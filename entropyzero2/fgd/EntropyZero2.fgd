@@ -238,7 +238,7 @@
 	// Inputs
 	input Explode(void) : "Explode"
 	input FadeAndRespawn(void) : "Fade And Respawn Ball" //added by vizzys
-	input Socketed(void) : "Ball is Socketed into place?" //added by vizzys
+	input Socketed(void) : "Ball is Socketed in place" //added by vizzys
 ]
 
 @SolidClass base(Trigger, Angles) = trigger_physics_trap :
@@ -397,7 +397,7 @@
 [
 	spawnflags(Flags) = 
 	[
-		32 : "[32] Autostart (When enabled, automatically deploy when enemy seen. Otherwise only deploys by Enable input.)" : 1
+		32 : "[32] Autostart (When enabled, automatically deploy when enemy seen. Otherwise deploy by Enable input.)" : 1
 		64 : "[64] Start Inactive (Wait for Enable input before looking for enemies)" : 0
 		128 : "[128] Never Retire (Stay deployed even when enemy is lost)" : 0
 		256 : "[256] Out of Ammo" : 0
@@ -413,7 +413,7 @@
 	// Inputs
 	input Enable(void) : "If closed, open."
 	input Disable(void) : "If open, close."
-	input Toggle(void) : "Toggle (If open, close. If closed, open)"
+	input Toggle(void) : "Toggle (If open, close. If closed, open.)"
 	input DepleteAmmo(void) : "Depletes all the ammo from a turret, causing it to dry-fire."
 	input RestoreAmmo(void) : "Restores ammo to a turret, allowing it to fire live rounds again."
 	input CreateSprite(void) : "Creates the turret's light sprite if it was previously destroyed."
@@ -582,7 +582,7 @@
 	spawnflags(Flags) = 
 	[
 		65536 :  "[65536] Friendly" : 0
-		131072 : "[131072] Use prop_physics collision rules (Lets rollermine go through clip and NPC clip brushes)"	: 0
+		131072 : "[131072] Use prop_physics collision rules (Let rollermine go through clip and NPC clip brushes)"	: 0
 		262144 : "[262144] Follow player when idle"	: 0
 	]
 
@@ -665,12 +665,12 @@
 
 	type(choices) : "Type of target" : 0 = 
 	[
-		0 : "Generic Citizen Beacon (lambda)"
-		1 : "Magnusson RDU Beacon (magnusson device)"
+		0 : "Generic Citizen Beacon (Lambda)"
+		1 : "Magnusson RDU Beacon (Magnusson Device)"
 		2 : "Dog"
-		3 : "Ally Installation (blue triangle with a dot)"
-		4 : "Enemy (red dot)"
-		5 : "Large Enemy (striders, big red dot)"
+		3 : "Ally Installation (Blue triangle with a dot)"
+		4 : "Enemy (Red dot)"
+		5 : "Large Enemy (Striders, big red dot)"
 	]
 
 	mode(choices) : "Mode" : 0 =
@@ -897,9 +897,9 @@
 [
 	BeamPower(choices) : "Beam Power" : "Low" =
 	[
-		0 : "Low (red, 1 damage)"
-		1 : "Medium (orange, 3 damage)"
-		2 : "High (yellow, 10 damage)"
+		0 : "Low (Red, 1 damage)"
+		1 : "Medium (Orange, 3 damage)"
+		2 : "High (Yellow, 10 damage)"
 	]
 	
 	Aggression(choices) : "Start Aggressive" : 0 : "Controls whether this stalker starts aggressive to the player and their allies without having to be provoked first." =
@@ -1118,7 +1118,7 @@
 	citizentype(choices) : "Type" : "Default" =
 	[
 		0 : "Default"	 
-		1 : "Downtrodden (Clean blue suit)"
+		1 : "Downtrodden (Clean blue uniform)"
 		2 : "Refugee (Dirty, ragged clothing)"
 		3 : "Rebel (Resistance getup and combat gear)"
 		5 : "Rebel Brute (Resistance getup and mask)"
@@ -1126,7 +1126,7 @@
 		7 : "Arctic (Resistance getup with lambda)"
 		8 : "Arbeit Employee (Tan/White shirt w nametag)"
 		9 : "Arbeit Security Guard (Sometimes camo)"
-		4 : "Unique (Set a particular model with Model)"
+		4 : "Unique (Set a particular model)"
 	]
 
 	expressiontype(choices) : "Expression Type" : "Random" =
@@ -1170,7 +1170,7 @@
 
 	neverleaveplayersquad(choices) : "Permanent squad member?" : 0 : "A permanent squad member cannot leave the player's squad unless killed or explicitly removed by entity I/O. Only use this if you're sure you want to override the default AI." =
 	[
-		0 : "No. Default behavior. (Give up if cant get in 600 units of player & have LOS after 20 seconds of trying)"
+		0 : "No. Default behavior. (Give up if cant get in 600 units of player & has LOS after 20 seconds of trying)"
 		1 : "Yes, stay in squad until death."
 	]
 	
@@ -2125,7 +2125,7 @@
 	spawnflags(Flags) = 
 	[
 		65536 :  "[65536] Loud rotor wash sound (Makes the propeller noise 10 times as loud)" : 0
-		131072 : "[131072] Electrical drone (Replaces heli with a bomb, makes zapping noises, and damages enemies within a small radius. Beta)" : 0
+		131072 : "[131072] Electrical drone (Replaces heli with bomb, make zapping noises, and damages enemies within a small radius. Beta)" : 0
 		262144 : "[262144] Helicopter lights (Puts red blinking lights on the helicopter)" : 0
 		524288 : "[524288] Ignore avoid spheres+boxes" : 0
 		1048576 : "[1048576] More aggressive attacks (Repositions more, holds gun charge if enemy hides, always knows where enemy is)" : 0
@@ -2501,7 +2501,7 @@
 		524288 : "[524288] Always stitch (If cop has SMG & player is beneath, shoot a meandering path of bullets even if player isnt in boat)" : 0
 		1048576 : "[1048576] No chatter" : 0
 		2097152 : "[2097152] Arrest enemies (Enemies are 'arrested')" : 0
-		4194304 : "[4194304] No far stitching (Stops stitching if the player is over 6000 units away)" : 0
+		4194304 : "[4194304] No far stitching (Stop stitching if the player is over 6000 units away)" : 0
 		8388608 : "[8388608] Prevent manhack toss (Deploying them can be allowed with EnableManhackToss)" : 0
 		16777216: "[16777216] Respond to thrown objects (If i have stunstick and I get something thrown at me, allow me to chase player)" : 0
 		33554432: "[33554432] Mid-range attacks (halfway between normal + long-range: 3500 units)" : 0
@@ -3615,9 +3615,9 @@
 
 	AssaultCue(choices) : "Assault Cue" : 1 =
 	[
-		1 : "Entity System Input"
+		1 : "Entity System Input (BeginAssault)"
 		2 : "Gunfire"
-		3 : "Don't wait for a cue."
+		3 : "Don't wait for a cue. (Attack immediately after rallying finish)"
 	]
 
 	RallySelectMethod(choices) : "Rally Point Selection Method" : 0 = 
@@ -4105,7 +4105,7 @@
 [
 	spawnflags(flags) =
 	[
-		8192  : "[8192] Threshold (door will move entire distance when target is within Proximity Distance+Offset)" : 0
+		8192  : "[8192] Threshold (Door will move entire distance when target is within Proximity Distance+Offset)" : 0
 		16384 : "[16384] Invert (Make door behave oppositely)" : 0
 		32768 : "[32768] From Open (Proximity and look direction will be calculated from the door's open position)" : 0
 	]
@@ -4142,7 +4142,7 @@
 	DefaultCitizenType(choices) : "Default Citizen Type" : 0 : "Overrides the default citizen type." =
 	[
 		0 : "None"
-		1 : "Downtrodden (Clean blue suit)"
+		1 : "Downtrodden (Clean blue uniform)"
 		2 : "Refugee (Dirty, ragged clothing)"
 		3 : "Rebel (Resistance getup and combat gear)"
 		5 : "Rebel Brute (Resistance getup and mask)"

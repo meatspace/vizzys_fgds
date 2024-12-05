@@ -4724,7 +4724,7 @@
 		256 : "[256] Start with collision disabled" : 0
 		512: "[512] NPCs Can't" : 0
 		2048: "[2048] Starts locked" : 0
-		4096: "[4096] Door silent (No sound, and does not alert NPCs)" : 0
+		4096: "[4096] Door silent (No sound, does not alert NPCs)" : 0
 		8192: "[8192] Use closes" : 1
 		16384 : "[16384] Door silent to NPCS (Does not alert NPCs)" : 0
 		32768 : "[32768] Ignore player +USE" : 0

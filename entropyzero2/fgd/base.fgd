@@ -61,6 +61,7 @@
 	input CreateSeparateRagdoll(void) : "Creates a separate serverside ragdoll at this entity's origin."
 	input CreateSeparateRagdollClient(void) : "Creates a separate clientside ragdoll at this entity's origin."
 	input SetLightingOrigin(target_destination) : "Sets this entity's lighting origin." // Was this really not in the FGD before?
+	input SetLightingOriginHack(target_destination) : "Offsets the entity's lighting origin by their distance from an info_lighting_relative." //added by vizzys, idk if it works tbh
 	input SetPoseParameter(string) : "Sets the specified pose parameter to the specified value (e.g. ''aim_yaw 45'')."
 	
 	// Outputs
@@ -644,12 +645,12 @@
 	//initialidle(string) : "Initial Idle Activity" :: "Activity the NPC should use to idle until becomes alert"
 	sleepstate(choices) : "Sleep State" : 0 : "Holds the NPC in stasis until specified condition. See also 'Wake Radius' and 'Wake Squad'." =
 	[
-		0 : "None"
-		1 : "Waiting for threat"
+		0 : "None (Immediately wake)"
+		1 : "Waiting for threat (Wake from damage, or if NPC visible to player, or can hear a danger sound and see it)"
 		2 : "Waiting for PVS"
-		3 : "Waiting for input, ignore PVS"
-		4 : "Auto PVS"
-		5 : "Auto PVS after PVS"
+		3 : "Waiting for input, ignore PVS (Only wake from Wake input)"
+		4 : "Auto PVS (Wake when this NPC enters player's PVS, go back to sleep when not in PVS)"
+		5 : "Auto PVS after PVS (Start awake, but switch to Auto PVS after leaving PVS for the first time)"
 	]
 
 	wakeradius(float) : "Wake Radius" : 0 : "Auto-wake if player within this distance"
@@ -1858,7 +1859,7 @@
 
 	spawnflags(Flags) = 
 	[
-		1 : "[1] Repeatable (Otherwise, removes itself after firing.)"  : 0
+		1 : "[1] Repeatable (Otherwise, remove itself after firing.)"  : 0
 	]
 
 	// Inputs
@@ -2106,7 +2107,7 @@
 	[
 		1 : "[1] No Damage - Only Force" : 1
 		2 : "[2] Push players" : 0
-		4 : "[4] Push radially (Not as a sphere, meaning as a cylinder. No upward or downward force will be generated.)" : 0
+		4 : "[4] Push radially (Not as a sphere, as a cylinder. No upward or downward force will be generated.)" : 0
 		8 : "[8] Test LOS before pushing (Otherwise, the force will travel through solid things.)" : 0
 		16 : "[16] Disorient player if pushed (Jostles view significantly.)" : 0
 	]
@@ -2512,7 +2513,7 @@
 
 	spawnflags(flags) =
 	[
-		1 : "[1] Repeatable (Otherwise, removes itself after firing.)" : 0
+		1 : "[1] Repeatable (Otherwise, remove itself after firing.)" : 0
 		2 : "[2] Gibs On fire" : 0
 		4 : "[4] Strict remove after lifetime" : 0
 	]
@@ -2552,7 +2553,7 @@
 
 	spawnflags(flags) =
 	[
-		1 : "[1] Repeatable (Otherwise, removes itself after firing.)" : 0
+		1 : "[1] Repeatable (Otherwise, remove itself after firing.)" : 0
 		2 : "[2] Gibs On fire" : 0
 		4 : "[4] Strict remove after lifetime" : 0
 	]
@@ -3081,7 +3082,7 @@
 		7 : "[7] South"
 		8 : "[8] Southeast"
 	]
-	font(string) : "Font" : : "The font to use from resource/ClientScheme.res. A blank value is equivalent to the default font. Not all fonts may function. Commonly defined fonts include 'DefaultSmall' and 'Trebuchet18'/'Trebuchet24'."
+	font(string) : "Font" : : "The font to use from resource/ClientScheme.res. The font must not be additive or proportional. Not all fonts may function. Commonly defined fonts include 'DefaultSmall' and 'Trebuchet18'/'Trebuchet24'."
 	resolution(integer) : "Panel Resolution" : 200 : "The number of pixels available to the text. The higher the resolution is, the smaller the text will be. (NOTE: Changing the resolution with inputs later will scale the screen itself)"
 	textsize(float) : "Panel Size" : 100 : "The size of the text panel in the world. This is previewed with a sphere, but it actually extends 'north-west' relative to the direction it's facing. Due to the limited in-editor previewing abilities, it's recommended to use the 'SetPanelSize' input in-game with the 'ent_fire' command to fine-tune this value. Use 'r_vguitext_bg' to display the panel in-game."
 	
@@ -8757,6 +8758,7 @@
 	// Outputs
 	output OnStart(void) : "Fired when the train starts moving in either direction."
 	output OnNext(string) : "Fires when this train picks a new point to move towards (and just after OnStart)."
+	output OnNextPoint(void) : "Fires every tick as the train moves. Activator is the path_track being traveled to." //added by vizzys
 	
 	ManualSpeedChanges(choices) : "Manual Train Speed" : 0 : "Train Speed is controlled through IO, handles accel, decel times." =
 	[
@@ -9566,6 +9568,7 @@
 	input SetHandModel(string) : "Sets player's hand viewmodel. Obsolete?" //added by vizzys	
 	input SetHandModelSkin(string) : "Sets player's hand viewmodel skin. Obsolete? Consider ent_fire viewmodel skin 1 instead." //added by vizzys
 	input SetLegModel(string) :  "Sets player's leg model." //added by vizzys	
+	input SetDrawPlayerModelExternally(string) : "Sets the player model to draw in mirrors and thirdperson (does not affect hand viewmodels)" //added by vizzys
 	input SetMaxInputArmor(integer)			: "Sets the maximum armor value that could be set by armor inputs."
 	input SetSuitZoomFOV(integer)				: "Sets the FOV used by suit zoom."
 	
