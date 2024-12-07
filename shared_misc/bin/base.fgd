@@ -7871,7 +7871,7 @@
 		// Disable world collisions on hinges
 		2: "[2] No world collision (If Hinge Object was set, make Attached Object not collide with world brushes)" : 0
 		// motor also acts as a hinge constraining the object to this axis
-		4: "[4] Hinge Object (Makes the object 'attached' to the motor. If not set, iwill move around freely)" : 1
+		4: "[4] Hinge Object (Makes the object 'attached' to the motor. If not set, will move around freely)" : 1
 		// Maintain local relationship with the attached object (NOT WORKING YET)
 //		8: "[8] Orient Locally" : 1
 	]
