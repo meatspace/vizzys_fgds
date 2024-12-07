@@ -7335,7 +7335,7 @@
 
 	spawnflags(Flags) =
 	[
-		1 : "[1] Use target entity's angles (NOT position)" : 0
+		1 : "[1] Use target entity's angles (NOT position. Checks if entities face the same direction)" : 0
 	]
 	
 	// Inputs
@@ -7869,9 +7869,9 @@
 		// starts on by default
 		1: "[1] Start On" : 1
 		// Disable world collisions on hinges
-		2: "[2] No world collision" : 0
+		2: "[2] No world collision (If Hinge Object was set, make Attached Object not collide with world brushes)" : 0
 		// motor also acts as a hinge constraining the object to this axis
-		4: "[4] Hinge Object" : 1
+		4: "[4] Hinge Object (Makes the object 'attached' to the motor. If not set, iwill move around freely)" : 1
 		// Maintain local relationship with the attached object (NOT WORKING YET)
 //		8: "[8] Orient Locally" : 1
 	]
@@ -8752,6 +8752,7 @@
 		16: "[16] Teleport to THIS path track" : 0
 		32: "[32] Part of an uphill path" : 0
 		64: "[64] Part of a downhill path" : 0
+		32768 : "[32768] Start on Branch (Sends trains to Branch Path by default.)" : 0
 	]
 	
 	target(target_destination) : "Next Stop Target" : : "The next path_track in the path."
@@ -8775,6 +8776,9 @@
 	input TogglePath(void) : "Cause the track to toggle on/off/"
 	input EnablePath(void) : "Enable the track."
 	input DisablePath(void) : "Disable the track."
+
+	input InPass(void) : "Fires OnPass. Normally the path follower entity sends this to the path node when it reaches that point."
+	input InTeleport(void) : "Fires OnTeleport. Normally the path follower entity sends this to the path node when it teleports to it."
 
 	// Outputs
 	output OnPass(void) : "Fired when any entity following this path passes this path_track node."

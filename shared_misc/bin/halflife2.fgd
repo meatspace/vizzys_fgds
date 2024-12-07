@@ -4169,11 +4169,11 @@
 [
 	spawnflags(Flags) =
 	[
-		1 : "[1] Use Master's values" : 1
-		2 : "[2] Is Master" : 0
-		4 : "[4] Spawn even if player meets all requirements" : 0
-		8 : "[8] Fallback to Health Vial" : 0
-		16 : "[16] Alternate master" : 0
+		1 : "[1] Use Master's values (Use settings from a resupply with Is Master checked)" : 1
+		2 : "[2] Is Master (resupplys with Use Master's values checked will use settings from this entity)" : 0
+		4 : "[4] Always Spawn (Spawn something even if the player doesn't need anything)" : 0
+		8 : "[8] Fallback to Health Vial (If Always Spawn checked & the player doesn't need anything, spawns an item_healthvial)" : 0
+		16 : "[16] Alternate master (Stop doing PVS check so it can be used by supply crates or become the master later on)" : 0
 	]
 
 	DesiredHealth(float) : "Desired Health Ratio" : "1" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max health."
@@ -4342,8 +4342,8 @@
 
 	spawnflags(flags) =
 	[
-		8192  : "[8192] Citadel recharger" : 0
-		16384 : "[16384] Kleiner's recharger" : 0
+		8192  : "[8192] Citadel recharger (Overcharges up to 200 power and gives health)" : 0
+		16384 : "[16384] Kleiner's recharger (Gives only 25 power)" : 0
 	]
 
 	// Inputs
