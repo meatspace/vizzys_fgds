@@ -1,9 +1,11 @@
-this repo contain my enhanced fgd's for both Mapbase and Entropy Zero 2 (which uses mapbase fgds)
+this repo contain my enhanced fgd's for both Mapbase and Entropy Zero 2 (which uses mapbase .FGD's)
 
 
-Mapbase folder goes at:  steamapps\sourcemods\mapbase_shared\shared_misc
+Mapbase install instructions: Click download .zip, extract, copy shared_misc folder to steamapps\sourcemods\mapbase_shared\shared_misc
 
-Ez2 folder goes at: steamapps\common\EntropyZero2\entropyzero2
+Entropy Zero 2 install instructions: Click download .zip, extract, copy entropyzero2 folder to steamapps\common\EntropyZero2\entropyzero2
+
+.psd files are for adobe photoshop
 
 
 --CREDITS--
