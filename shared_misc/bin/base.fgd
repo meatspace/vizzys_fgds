@@ -608,7 +608,7 @@
 		8 : "[8] Drop Healthkit (drops health vial on death)" : 0
 		16 : "[16] Efficient (Don't acquire enemies or avoid obstacles)" : 0
 		128 : "[128] Wait For Script" : 0
-		256 : "[256] Long Visibility/Shoot" : 0
+		256 : "[256] Long Visibility/Shoot (NPC tries to do extreme long range combat)" : 0
 		512 : "[512] Fade Corpse" : 1
 		1024 : "[1024] Think outside PVS (allows AI to stay active outside of combat and PVS)" : 0
 		2048 : "[2048] Template NPC (used by npc_maker, will not spawn; NOT used by point_template)" : 0
@@ -622,7 +622,7 @@
 	[
 		0 : "None (Immediately wake)"
 		1 : "Waiting for threat (Wake from damage, or if NPC visible to player, or can hear a danger sound and see it)"
-		2 : "Waiting for PVS"
+		2 : "Waiting for PVS (Wake up when this NPC enters the player's PVS)"
 		3 : "Waiting for input, ignore PVS (Only wake from Wake input)"
 		4 : "Auto PVS (Wake when this NPC enters player's PVS, go back to sleep when not in PVS)"
 		5 : "Auto PVS after PVS (Start awake, but switch to Auto PVS after leaving PVS for the first time)"
@@ -876,7 +876,7 @@
 		// AWAIT INPUT will make the helicopter spawn disabled, awaiting 
 		// the "Activate" input to start acting.
 		32 : "[32] No Rotorwash" : 0
-		64 : "[64] Await Input" : 0
+		64 : "[64] Await Input (NPC waits for the Activate input to begin flying)" : 0
 	]
 ]
 
@@ -1739,7 +1739,7 @@
 	nolistrepeat(choices) : "No List Repeat" : 0 = 
 	[
 		0 : "Allow List Repeats"
-		1 : "No List Repeats"
+		1 : "No List Repeats (Skip to next unused frame on the list)"
 	]
 
 	width(integer) : "Panel width" : 256 : "Width of the panel in units."
@@ -2893,7 +2893,7 @@
 [
 	spawnflags(flags) =
 	[
-		1: "[1] Use Only" : 0
+		1: "[1] Use Only (Only activate from Use input. Otherwise players automatically get items upon spawning)" : 0
 	]
 	//master(target_destination) : "Team Master (Obsolete)" : : "Legacy support: The name of a master entity. If the master hasn't been activated, this entity will not activate."	
 ]
@@ -2940,9 +2940,9 @@
 	y(string) : "Y (0 - 1.0 = top to bottom) (-1 centers)" : "-1" : "Vertical position on the player's screens to draw the text. The value should be between 0 and 1, where 0 is the top of the screen and 1 is the bottom. -1 centers the text."
 	effect(Choices) : "Text Effect" : 0 =
 	[
-		0 : "Fade In/Out"
+		0 : "Fade In/Out (The whole text fades in and fades out)"
 		1 : "Credits"
-		2 : "Scan Out"
+		2 : "Scan Out (Puts each letter in one by one, gives the letters an alternative color if they were just put in)"
 	]
 	color(color255) : "Color1" : "100 100 100"
 	color2(color255) : "Color2" : "240 110 0"
@@ -3680,7 +3680,7 @@
 		64 : "[64] Force tiny_centered permission" : 0
 		128 : "[128] Force large permission" : 0
 		256 : "[256] Force large_centered permission" : 0
-		512 : "[512] Keep editor position" : 0
+		512 : "[512] Keep editor position (Makes the node not fall to the ground after spawn)" : 0
 	]
 ]
 
@@ -4229,7 +4229,7 @@
 
 	Subdiv(integer) : "Subdivision" : 2 : "Number of subdivisions between each rope segment. Maximum value is 8. Higher values make smoother ropes, but are slower to render."
 
-	Barbed(choices) : "Barbed" : 0 : "Test effect that makes the rope look sharper and more barbed." =
+	Barbed(choices) : "Barbed" : 0 : "Test effect that makes the rope look sharper and more barbed. Looks awful if the rope has too much slack." =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -4245,7 +4245,7 @@
 		1 : "Yes"
 	]
 
-	Dangling(choices) : "Start Dangling" : 0 : "When set to Yes, the rope starts out detached from its target endpoint." =
+	Dangling(choices) : "Start Dangling" : 0 : "When set to Yes, the rope starts out detached from its target endpoint. Do not use this when hanging things on ropes!" =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -4681,7 +4681,7 @@
 	hardware(choices) : "Hardware Type" : 1 =
 	[
 		0 : "<None>"
-		1 : "Lever"
+		1 : "Lever (Default Handle)"
 		2 : "Push bar"
 		3 : "Keypad"
 	]
@@ -5813,8 +5813,8 @@
 		1 : "[1] Enable AutoSpawn (will spawn whenever there's room)" : 0
 		2 : "[2] AutoSpawn: Wait for entity destruction" : 0
 		4 : "[4] AutoSpawn: Even if the player is looking" : 0
-		8 : "[8] ForceSpawn: Only if there's room" : 0
-	  	16 : "[16] ForceSpawn: Only if the player isn't looking" : 0
+		8 : "[8] ForceSpawn (input): Spawn only if there's room" : 0
+	  	16 : "[16] ForceSpawn (input): Spawn only if the player isn't looking" : 0
 	]
 
 	EntityTemplate(target_destination) : "Point_template To Spawn" : "" : "Name of the point_template to spawn here."
@@ -5829,7 +5829,7 @@
 	]
 
 	// Inputs
-	input ForceSpawn(void)				: "Spawn an instance of the template at this origin and angle."
+	input ForceSpawn(void)	: "Spawn an instance of the template at this origin and angle."
 	input ForceSpawnAtEntityOrigin(target_destination) : "Spawns an instance of the template that has the same origin and angles as the specified entity."
 	input ForceSpawnAtEntityCenter(target_destination) : "Spawns an instance of the template at the specified entity's world space center and angles."
 	input ForceSpawnAtPosition(vector) : "Spawn an instance of the template at the specified position (has env_entity_maker's angles)"
@@ -8600,10 +8600,11 @@
 [
 	spawnflags(flags) =
 	[
-		1 : "[1] No Pitch (X-rot)" : 0
+		1 : "[1] No Pitch (X-rot, pitch never changes as it moves)" : 0
 		2 : "[2] No User Control" : 0
+		4 : "[4] Forward Only (The controlling player may only move the entity forward, or stop it.)" : 0
 		8 : "[8] Passable" : 0
-		16 : "[16] Fixed Orientation" : 0
+		16 : "[16] Fixed Orientation (Brush stays in the orientation it was created in)" : 0
 		128 : "[128] Rideable Train (HL1 Train)" : 0
 		256 : "[256] Use max speed for pitch shifting move sound" : 0
 		512 : "[512] Is unblockable by player" : 0

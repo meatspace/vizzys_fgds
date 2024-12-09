@@ -373,7 +373,7 @@
 	[
 		32 : "[32] Autostart" : 1
 		64 : "[64] Start Inactive" : 0
-		128 : "[128] Fast Retire" : 0
+		128 : "[128] Fast Retire (gives up search faster)" : 0
 		256 : "[256] Out of Ammo" : 0
 		512 : "[512] Citizen modified (Friendly)" : 0
 		1024 : "[1024] No Light Sprite" : 0
@@ -693,7 +693,7 @@
 	input DisableBark(void) : "Stop the antlion guard from trying to summon antlions"
 	input InvestigateHint(target_destination) : "Sniff around at a hint group until told otherwise"
 	input StopInvestigating(void) : "Stop trying to sniff out the player"
-
+	input SummonedAntlionDied(void) : "Informs the guard that a summoned antlion has died. Automatically sent by summoned antlions when they die. Sending this manually will cause the guard to summon an extra antlion for each time its sent." //added by vizzys
 	input EnablePreferPhysicsAttack(void) : "Prefer to use physics attacks if at all possible, even when inside a cavern."
 	input DisablePreferPhysicsAttack(void) : "Do not prefer to use physics attacks if at all possible, even when inside a cavern."
 
@@ -706,7 +706,7 @@
 
 @BaseClass base(BaseNPC) = BaseBird
 [
-	input FlyAway( target_destination ) : "Forces the crow to fly to the nearest crow flyto hint node."
+	input FlyAway( target_destination ) : "Forces the bird to fly to the nearest 'fly to' hint node."
 
 	deaf(choices) : "Deaf?" : 0 =
 	[
@@ -928,25 +928,25 @@
 		//2097152 : "[2097152] Don't use Speech Semaphore - OBSOLETE" : 0
 		4194304 : "[4194304] Random male head" : 0
 		8388608 : "[8388608] Random female head" : 0
-		16777216 : "[16777216] Use RenderBox in ActBusies" : 0
+		16777216 : "[16777216] Use RenderBox in ActBusies (Makes collision box as big as the rendering box when in actbusies)" : 0
 		33554432 : "[33554432] Player can +USE and +WALK (Alt + E) to toggle squad (disables automatically joining)" : 0
 	]
 
 	additionalequipment(choices) : "Weapons" : "0" =
 	[
-		"weapon_smg1" : "SMG1"
+		"weapon_357" : ".357 Magnum (Revolver)"
 		"weapon_ar2" : "AR2"
-		"weapon_stunstick" : "Stun Stick"
-		"weapon_crowbar" : "Crowbar"
-		"weapon_shotgun" : "Shotgun"
-		"weapon_pistol" : "Pistol"
-		"weapon_357" : "357"
-		"weapon_crossbow" : "Crossbow"
-		//"weapon_beerbottle" : "Beer Bottle"
-		//"weapon_beerbottle2" : "Beer Bottle2"
-		"weapon_rpg" : "RPG"
 		"weapon_citizenpackage" : "Citizen Package"
 		"weapon_citizensuitcase" : "Citizen Suitcase"
+		"weapon_crossbow" : "Crossbow"
+		"weapon_crowbar" : "Crowbar"
+		"weapon_pistol" : "Pistol"
+		"weapon_rpg" : "RPG"
+		"weapon_shotgun" : "Shotgun"
+		"weapon_smg1" : "SMG1"
+		"weapon_stunstick" : "Stun Stick"
+		//"weapon_beerbottle" : "Beer Bottle"
+		//"weapon_beerbottle2" : "Beer Bottle2"
 		"0"  : "Nothing"
 	]
 
@@ -1111,15 +1111,15 @@
 [
 	additionalequipment(choices) : "Weapons" : "weapon_smg1" =
 	[
+		"weapon_357" : ".357 Magnum (Revolver)"
 		"weapon_ar2" : "AR2"
-		"weapon_shotgun" : "Shotgun"
-		"weapon_smg1" : "SMG1"
-		"weapon_rpg" : "RPG"
-		"weapon_stunstick" : "Stun Stick"
-		"weapon_pistol" : "Pistol"
-		"weapon_357" : "357"
 		"weapon_citizenpackage" : "Citizen Package"
 		"weapon_citizensuitcase" : "Citizen Suitcase"
+		"weapon_pistol" : "Pistol"
+		"weapon_rpg" : "RPG"
+		"weapon_shotgun" : "Shotgun"
+		"weapon_smg1" : "SMG1"
+		"weapon_stunstick" : "Stun Stick"
 		"0" : "Nothing"
 	]
 
@@ -1200,7 +1200,7 @@
 
 	spawnflags(Flags) = 
 	[
-		65536  :  "[65536] Check LOS" : 1
+		65536  :  "[65536] Check LOS (Don't shoot once enemy takes cover, unless using SetEnemyEntity)" : 1
 	]
 
 	StartOn(choices) : "Start On" : 0 = 
@@ -1219,7 +1219,7 @@
 	[
 		0: "Off"
 		1: "On"
-		2: "On Homing"
+		2: "On Homing (Only a small trail)"
 	] 
 	LaunchSmoke(choices) : "Launch Smoke" : 1 = 
 	[
@@ -2060,16 +2060,16 @@
 
 	additionalequipment(choices) : "Weapons" : "weapon_pistol" =
 	[
-		"weapon_pistol" : "Pistol"
-		"weapon_smg1"  : "SMG1"
-		"weapon_stunstick"  : "Stun Stick"
-		"weapon_crowbar"  : "Crowbar"
+		"weapon_357" : ".357 Magnum (Revolver)"
 		"weapon_ar2"  : "AR2"
-		"weapon_shotgun"  : "Shotgun"
-		"weapon_357" : "357"
-		"weapon_rpg" : "RPG"
 		"weapon_citizenpackage" : "Citizen Package"
 		"weapon_citizensuitcase" : "Citizen Suitcase"
+		"weapon_crowbar"  : "Crowbar"
+		"weapon_pistol" : "Pistol"
+		"weapon_rpg" : "RPG"
+		"weapon_shotgun"  : "Shotgun"
+		"weapon_smg1"  : "SMG1"
+		"weapon_stunstick"  : "Stun Stick"
 		"0"  : "Nothing"
 	]
 
@@ -2125,20 +2125,20 @@
 [
 	additionalequipment(choices) : "Weapons" : "weapon_annabelle" =
 	[
-		"weapon_annabelle" : "Annabelle"
-		"weapon_smg1" : "SMG1"
+		"weapon_357" : ".357 Magnum (Revolver)"
+		"weapon_annabelle" : "Annabelle (Grigori's Shotgun)"
 		"weapon_ar2" : "AR2"
-		"weapon_stunstick" : "Stun Stick"
-		"weapon_crowbar" : "Crowbar"
-		"weapon_shotgun" : "Shotgun"
-		"weapon_pistol" : "Pistol"
-		"weapon_357" : "357"
+		"weapon_citizenpackage" : "Citizen Package (Ration)"
+		"weapon_citizensuitcase" : "Citizen Suitcase"
 		"weapon_crossbow" : "Crossbow"
+		"weapon_crowbar" : "Crowbar"
+		"weapon_pistol" : "Pistol"
+		"weapon_rpg" : "RPG"
+		"weapon_shotgun" : "Shotgun"
+		"weapon_smg1" : "SMG1"
+		"weapon_stunstick" : "Stun Stick"
 		//"weapon_beerbottle" : "Beer Bottle"
 		//"weapon_beerbottle2" : "Beer Bottle2"
-		"weapon_rpg" : "RPG"
-		"weapon_citizenpackage" : "Citizen Package"
-		"weapon_citizensuitcase" : "Citizen Suitcase"
 		"0"  : "Nothing"
 	]
 
@@ -2990,8 +2990,8 @@
 	HintGroupChangeReaction(Choices) : "Reaction to tactical change" : 1 : "What to do if leader moves, threat is neutralized, hint group changes, etc" =
 	[
 		0 : "Move when ready (default AI)"
-		1 : "Move when seek cover"
-		2 : "Move immediately"
+		1 : "Move when seek cover (Move when cover is needed)"
+		2 : "Move immediately (Move to a different position, if we want to, when change occurs)"
 	]
 
 	Aggressiveness(Choices) : "Aggressiveness" : 2 =
@@ -4377,6 +4377,7 @@
 		16 : "[16] Preserve ammo values when picked up" : 0
 		32 : "[32] Preserve name on player pickup" : 0
 		64 : "[64] Always touchable (no obstruction checking)" : 0
+		1073741824 : "[1073741824] Weapon will not respawn." : 0
 	]
 	
 	SetAmmo1(integer) : "Ammo 1 Override" : 0 : "Overrides the amount of primary ammo this weapon has. Be sure to set 'Preserve ammo values when picked up' for this to be maintained upon pickup."
@@ -4925,10 +4926,10 @@
 	
 	spawnflags(Flags) =
 	[
-		1 : "[1] No DLight" : 0
+		1 : "[1] No DLight (No dynamic light)" : 0
 		2 : "[2] No Smoke" : 0
 		4 : "[4] Infinite" : 0
-		8 : "[8] Start off" : 0
+		8 : "[8] Start off (Completely hidden until Start or Launch input)" : 0
 	]
 
 	input Start(float) : "Starts the flare burning. The flare will burn for the specified number of seconds (0 = infinite)."
@@ -5383,7 +5384,7 @@
 	input SetCargoHopperVisibility ( bool ) : "Set the strider buster hopper thingy to be visible, or invisible."
 	input EnableHazardLights ( void ) : "Enables the jalopy's hazard lights."
 	input DisableHazardLights ( void ) : "Disables the jalopy's hazard lights."
-
+	input OutsideTransition(void) : "Tells the vehicle to teleport to an info_target_vehicle_transition. Normally sent by trigger_changelevel when the vehicle is not inside a trigger_transition." //added by vizzys
 	input DisablePhysGun(void) : "Disable physgun interactions with the jeep."
 	input EnablePhysGun(void) : "Enable physgun interactions with the jeep (default)."
 

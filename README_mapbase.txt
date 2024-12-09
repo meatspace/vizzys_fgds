@@ -1,7 +1,7 @@
 
 Hello. This is my attempt to make Hammer more bearable to use with more icons for various entity's. My thinking is any icon is better than a blank one!
 
---// CHANGELOG //--
+-- // MAPBASE CHANGELOG // --
 • added detailed info for many entities (taken from Brokk's / Pinsplash's .fgd's)
 • added input SetLightingOriginHack (Deprecated, but why not. https://user-images.githubusercontent.com/11617079/109691349-65e9d200-7b98-11eb-8739-ae77a1f5999c.jpg)
 • added input KilledNPC to basecompanion

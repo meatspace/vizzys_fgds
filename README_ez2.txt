@@ -6,7 +6,12 @@ Hello. This is my attempt to make Hammer more bearable to use with more icons fo
 
 -- // EZ2 CHANGELOG //--
 • added detailed info for many entities (taken from Brokk's / Pinsplash's .fgd's)
+• added input SetLightingOriginHack (Deprecated, but why not. https://user-images.githubusercontent.com/11617079/109691349-65e9d200-7b98-11eb-8739-ae77a1f5999c.jpg)
+• added input KilledNPC to basecompanion
+• added output OnNextPoint to func_tracktrain ("Fires every tick as the train moves. Activator is the path_track being traveled to.") might be better in in basetrain? idk without testing
+• added input Toggle to func_brush
 • added missing spawnflag for npc_manhack "Carried"
+• added input HideWeapon to weapon baseclass ("If the weapon is being held by someone, makes it invisible. The weapon will reappear if they switch weapons.")
 • fixed cs:s mp5 weapon choice and sorted weapons lists alphabetically
 • added Skin parameter to basenpc 🙏
 • added input HideWeapon to weapon baseclass ("If the weapon is being held by someone, makes it invisible. The weapon will reappear if they switch weapons.")
