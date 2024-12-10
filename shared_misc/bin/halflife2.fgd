@@ -936,7 +936,7 @@
 	[
 		"weapon_357" : ".357 Magnum (Revolver)"
 		"weapon_ar2" : "AR2"
-		"weapon_citizenpackage" : "Citizen Package"
+		"weapon_citizenpackage" : "Citizen Package (Ration)"
 		"weapon_citizensuitcase" : "Citizen Suitcase"
 		"weapon_crossbow" : "Crossbow"
 		"weapon_crowbar" : "Crowbar"
@@ -1113,7 +1113,7 @@
 	[
 		"weapon_357" : ".357 Magnum (Revolver)"
 		"weapon_ar2" : "AR2"
-		"weapon_citizenpackage" : "Citizen Package"
+		"weapon_citizenpackage" : "Citizen Package (Ration)"
 		"weapon_citizensuitcase" : "Citizen Suitcase"
 		"weapon_pistol" : "Pistol"
 		"weapon_rpg" : "RPG"
@@ -2062,7 +2062,7 @@
 	[
 		"weapon_357" : ".357 Magnum (Revolver)"
 		"weapon_ar2"  : "AR2"
-		"weapon_citizenpackage" : "Citizen Package"
+		"weapon_citizenpackage" : "Citizen Package (Ration)"
 		"weapon_citizensuitcase" : "Citizen Suitcase"
 		"weapon_crowbar"  : "Crowbar"
 		"weapon_pistol" : "Pistol"
