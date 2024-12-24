@@ -30,21 +30,20 @@ Some icon entity's like point_entity_finder are by them, and I based the icon po
 Valve Developer Community: 
 https://developer.valvesoftware.com/
 
-Tf2maps.net:
-https://tf2maps.net/
-
 A Boojum Snark:
 https://tf2maps.net/downloads/ultimate-mapping-resource-pack.510/
 
 The Spud Lord:
 https://tf2maps.net/threads/an-fgd-fit-for-a-lord.41812/
+inspiration for this fgd
 
 Brokkhouse:
 https://tf2maps.net/downloads/an-fgd-fit-for-a-lord-brokk-edition.15924/
+valuable reference point using their .FGD knowledge.
 
 Pinsplash:
 https://github.com/Pinsplash/SEFGD
-All valuable reference points using their combined .FGD knowledge.
+valuable reference point using their .FGD knowledge.
 
 Vizzys: 
 https://developer.valvesoftware.com/wiki/User:Vizzys
