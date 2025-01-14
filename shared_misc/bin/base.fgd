@@ -3081,11 +3081,6 @@
 		2 :  "[2] No Dynamic Light" : 1
 	]
 
-	IgnoreSolid(choices) : "Ignore Solid" : 0 : "If set, this spotlight won't trace for solids." =
-	[
-		0 : "No"
-		1 : "Yes"
-	]
 	spotlightlength(integer) : "Spotlight Length" : 500 : "Length of the spotlight beam."
 	spotlightwidth(integer) : "Spotlight Width" : 50 : "Width of the spotlight beam."
 	rendercolor(color255) : "Color (R G B)" : "255 255 255"
@@ -4592,6 +4587,7 @@
 		1024: "[1024] Touch Opens" : 0
 		2048: "[2048] Starts locked" : 0
 		4096:	"[4096] Door Silent" : 0
+		65536 : "[65536] New +Use rules (If closing, allow +Use to reopen, if unlocked) NOT for prop_doors!" : 0
 	]
 	//locked_sentence(choices) : "Locked Sentence" : 0 : "A sentence played when the player tries to use the door, and fails because it's locked." =  
 	//[
@@ -4662,7 +4658,6 @@
 		16: "[16] One-way" : 0
 		64: "[64] X Axis" : 0
 		128: "[128] Y Axis" : 0
-		65536: "[65536] New func_door +USE rules (NOT for prop_doors!!)" : 0
 	]
 	distance(integer) : "Distance" : 90 : "The amount, in degrees, that the button should rotate when it's pressed."
 
@@ -4780,12 +4775,6 @@
 	input DisallowPlayerUse(void) : "Prevents players from using the door. This just enables the 'Ignore player +USE' spawnflag."
 	
 	input SetDoorFilter(target_destination) : "Sets the entity to use as the NPC filter. Pass in an empty string to clear the NPC filter."
-
-	input SetFullyOpenSound(string) : "Sets the sound to use when the door is fully open."
-	input SetFullyClosedSound(string) : "Sets the sound to use when the door is fully closed."
-	input SetMovingSound(string) : "Sets the sound to use when the door is moving."
-	input SetLockedSound(string) : "Sets the sound to use when the door is locked."
-	input SetUnlockedSound(string) : "Sets the sound to use when the door is unlocked."
 ]
 
 
@@ -7546,7 +7535,6 @@
 	output OnMotionEnabled(void) : "Fired when motion is enabled due to damage/physcannon/force."
 	output OnPhysGunPickup(void) : "Fired when a player picks this object up, either with the physgun or +USE."
 	output OnPhysGunPunt(void) : "Fired when a player punts this object with the physgun."
-	output OnPhysGunPull(void) : "Fired when a player pulls this object with the physgun."
 	output OnPhysGunOnlyPickup(void) : "Fired when a player picks this object up WITH THE PHYSGUN. +USE pickups do not fire this output."
 	output OnPhysGunDrop(void) : "Fired when a player drops this object."
 	output OnPlayerUse(void) : "Fired when the player tries to +USE the physbox. This output will fire only if the Generate output on +USE spawnflag is set."
