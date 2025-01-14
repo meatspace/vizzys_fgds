@@ -373,7 +373,7 @@
 	[
 		32 : "[32] Autostart" : 1
 		64 : "[64] Start Inactive" : 0
-		128 : "[128] Fast Retire (gives up search faster)" : 0
+		128 : "[128] Fast Retire (Give up search faster)" : 0
 		256 : "[256] Out of Ammo" : 0
 		512 : "[512] Citizen modified (Friendly)" : 0
 		1024 : "[1024] No Light Sprite" : 0
@@ -395,6 +395,7 @@
 	output OnDeploy(void) : "Turret is becoming active and dangerous."
 	output OnRetire(void) : "Turret is becoming inactive and harmless."
 	output OnTipped(void) : "Turret has been tipped over and is inactive."
+	output OnStartTipped(void) : "Turret has just been tipped over."
 	output OnPhysGunPickup(void) : "Picked up with physgun"
 	output OnPhysGunDrop(void) : "Released by physgun"
 ]
@@ -479,7 +480,7 @@
 	uniformsightdist(choices) : "Sight Distance" : 0 = 
 	[
 		0 : "Default: Ignore distant targets not in a vehicle (300 idle, 800 in combat)."
-		1 : "Equal visibility for all targets. (on foot targets 2048 units away)"
+		1 : "Equal visibility for all targets. (On foot targets 2048 units away)"
 	]
 
 	input TurnOn(void) : "Restore this rollermine to normal functionality."
@@ -1414,6 +1415,7 @@
 		0 : "Normal headcrabs"
 		1 : "Fast Headcrabs"
 		2 : "Poison Headcrabs"
+		-1 : "Random"
 	]
 	HeadcrabCount(integer) : "Headcrab count" : 6 : "Number of headcrabs to spawn on impact"
 	FlightSpeed(float) : "Flight Speed" : 3000  : "Speed to fly through the air"
@@ -4175,7 +4177,7 @@
 	spawnflags(Flags) =
 	[
 		1 : "[1] Use Master's values (Use settings from a resupply with Is Master checked)" : 1
-		2 : "[2] Is Master (resupplys with Use Master's values checked will use settings from this entity)" : 0
+		2 : "[2] Is Master (Resupplys with Use Master's values checked will use settings from this entity)" : 0
 		4 : "[4] Always Spawn (Spawn something even if the player doesn't need anything)" : 0
 		8 : "[8] Fallback to Health Vial (If Always Spawn checked & the player doesn't need anything, spawns an item_healthvial)" : 0
 		16 : "[16] Alternate master (Stop doing PVS check so it can be used by supply crates or become the master later on)" : 0
