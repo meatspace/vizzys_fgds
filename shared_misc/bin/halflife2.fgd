@@ -3701,7 +3701,7 @@
 		1 : "Downtrodden (Clean, blue uniform)"
 		2 : "Refugee (Dirty, ragged clothing)"
 		3 : "Rebel (Full resistance getup and combat gear)"
-		4 : "Unique (Set a particular model with Model)"
+		4 : "Unique (Set a particular model)"
 	]
 	
 	// Friendly fire is just a global state now.
@@ -5427,7 +5427,7 @@
 	"A way to access the original HL2 jeep in Episodic. Just use prop_vehicle_jeep if you're using the original HL2 version."
 [
 	model(studio) : "World model" : "models/buggy.mdl"
-	EnableGun(choices) : "Has Gun" : 0 : "Whether the jeep's tau cannon is enabled or disabled." =
+	EnableGun(choices) : "Has Gun" : 1 : "Whether the jeep's tau cannon is enabled or disabled." =
 	[
 		0 : "No"
 		1 : "Yes"
