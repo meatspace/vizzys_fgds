@@ -38,6 +38,10 @@ The Spud Lord:
 https://tf2maps.net/threads/an-fgd-fit-for-a-lord.41812/
 inspiration for this fgd
 
+MrFunReal:
+https://steamcommunity.com/id/funreal (nsfw)
+inspiration for this fgd, some clever ideas taken from their l4d2 fgds
+
 Brokkhouse:
 https://tf2maps.net/downloads/an-fgd-fit-for-a-lord-brokk-edition.15924/
 Valuable reference point using their .FGD knowledge and fixes.
