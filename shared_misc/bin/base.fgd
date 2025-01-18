@@ -614,7 +614,7 @@
 		2048 : "[2048] Template NPC (used by npc_maker, will not spawn; NOT used by point_template)" : 0
 		4096 : "[4096] Do alternate collision/player avoidance (largely obsolete, use Start/StopScripting)" : 0
 		8192 : "[8192] Don't drop weapons" : 0
-		16384 : "[16384] Ignore player push (don't give way to player)" : 0
+		16384 : "[16384] Ignore player push (Don't give way to player)" : 0
 	]
 
 	//initialidle(string) : "Initial Idle Activity" :: "Activity the NPC should use to idle until becomes alert"
@@ -1309,6 +1309,8 @@
 		0 : "Advisor Stun (Pulsating sideways blur)"
 		1 : "Intro Blur (Radial blur with trailing effects)"
 		2 : "Groggy Vision (Blurry objects, white screen)"
+		100 : "Chromatic Blur (Mapbase)"
+		101 : "Chromatic Aberration (Mapbase)"
 	]
 
 	// Inputs
@@ -3080,6 +3082,11 @@
 		2 :  "[2] No Dynamic Light" : 1
 	]
 
+	IgnoreSolid(choices) : "Ignore Solid" : 0 : "If set, this spotlight won't trace for solids." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
 	spotlightlength(integer) : "Spotlight Length" : 500 : "Length of the spotlight beam."
 	spotlightwidth(integer) : "Spotlight Width" : 50 : "Width of the spotlight beam."
 	rendercolor(color255) : "Color (R G B)" : "255 255 255"
@@ -4549,7 +4556,6 @@
 		1024: "[1024] Touch Opens" : 0
 		2048: "[2048] Starts locked" : 0
 		4096:	"[4096] Door Silent" : 0
-		65536 : "[65536] New +Use rules (If closing, allow +Use to reopen, if unlocked) NOT for prop_doors!" : 0
 	]
 	//locked_sentence(choices) : "Locked Sentence" : 0 : "A sentence played when the player tries to use the door, and fails because it's locked." =  
 	//[
@@ -4620,6 +4626,7 @@
 		16: "[16] One-way" : 0
 		64: "[64] X Axis" : 0
 		128: "[128] Y Axis" : 0
+		65536: "[65536] New func_door +USE rules (NOT for prop_doors!!)" : 0
 	]
 	distance(integer) : "Distance" : 90 : "The amount, in degrees, that the button should rotate when it's pressed."
 
@@ -4737,6 +4744,12 @@
 	input DisallowPlayerUse(void) : "Prevents players from using the door. This just enables the 'Ignore player +USE' spawnflag."
 	
 	input SetDoorFilter(target_destination) : "Sets the entity to use as the NPC filter. Pass in an empty string to clear the NPC filter."
+	
+	input SetFullyOpenSound(string) : "Sets the sound to use when the door is fully open."
+	input SetFullyClosedSound(string) : "Sets the sound to use when the door is fully closed."
+	input SetMovingSound(string) : "Sets the sound to use when the door is moving."
+	input SetLockedSound(string) : "Sets the sound to use when the door is locked."
+	input SetUnlockedSound(string) : "Sets the sound to use when the door is unlocked."
 ]
 
 
@@ -5005,7 +5018,7 @@
 	input SetFModRate(float) : "Set the modulation cycles per second from -10.0f to 10.0."
 	input SetFModAmplitude(float) : "Set the modulation extents from 0.0f to 10.0."
 	input RandomizeFMod(float) : "Randomize the frequency modulation by an extremeness of 0.0 to 1.0."
-	input GetFMod(float) : "Outputs the current modulation settings in console."
+	input GetFMod(void) : "Outputs the current modulation settings in console."
 ]
 
 @PointClass base(Targetname) iconsprite("editor/logic_compare.vmt") = logic_compare :
@@ -5076,7 +5089,7 @@
 	Branch16(target_destination) : "Logic Branch 16" : : "The name of one or more logic_branches (wildcards allowed)."
 
 	input Test(void) : "Tests the state of all the logic_branches in the list and fires the appropriate output."
-	input _OnLogicBranchRemoved(void) : "Sent automatically by a logic_branch when it gets removed for any reason. The !activator will no longer be watched by this entity. Makes the entity fire an output, but only if the listener's final result has changed." //added by vizzys
+	input _OnLogicBranchRemoved(void) : "Sent by a logic_branch when it gets removed for any reason. The !activator will no longer be watched by this entity. Makes the entity fire an output, but only if the listener's final result has changed." //added by vizzys
 	output OnAllTrue(void) : "Fired when all the logic_branches in the list become true."
 	output OnAllFalse(void) : "Fired when all the logic_branches in the list become false."
 	output OnMixed(void) : "Fired when one of the logic branches in the list changes, but some are true and some are false."
@@ -5176,7 +5189,7 @@
 	spawnflags(flags) =
 	[
 		1: "[1] Only trigger once" : 0
-		2: "[2] Allow fast retrigger (doesn't 'sleep' after triggering, ignores Trigger inputs while firing)" : 0
+		2: "[2] Allow fast retrigger (Doesn't 'sleep' after triggering, ignores Trigger inputs while firing)" : 0
 	]
 	OnTriggerChance1(float) : "OnTrigger1 Chance" : "1.0" : "Chance (from 0 to 1) of the OnTrigger1 output firing when this entity is triggered."
 	OnTriggerChance2(float) : "OnTrigger2 Chance" : "1.0" : "Chance (from 0 to 1) of the OnTrigger2 output firing when this entity is triggered."
@@ -5235,7 +5248,7 @@
 	spawnflags(flags) =
 	[
 		1: "[1] Only trigger once" : 0
-		2: "[2] Allow fast retrigger (doesn't 'sleep' after triggering, ignores Trigger inputs while firing)" : 0
+		2: "[2] Allow fast retrigger (Doesn't 'sleep' after triggering, ignores Trigger inputs while firing)" : 0
 	]
 
 	// Inputs
@@ -6367,7 +6380,7 @@
 		128 : "[128] CLUB"
 		256 : "[256] SHOCK (+ stalker laser, tau cannon)"
 		512 : "[512] SONIC"
-		1024 : "[1024] ENERGYBEAM (beams, lasers)"
+		1024 : "[1024] ENERGYBEAM (+ lasers)"
 		4098 : "[4098] Func_tank, large flying NPCs" //added by vizzys
 		8194 : "[8194] Combine Autocannon" //added by vizzys
 		8197 : "[8197] Barnacle Eat" //added by vizzys
@@ -6392,7 +6405,7 @@
 	damagepresets(choices) : "Damage Presets" : 0 : "User-friendly 'presets' based on combined damage types. This is accompanied by the damage type and damage or, if they are specified." = 
 	[
 		0 : "None"
-		268435464 : "[268435464] Ignite, Passive Burning (BURN + DIRECT)"
+		268435464 : "[268435464] Ignite, Passive Burn (BURN + DIRECT)"
 		134217792 : "[134217792] All Blast Types (BLAST + BLAST_SURFACE)"
 	]
 	
@@ -6883,7 +6896,7 @@
 		128 : "[128] CLUB"
 		256 : "[256] SHOCK (+ stalker laser, tau cannon)"
 		512 : "[512] SONIC"
-		1024 : "[1024] ENERGYBEAM (beams, lasers)"
+		1024 : "[1024] ENERGYBEAM (+ lasers)"
 		4098 : "[4098] Func_tank, large flying NPCs" //added by vizzys
 		8194 : "[8194] Combine Autocannon" //added by vizzys
 		8197 : "[8197] Barnacle Eat" //added by vizzys
@@ -7497,6 +7510,7 @@
 	output OnMotionEnabled(void) : "Fired when motion is enabled due to damage/physcannon/force."
 	output OnPhysGunPickup(void) : "Fired when a player picks this object up, either with the physgun or +USE."
 	output OnPhysGunPunt(void) : "Fired when a player punts this object with the physgun."
+	output OnPhysGunPull(void) : "Fired when a player pulls this object with the physgun."
 	output OnPhysGunOnlyPickup(void) : "Fired when a player picks this object up WITH THE PHYSGUN. +USE pickups do not fire this output."
 	output OnPhysGunDrop(void) : "Fired when a player drops this object."
 	output OnPlayerUse(void) : "Fired when the player tries to +USE the physbox. This output will fire only if the Generate output on +USE spawnflag is set."
@@ -8102,7 +8116,7 @@
 		1024: "[1024] Prevent motion enable on player bump" : 0
 		4096: "[4096] Debris with trigger interaction" : 0
 		8192: "[8192] Force server-side (Multiplayer only)" : 0
-		16384: "[16384] Radius pickup (easier to pickup)" : 0
+		16384: "[16384] Radius pickup (Easier to pickup)" : 0
 		1048576: "[1048576] Physgun can ALWAYS pick up. No matter what." : 0
 		2097152: "[2097152] No collisions" : 0
 		8388608: "[8388608] Zombies can't swat" : 0
@@ -8236,6 +8250,8 @@
 		32768 : "[32768] Allow stretch" : 0
 		65536 : "[65536] Start asleep" : 0
 		131072 : "[131072] Fixed constraints (make statue)" : 0
+		262144 : "[262144] Allow +USE" : 0
+		524288 : "[524288] Prevent pickup (if +USE is enabled)" : 0
 	]
 	angleOverride(string) : "Override Animation" : "" : "Filled in by the engine via wc_update_entity, do not edit by hand except to clear."
 
@@ -8245,6 +8261,10 @@
 	input EnableMotion(void) : "Enable physics motion/collision response."
 	input DisableMotion(void) : "Disable physics motion/collision response."
 	input FadeAndRemove(float) : "Fade out then remove (kill) self. Parameter override = duration of fade"
+	input AddToLRU(void) : "Adds the ragdoll to the cleanup list (ragdoll will fade out when it's the least recently used)"
+	input RemoveFromLRU(void) : "Removes the ragdoll from the cleanup list, allowing it to exist indefinitely"
+	
+	output OnPlayerUse(void) : "Fires when the ragdoll is used, if +USE is enabled."
 	
 	input SetCycle(float) : "Skip to a specific point in the CURRENT animation. Needs to be set AFTER setting the animation and starting playback." //added by vizzys
 	input SetModel(string) : "Changes the model to the specified path. Form of models/ammo/ammo_us.mdl. Absolutely NO quotes. Make sure you use forward slash." //added by vizzys
