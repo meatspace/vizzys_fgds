@@ -1,3 +1,5 @@
+@include "base.fgd"
+
 // start commentary section added by vizzys
 @PointClass iconsprite("vizzys-icons/commentary_auto.vmt") = commentary_auto : "Similar to logic_auto, fires outputs when the commentary system is loaded."
 [
