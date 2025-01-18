@@ -5303,6 +5303,7 @@
 	Group13(target_destination) : "EntityGroup[13]"
 	Group14(target_destination) : "EntityGroup[14]"
 	Group15(target_destination) : "EntityGroup[15]"
+	rendercolor(color255) : "Sprite Icon Color" : "255 255 255" : "Helper color to differentiate your script icons. Only works in Hammer++."
 ]
 
 @PointClass base(Targetname) iconsprite("editor/logic_script_client.vmt") = logic_script_client : "An entity capable of running client-side scripts"
