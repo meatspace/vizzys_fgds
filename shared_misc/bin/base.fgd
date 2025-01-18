@@ -2706,7 +2706,7 @@
 	input ToggleSprite(void) : "Toggle the sprite between hidden and shown."
 ]
 
-@PointClass base(env_sprite, Angles) sphere(GlowProxySize) = env_sprite_oriented :
+@PointClass base(env_sprite, Angles) sphere(GlowProxySize) frustum( fov,near,far,rendercolor,-1 ) sprite() = env_sprite_oriented :
     "A env_sprite that allows orientation."
 [
 	framerate(string) : "Framerate" : "10.0" : "Rate at which the sprite should animate, if at all."
@@ -2730,6 +2730,12 @@
 	input HideSprite(void) : "Hide the sprite. Won't be drawn until the 'ShowSprite' input is received."
 	input ShowSprite(void) : "Show the sprite."
 	input ToggleSprite(void) : "Toggle the sprite between hidden and shown."
+	
+	fov(string) : "Helper - fov" : "100"	: "IGNORE. The 'Frustum' used to show where this sprite points need these lines" //added by vizzys, shows sprite direction in hammer
+	near(string) : "Helper - near" : "5"	: "IGNORE. The 'Frustum' used to show where this sprite points need these lines" //added by vizzys, shows sprite direction in hammer
+	far(string) : "Helper - far" : "8"	: "IGNORE. The 'Frustum' used to show where this sprite points need these lines" //added by vizzys, shows sprite direction in hammer
+	pitch_scale(string) :	"Helper - pitch_scale" : "1"	: "IGNORE. The 'Frustum' used to show where this sprite points need these lines" //added by vizzys, shows sprite direction in hammer
+	
 ]
 
 
