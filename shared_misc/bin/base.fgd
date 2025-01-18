@@ -1054,7 +1054,7 @@
 	[
 		1: "[1] Clients" : 1
 		2: "[2] NPCs" : 0
-		4: "[4] Pushables": 0
+		4: "[4] Pushables (Deprecated)": 0
 		8: "[8] Physics Objects" : 0
 		8192: "[8192] Items (weapons, items, projectiles)" : 0
 		16: "[16] Only player ally NPCs" : 0
