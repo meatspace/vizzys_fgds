@@ -239,6 +239,7 @@
 [
 	output OnBallReinserted(void) : "Fired when a combine ball is reinserted into the field (only gets triggered when Combine Power supply is checked)"
 	output OnLastBallGrabbed(void) : "Fired when the last combine ball is grabbed from the field by a mega physcannon"
+	input Destroy(void) : "Releases all balls from the spawner as if they were punted out by the gravity gun."
 ]
 
 @PointClass base(CombineBallSpawners, Parentname) iconsprite("vizzys-icons/point_combine_ball_launcher") = point_combine_ball_launcher :
@@ -395,6 +396,7 @@
 	output OnDeploy(void) : "Turret is becoming active and dangerous."
 	output OnRetire(void) : "Turret is becoming inactive and harmless."
 	output OnTipped(void) : "Turret has been tipped over and is inactive."
+	output OnStartTipped(void) : "Turret has just been tipped over."
 	output OnPhysGunPickup(void) : "Picked up with physgun"
 	output OnPhysGunDrop(void) : "Released by physgun"
 ]
@@ -642,7 +644,6 @@
 	input IgnoreBugbait(void) : "Ignore bugbait"
 	input HearBugbait(void) : "Hear bugbait"
 	input JumpAtTarget(target_destination) : "The antlion will attempt to jump through or at the target." //added by vizzys
-
 	output	OnReachedFightGoal(void) : "Fires when the antlion reaches his specified fight-to location"
 	output	OnUnBurrowed(void) : "Fires when the antlion unburrows"
 
@@ -1013,7 +1014,7 @@
 
 	neverleaveplayersquad(choices) : "Permanent squad member?" : 0 : "A permanent squad member cannot leave the player's squad unless killed or explicitly removed by entity I/O. Only use this if you're sure you want to override the default AI." =
 	[
-		0 : "No. Default behavior. (Give up if cant get in 600 units of player & has LOS after 20 seconds of trying)"
+		0 : "No. Default behavior. (Give up if cant get within 600 units of player & LOS after 20 seconds of trying)"
 		1 : "Yes, stay in squad until death."
 	]
 
@@ -1407,13 +1408,14 @@
 		65536 : "[65536] No smoke" : 0
 		131072 : "[131072] No shake" : 0
 		262144 : "[262144] Remove on impact (Prevents damage, headcrabs, and most visual and sound effects)" : 0
-		524288 : "[524288] No impact effects (Dust explosion)" : 0
+		524288 : "[524288] No impact effects (No Dust explosion)" : 0
 	]
 	HeadcrabType(choices) : "Which headcrab to spawn?" : 0 =
 	[
 		0 : "Normal headcrabs"
 		1 : "Fast Headcrabs"
 		2 : "Poison Headcrabs"
+		-1 : "Random"
 	]
 	HeadcrabCount(integer) : "Headcrab count" : 6 : "Number of headcrabs to spawn on impact"
 	FlightSpeed(float) : "Flight Speed" : 3000  : "Speed to fly through the air"
@@ -1875,8 +1877,11 @@
 	spawnflags(Flags) = 
 	[
 		32768 :  "[32768] Never turn into a torso" : 0
+		65536 :  "[65536] Never release headcrab" : 0
 	]
 
+	MaxDistToSwat(float) : "Max Distance to Swat Props" : : "Overrides the maximum distance in which this zombie should be able to swat props at enemies. Default is 1000"
+	MaxObjMassToSwat(float) : "Max Object Mass to Swat" : : "Overrides the maximum mass this zombie should consider when choosing props to swat. Default is 60"
 	output OnSwattedProp(ehandle) : "Fires when this NPC swats a prop, passing the prop as the activator and parameter."
 	output OnCrab(ehandle) : "Fires when the zombie releases a headcrab, passing the headcrab as the activator and parameter."
 ]
@@ -1893,10 +1898,12 @@
 
 @NPCClass base(BaseZombie) studio("models/Zombie/Classic.mdl") = npc_zombie : "Zombie"
 [
+	MeleeReach(float) : "Melee Reach" : : "Overrides the maximum distance in which this zombie should be able to swat at enemies. Default is 55"
 ]
 
 @NPCClass base(BaseZombie) studio("models/Zombie/Classic_torso.mdl") = npc_zombie_torso : "Zombie Torso"
 [
+	MeleeReach(float) : "Melee Reach" : : "Overrides the maximum distance in which this zombie should be able to swat at enemies. Default is 55"
 ]
 
 // CUSTOM ZOMBIES
@@ -2095,7 +2102,7 @@
 		2097152 : "[2097152] Arrest enemies (Enemies are 'arrested')" : 0
 		4194304 : "[4194304] No far stitching (Stop stitching if the player is over 6000 units away)" : 0
 		8388608 : "[8388608] Prevent manhack toss (Deploying them can be allowed with EnableManhackToss)" : 0
-		16777216: "[16777216] Respond to thrown objects (If i have stunstick and I get something thrown at me, allow me to chase player)" : 0
+		16777216: "[16777216] Respond to thrown objects (If I have stunstick and I get something thrown at me, allow me to chase player)" : 0
 		33554432: "[33554432] Mid-range attacks (halfway between normal + long-range: 3500 units)" : 0
 	]
 	  
@@ -4170,7 +4177,7 @@
 	spawnflags(Flags) =
 	[
 		1 : "[1] Use Master's values (Use settings from a resupply with Is Master checked)" : 1
-		2 : "[2] Is Master (resupplys with Use Master's values checked will use settings from this entity)" : 0
+		2 : "[2] Is Master (Resupplys with Use Master's values checked will use settings from this entity)" : 0
 		4 : "[4] Always Spawn (Spawn something even if the player doesn't need anything)" : 0
 		8 : "[8] Fallback to Health Vial (If Always Spawn checked & the player doesn't need anything, spawns an item_healthvial)" : 0
 		16 : "[16] Alternate master (Stop doing PVS check so it can be used by supply crates or become the master later on)" : 0
