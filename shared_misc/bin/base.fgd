@@ -8101,7 +8101,7 @@
 	output OnOut(void) : "Fired whenever the prop completes its 'Out' animation."
 ]
 
-@BaseClass base(Targetname, Global, Angles, Studiomodel, BreakableProp, RenderFields, DXLevelChoice, BaseFadeProp) = BasePropPhysics
+@BaseClass base(Targetname, Global, Angles, Studiomodel, BreakableProp, RenderFields, DXLevelChoice, Parentname, BaseFadeProp) = BasePropPhysics
 [ 
 	spawnflags(flags) = 
 	[
