@@ -1869,6 +1869,7 @@
 @BaseClass base(BaseNPC) = BaseZombie
 [
 	Headless(choices) : "Headcrab-less" : "No" : "Toggles whether this zombie should have a headcrab on their head. They usually should." =
+	
 	[
 		0 : "No"
 		1 : "Yes"
@@ -1882,6 +1883,7 @@
 
 	MaxDistToSwat(float) : "Max Distance to Swat Props" : : "Overrides the maximum distance in which this zombie should be able to swat props at enemies. Default is 1000"
 	MaxObjMassToSwat(float) : "Max Object Mass to Swat" : : "Overrides the maximum mass this zombie should consider when choosing props to swat. Default is 60"
+	
 	output OnSwattedProp(ehandle) : "Fires when this NPC swats a prop, passing the prop as the activator and parameter."
 	output OnCrab(ehandle) : "Fires when the zombie releases a headcrab, passing the headcrab as the activator and parameter."
 ]
@@ -2519,6 +2521,7 @@
 	input BeginSequence(void) : "Summons an NPC to act out the scripted sequence."
 	input MoveToPosition(void) : "Summons an NPC to the script location. They will play their scripted idle (or ACT_IDLE if none is specified) until BeginSequence is triggered."
 	input CancelSequence(void) : "Stops the scripted sequence. If fired after a sequence starts, this input will not take effect until the NPC finishes playing the scripted action animation."
+	input StopActionLoop(void) : "Stops looping the action animation if it is specified to loop."
 	input SetTarget(target_destination) : "Sets the target NPC."
 	input ScriptPlayerDeath(void) : "Pretends that the player died."		//added by vizzys
 
