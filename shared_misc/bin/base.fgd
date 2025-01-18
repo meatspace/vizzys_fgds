@@ -2047,7 +2047,7 @@
 	input SetIgnoredEntity(target_destination) : "Sets the ignored entity."
 ]
 
-@PointClass base(Targetname, Parentname) color(200 50 0) iconsprite("editor-ficool2/env_smoketrail") = env_smoketrail : 
+@PointClass base(Targetname, Parentname) color(200 50 0) sphere(spawnradius) iconsprite("editor-ficool2/env_smoketrail") = env_smoketrail : 
 	"An entity that creates a smoke trail." 
 [
 	opacity(float) : "Sprite Opacity" : "0.75" : "Opacity of the sprites (range from 0 - 1)."
