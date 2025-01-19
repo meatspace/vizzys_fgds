@@ -182,11 +182,11 @@
 	input Enable(void) : "Enable spawning of combine balls"
 	input Disable(void) : "Disable spawning of combine balls"
 
-	output OnBallGrabbed(void) : "Fired when a combine ball is grabbed from the field by a mega physcannon"
+	output OnBallGrabbed(void) : "Fired when a combine ball is grabbed from the field by super Gravity Gun"
 	output OnBallReinserted(void) : "Fired when a combine ball is reinserted into the field (only gets triggered when Combine Power supply is checked)"
 	output OnBallHitTopSide(void) : "Fired when a combine ball in hits the top side of the field (only gets triggered when Combine Power supply is checked)"
 	output OnBallHitBottomSide(void) : "Fired when a combine ball in hits the bottom side of the field (only gets triggered when Combine Power supply is checked)"
-	output OnLastBallGrabbed(void) : "Fired when the last combine ball is grabbed from the field by a mega physcannon"
+	output OnLastBallGrabbed(void) : "Fired when the last combine ball is grabbed from the field by super Gravity Gun"
 	output OnFirstBallReinserted(void) : "Fired when the first combine ball is reinserted into the field (only gets triggered when Combine Power supply is checked)"
 ]
 
@@ -218,7 +218,7 @@
 
 	// Outputs
 	output OnDissolveWeapon(void) : "Fires when one weapon is starting to dissolve in the trigger volume."
-	output OnChargingPhyscannon(void) : "Fires when the trigger begins to charge the physcannon."
+	output OnChargingPhyscannon(void) : "Fires when the trigger begins to supercharge the Gravity Gun."
 
 	// Inputs
 	input StopSound(void) : "Stops all sounds."
@@ -238,8 +238,8 @@
     "A brush that creates and contains prop_combine_balls. The balls inside this entity behave like the ones seen in light beams throughout the Citadel."
 [
 	output OnBallReinserted(void) : "Fired when a combine ball is reinserted into the field (only gets triggered when Combine Power supply is checked)"
-	output OnLastBallGrabbed(void) : "Fired when the last combine ball is grabbed from the field by a mega physcannon"
-	input Destroy(void) : "Releases all balls from the spawner as if they were punted out by the gravity gun."
+	output OnLastBallGrabbed(void) : "Fired when the last combine ball is grabbed from the field by super Gravity Gun"
+	input Destroy(void) : "Releases all balls from the spawner as if they were punted out by the Gravity Gun."
 ]
 
 @PointClass base(CombineBallSpawners, Parentname) iconsprite("vizzys-icons/point_combine_ball_launcher") = point_combine_ball_launcher :
@@ -397,8 +397,8 @@
 	output OnRetire(void) : "Turret is becoming inactive and harmless."
 	output OnTipped(void) : "Turret has been tipped over and is inactive."
 	output OnStartTipped(void) : "Turret has just been tipped over."
-	output OnPhysGunPickup(void) : "Picked up with physgun"
-	output OnPhysGunDrop(void) : "Released by physgun"
+	output OnPhysGunPickup(void) : "Picked up with Gravity Gun"
+	output OnPhysGunDrop(void) : "Released by Gravity Gun"
 ]
 
 @BaseClass base(BaseNPC) = VehicleDriverNPC
@@ -487,8 +487,8 @@
 	input TurnOn(void) : "Restore this rollermine to normal functionality."
 	input TurnOff(void) : "Make this rollermine completely inert. Does not run AI and NPCs will ignore it." 
 
-	output OnPhysGunPickup(void) : "Picked up with physgun"
-	output OnPhysGunDrop(void) : "Released by physgun"
+	output OnPhysGunPickup(void) : "Picked up with Gravity Gun"
+	output OnPhysGunDrop(void) : "Released by Gravity Gun"
 ]
 
 @NPCClass base(BaseNPC) studio("models/missile_defense.mdl") = npc_missiledefense : "Missile Defense"
@@ -1838,7 +1838,7 @@
 	input ExplodeIn(float) : "Tells the bomb to explode in X seconds."
 	
 	// Outputs
-	output OnPhysGunOnlyPickup(void) : "Fired when a player picks this object up WITH THE PHYSGUN. +USE pickups do not fire this output."
+	output OnPhysGunOnlyPickup(void) : "Fired when a player picks this object up with the Gravity Gun. +USE pickups do not fire this output."
 ]
 
 
@@ -2288,7 +2288,7 @@
 	input SetPickupTarget(target_destination) : "Sets the target entity for dog to pickup."
 	input StartCatchThrowBehavior(target_destination) : "Tells d0g to start playing with the player. You can pass in the name of the object you want him to play with otherwise he'll find the closes phys_object."
 	input StopCatchThrowBehavior(void) : "Stop the catch and throw behavior."
-	input PlayerPickupObject(void) : "Tells d0g the physgun just picked up an object."
+	input PlayerPickupObject(void) : "Tells d0g the Gravity Gun just picked up an object."
 	input StartWaitAndCatch(void) : "Tells d0g to wait for the player to throw an object at him."
 	input StopWaitAndCatch(void) : "Tells d0g to stop waiting for the player."
 	input SetThrowArcModifier(float) : "Used to pass in a modifier for d0g's object flight arc."
@@ -4409,7 +4409,7 @@
 	output OnPlayerUse(void) : "Fires when the player +uses this weapon"
 	output OnPlayerPickup(void) : "Fires when the player picks up this weapon"
 	output OnNPCPickup(void) : "Fires when an NPC picks up this weapon"
-	output OnCacheInteraction(void) : "Fires when the player 'proves' they've found this weapon. Fires on: Player Touch, +USE pickup, Physcannon pickup, Physcannon punt."
+	output OnCacheInteraction(void) : "Fires when the player 'proves' they've found this weapon. Fires on: Player Touch, +USE pickup, Gravity Gun pickup, Gravity Gun punt."
 	output OnDropped(void) : "Fires when the weapon is dropped by a NPC or player, either through death or from picking up a different weapon."
 
 	fademindist(float) : "Start Fade Dist/Pixels" : -1 : "Distance at which the prop starts to fade (<0 = use fademaxdist). If 'Screen Space Fade' is selected, this represents the number of pixels wide covered by the prop when it starts to fade."
@@ -4421,15 +4421,15 @@
 @PointClass base(Weapon) studio("models/weapons/w_crowbar.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_crowbar : "Crowbar" []
 @PointClass base(Weapon) studio("models/weapons/w_stunbaton.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_stunstick : "StunStick" []
 @PointClass base(Weapon) studio("models/weapons/w_pistol.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_pistol : "Pistol" []
-@PointClass base(Weapon) studio("models/weapons/w_irifle.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_ar2 : "Assault Rifle 2" []
-@PointClass base(Weapon) studio("models/weapons/w_rocket_launcher.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_rpg : "Missile Launcher" []
+@PointClass base(Weapon) studio("models/weapons/w_irifle.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_ar2 : "Pulse Rifle" []
+@PointClass base(Weapon) studio("models/weapons/w_rocket_launcher.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_rpg : "Rocket Launcher" []
 @PointClass base(Weapon) studio("models/weapons/w_smg1.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_smg1 : "SMG1" []
-@PointClass base(Weapon) studio("models/weapons/w_357.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_357 : "357" []
+@PointClass base(Weapon) studio("models/weapons/w_357.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_357 : ".357 Magnum" []
 @PointClass base(Weapon) studio("models/weapons/w_crossbow.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_crossbow : "Crossbow" []
 @PointClass base(Weapon) studio("models/weapons/w_shotgun.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_shotgun : "Shotgun" []
 @PointClass base(Weapon) studio("models/weapons/w_grenade.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_frag : "Frag Grenade" []
-@PointClass base(Weapon) studio("models/weapons/w_physics.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_physcannon : "Physics Cannon" []
-@PointClass base(Weapon) studio("models/weapons/w_bugbait.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_bugbait: "Bug bait" []
+@PointClass base(Weapon) studio("models/weapons/w_physics.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_physcannon : "Gravity Gun" []
+@PointClass base(Weapon) studio("models/weapons/w_bugbait.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_bugbait: "Bugbait" []
 @PointClass base(Weapon) studio("models/weapons/W_Alyx_Gun.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_alyxgun: "Alyx Gun" []
 @PointClass base(Weapon) studio("models/weapons/W_annabelle.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_annabelle: "Annabelle (Grigori)" []
 @PointClass base(Weapon) studio("models/weapons/w_slam.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_slam: "A tripmine/satchel hybrid from HL2:MP.\n\nCome on and slam, and welcome to the jam!\nCome on and slam, if you wanna jam!" []
@@ -4852,10 +4852,10 @@
 	[
 		0 : "Deploying"
 		1 : "Disarmed"
-		2 : "Captive (locked in physgun)"
+		2 : "Captive (locked in Gravity Gun hold)"
 		3 : "Planted"
 		4 : "Triggered (bounce, explode on touch)"
-		5 : "Physgun Launch (no bounce, explode on touch)"
+		5 : "Gravity Gun Launch (no bounce, explode on touch)"
 	]
 	
 	CheapWarnSound(choices) : "Cheap Warn Sound" : 0 : "Makes the mine's warn sound use generic sound methods instead of a sound patch, which is cheaper and doesn't continuously take up audio channels. Use this for areas with tons of active mines." =
@@ -4910,7 +4910,7 @@
 	input SetPlantOrientationRaw(vector) : "Sets the mine's plant orientation as a direction vector."
 
 	// Outputs
-	output OnPulledUp(void) : "Fires when this mine is uprooted with a physgun."
+	output OnPulledUp(void) : "Fires when this mine is uprooted with Gravity Gun."
 	output OnTriggered(void) : "Fires when this mine is triggered by an enemy."
 	output OnExplode(void) : "Fires when this mine actually explodes."
 ]
@@ -5395,8 +5395,8 @@
 	input EnableHazardLights ( void ) : "Enables the jalopy's hazard lights."
 	input DisableHazardLights ( void ) : "Disables the jalopy's hazard lights."
 	input OutsideTransition(void) : "Tells the vehicle to teleport to an info_target_vehicle_transition. Normally sent by trigger_changelevel when the vehicle is not inside a trigger_transition." //added by vizzys
-	input DisablePhysGun(void) : "Disable physgun interactions with the jeep."
-	input EnablePhysGun(void) : "Enable physgun interactions with the jeep (default)."
+	input DisablePhysGun(void) : "Disable Gravity Gun interactions with the jeep."
+	input EnablePhysGun(void) : "Enable Gravity Gun interactions with the jeep (default)."
 
 	input CreateLinkController(void) : "Automatically builds and attaches a link controller to the car, which cuts the node connections under the car while the car is standing still."
 	input DestroyLinkController(void) : "Destroys the link controller created by CreateLinkController."
@@ -5446,8 +5446,8 @@
 	input StartRemoveTauCannon(void) : "Start the tau removal sequence."
 	input FinishRemoveTauCannon(void) : "Finish the tau removal sequence."
 
-	input DisablePhysGun(void) : "Disable physgun interactions with the jeep."
-	input EnablePhysGun(void) : "Enable physgun interactions with the jeep (default)."
+	input DisablePhysGun(void) : "Disable Gravity Gun interactions with the jeep."
+	input EnablePhysGun(void) : "Enable Gravity Gun interactions with the jeep (default)."
 ]
 
 @PointClass base(BaseDriveableVehicle) studioprop() = vehicle_viewcontroller : 
