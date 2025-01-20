@@ -151,8 +151,8 @@
 	input SetLocalVelocity(vector) : "Sets this entity's current velocity."
 	input SetLocalAngularVelocity(vector) : "Sets this entity's current angular velocity."
 	
-	input AddSpawnFlags(integer) : "Adds spawnflag(s) to this entity. Many spawnflags have their respective numbers suffixed in this FGD."
-	input RemoveSpawnFlags(integer) : "Removes spawnflag(s) from this entity. Many spawnflags have their respective numbers suffixed in this FGD."
+	input AddSpawnFlags(integer) : "Adds spawnflag(s) to this entity. Many spawnflags have their respective numbers prefixed in this FGD."
+	input RemoveSpawnFlags(integer) : "Removes spawnflag(s) from this entity. Many spawnflags have their respective numbers prefixed in this FGD."
 	
 	input AddSolidFlags(integer) : "Adds solid flags to this entity."
 	input RemoveSolidFlags(integer) : "Removes solid flags from this entity."
@@ -861,15 +861,15 @@
 	input ChangePathCorner(target_destination) : "Tell the helicopter to move to a path corner on a new path."
 	input SelfDestruct(void) : "Self Destruct."
 	input Activate(void) : "Activate. Use to wake up a helicopter that spawned with the 'Await Input' spawnflag on."
-	input SetTrack(target_destination) : "Set a track for the helicopter to adhere to. The helicopter will do nothing if he's on the same path, and will move to the closest point on the specified track if he's on a different path."
-	input FlyToSpecificTrackViaPath(target_destination) : "The helicopter will first fly to the closest point on the path if he's on a different path. Then he'll fly along the path to the specified track point."
+	input SetTrack(target_destination) : "Set a track for the helicopter to adhere to. The helicopter will do nothing if it's on the same path, and will move to the closest point on the specified track if it's on a different path."
+	input FlyToSpecificTrackViaPath(target_destination) : "The helicopter will first fly to the closest point on the path if it's on a different path. Then it'll fly along the path to the specified track point."
 	input FlyToPathTrack(target_destination) : "The helicopter will fly to the given path_track." //added by vizzys
 	input StartPatrol(void) : "Start patrolling back and forth along the current track."
-	input StopPatrol(void) : "Stop patrolling back and forth along the track. This will cause the helicopter to come to rest at the track which he's currently flying toward."
+	input StopPatrol(void) : "Stop patrolling back and forth along the track. This will cause the helicopter to come to rest at the track which it's currently flying toward."
 	input ChooseFarthestPathPoint(void) : "When tracking an enemy, choose the point on the path furthest from the enemy, but still in firing range."
 	input ChooseNearestPathPoint(void) : "When tracking an enemy, choose the point on the path nearest from the enemy."
-	input StartBreakableMovement(void) : "The helicopter is now allowed to disobey direct commands to go to particular points if he senses an enemy. He will move to the closest point (or farthest point, if ChooseFarthestPathPoint is used), on the path if he senses an enemy."
-	input StopBreakableMovement(void) : "The helicopter can not disobey direct commands. He will continue to fly along his patrol path or to his specified target even if he senses an enemy."
+	input StartBreakableMovement(void) : "The helicopter is now allowed to disobey direct commands to go to particular points if it senses an enemy. It will move to the closest point (or farthest point, if ChooseFarthestPathPoint is used), on the path if it senses an enemy."
+	input StopBreakableMovement(void) : "The helicopter can not disobey direct commands. It will continue to fly along it's patrol path or to it's specified target even if it senses an enemy."
 
 	spawnflags(Flags) =
 	[
@@ -1847,7 +1847,7 @@
 	life(string) : "Life (seconds 0 = infinite)" : "1" : "Amount of time before the beam dies. Setting to zero will make the beam stay forever."
 	BoltWidth(float) : "Width of beam" : 2 : "Pixel width of the beam."
 	NoiseAmplitude(float) : "Amount of noise (0-255)" : 0 : "The amount of noise in the beam. 0 is a perfectly straight beam."
-	texture(sprite) : "Sprite Name" : "sprites/laserbeam.spr" : "The material used to draw the beam."
+	texture(sprite) : "Sprite Name" : "sprites/laserbeam.vmt" : "The material used to draw the beam."
 	TextureScroll(integer) : "Texture Scroll Rate (0-100)" : 35 : "Rate at which the beam texture should scroll along the beam."
 	framerate(integer) : "Frames per 10 seconds" : 0 : "Framerate at which the beam texture should animate, if it has multiple frames."
 	framestart(integer) : "Starting Frame" : 0 : "The frame to start the beam texture on."
@@ -2014,7 +2014,7 @@
 	// If no radius override, magnitude will determine radius.
 	iRadiusOverride(Integer) : "Radius Override" : 0 : "If specified, the radius in which the explosion damages entities. If unspecified, the radius will be based on the magnitude."
 	DamageForce(float) : "Damage Force" : 0 : "Overrides push force. BUG: Very obvious disparity between force applied to players and force applied to physics objects." //added by vizzys
-	fireballsprite(sprite) : "Fireball Sprite" : "sprites/zerogxplode.spr"
+	fireballsprite(sprite) : "Fireball Sprite" : "sprites/zerogxplode.vmt"
 	rendermode(choices) : "Render Mode" : 5 =
 	[
 		0: "Normal"
@@ -2064,8 +2064,8 @@
 	endsize(float) : "Ending particle size" : "50" : "Ending particle size."
 	spawnradius(float) : "Spawn radius" : "15" : "Distance from env_smoketrail at which particles are emitted."
 
-	firesprite(sprite) : "Fire Sprite" : "sprites/firetrail.spr"
-	smokesprite(sprite) : "Smoke Puff" : "sprites/whitepuff.spr"
+	firesprite(sprite) : "Fire Sprite" : "sprites/firetrail.vmt"
+	smokesprite(sprite) : "Smoke Puff" : "sprites/whitepuff.vmt"
 ]
 
 @PointClass base(Targetname, Parentname) sphere(radius) sphere(inner_radius) sphere(radius) iconsprite("editor/env_physexplosion.vmt") = env_physexplosion : 
@@ -2288,7 +2288,7 @@
 		1 : "[1] Emissive" : 0
 	]
 
-	InitialState(choices) : "Initial State" : 0 = 
+	InitialState(choices) : "Start Enabled" : 0 = 
 	[
 		0 : "Off"
 		1 : "On"
@@ -2306,10 +2306,10 @@
 	StartSize(integer) : "Particle start size" : 10 : "The initial size of the particles after they spawn."
 	EndSize(integer) : "Particle end size" : 25 : "The size of the particles at the point at which they are removed."
 	Rate(integer) : "Emission rate" : 26 : "The rate of particle emission. i.e. particles per second."
-	rendercolor(color255) : "Color (R G B)" : "255 255 255"
+	rendercolor(color255) : "Color (R G B)" : "60 65 68" : "Color of the steam. Only has an effect if the Emissive flag is on."
 	JetLength(integer) : "Length of steam jet" : 80 : "The length of the jet determines the lifetime of each particle."
 	renderamt(integer) : "Translucency" : 255
-	rollspeed(float) : "How fast does the particles spin" : 8
+	rollspeed(float) : "Spin Speed" : 8 : "How fast do the particles spin."
 	
 	// Inputs
 	input TurnOn(void) : "Turns the steam jet on."
@@ -2332,7 +2332,7 @@
 	rendercolor(color255) : "Beam Color (R G B)" : "255 255 255"
 	width(float) : "Width of Beam" : 2 : "The width of the laser beam, in pixels."
 	NoiseAmplitude(integer) : "Amount of noise (0-255)" : 0 : "The amount of noise in the beam. 0 is a perfectly straight beam."
-	texture(sprite) : "Sprite Name" : "sprites/laserbeam.spr" : "The material used to draw the laser beam."
+	texture(sprite) : "Sprite Name" : "sprites/laserbeam.vmt" : "The material used to draw the laser beam."
 	EndSprite(sprite) : "End Sprite" : "" : "If specified, this sprite will be drawn at the end of the laser beam."
 	TextureScroll(integer) : "Texture Scroll Rate (0-100)" : 35 : "Rate at which the beam texture should scroll along the beam."
 	framestart(integer) : "Starting Frame" : 0 : "The frame to start the beam texture on."
@@ -2577,7 +2577,17 @@
 	input SetGibFlags(integer) : "Sets the flags for each gib."
 ]
 
-@PointClass base(Targetname,Parentname) sphere(radius) iconsprite("editor/env_soundscape.vmt") = env_soundscape_proxy : 
+@PointClass base(Targetname,Parentname) sphere(radius) iconsprite("editor/env_soundscape.vmt")
+	line(255 255 255, targetname, MainSoundscapeName) 
+	line(128 128 128, targetname, position0) 
+	line(128 128 128, targetname, position1) 
+	line(128 128 128, targetname, position2) 
+	line(128 128 128, targetname, position3) 
+	line(128 128 128, targetname, position4) 
+	line(128 128 128, targetname, position5) 
+	line(128 128 128, targetname, position6) 
+	line(128 128 128, targetname, position7)
+	= env_soundscape_proxy : 
 	"An entity that acts like a soundscape but gets all of its sound parameters from another env_soundscape entity."
 [
 	MainSoundscapeName(target_destination) : "Soundscape Entity" : "" : "The soundscape to get all sound parameters from."
@@ -2588,7 +2598,7 @@
 @PointClass base(Targetname,Parentname,EnableDisable) sphere(radius) iconsprite("editor/env_soundscape.vmt") line(255 255 255, targetname, position0) line(255 255 255, targetname, position1) line(255 255 255, targetname, position2) line(255 255 255, targetname, position3) line(255 255 255, targetname, position4) line(255 255 255, targetname, position5) line(255 255 255, targetname, position6) line(255 255 255, targetname, position7) = env_soundscape : 
 	"An entity to control sound in an area. The active soundscape at any time is the last one that had line-of-sight to the player, and was within the radius."
 [
-	radius(integer) : "Radius" : 128 : "If set to -1, then the player can hear the soundscape as long as he can see it (regardless of distance to it)."
+	radius(integer) : "Radius" : 128 : "If set to -1, then the player can hear the soundscape as long as they can see it (regardless of distance to it)."
 	soundscape(choices) : "Soundscape" : "Nothing" : "The name of the soundscape to use. Corresponds to an entry in the soundscapes*.txt file in the hl2\scripts directory." =
 	[
 		"Nothing" : "Nothing (DSP:None)"
@@ -2684,7 +2694,7 @@
 	"An entity that controls the drawing of a sprite in the world." 
 [
 	framerate(string) : "Framerate" : "10.0" : "Rate at which the sprite should animate, if at all."
-	model(sprite) : "Sprite Name" : "sprites/glow01.spr" : "Material of the sprite to be drawn."
+	model(sprite) : "Sprite Name" : "sprites/glow01.vmt" : "Material of the sprite to be drawn."
 	scale(string) : "Scale" : "0.25" : "Scale multiplier of the sprite."
 	spawnflags(flags) =
 	[
@@ -2710,7 +2720,7 @@
     "A env_sprite that allows orientation."
 [
 	framerate(string) : "Framerate" : "10.0" : "Rate at which the sprite should animate, if at all."
-	model(sprite) : "Sprite Name" : "sprites/glow01.spr" : "Material of the sprite to be drawn."
+	model(sprite) : "Sprite Name" : "sprites/glow01.vmt" : "Material of the sprite to be drawn."
 	scale(string) : "Scale" : "" : "Scale multiplier of the sprite."
 	spawnflags(flags) =
 	[
@@ -2735,7 +2745,6 @@
 	near(string) : "Helper - near" : "5"	: "IGNORE. The 'Frustum' used to show where this sprite points need these lines" //added by vizzys, shows sprite direction in hammer
 	far(string) : "Helper - far" : "8"	: "IGNORE. The 'Frustum' used to show where this sprite points need these lines" //added by vizzys, shows sprite direction in hammer
 	pitch_scale(string) :	"Helper - pitch_scale" : "1"	: "IGNORE. The 'Frustum' used to show where this sprite points need these lines" //added by vizzys, shows sprite direction in hammer
-	
 ]
 
 
@@ -4240,7 +4249,7 @@
 	input SetSlack(integer) : "Set the rope's slack. (Wind may need to be enabled for changes to apply)"
 	input SetWidth(float) : "Set the rope's width."
 	input SetSubdivision(integer) : "Set the rope's subdivision. (Wind may need to be enabled for changes to apply)"
-	input Break(void) : "Break the rope, if it's marked to do so."
+	input Break(void) : "Detach this end of the rope, causing it to fall."
 	
 	// Outputs
 	output OnBreak(void) : "Fires when this rope breaks."
@@ -4562,6 +4571,7 @@
 		1024: "[1024] Touch Opens" : 0
 		2048: "[2048] Starts locked" : 0
 		4096:	"[4096] Door Silent" : 0
+		65536 : "[65536] New +Use rules (If closing, allow +Use to reopen, if unlocked) NOT for prop_doors!" : 0
 	]
 	//locked_sentence(choices) : "Locked Sentence" : 0 : "A sentence played when the player tries to use the door, and fails because it's locked." =  
 	//[
@@ -4632,7 +4642,6 @@
 		16: "[16] One-way" : 0
 		64: "[64] X Axis" : 0
 		128: "[128] Y Axis" : 0
-		65536: "[65536] New func_door +USE rules (NOT for prop_doors!!)" : 0
 	]
 	distance(integer) : "Distance" : 90 : "The amount, in degrees, that the button should rotate when it's pressed."
 
@@ -5253,7 +5262,7 @@
 [
 	spawnflags(flags) =
 	[
-		1: "[1] Only trigger once" : 0
+		1: "[1] Only trigger once (Remove after OnSpawn or OnTrigger outputs fire)" : 0
 		2: "[2] Allow fast retrigger (Doesn't 'sleep' after triggering, ignores Trigger inputs while firing)" : 0
 	]
 
@@ -5304,7 +5313,24 @@
 	output OnTriggerParameter(string) : "Fired when the relay is triggered with a parameter."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/logic_script.vmt") = logic_script : "An entity that acts as a container for scripts"
+@PointClass base(Targetname) iconsprite("editor/logic_script.vmt") 
+	line(200 200 200, targetname, group00) 
+	line(200 200 200, targetname, group01) 
+	line(200 200 200, targetname, group02) 
+	line(200 200 200, targetname, group03) 
+	line(200 200 200, targetname, group04) 
+	line(200 200 200, targetname, group05) 
+	line(200 200 200, targetname, group06) 
+	line(200 200 200, targetname, group07) 
+	line(200 200 200, targetname, group08) 
+	line(200 200 200, targetname, group09) 
+	line(200 200 200, targetname, group10) 
+	line(200 200 200, targetname, group11) 
+	line(200 200 200, targetname, group12) 
+	line(200 200 200, targetname, group13) 
+	line(200 200 200, targetname, group14)
+	line(200 200 200, targetname, group15)
+= logic_script : "An entity that acts as a container for scripts"
 [
 	Group00(target_destination) : "EntityGroup[0]"
 	Group01(target_destination) : "EntityGroup[1]"
@@ -7504,7 +7530,7 @@
 	input Sleep(void) : "Put this physics object to sleep. It will wake if given the Wake input, or if force is applied to it. Note that physics objects go to sleep automatically after coming to rest for a while, so you don't really need to use this."
 	input EnableMotion(void) : "Enable physics motion/collision response."
 	input DisableMotion(void) : "Disable physics motion/collision response."
-	input ForceDrop(void) : "If this object is being carried by a player, with Gravity Gun or +USE, force it to be dropped."
+	input ForceDrop(void) : "If this object is being carried by a player, with the Gravity Gun or +USE, force it to be dropped."
 	input SetDebris(bool) : "Sets whether this brush is debris."
 	input DisableFloating(void) : "If the object would normally float when in water, tells it to not float. There seems to be no way to re-enable floating behavior." //added by vizzys
 	input Enable(void) : "Makes the object visible and solid (doesn't override Not solid to world)." //added by vizzys
@@ -7514,11 +7540,11 @@
 	output OnDamaged(void) : "Fired when this entity is damaged."
 	output OnAwakened(void) : "Fired when this entity becomes awake (collision/force is applied)."
 	output OnMotionEnabled(void) : "Fired when motion is enabled due to damage/Gravity Gun/force."
-	output OnPhysGunPickup(void) : "Fired when a player picks this object up, either with Gravity Gun or +USE."
+	output OnPhysGunPickup(void) : "Fired when a player picks this object up, either with the Gravity Gun or +USE."
 	output OnPhysGunPunt(void) : "Fired when a player punts this object with the Gravity Gun."
 	output OnPhysGunPull(void) : "Fired when a player pulls this object with the Gravity Gun."
 	output OnPhysGunOnlyPickup(void) : "Fired when a player picks this object up with the Gravity Gun. +USE pickups do not fire this output."
-	output OnPhysGunDrop(void) : "Fired when a player drops this object with Gravity Gun."
+	output OnPhysGunDrop(void) : "Fired when a player drops this object with the Gravity Gun."
 	output OnPlayerUse(void) : "Fired when the player tries to +USE the physbox. This output will fire only if the Generate output on +USE spawnflag is set."
 ]
 
@@ -8137,7 +8163,7 @@
 		1: "Sharp"
 	]
 
-	nodamageforces(choices) : "Damaging it Doesn't Push It" : 0 : "Used to determine whether or not damage should cause the brush to move." =
+	nodamageforces(choices) : "Damaging it Doesn't Push It" : 0 : "Used to determine whether or not damage should cause the prop to move." =
 	[
 		0: "No"
 		1: "Yes"
@@ -8176,7 +8202,7 @@
 	output OnPhysGunOnlyPickup(void) : "Fired when a player picks this object up with the Gravity Gun. +USE pickups do not fire this output."
 	output OnPhysGunDrop(void) : "Fired when the player drops the prop with the Gravity Gun or USE."
 	output OnPlayerUse(void) : "Fired when the player tries to +USE the prop. This output will fire only if the Generate output on +USE spawnflag is set."
-	output OnPlayerPickup(void) : "Fired whenever the player picks up this prop (with the Gravity Gun or +USE)."
+	output OnPlayerPickup(void) : "Fired whenever the player picks up this prop (with the Gravity Gun or with +USE)."
 	output OnOutOfWorld(void) : "Fired whenever the prop is out of the allowed world bounds."
 ]
 
@@ -8956,7 +8982,7 @@
 
 	spawnflags(flags) = 
 	[ 
-		128: "[128] Once Only" : 0
+		128: "[128] Trigger Once Only" : 0
 		256: "[256] Affects Ladders (Half-Life 2)" : 0 
 	]
 
@@ -9003,7 +9029,7 @@
 	"and 1 when the player is at the radius."
 [
 	measuretarget(target_destination) : "Point to Measure From" : : "The name of a target entity who's origin is the point to measure the player's distance from."
-	radius(string) : "Radius to measure within" : 256 : "The radius to which the distance should be mapped. If the player is outside the radius he will be ignored."
+	radius(string) : "Radius to measure within" : 256 : "The radius to which the distance should be mapped. If the player is outside the radius they will be ignored."
 	
 	// Outputs
 	output NearestEntityDistance(integer) : "Fired continuously when entities are touching the trigger volume. The output parameter is the distance from the "+
@@ -9077,7 +9103,7 @@
 	subject(target_destination) : "Subject(s)" : "" : "This is the NPC(s) whose speech we're filtering. May be a targetname or a classname."	
 
 	IdleModifier(float) : "Idle modifier." : "1.0" : "Multiplier to the percentage chance that our NPC(s) will idle speak. Set to 0 to prevent all idle speech."
-	NeverSayHello(choices) : "Greet Player?" : 0 : "If set to Yes, our NPC(s) won't greet the player when they first meet him." =
+	NeverSayHello(choices) : "Greet Player?" : 0 : "If set to Yes, our NPC(s) won't greet the player when they first meet them." =
 	[
 		0 : "Yes"
 		1 : "No"
@@ -9451,8 +9477,8 @@
 	HandsVMBody(string) : "Hands Viewmodel Bodygroup" : : "Bodygroup value for the custom hands viewmodel."
 
 	// Outputs
-	output OnFlashlightOn(float) 	: "Fired when the player turns on his flashlight. This output has the value of how much energy the player had when this happened [0..1]."
-	output OnFlashlightOff(float) 	: "Fired when the player turns off his flashlight. This output has the value of how much energy the player had when this happened [0..1]."
+	output OnFlashlightOn(float) 	: "Fired when the player turns on their flashlight. This output has the value of how much energy the player had when this happened [0..1]."
+	output OnFlashlightOff(float) 	: "Fired when the player turns off their flashlight. This output has the value of how much energy the player had when this happened [0..1]."
 	input RequestPlayerHealth(void) 	: "Requests the current player's health from the proxy. This will fire the PlayerHealth output with the value."
 	input RequestPlayerArmor(void) 	: "Requests the current player's armor from the proxy. This will fire the PlayerArmor output with the value."
 	input RequestPlayerAuxPower(void) 	: "Requests the current player's auxiliary power from the proxy. This will fire the PlayerAuxPower output with the value."
@@ -9709,7 +9735,7 @@
 	input SetRefractRenderTarget(string) : "Sets the refraction render target."
 ]
 
-@SolidClass base(func_brush) = func_fake_worldportal :
+@SolidClass base(func_brush) line(255 255 0, targetname, target) line(255 255 255, targetname, FogController) = func_fake_worldportal :
 	"Used to produce perfectly reflective glass that renders world + entities. " +
 	"Typically, you want your glass brush to have nodraw on all non-reflective surfaces " +
 	"and you want to use a shader like lightmappedreflective in your material applied " +
@@ -9994,7 +10020,7 @@
 
 ]
 
-@PointClass base(Targetname,EnableDisable) iconsprite("vizzys-icons/point_glow") = point_glow : "Mapbase off-shoot of tf_glow"
+@PointClass base(Targetname,EnableDisable) line(255 255 255, targetname, target) iconsprite("vizzys-icons/point_glow") = point_glow : "Mapbase off-shoot of tf_glow"
 [
 	target(target_destination) : "Target" : : "One target only."
 	GlowColor(color255) : "Glow Color" : "255 0 0 255" : "<r> <g> <b> <a> 0-255"

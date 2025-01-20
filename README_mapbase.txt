@@ -115,7 +115,7 @@ Some entities such as env_splash, env_dustpuff, env_citadel_energy_core and env_
 Another hammer feature/bug is is if the entity supports a color value it will change the icons color as well making it potentially unreadable. This can really only be fixed by making the icon an outline or 3d model AFAIK.
 The closed caption logo used for env_closecaption is public domain.
 Entity's I learned are not in Mapbase .fgd's for whatever reasons and you may want to add someday:
-prop_detail_sprite, env_detail_controller, weapon_oldmanharpoon, target_changegravity
+prop_detail_sprite, env_detail_controller, weapon_oldmanharpoon, target_changegravity, env_tracer
 
 
 --// TO-DO LIST //--
