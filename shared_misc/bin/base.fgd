@@ -2591,8 +2591,15 @@
 	"An entity that acts like a soundscape but gets all of its sound parameters from another env_soundscape entity."
 [
 	MainSoundscapeName(target_destination) : "Soundscape Entity" : "" : "The soundscape to get all sound parameters from."
-
 	radius(integer) : "Radius" : 128					// NEEDHELP: The datadesc doesn't include this entry. Probably not used.
+	
+	// Inputs
+	input Enable(void) : "Enable the soundscape."
+	input Disabled(void) : "Disable the soundscape."
+	input ToggleEnabled(void) : "Toggle the soundscape enabled state."
+	// Outputs
+	output OnPlay(void) : "Fired when this soundscape becomes the active one."
+	
 ]
 
 @PointClass base(Targetname,Parentname,EnableDisable) sphere(radius) iconsprite("editor/env_soundscape.vmt") line(255 255 255, targetname, position0) line(255 255 255, targetname, position1) line(255 255 255, targetname, position2) line(255 255 255, targetname, position3) line(255 255 255, targetname, position4) line(255 255 255, targetname, position5) line(255 255 255, targetname, position6) line(255 255 255, targetname, position7) = env_soundscape : 
@@ -5218,7 +5225,8 @@
 	// Inputs
 	input Trigger(void) : "Trigger this entity, causing its OnTrigger outputs to fire if it is enabled."
 	input Toggle(void) : "Toggle this entity between enabled and disabled."
-	//input CancelPending(void) : "Cancel any events fired by this entity that are currently pending in the I/O event queue."
+	input CancelPending(void) : "Cancel any events fired by this entity that are currently pending in the I/O event queue."
+	input EnableRefire(void) : "Allow this relay to trigger again quickly, if allow fast retrigger is disabled." //added by vizzys
 	
 	// Outputs
 	output OnSpawn(void) : "Fired when this entity is spawned. If this entity is set to only trigger once, it will "+
@@ -8970,7 +8978,10 @@
 		1 : "Yes"
 	]
 
-	// Output
+	//Inputs
+	input LookTime(float) : "Set the time, in seconds, that the player has to look at the target before firing." //added by vizzys
+	input FieldOfView(float) : "Set how close the player has to be looking at the target." //added by vizzys
+	// Outputs
 	output OnTrigger(void) : "Fired when the trigger is activated."
 	output OnTimeout(void) : "Fired after the timeout interval expires if the player never looked at the target."
 ]
