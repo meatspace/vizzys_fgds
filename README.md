@@ -1,9 +1,10 @@
-![alt text](https://cdn.discordapp.com/emojis/860206945943158844.gif?size=32&quality=lossless) This repo contain my enhanced fgd's for both Mapbase and Entropy Zero 2 (which uses mapbase .FGD's) 
-![alt text](https://cdn.discordapp.com/emojis/860206945943158844.gif?size=32&quality=lossless) 
+# Vizzy's enhanced Mapbase and Entropy Zero 2 .fgd's! ![alt text](https://cdn.discordapp.com/emojis/860206945943158844.gif?size=32&quality=lossless) 
 
-**Mapbase install instructions:** Click download .zip, extract, copy shared_misc folder to *steamapps\sourcemods\mapbase_shared\shared_misc*
+**Mapbase install instructions:** Click download .zip, extract, copy shared_misc folder to:
+`steamapps\sourcemods\mapbase_shared\shared_misc`
 
-**Entropy Zero 2 install instructions:** Click download .zip, extract, copy entropyzero2 folder to *steamapps\common\EntropyZero2\entropyzero2*
+**Entropy Zero 2 install instructions:** Click download .zip, extract, copy entropyzero2 folder to:
+`steamapps\common\EntropyZero2\entropyzero2`
 
 .psd files are for Adobe Photoshop.
 ----
