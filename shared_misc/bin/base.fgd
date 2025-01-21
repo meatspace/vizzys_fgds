@@ -836,7 +836,7 @@
 
 	MinSpawnDistance(integer) : "Minimum spawn distance from player" : 0 : "The spawn destination node distance to the player will have to be further or equal than this value."
 
-	//Inputs
+	// Inputs
 	input SpawnNPCInRadius(void) : "Spawn an NPC somewhere within the maker's radius."
 	input SpawnNPCInLine(void) : "Spawn an NPC somewhere within a line behind the maker."
 	input SpawnMultiple(integer) : "Spawn multiple NPCs (uses destination group, else radius)."
@@ -8979,7 +8979,7 @@
 		1 : "Yes"
 	]
 
-	//Inputs
+	// Inputs
 	input LookTime(float) : "Set the time, in seconds, that the player has to look at the target before firing." //added by vizzys
 	input FieldOfView(float) : "Set how close the player has to be looking at the target." //added by vizzys
 	// Outputs

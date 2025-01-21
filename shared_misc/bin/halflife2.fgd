@@ -1032,7 +1032,7 @@
 		1 : "Yes"
 	]
 
-    //Inputs
+    // Inputs
 	input RemoveFromPlayerSquad(void) : "Remove from player squad, instantly."
 	input SetExpressionOverride(string) : "Set facial expression override"
 
@@ -1529,7 +1529,7 @@
 		131072 :  "[131072] Minimal damage taken from NPCs (1 point per missile)" : 0
 	]
 
-	//Inputs
+	// Inputs
 	input SetMinigunTime(float) : "Time to shoot at any set minigun target"
 	input SetMinigunTarget(target_destination) : "Strider will shoot minigun at this"
 	input DisableMinigun(void) : "Disables the minigun until further notice by the EnableMinigun input."
@@ -2198,7 +2198,7 @@
 	input ClearAnimLockedEntity(void) : "Stops Alyx from taking her animation locking from another character."
 	input GiveEMP(bool): "Gives or removes the EMP tool."
 
-    //Outputs
+    // Outputs
 	output OnFinishInteractWithObject(void) : "Fires when Alyx finishes interacting with an object (usually hacking it)."
 	output OnPlayerUse(void) : "Fires when a player +USEs Alyx."
 
@@ -2284,7 +2284,7 @@
 
 @NPCClass base(BaseNPC) studio("models/dog.mdl") = npc_dog : "d0g"
 [
-	//Inputs
+	// Inputs
 	input SetPickupTarget(target_destination) : "Sets the target entity for dog to pickup."
 	input StartCatchThrowBehavior(target_destination) : "Tells d0g to start playing with the player. You can pass in the name of the object you want him to play with otherwise he'll find the closes phys_object."
 	input StopCatchThrowBehavior(void) : "Stop the catch and throw behavior."
@@ -5354,7 +5354,7 @@
 	
 	missilehint(target_destination) : "Missile Hint Target" : "" : "Name of one or more info_apc_missile_hint entities to use to determine what to hit."
 	
-    //Inputs
+    // Inputs
     input FireMissileAt(target_destination) : "A target to fire a missile at"
 	input Destroy(void) : "Causes the APC to blow up."
 
