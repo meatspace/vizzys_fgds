@@ -5585,7 +5585,7 @@
 	]
 ]
 
-@PointClass base(Targetname) iconsprite("vizzys-icons/info_player_view_proxy") = info_player_view_proxy : "Copies a player's view as if they're at a different position. Intended to be used with script_intro."
+@PointClass base(Targetname) line(255 255 0, targetname, MeasureReference) line(255 255 0, targetname, TargetReference) iconsprite("vizzys-icons/info_player_view_proxy") = info_player_view_proxy : "Copies a player's view as if they're at a different position. Intended to be used with script_intro."
 [
 	Enabled(choices) : "Start Activated" : 0 : "Starts with position offsetting enabled." =
 	[
