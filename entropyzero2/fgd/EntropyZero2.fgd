@@ -6374,9 +6374,10 @@
 @NPCClass base(BaseFlora) studio("models/fungus.mdl") = npc_xenspore : "Xen Spore" []
 
 // Reverse engineered from Left 4 Dead 2 - new code, same functionality
-@PointClass base(Origin,Targetname)  iconsprite("vizzys-icons/info_remarkable") = info_remarkable : "An object in the world such that characters seeing it will speak a TLK_REMARK concept"
+@PointClass base(Origin,Targetname) sphere() iconsprite("vizzys-icons/info_remarkable") = info_remarkable : "An object in the world such that characters seeing it will speak a TLK_REMARK concept"
 [
 	contextsubject(string) : "Subject context" : "" : "Text to put in the SUBJECT context of the TLK_REMARK fired upon sighting this object." 
+	radius(string) : "Helper radius for Placement" : "500" : "Set a helper radius visual aid. Does not have any impact whatsoever. Actual radius is found in the talker scripts."
 	StartDisabled(choices) : "Start Disabled" : 0 =
 	[
 		0 : "No"
