@@ -270,10 +270,10 @@
 		3: "Glow"
 		4: "Solid"
 		5: "Additive"
-		7: "Additive Fractional Frame (requires animated texture)"
+		7: "Additive Fractional Frame (must be animated)"
 		8: "Alpha Add"
 		9: "World Space Glow"
-		10: "Don't Render"
+		10: "Don't Render (Invisible)"
 	]
 	renderamt(integer) : "FX Amount (0 - 255)" : 255 : "The FX amount is used by the selected Render Mode."
 	rendercolor(color255) : "FX Color (R G B)" : "255 255 255" : "The FX color is used by the selected Render Mode."
@@ -2696,7 +2696,7 @@
 	output OnSpark(void) : "Fired whenever sparks are emitted." // added by Vizzys
 ]
 
-@PointClass base(Targetname, Parentname, RenderFields,DXLevelChoice) size(-2 -2 -2, 2 2 2) sprite() color(20 140 20) sphere(GlowProxySize) = env_sprite : 
+@PointClass base(Targetname, Parentname, DXLevelChoice) size(-2 -2 -2, 2 2 2) sprite() color(20 140 20) sphere(GlowProxySize) = env_sprite : 
 	"An entity that controls the drawing of a sprite in the world." 
 [
 	framerate(string) : "Framerate" : "10.0" : "Rate at which the sprite should animate, if at all."
@@ -2706,6 +2706,20 @@
 	[
 		1: "[1] Start on" : 0
 		2: "[2] Play Once" : 0
+	]
+	
+	rendermode(choices) : "Render Mode" : 9 : "Used to set a non-standard rendering mode on this entity. See also 'FX Amount' and 'FX Color'. Most of these are only used by sprites." =
+	[
+		0: "Normal"
+		1: "Color (May fix render order issues)"
+		2: "Texture"
+		3: "Glow"
+		4: "Solid"
+		5: "Additive"
+		7: "Additive Fractional Frame (must be animated)"
+		8: "Alpha Add"
+		9: "World Space Glow"
+		10: "Don't Render (Invisible)"
 	]
 
 	GlowProxySize(float) : "Size of Glow Proxy Geometry." : "2.0" : "Size of the glow to be rendered for visibility testing. Must be larger than the distance from the sprite center to empty space.  So if this glow is inside geometry (like a light bulb), set this value to be bigger than the bulb's radius. Any time a sphere of this radius would be visible (poking through any nearby geometry), the glow will be rendered."
