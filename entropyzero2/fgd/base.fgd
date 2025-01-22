@@ -4708,9 +4708,10 @@
 	hardware(choices) : "Hardware Type" : 1 =
 	[
 		0 : "<None>"
-		1 : "Lever"
+		1 : "Lever (Default Handle)"
 		2 : "Push bar"
 		3 : "Keypad"
+		4 : "Combine Lock (Mapbase Door Models)"
 	]
 	
 	ajarangles(angle) : "Ajar Angles (Pitch Yaw Roll)" : "0 0 0" : "If the door 'Spawn Position' is set to Ajar, these are the angles to spawn at, instead of being open or closed."
