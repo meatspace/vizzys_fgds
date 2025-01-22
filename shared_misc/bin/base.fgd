@@ -270,10 +270,10 @@
 		3: "Glow"
 		4: "Solid"
 		5: "Additive"
-		7: "Additive Fractional Frame (requires animated texture)"
+		7: "Additive Fractional Frame (must be animated)"
 		8: "Alpha Add"
 		9: "World Space Glow"
-		10: "Don't Render"
+		10: "Don't Render (Invisible)"
 	]
 	renderamt(integer) : "FX Amount (0 - 255)" : 255 : "The FX amount is used by the selected Render Mode."
 	rendercolor(color255) : "FX Color (R G B)" : "255 255 255" : "The FX color is used by the selected Render Mode."
