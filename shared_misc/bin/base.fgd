@@ -2599,7 +2599,6 @@
 	input ToggleEnabled(void) : "Toggle the soundscape enabled state."
 	// Outputs
 	output OnPlay(void) : "Fired when this soundscape becomes the active one."
-	
 ]
 
 @PointClass base(Targetname,Parentname,EnableDisable) sphere(radius) iconsprite("editor/env_soundscape.vmt") line(255 255 255, targetname, position0) line(255 255 255, targetname, position1) line(255 255 255, targetname, position2) line(255 255 255, targetname, position3) line(255 255 255, targetname, position4) line(255 255 255, targetname, position5) line(255 255 255, targetname, position6) line(255 255 255, targetname, position7) = env_soundscape : 
@@ -7168,7 +7167,7 @@
 [
 ]
 
-@FilterClass base(BaseRedirectFilter) iconsprite("editor/filter_damage_transfer.vmt") = filter_damage_transfer :
+@FilterClass base(BaseRedirectFilter) line(255 255 255, targetname, target) iconsprite("editor/filter_damage_transfer.vmt") = filter_damage_transfer :
 	"Whenever an entity using this as a damage filter takes damage, that damage is transferred to another entity. The entity using this filter will not take the damage unless a secondary filter is specified and passed or caller damage is allowed. All damage information including force, type, attacker, etc. should be retained during the transfer and it obeys the target entity's own damage filters."
 [
 	target(target_destination) : "Transfer Target" : "" : "The name of the entity/entities that will receive the damage. Please note that this complies with their own damage filters."
@@ -9546,7 +9545,7 @@
 ]
 
 @PointClass base(Targetname, Parentname) iconsprite("vizzys-icons/env_spritetrail") = env_spritetrail : 
-	"A magical trail you can parent to anything you heart desires."
+	"A sprite trail you can parent to anything you heart desires."
 [
 	lifetime(float) : "Lifetime" : "0.5"
 	startwidth(float) : "Start Width" : "8.0"
