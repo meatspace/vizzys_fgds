@@ -1343,7 +1343,7 @@
 	spawnrate(float) : "Spawn Rate (as percentage)" : "25" : "How dense the spore effect is. This percentage is not bound to 100; even values in the thousands are acceptable."
 ]
 
-@PointClass base(Targetname, Parentname, Targetname, EnableDisable) iconsprite("editor-ficool2/env_gunfire")  = env_gunfire : "Gunfire Effect"
+@PointClass base(Targetname, Parentname, Targetname, EnableDisable)  line(255 255 255, targetname, target) iconsprite("editor-ficool2/env_gunfire")  = env_gunfire : "Gunfire Effect"
 [
 	target(target_destination) : "Target" : "" : "Shoot at this target. REMEMBER - this is an effect only! It does not do damage!"
 
