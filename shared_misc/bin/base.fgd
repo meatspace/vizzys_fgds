@@ -7913,7 +7913,7 @@
 	input TurnOff(void) : "Turns motor off"
 ]
 
-@PointClass base(Targetname, Parentname, Angles, Studiomodel) studio() = phys_magnet : 
+@PointClass base(Targetname, Parentname, Angles, Studiomodel) sphere(fademindist) sphere(fademaxdist) studio() = phys_magnet : 
 	"An entity that acts like a magnet, attaching metallic physics objects to itself when they touch it."
 [
 	spawnflags(flags) =
