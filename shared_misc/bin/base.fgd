@@ -4915,7 +4915,7 @@
 
 
 // NEEDHELP
-@PointClass base( Targetname, Parentname, Angles ) iconsprite("editor-ficool2/env_effectscript") = env_effectscript : 
+@PointClass base( Targetname, Parentname, Angles ) sphere(fademindist) sphere(fademaxdist) iconsprite("editor-ficool2/env_effectscript") = env_effectscript : 
 	"An entity that allows you to script special visual effects via a script file."
 [
 	model(studio) : "Script Model" : "models/Effects/teleporttrail.mdl" : "Model to use for animation sequences."
