@@ -4969,7 +4969,7 @@
 	output OnMultiNewRound(void) : "Fired only in multiplayer, when a new round is started. Only fired in multiplayer games that use round-based gameplay."
 ]
 
-@PointClass base(Targetname,Angles) studioprop("models/editor/camera.mdl") frustum(fov,4,250,250 250 250,-1) = point_viewcontrol : 
+@PointClass base(Targetname,Angles,Parentname) studioprop("models/editor/camera.mdl") frustum(fov,4,250,250 250 250,-1) = point_viewcontrol : 
 	"A camera entity that controls the player's view. While it's active, the player will see out of the camera." 
 [
 	target(target_destination) : "Entity to Look At" : : "Name of the entity that the camera should point at and track while active."
