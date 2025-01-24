@@ -3341,6 +3341,8 @@
 		1 : "Yes"
 	]
 
+	ApplyEntity(target_destination) : "Apply Entity" :  : "An optional entity to apply the decal to. If this is empty, the decal will locate the entity by tracing. This might be useful if the decal is close to multiple things and isn't applying how you want."
+
 	// Inputs
 	input Activate(void) : "Force the decal to apply itself to the world."
 ]
