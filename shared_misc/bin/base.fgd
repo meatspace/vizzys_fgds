@@ -3971,7 +3971,7 @@
 //-------------------------------------------------------------------------
 
 @PointClass base(Targetname, Angles) iconsprite("editor/shadow_control.vmt") = shadow_control : 
-	"An entity to control the shadows in the map."
+	"An entity to control the entity shadows in the map. Such as players, weapons and dynamic props."
 [
 	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "80 30 0" : "This is the shadow direction. Pitch is rotation around the Y axis, yaw is the rotation around the Z axis, and roll is the rotation around the X axis."
 
