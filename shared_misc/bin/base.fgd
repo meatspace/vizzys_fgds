@@ -5629,7 +5629,7 @@
 	input SetMinValueNoFire(float): "Set the lower bound of the counter without firing any outputs."
 
 	// Outputs
-	output OutValue(float) : "Fired when the counter value changes."
+	output OutValue(float) : "Fires whenever the stored number changes, except when caused by SetValueNoFire. Automatically puts the stored number as the input parameter, unless overridden by the mapper."
 	output OnHitMin(void) : "Fired when the counter value meets or goes below the min value. The counter must go back above the min value before the output will fire again."
 	output OnHitMax(void) : "Fired when the counter value meets or exceeds the max value. The counter must go below the max value before the output will fire again."
 	output OnGetValue(float) : "Fired in response to the GetValue input. Used for polling the counter when you don't want constant updates from the OutValue output."
