@@ -4587,7 +4587,7 @@
 		8: "[8] Passable" : 0
 	    32: "[32] Toggle" : 0
 		256:"[256] Use Opens" : 0
-		512: "[512] NPCs Can't" : 0
+		512: "[512] NPCs Can't Open" : 0
 		1024: "[1024] Touch Opens" : 0
 		2048: "[2048] Starts locked" : 0
 		4096:	"[4096] Door Silent" : 0
@@ -4727,7 +4727,7 @@
 	spawnflags(flags) =
 	[
 		256 : "[256] Start with collision disabled" : 0
-		512: "[512] NPCs Can't" : 0
+		512: "[512] NPCs Can't Open" : 0
 		2048: "[2048] Starts locked" : 0
 		4096: "[4096] Door silent (No sound, does not alert NPCs)" : 0
 		8192: "[8192] Use closes" : 1
