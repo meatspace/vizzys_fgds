@@ -2665,19 +2665,19 @@
 	"An entity used to create sparks at its origin." 
 [
 	MaxDelay(string) : "Max Delay" : "0" : "The longest delay between sparks (in seconds)."
-	Magnitude(choices) : "Magnitude" : 1 : "The size of the sparks." =
+	Magnitude(choices) : "Magnitude" : 1 : "The size of the sparks. Any number may be entered here." =
 	[
-		1 : "Small"
-		2 : "Medium"
-		5 : "Large"
-		8 : "Huge"
+		1 : "Small (1)"
+		2 : "Medium (2)"
+		5 : "Large (5)"
+		8 : "Huge (8)"
 	]
 
 	TrailLength(choices) : "Spark Trail Length" : 1 =
 	[
-		1 : "Short"
-		2 : "Medium"
-		3 : "Long"
+		1 : "Short (1)"
+		2 : "Medium (2)"
+		3 : "Long (3)"
 	]
 
 	spawnflags(flags) =
