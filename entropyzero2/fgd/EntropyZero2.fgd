@@ -114,7 +114,7 @@
 	input OutsideTransition(void) : "Use this input to teleport the NPC to a hintnode with the Player Squad Transition Point hint type."
 	input EnableAlwaysTransition(void) : "Enable the 'always transition' behavior"
 	input DisableAlwaysTransition(void) : "Disable the 'always transition' behavior"
-	
+	input KilledNPC(void) : "Tells the entity it killed something. This input is automatically sent by the victim when they die. The NPC may respond with a voiceline remarking on the fight." //added by vizzys
 	input EnableSpeakWhileScripting(void) : "Allow this NPC to speak responses while in a scripted sequence or while StartScripting is active."
 	input DisableSpeakWhileScripting(void) : "Cancels this NPC's ability to speak responses while in a scripted sequence or while StartScripting is active if it was previously enabled by EnableSpeakWhileScripting."
 	
@@ -223,11 +223,11 @@
 	input Enable(void) : "Enable spawning of combine balls"
 	input Disable(void) : "Disable spawning of combine balls"
 
-	output OnBallGrabbed(void) : "Fired when a combine ball is grabbed from the field by a mega physcannon"
+	output OnBallGrabbed(void) : "Fired when a combine ball is grabbed from the field by a super Gravity Gun"
 	output OnBallReinserted(void) : "Fired when a combine ball is reinserted into the field (only gets triggered when Combine Power supply is checked)"
 	output OnBallHitTopSide(void) : "Fired when a combine ball in hits the top side of the field (only gets triggered when Combine Power supply is checked)"
 	output OnBallHitBottomSide(void) : "Fired when a combine ball in hits the bottom side of the field (only gets triggered when Combine Power supply is checked)"
-	output OnLastBallGrabbed(void) : "Fired when the last combine ball is grabbed from the field by a mega physcannon"
+	output OnLastBallGrabbed(void) : "Fired when the last combine ball is grabbed from the field by a super Gravity Gun"
 	output OnFirstBallReinserted(void) : "Fired when the first combine ball is reinserted into the field (only gets triggered when Combine Power supply is checked)"
 ]
 
@@ -259,7 +259,7 @@
 
 	// Outputs
 	output OnDissolveWeapon(void) : "Fires when one weapon is starting to dissolve in the trigger volume."
-	output OnChargingPhyscannon(void) : "Fires when the trigger begins to charge the physcannon."
+	output OnChargingPhyscannon(void) : "Fires when the trigger begins to supercharge the Gravity Gun."
 
 	// Inputs
 	input StopSound(void) : "Stops all sounds."
@@ -279,7 +279,8 @@
     "A brush that creates and contains prop_combine_balls. The balls inside this entity behave like the ones seen in light beams throughout the Citadel."
 [
 	output OnBallReinserted(void) : "Fired when a combine ball is reinserted into the field (only gets triggered when Combine Power supply is checked)"
-	output OnLastBallGrabbed(void) : "Fired when the last combine ball is grabbed from the field by a mega physcannon"
+	output OnLastBallGrabbed(void) : "Fired when the last combine ball is grabbed from the field by a super Gravity Gun"
+	input Destroy(void) : "Releases all balls from the spawner as if they were punted out by the Gravity Gun."
 ]
 
 @PointClass base(CombineBallSpawners, Parentname) iconsprite("vizzys-icons/point_combine_ball_launcher") = point_combine_ball_launcher :
@@ -316,6 +317,8 @@
 	]
 
 	input SetTimer(float) : "This input makes the grenade live, and specifies how many seconds before it explodes."
+	input Detonate(void) : "This input makes the grenade Detonate." //added by vizzys
+	output OnDetonate(void) : "Fires when the grenade Detonates." //added by vizzys
 ]
 
 @NPCClass base(Targetname) studio("models/Weapons/w_xengrenade.mdl") = npc_grenade_hopwire : "Hand Grenade"
@@ -397,7 +400,7 @@
 [
 	spawnflags(Flags) = 
 	[
-		32 : "[32] Autostart (When enabled, automatically deploy when enemy seen. Otherwise deploy by Enable input.)" : 1
+		32 : "[32] Autostart (When enabled, automatically deploy when enemy seen. Otherwise, deploy by Enable input.)" : 1
 		64 : "[64] Start Inactive (Wait for Enable input before looking for enemies)" : 0
 		128 : "[128] Never Retire (Stay deployed even when enemy is lost)" : 0
 		256 : "[256] Out of Ammo" : 0
@@ -449,7 +452,7 @@
 	[
 		32 : "[32] Autostart" : 1
 		64 : "[64] Start Inactive" : 0
-		128 : "[128] Fast Retire" : 0
+		128 : "[128] Fast Retire (gives up search faster)" : 0
 		256 : "[256] Out of Ammo" : 0
 		512 : "[512] Citizen modified (Un-Friendly)" : 0
 		1024 : "[1024] No Light Sprite" : 0
@@ -471,8 +474,9 @@
 	output OnDeploy(void) : "Turret is becoming active and dangerous."
 	output OnRetire(void) : "Turret is becoming inactive and harmless."
 	output OnTipped(void) : "Turret has been tipped over and is inactive."
-	output OnPhysGunPickup(void) : "Picked up with physgun"
-	output OnPhysGunDrop(void) : "Released by physgun"
+	output OnStartTipped(void) : "Turret has just been tipped over."
+	output OnPhysGunPickup(void) : "Picked up with Gravity Gun"
+	output OnPhysGunDrop(void) : "Released by Gravity Gun"
 ]
 
 @PointClass base(npc_turret_floor, EZVariable, ResponseContext) studio( "models/props/turret_01.mdl" ) frustum(FOV,0,Range,255 0 0,-1) = npc_arbeit_turret_floor : "Arbeit Floor Turret"
@@ -601,8 +605,8 @@
 	input TurnOn(void) : "Restore this rollermine to normal functionality."
 	input TurnOff(void) : "Make this rollermine completely inert. Does not run AI and NPCs will ignore it." 
 
-	output OnPhysGunPickup(void) : "Picked up with physgun"
-	output OnPhysGunDrop(void) : "Released by physgun"
+	output OnPhysGunPickup(void) : "Picked up with Gravity Gun"
+	output OnPhysGunDrop(void) : "Released by Gravity Gun"
 ]
 
 @NPCClass base(BaseNPC) studio("models/missile_defense.mdl") = npc_missiledefense : "Missile Defense"
@@ -766,7 +770,7 @@
 	input HearBugbait(void) : "Hear bugbait"
 	input JumpAtTarget(target_destination) : "The antlion will attempt to jump through or at the target." //added by vizzys
 
-	output	OnReachedFightGoal(void) : "Fires when the antlion reaches his specified fight-to location"
+	output	OnReachedFightGoal(void) : "Fires when the antlion reaches it's specified fight-to location"
 	output	OnUnBurrowed(void) : "Fires when the antlion unburrows"
 
 ]
@@ -816,7 +820,7 @@
 	input DisableBark(void) : "Stop the antlion guard from trying to summon antlions"
 	input InvestigateHint(target_destination) : "Sniff around at a hint group until told otherwise"
 	input StopInvestigating(void) : "Stop trying to sniff out the player"
-
+	input SummonedAntlionDied(void) : "Informs the guard that a summoned antlion has died. Automatically sent by summoned antlions when they die. Sending this manually will cause the guard to summon an extra antlion for each time its sent." //added by vizzys
 	input EnablePreferPhysicsAttack(void) : "Prefer to use physics attacks if at all possible, even when inside a cavern."
 	input DisablePreferPhysicsAttack(void) : "Do not prefer to use physics attacks if at all possible, even when inside a cavern."
 
@@ -829,7 +833,7 @@
 
 @BaseClass base(BaseNPC) = BaseBird
 [
-	input FlyAway( target_destination ) : "Forces the crow to fly to the nearest crow flyto hint node."
+	input FlyAway( target_destination ) : "Forces the bird to fly to the nearest 'fly to' hint node."
 
 	deaf(choices) : "Deaf?" : 0 =
 	[
@@ -1054,18 +1058,18 @@
 		//2097152 : "[2097152] Don't use Speech Semaphore - OBSOLETE" : 0
 		4194304 : "[4194304] Random male head" : 0
 		8388608 : "[8388608] Random female head" : 0
-		16777216 : "[16777216] Use RenderBox in ActBusies" : 0
+		16777216 : "[16777216] Use RenderBox in ActBusies (Makes collision box as big as the rendering box when in actbusies)" : 0
 		33554432 : "[33554432] Player can +USE and +WALK (Alt + E) to toggle squad (disables automatically joining)" : 0
 	]
 
 	additionalequipment(choices) : "Weapons" : "0" =
 	[
-		"weapon_357" : "357"
-		"weapon_ar2" : "AR2"
+		"weapon_357" : ".357 Magnum (Revolver)"
+		"weapon_ar2" : "AR2 (Pulse Rifle)"
 		"weapon_ar2_proto" : "Prototype AR2"
 		"weapon_arbeit_pistol" : "Arbeit Pistol"
 		"weapon_arbeit_shotgun" : "Arbeit Shotgun"
-		"weapon_citizenpackage" : "Citizen Package"
+		"weapon_citizenpackage" : "Citizen Package (Ration)"
 		"weapon_citizensuitcase" : "Citizen Suitcase"
 		"weapon_crossbow" : "Crossbow"
 		"weapon_crowbar" : "Crowbar"
@@ -1118,9 +1122,9 @@
 	citizentype(choices) : "Type" : "Default" =
 	[
 		0 : "Default"	 
-		1 : "Downtrodden (Clean blue uniform)"
+		1 : "Downtrodden (Clean, blue uniform)"
 		2 : "Refugee (Dirty, ragged clothing)"
-		3 : "Rebel (Resistance getup and combat gear)"
+		3 : "Rebel (Full resistance getup and combat gear)"
 		5 : "Rebel Brute (Resistance getup and mask)"
 		6 : "Longfall (Longfall Boots, Jump gear)"
 		7 : "Arctic (Resistance getup with lambda)"
@@ -1170,7 +1174,7 @@
 
 	neverleaveplayersquad(choices) : "Permanent squad member?" : 0 : "A permanent squad member cannot leave the player's squad unless killed or explicitly removed by entity I/O. Only use this if you're sure you want to override the default AI." =
 	[
-		0 : "No. Default behavior. (Give up if cant get in 600 units of player & has LOS after 20 seconds of trying)"
+		0 : "No. Default behavior. (Give up if cant get within 600 units of player & LOS after 20 seconds of trying)"
 		1 : "Yes, stay in squad until death."
 	]
 	
@@ -1223,7 +1227,7 @@
 	output OnFollowOrder(void) : "Fires when ordered to follow player"
 	output OnStationOrder(void) : "Fires when ordered to a location by player"
 	output OnPlayerUse(void) : "Fires when a player +USEs the citizen"
-	output OnNavFailBlocked(void) : "Fires when this citizen's movement fails because he/she is blocked."
+	output OnNavFailBlocked(void) : "Fires when this citizen's movement fails because they are blocked."
 	
 	output OnHealedNPC(void) : "Fires when this citizen heals a NPC."
 	output OnHealedPlayer(void) : "Fires when this citizen heals a player."
@@ -1263,12 +1267,12 @@
 
 	additionalequipment(choices) : "Weapons" : "weapon_pistol" =
 	[
-		"weapon_357" : ".357 Revolver"
-		"weapon_ar2" : "AR2"
+		"weapon_357" : ".357 Magnum (Revolver)"
+		"weapon_ar2" : "AR2 (Pulse Rifle)"
 		"weapon_ar2_proto" : "Prototype AR2"
 		"weapon_arbeit_pistol" : "Arbeit Pistol"
 		"weapon_arbeit_shotgun" : "Arbeit Shotgun"
-		"weapon_citizenpackage" : "Citizen Package"
+		"weapon_citizenpackage" : "Citizen Package (Ration)"
 		"weapon_citizensuitcase" : "Citizen Suitcase"
 		"weapon_crossbow" : "Crossbow"
 		"weapon_crowbar" : "Crowbar"
@@ -1314,12 +1318,12 @@
 [
 	additionalequipment(choices) : "Weapons" : "weapon_smg1" =
 	[
-		"weapon_357" : ".357 Revolver"
-		"weapon_ar2" : "AR2"
+		"weapon_357" : ".357 Magnum (Revolver)"
+		"weapon_ar2" : "AR2 (Pulse Rifle)"
 		"weapon_ar2_proto" : "Prototype AR2"
 		"weapon_arbeit_pistol" : "Arbeit Pistol"
 		"weapon_arbeit_shotgun" : "Arbeit Shotgun"
-		"weapon_citizenpackage" : "Citizen Package"
+		"weapon_citizenpackage" : "Citizen Package (Ration)"
 		"weapon_citizensuitcase" : "Citizen Suitcase"
 		"weapon_crossbow" : "Crossbow"
 		"weapon_crowbar" : "Crowbar"
@@ -1354,7 +1358,11 @@
 		"0" : "Nothing"
 	]
 	
+																
   
+  
+  
+																
   
  
 	NumGrenades(choices) : "Number of Grenades" : "5" =
@@ -1498,7 +1506,7 @@
 
 	spawnflags(Flags) = 
 	[
-		65536  :  "[65536] Check LOS" : 1
+		65536  :  "[65536] Check LOS (Don't shoot once enemy takes cover, unless using SetEnemyEntity)" : 1
 	]
 
 	StartOn(choices) : "Start On" : 0 = 
@@ -1517,7 +1525,7 @@
 	[
 		0: "Off"
 		1: "On"
-		2: "On Homing"
+		2: "On Homing (Only a small trail)"
 	] 
 	LaunchSmoke(choices) : "Launch Smoke" : 1 = 
 	[
@@ -1672,7 +1680,7 @@
 	spawnrate(float) : "Spawn Rate (as percentage)" : "25" : "How dense the spore effect is. This percentage is not bound to 100; even values in the thousands are acceptable."
 ]
 
-@PointClass base(Targetname, Parentname, Targetname, EnableDisable) iconsprite("editor-ficool2/env_gunfire") = env_gunfire : "Gunfire Effect"
+@PointClass base(Targetname, Parentname, Targetname, EnableDisable) line(255 255 255, targetname, target) iconsprite("editor-ficool2/env_gunfire") = env_gunfire : "Gunfire Effect"
 [
 	target(target_destination) : "Target" : "" : "Shoot at this target. REMEMBER - this is an effect only! It does not do damage!"
 
@@ -1737,13 +1745,14 @@
 		65536 : "[65536] No smoke" : 0
 		131072 : "[131072] No shake" : 0
 		262144 : "[262144] Remove on impact (Prevents damage, headcrabs, and most visual and sound effects)" : 0
-		524288 : "[524288] No impact effects (Dust explosion)" : 0
+		524288 : "[524288] No impact effects (No Dust explosion)" : 0
 	]
 	HeadcrabType(choices) : "Which headcrab to spawn?" : 0 =
 	[
 		0 : "Normal headcrabs"
 		1 : "Fast Headcrabs"
 		2 : "Poison Headcrabs"
+		-1 : "Random"
 	]
 	HeadcrabCount(integer) : "Headcrab count" : 6 : "Number of headcrabs to spawn on impact"
 	FlightSpeed(float) : "Flight Speed" : 3000  : "Speed to fly through the air"
@@ -1781,7 +1790,7 @@
 		1 : "Yes"
 	]
 
-	HealthRegenerateEnabled(choices) : "Regenerate Health" : 0 : "Whether or not the vortigaunt will recover his own health over time like vital allies, while in combat" =
+	HealthRegenerateEnabled(choices) : "Regenerate Health" : 0 : "Whether or not the vortigaunt will recover it's own health over time like vital allies, while in combat" =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -1794,8 +1803,8 @@
 	input DisableArmorRecharge(void) : "Do not allow armor recharging on players"
 	input ExtractBugbait(target_destination) : "Causes the vortigaunt to extract bugbait from the named target passed in."
 	input ChargeTarget(target_destination) : "Force the vortigaunt to charge the named target."
-	input EnableHealthRegeneration(void) : "Allow the vortigaunt to start regenerating his health over time, like vital allies."
-	input DisableHealthRegeneration(void) : "Stop the vortigaunt from regenerating his health. (Default behavior)"
+	input EnableHealthRegeneration(void) : "Allow the vortigaunt to start regenerating it's health over time, like vital allies."
+	input DisableHealthRegeneration(void) : "Stop the vortigaunt from regenerating it's health. (Default behavior)"
 	input TurnBlue(bool) : "If true, turn blue. If false, turn green. (Episodic)."
 	input TurnBlack(bool) : "If true, turn black. If false, be seen. (Episodic)."
 	input BeginCarryNPC(void) : "Begin to override our animations for 'carrying' an NPC. (Episodic)"
@@ -1900,10 +1909,10 @@
 	input DisableMinigun(void) : "Disables the minigun until further notice by the EnableMinigun input."
 	input EnableMinigun(void) : "Enables the minigun if it was disabled by the DisableMinigun input."
 	input SetCannonTarget(target_destination) : "Strider will shoot cannon at this"
-	input FlickRagdoll(void) : "Strider will flick anyone he's skewered"
+	input FlickRagdoll(void) : "Strider will flick anyone it's skewered"
 
 	input StartPatrol(void) : "Start patrolling back and forth along the current track."
-	input StopPatrol(void) : "Stop patrolling back and forth along the track. This will cause the helicopter to come to rest at the track which he's currently flying toward."
+	input StopPatrol(void) : "Stop patrolling back and forth along the track. This will cause the helicopter to come to rest at the track which it's currently flying toward."
 	input ChooseFarthestPathPoint(void) : "When tracking an enemy, choose the point on the path furthest from the enemy, but still in firing range"
 	input ChooseNearestPathPoint(void) : "When tracking an enemy, choose the point on the path nearest from the enemy"
 	input Crouch(void) : "Crouch down"
@@ -2028,8 +2037,8 @@
 [
 	input Enable(void) : "Enable the crash target."
 	input Disable(void) : "Disable the crash target."
-	// Output added by vizzy, suggested by xblah
-	output OnCrashed(void) : "Fires when the gunship crashes."
+
+	output OnCrashed(void) : "Fires when the gunship crashes."	// Output added by vizzy, suggested by xblah
 ]
 
 @NPCClass base(BaseHelicopter) studio("models/combine_dropship.mdl" ) = npc_combinedropship : "Combine Dropship"
@@ -2134,8 +2143,8 @@
 	]
 
 	InitialSpeed(string) : "Initial Speed" : "0"
-	GracePeriod(float) : "Grace Period" : "2.0" : "Time in seconds the helicopter has to see the player before he starts shooting"
-	PatrolSpeed(float) : "Patrol Speed" : "0" : "Speed at which the helicopter moves if he has no enemy."
+	GracePeriod(float) : "Grace Period" : "2.0" : "Time in seconds the helicopter has to see the player before it starts shooting"
+	PatrolSpeed(float) : "Patrol Speed" : "0" : "Speed at which the helicopter moves if it has no enemy."
 	
 	FieldOfView(float) : "Field of View" : "-1.0" : "The helicopter's viewcone. (1.0 = straight ahead, 0.0 = +/- 90 degrees, -1.0 = all directions)"
 
@@ -2156,7 +2165,7 @@
 	input DisableRotorSound(void) : "Turns off rotor sounds"
 	input StartBombingVehicle(void) : "Starts the chopper leading enemy vehicles and dropping bombs on them."
 	input StartTrailingVehicle(void) : "Starts the chopper trailing enemy vehicles and shooting at them."
-	input StartDefaultBehavior(void) : "Starts the chopper in the mode where he always stops at nav points instead of stopping anywhere in between nav points."
+	input StartDefaultBehavior(void) : "Starts the chopper in the mode where it always stops at nav points instead of stopping anywhere in between nav points."
 	input StartAlwaysLeadingVehicle(void) : "Starts the chopper *always* leading enemy vehicles (regardless of how they are moving w/respect to the path) and dropping bombs on them. This mode is different from StartBombingVehicle in that it never uses the machine gun."
 	input StartSprinkleBehavior(void) : "Starts the chopper dropping bombs randomly + shooting at the player."
 	input StartBullrushBehavior(void) : "Starts the chopper bullrushing the player."
@@ -2170,7 +2179,7 @@
 	input StartContinuousShooting(void) : "The chopper fires continuously."
 	input StartFastShooting(void) : "The chopper fires normal bursts, but does not 'charge up' the gun. Fires immediately."
 
-	input ResetIdleTime(void) : "Allows the helicopter to fire immediately if he's not in the middle of charging or firing"
+	input ResetIdleTime(void) : "Allows the helicopter to fire immediately if it's not in the middle of charging or firing"
 	input SetAngles(string) : "Instantly snaps the orientation of the helicopter (Pitch Yaw Roll)"
 	input DropBomb(void) : "Immediately drops a bomb based on normal bomb dropping rules"
 	input DropBombStraightDown(void) : "Immediately drops a bomb directly downwards"
@@ -2179,8 +2188,8 @@
 	input DropBombDelay(float) : "Add a delay before the next bomb is dropped"
 	input BecomeIndestructible(void) : "Makes the helicopter take no more damage"
 
-	input DisablePathVisibilityTests(void) : "When the helicopter moves, he will not check for visibility from the path_track to the enemy to cull out path_tracks"
-	input EnablePathVisibilityTests(void) : "When the helicopter moves, he will only move to path_tracks that have line-of-sight to the enemy"
+	input DisablePathVisibilityTests(void) : "When the helicopter moves, it will not check for visibility from the path_track to the enemy to cull out path_tracks"
+	input EnablePathVisibilityTests(void) : "When the helicopter moves, it will only move to path_tracks that have line-of-sight to the enemy"
 
 	input StartCarpetBombing(void) : "Starts the helicopter constantly dropping megabombs until StopCarpetBombing input"
 	input StopCarpetBombing(void) : "Stop the carpet bombing behavior"
@@ -2203,7 +2212,7 @@
 	input ExplodeIn(float) : "Tells the bomb to explode in X seconds."
 	
 	// Outputs
-	output OnPhysGunOnlyPickup(void) : "Fired when a player picks this object up WITH THE PHYSGUN. +USE pickups do not fire this output."
+	output OnPhysGunOnlyPickup(void) : "Fired when a player picks this object up with the Gravity Gun. +USE pickups do not fire this output."
 ]
 
 
@@ -2245,8 +2254,11 @@
 	spawnflags(Flags) = 
 	[
 		32768 :  "[32768] Never turn into a torso" : 0
+		65536 :  "[65536] Never release headcrab" : 0
 	]
 
+	MaxDistToSwat(float) : "Max Distance to Swat Props" : : "Overrides the maximum distance in which this zombie should be able to swat props at enemies. Default is 1000"
+	MaxObjMassToSwat(float) : "Max Object Mass to Swat" : : "Overrides the maximum mass this zombie should consider when choosing props to swat. Default is 60"
 	output OnSwattedProp(ehandle) : "Fires when this NPC swats a prop, passing the prop as the activator and parameter."
 	output OnCrab(ehandle) : "Fires when the zombie releases a headcrab, passing the headcrab as the activator and parameter."
 ]
@@ -2267,10 +2279,12 @@
 
 @NPCClass base(BaseZombie) studio("models/Zombie/Classic.mdl") = npc_zombie : "Zombie"
 [
+	MeleeReach(float) : "Melee Reach" : : "Overrides the maximum distance in which this zombie should be able to swat at enemies. Default is 55"
 ]
 
 @NPCClass base(BaseZombie) studio("models/Zombie/Classic_torso.mdl") = npc_zombie_torso : "Zombie Torso"
 [
+	MeleeReach(float) : "Melee Reach" : : "Overrides the maximum distance in which this zombie should be able to swat at enemies. Default is 55"
 ]
 
 // CUSTOM ZOMBIES
@@ -2441,12 +2455,12 @@
 
 	additionalequipment(choices) : "Weapons" : "weapon_pistol" =
 	[
-		"weapon_357" : ".357 Revolver"
-		"weapon_ar2" : "AR2"
+		"weapon_357" : ".357 Magnum (Revolver)"
+		"weapon_ar2" : "AR2 (Pulse Rifle)"
 		"weapon_ar2_proto" : "Prototype AR2"
 		"weapon_arbeit_pistol" : "Arbeit Pistol"
 		"weapon_arbeit_shotgun" : "Arbeit Shotgun"
-		"weapon_citizenpackage" : "Citizen Package"
+		"weapon_citizenpackage" : "Citizen Package (Ration)"
 		"weapon_citizensuitcase" : "Citizen Suitcase"
 		"weapon_crossbow" : "Crossbow"
 		"weapon_crowbar" : "Crowbar"
@@ -2503,7 +2517,7 @@
 		2097152 : "[2097152] Arrest enemies (Enemies are 'arrested')" : 0
 		4194304 : "[4194304] No far stitching (Stop stitching if the player is over 6000 units away)" : 0
 		8388608 : "[8388608] Prevent manhack toss (Deploying them can be allowed with EnableManhackToss)" : 0
-		16777216: "[16777216] Respond to thrown objects (If i have stunstick and I get something thrown at me, allow me to chase player)" : 0
+		16777216: "[16777216] Respond to thrown objects (If I have stunstick and I get something thrown at me, allow me to chase player)" : 0
 		33554432: "[33554432] Mid-range attacks (halfway between normal + long-range: 3500 units)" : 0
 	]
 	  
@@ -2533,13 +2547,13 @@
 [
 	additionalequipment(choices) : "Weapons" : "weapon_annabelle" =
 	[
-		"weapon_357" : ".357 Revolver"
-		"weapon_annabelle"	: "Annabelle"
-		"weapon_ar2" : "AR2"
+		"weapon_357" : ".357 Magnum (Revolver)"
+		"weapon_annabelle"	: "Annabelle (Grigori's Shotgun)"
+		"weapon_ar2" : "AR2 (Pulse Rifle)"
 		"weapon_ar2_proto" : "Prototype AR2"
 		"weapon_arbeit_pistol" : "Arbeit Pistol"
 		"weapon_arbeit_shotgun" : "Arbeit Shotgun"
-		"weapon_citizenpackage" : "Citizen Package"
+		"weapon_citizenpackage" : "Citizen Package (Ration)"
 		"weapon_citizensuitcase" : "Citizen Suitcase"
 		"weapon_crossbow" : "Crossbow"
 		"weapon_crowbar" : "Crowbar"
@@ -2593,7 +2607,7 @@
 	additionalequipment(choices) : "Weapons" : "weapon_alyxgun" =
 	[
 		"weapon_alyxgun" : "Alyx Gun"
-		"weapon_ar2" : "AR2"
+		"weapon_ar2" : "AR2 (Pulse Rifle)"
 		"weapon_arbeit_pistol" : "Arbeit Pistol"
 		"weapon_arbeit_shotgun" : "Arbeit Shotgun"
 		"weapon_flechette_shotgun" : "Flechette Shotgun"
@@ -2715,7 +2729,7 @@
 	input SetPickupTarget(target_destination) : "Sets the target entity for dog to pickup."
 	input StartCatchThrowBehavior(target_destination) : "Tells d0g to start playing with the player. You can pass in the name of the object you want him to play with otherwise he'll find the closes phys_object."
 	input StopCatchThrowBehavior(void) : "Stop the catch and throw behavior."
-	input PlayerPickupObject(void) : "Tells d0g the physgun just picked up an object."
+	input PlayerPickupObject(void) : "Tells d0g the Gravity Gun just picked up an object."
 	input StartWaitAndCatch(void) : "Tells d0g to wait for the player to throw an object at him."
 	input StopWaitAndCatch(void) : "Tells d0g to stop waiting for the player."
 	input SetThrowArcModifier(float) : "Used to pass in a modifier for d0g's object flight arc."
@@ -2806,7 +2820,7 @@
 	[
 		"weapon_357" : ".357 Magnum (Revolver)"
 		"weapon_annabelle"	: "Annabelle (Grigori's Shotgun)"
-		"weapon_ar2" : "AR2"
+		"weapon_ar2" : "AR2 (Pulse Rifle)"
 		"weapon_arbeit_pistol" : "Arbeit Pistol"
 		"weapon_arbeit_shotgun" : "Arbeit Shotgun"
 		"weapon_citizenpackage" : "Citizen Package (Ration)"
@@ -2953,6 +2967,7 @@
 	input BeginSequence(void) : "Summons an NPC to act out the scripted sequence."
 	input MoveToPosition(void) : "Summons an NPC to the script location. They will play their scripted idle (or ACT_IDLE if none is specified) until BeginSequence is triggered."
 	input CancelSequence(void) : "Stops the scripted sequence. If fired after a sequence starts, this input will not take effect until the NPC finishes playing the scripted action animation."
+	input StopActionLoop(void) : "Stops looping the action animation if it is specified to loop."
 	input SetTarget(target_destination) : "Sets the target NPC."
 	input ScriptPlayerDeath(void) : "Pretends that the player died."		//added by vizzys
 
@@ -3224,7 +3239,7 @@
 	goal(target_destination) : "Target Entity"
 	WaitPointName(target_destination) : "Point to wait at if the target's not visible"
 	WaitDistance(float) : "Wait until player gets this close"
-	LeadDistance(float) : "Lead Distance" : "64" : "The player is considered to be lagging if he's beyond this distance.  The Actor will consider retrieving when the player is 4x 'Lead Distance' away."
+	LeadDistance(float) : "Lead Distance" : "64" : "The player is considered to be lagging if they're beyond this distance.  The Actor will consider retrieving when the player is 4x 'Lead Distance' away."
 	RetrieveDistance(float) : "Retrieve Distance" : "96" : "The distance from the player that the NPC should return to when retrieving a lagging player. Must be between ('Lead Distance' + 24) and ('Lead Distance' * 4) to avoid the leader ping-ponging."
 	SuccessDistance(float) : "Success Distance" : "0" : "The distance from the player (to the NPC) that the player must be within for the Lead to succeed, once the NPC has reached the goal. If set to 0, it'll use the lead distance instead (for legacy support)."
 	Run(choices) : "Run instead of Walk" : "0" =
@@ -3270,8 +3285,8 @@
 	PostArrivalConceptModifier(string)	: "Post-arrival concepts modifier"
 	SuccessConceptModifier(string)		: "Success concept modifier" : "" : "Appended to the keyvalues passed into the response rules when the 'TLK_LEAD_SUCCESS' concept is spoken."
 	FailureConceptModifier(string)		: "Failure concept modifier" : "" : "Appended to the keyvalues passed into the response rules when the 'lead_fail' concept is spoken."
-	ComingBackConceptModifier(string)	: "Coming Back concept modifier" : "" : "Appended to the keyvalues passed into the response rules when the 'TLK_LEAD_RETRIEVE' concept is spoken. Spoken as the NPC starts returning to the player to retrieve him."
-	RetrieveConceptModifier(string)		: "Retrieve concept modifier" : "" : "Appended to the keyvalues passed into the response rules when the 'TLK_LEAD_COMINGBACK' concept is spoken. Spoken when NPC has finally reached the player to retrieve him."
+	ComingBackConceptModifier(string)	: "Coming Back concept modifier" : "" : "Appended to the keyvalues passed into the response rules when the 'TLK_LEAD_RETRIEVE' concept is spoken. Spoken as the NPC starts returning to the player to retrieve them."
+	RetrieveConceptModifier(string)		: "Retrieve concept modifier" : "" : "Appended to the keyvalues passed into the response rules when the 'TLK_LEAD_COMINGBACK' concept is spoken. Spoken when NPC has finally reached the player to retrieve them."
 	
 	// Spawnflags
 	spawnflags(Flags) = 
@@ -3430,9 +3445,9 @@
 
 	HintGroupChangeReaction(Choices) : "Reaction to tactical change" : 1 : "What to do if leader moves, threat is neutralized, hint group changes, etc" =
 	[
-		0 : "Move when ready (default AI)"
-		1 : "Move when seek cover"
-		2 : "Move immediately"
+		0 : "Move when ready (Default AI)"
+		1 : "Move when seek cover (Move when cover is needed)"
+		2 : "Move immediately (Move to a different position, if we want to, when change occurs)"
 	]
 
 	Aggressiveness(Choices) : "Aggressiveness" : 2 =
@@ -3707,12 +3722,12 @@
 
 	output OnNPCStartedLeavingBusy(ehandle) : "Fired right when an NPC targeted by this goal begins to stop acting busy, which would be right as they play their exit animation."
 	output OnNPCLostSeeEntity(void) : "Fired when the NPC loses sight of the see entity (if one is specified)."
-	output OnNPCSeeEnemy(void)  : "Fired when this NPC leaves his actbusy because of sighting an enemy."
+	output OnNPCSeeEnemy(void)  : "Fired when this NPC leaves their actbusy because of sighting an enemy."
 ]
 
 @PointClass base(BaseActBusy) iconsprite("editor-ficool2/ai_goal_actbusy_queue") = ai_goal_actbusy_queue : "AI Goal Act Busy Queue"
 [
-	node_exit(target_destination) : "Exit Node" : "" : "The name of the node the first NPC in the queue should move to when he leaves the head of the queue."
+	node_exit(target_destination) : "Exit Node" : "" : "The name of the node the first NPC in the queue should move to when they leave the head of the queue."
 	node01(target_destination) : "Node 1" : "" : "The name of the first actbusy hint node in the queue."
 	node02(target_destination) : "Node 2" : "" : "The name of the second actbusy hint node in the queue."
 	node03(target_destination) : "Node 3" : "" : "The name of the third actbusy hint node in the queue."
@@ -4142,15 +4157,15 @@
 	DefaultCitizenType(choices) : "Default Citizen Type" : 0 : "Overrides the default citizen type." =
 	[
 		0 : "None"
-		1 : "Downtrodden (Clean blue uniform)"
+		1 : "Downtrodden (Clean, blue uniform)"
 		2 : "Refugee (Dirty, ragged clothing)"
-		3 : "Rebel (Resistance getup and combat gear)"
+		3 : "Rebel (Full resistance getup and combat gear)"
 		5 : "Rebel Brute (Resistance getup and mask)"
 		6 : "Longfall (Longfall boot, Jump Gear)"
 		7 : "Arctic (Resistance getup with lambda)"
 		8 : "Arbeit Employee (Tan/White shirt w nametag)"
 		9 : "Arbeit Security Guard (Sometimes camo)"
-		4 : "Unique (Set a particular model with Model)"
+		4 : "Unique (Set a particular model)"
 	]
 	
 	// Friendly fire is just a global state now.
@@ -4560,7 +4575,7 @@
 [
 	output OnPlayerTouch(void) : "Fires when the player touches this object"
 
-	output OnCacheInteraction(void) : "This output fires when the player proves they have 'found' this item. Fires on: Player Touch (whether or not player actually acquires the item), Picked up by +USE, Picked up by Physcannon, Punted by Physcannon."
+	output OnCacheInteraction(void) : "This output fires when the player proves they have 'found' this item. Fires on: Player Touch (whether or not player actually acquires the item), Picked up by +USE, Picked up by Gravity Gun, Punted by Gravity Gun."
 
 	fademindist(float) : "Start Fade Dist/Pixels" : -1 : "Distance at which the prop starts to fade (<0 = use fademaxdist). If 'Screen Space Fade' is selected, this represents the number of pixels wide covered by the prop when it starts to fade."
 	fademaxdist(float) : "End Fade Dist/Pixels" : 0 : "Maximum distance at which the prop is visible (0 = don't fade out). If 'Screen Space Fade' is selected, this represents the *minimum* number of pixels wide covered by the prop when it fades."
@@ -4619,25 +4634,25 @@
 [
 	spawnflags(Flags) =
 	[
-		1 : "[1] Use Master's values" : 1
-		2 : "[2] Is Master" : 0
-		4 : "[4] Spawn even if player meets all requirements" : 0
-		8 : "[8] Fallback to Health Vial" : 0
-		16 : "[16] Alternate master" : 0
+		1 : "[1] Use Master's values (Use settings from a resupply with Is Master checked)" : 1
+		2 : "[2] Is Master (Resupplys with Use Master's values checked will use settings from this entity)" : 0
+		4 : "[4]Always Spawn (Spawn something even if the player doesn't need anything)" : 0
+		8 : "[8] Fallback to Health Vial (If Always Spawn checked & the player doesn't need anything, spawns an item_healthvial)" : 0
+		16 : "[16] Alternate master (Stop doing PVS check so it can be used by supply crates or become the master later on)" : 0
 	]
 
-	DesiredHealth(float) : "Desired Health Ratio" : "1" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max health."
-	DesiredArmor(float) : "Desired Armor Ratio" : "0.3" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max armor."
-	DesiredAmmoPistol(float) : "Desired Pistol Ammo Ratio" : "0.5" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max ammo carrying capacity."
-	DesiredAmmoSMG1(float) : "Desired SMG1 Ammo Ratio" : "0.5" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max ammo carrying capacity."
-	DesiredAmmoSMG1_Grenade(float) : "Desired SMG1 Grenade Ammo Ratio" : "0.1" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max ammo carrying capacity."
-	DesiredAmmoAR2(float) : "Desired AR2 Ammo Ratio" : "0.4" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max ammo carrying capacity."
-	DesiredAmmoBuckshot(float) : "Desired Shotgun Ammo Ratio" : "0.5" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max ammo carrying capacity."
-	DesiredAmmoRPG_Round(float) : "Desired RPG Ammo Ratio" : "0" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max ammo carrying capacity."
-	DesiredAmmoGrenade(float) : "Desired Grenade Ammo Ratio" : "0.1" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max ammo carrying capacity."
-	DesiredAmmo357(float) : "Desired 357 Ammo Ratio" : "0" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max ammo carrying capacity."
-	DesiredAmmoCrossbow(float) : "Desired Crossbow Ammo Ratio" : "0" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max ammo carrying capacity."
-	DesiredAmmoAR2_AltFire(float) : "Desired AR2 Alt-fire Ammo Ratio" : "0" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max ammo carrying capacity."
+	DesiredHealth(float) : "Desired Health Ratio" : "1" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of their max health."
+	DesiredArmor(float) : "Desired Armor Ratio" : "0.3" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of their max armor."
+	DesiredAmmoPistol(float) : "Desired Pistol Ammo Ratio" : "0.5" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of their max ammo carrying capacity."
+	DesiredAmmoSMG1(float) : "Desired SMG1 Ammo Ratio" : "0.5" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of their max ammo carrying capacity."
+	DesiredAmmoSMG1_Grenade(float) : "Desired SMG1 Grenade Ammo Ratio" : "0.1" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of their max ammo carrying capacity."
+	DesiredAmmoAR2(float) : "Desired AR2 Ammo Ratio" : "0.4" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of their max ammo carrying capacity."
+	DesiredAmmoBuckshot(float) : "Desired Shotgun Ammo Ratio" : "0.5" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of their max ammo carrying capacity."
+	DesiredAmmoRPG_Round(float) : "Desired RPG Ammo Ratio" : "0" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of their max ammo carrying capacity."
+	DesiredAmmoGrenade(float) : "Desired Grenade Ammo Ratio" : "0.1" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of their max ammo carrying capacity."
+	DesiredAmmo357(float) : "Desired .357 Ammo Ratio" : "0" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of their max ammo carrying capacity."
+	DesiredAmmoCrossbow(float) : "Desired Crossbow Ammo Ratio" : "0" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of their max ammo carrying capacity."
+	DesiredAmmoAR2_AltFire(float) : "Desired AR2 Alt-fire Ammo Ratio" : "0" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of their max ammo carrying capacity."
 	DesiredAmmoAR2_XenGrenade(float) : "Desired Xen Grenade Ammo Ratio" : "0" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max ammo carrying capacity."
 
 	// Inputs
@@ -4651,8 +4666,8 @@
 @PointClass base(ItemAmmo) studio("models/items/BoxMRounds.mdl")= item_ammo_smg1_large : "Large Box of SMG1 ammo" []
 @PointClass base(ItemAmmo) studio("models/items/combine_rifle_cartridge01.mdl")= item_ammo_ar2 : "Box of AR2 ammo" []
 @PointClass base(ItemAmmo) studio("models/items/combine_rifle_cartridge01.mdl")= item_ammo_ar2_large : "Large Box of AR2 ammo" []
-@PointClass base(ItemAmmo) studio("models/items/357ammo.mdl")= item_ammo_357 : "Box of 357 ammo" []
-@PointClass base(ItemAmmo) studio("models/items/357ammobox.mdl")= item_ammo_357_large : "Large Box of 357 ammo" []
+@PointClass base(ItemAmmo) studio("models/items/357ammo.mdl")= item_ammo_357 : "Box of .357 ammo" []
+@PointClass base(ItemAmmo) studio("models/items/357ammobox.mdl")= item_ammo_357_large : "Large Box of .357 ammo" []
 @PointClass base(ItemAmmo) studio("models/items/CrossbowRounds.mdl")= item_ammo_crossbow : "Box of Crossbow ammo" []
 @PointClass base(ItemAmmo) studio("models/items/BoxBuckshot.mdl")= item_box_buckshot : "Box Buckshot" []
 @PointClass base(ItemAmmo) studio("models/weapons/w_missile_closed.mdl")= item_rpg_round : "RPG Round" []
@@ -4744,7 +4759,7 @@
 	output OnBreak(void) : "Fires when broken."
 	output OnHealthChanged(float) : "Fires when the health of this breakable changes, passing the new value of health as a percentage of max health, from [0..1]."
 
-	output OnCacheInteraction(void) : "This output fires when the player proves they have 'found' this crate. Fires on: Picked up by +USE, Picked up by Physcannon, Punted by Physcannon, Broken."
+	output OnCacheInteraction(void) : "This output fires when the player proves they have 'found' this crate. Fires on: Picked up by +USE, Picked up by Gravity Gun, Punted by Gravity Gun, Broken."
 	
 	output OnItem(ehandle) : "Fires for each item spawned by this crate."
 ]
@@ -4817,8 +4832,8 @@
 
 	spawnflags(flags) =
 	[
-		8192  : "[8192] Citadel recharger" : 0
-		16384 : "[16384] Kleiner's recharger" : 0
+		8192  : "[8192] Citadel recharger (Overcharges up to 200 power and gives health)" : 0
+		16384 : "[16384] Kleiner's recharger (Gives only 25 power)" : 0
 	]
 
 	// Inputs
@@ -4876,10 +4891,10 @@
 	input HideWeapon(void) : "If the weapon is being held by someone, makes it invisible. The weapon will reappear if they switch weapons."
 
 	// Outputs
-	output OnPlayerUse(void) : "Fires when the player +uses this weapon"
+	output OnPlayerUse(void) : "Fires when the player +USEs this weapon"
 	output OnPlayerPickup(void) : "Fires when the player picks up this weapon"
 	output OnNPCPickup(void) : "Fires when an NPC picks up this weapon"
-	output OnCacheInteraction(void) : "Fires when the player 'proves' they've found this weapon. Fires on: Player Touch, +USE pickup, Physcannon pickup, Physcannon punt."
+	output OnCacheInteraction(void) : "Fires when the player 'proves' they've found this weapon. Fires on: Player Touch, +USE pickup, Gravity Gun pickup, Gravity Gun punt."
 	output OnDropped(void) : "Fires when the weapon is dropped by a NPC or player, either through death or from picking up a different weapon."
 
 	fademindist(float) : "Start Fade Dist/Pixels" : -1 : "Distance at which the prop starts to fade (<0 = use fademaxdist). If 'Screen Space Fade' is selected, this represents the number of pixels wide covered by the prop when it starts to fade."
@@ -4891,18 +4906,18 @@
 @PointClass base(Weapon) studio("models/weapons/w_crowbar.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_crowbar : "Crowbar" []
 @PointClass base(Weapon) studio("models/weapons/w_stunbaton.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_stunstick : "StunStick" []
 @PointClass base(Weapon) studio("models/weapons/w_pistol.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_pistol : "Pistol" []
-@PointClass base(Weapon) studio("models/weapons/w_irifle.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_ar2 : "Assault Rifle 2" []
-@PointClass base(Weapon) studio("models/weapons/w_rocket_launcher.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_rpg : "Missile Launcher" []
+@PointClass base(Weapon) studio("models/weapons/w_irifle.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_ar2 : "AR2 (Pulse Rifle)" []
+@PointClass base(Weapon) studio("models/weapons/w_rocket_launcher.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_rpg : "RPG" []
 @PointClass base(Weapon) studio("models/weapons/w_smg1.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_smg1 : "SMG1" []
-@PointClass base(Weapon) studio("models/weapons/w_357.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_357 : "357" []
+@PointClass base(Weapon) studio("models/weapons/w_357.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_357 : ".357 Magnum (Revolver)" []
 @PointClass base(Weapon) studio("models/weapons/w_crossbow.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_crossbow : "Crossbow" []
 @PointClass base(Weapon) studio("models/weapons/w_shotgun.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_shotgun : "Shotgun" []
 @PointClass base(Weapon) studio("models/weapons/w_grenade.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_frag : "Frag Grenade" []
-@PointClass base(Weapon) studio("models/weapons/w_physics.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_physcannon : "Physics Cannon" []
-@PointClass base(Weapon) studio("models/weapons/w_bugbait.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_bugbait: "Bug bait" []
+@PointClass base(Weapon) studio("models/weapons/w_physics.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_physcannon : "Gravity Gun" []
+@PointClass base(Weapon) studio("models/weapons/w_bugbait.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_bugbait: "Bugbait" []
 @PointClass base(Weapon) studio("models/weapons/W_Alyx_Gun.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_alyxgun: "Alyx Gun" []
-@PointClass base(Weapon) studio("models/weapons/W_annabelle.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_annabelle: "Annabelle (Grigori)" []
-@PointClass base(Weapon) studio("models/weapons/w_slam.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_slam: "A tripmine/satchel hybrid from HL2:MP.\n\nCome on and slam, and welcome to the jam!\nCome on and slam, if you wanna jam!" []
+@PointClass base(Weapon) studio("models/weapons/W_annabelle.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_annabelle: "Annabelle (Grigori's Shotgun)" []
+@PointClass base(Weapon) studio("models/weapons/w_slam.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_slam: "SLAM tripmine from HL2:MP.\n\nCome on and slam, and welcome to the jam!\nCome on and slam, if you wanna jam!" []
 @PointClass base(Weapon) studio("models/manhack.mdl") = weapon_manhacktoss: "Deployable Manhack" []
 
 // TODO: Move to its own FGD? Needs to access Weapon base class somehow
@@ -5091,7 +5106,7 @@
 [
 	// Inputs
 	input Strip(void) : "Strip player's weapons"
-	input StripWeaponsAndSuit(void) : "Strip player's weapons and his suit"
+	input StripWeaponsAndSuit(void) : "Strip player's weapons and their suit"
 ]
 
 @PointClass base(Targetname) iconsprite("editor-ficool2/player_speedmod") = player_speedmod: "Speeds up or slows down player velocity over time (slow mo/fast forward)"
@@ -5327,10 +5342,10 @@
 	[
 		0 : "Deploying"
 		1 : "Disarmed"
-		2 : "Captive (locked in physgun)"
+		2 : "Captive (locked in Gravity Gun hold)"
 		3 : "Planted"
 		4 : "Triggered (bounce, explode on touch)"
-		5 : "Physgun Launch (no bounce, explode on touch)"
+		5 : "Gravity Gun Launch (no bounce, explode on touch)"
 	]
 	
 	CheapWarnSound(choices) : "Cheap Warn Sound" : 0 : "Makes the mine's warn sound use generic sound methods instead of a sound patch, which is cheaper and doesn't continuously take up audio channels. Use this for areas with tons of active mines." =
@@ -5390,7 +5405,7 @@
 	input SetPlantOrientationRaw(vector) : "Sets the mine's plant orientation as a direction vector."
 
 	// Outputs
-	output OnPulledUp(void) : "Fires when this mine is uprooted with a physgun."
+	output OnPulledUp(void) : "Fires when this mine is uprooted with the Gravity Gun."
 	output OnTriggered(void) : "Fires when this mine is triggered by an enemy."
 	output OnExplode(void) : "Fires when this mine actually explodes."
 ]
@@ -5416,10 +5431,10 @@
 	
 	spawnflags(Flags) =
 	[
-		1 : "[1] No DLight" : 0
+		1 : "[1] No DLight (No dynamic light)" : 0
 		2 : "[2] No Smoke" : 0
 		4 : "[4] Infinite" : 0
-		8 : "[8] Start off" : 0
+		8 : "[8] Start off (Completely hidden until Start or Launch input)" : 0
 	]
 
 	input Start(float) : "Starts the flare burning. The flare will burn for the specified number of seconds (0 = infinite)."
@@ -5480,9 +5495,46 @@
 		"ACHIEVEMENT_EVENT_EZ2_RECORDING_RG06"      : "[EZ2] Radio Guy Recording Box 6"	
 																																																																										 
 																													  
+																																																																										 
+																													  
 																								  
 																										
 																										   
+																											  
+																											  
+																								  
+																										
+																										   
+																											  
+																											  
+																												
+																										  
+																							
+																											 
+																												
+																										 
+																											 
+																									  
+																								  
+																											 
+																											   
+																										 
+																												  
+																										   
+																									   
+																								   
+																										 
+																											 
+																												
+																								  
+																										
+																										   
+																									   
+																								 
+																							 
+																				   
+																													  
+																																																																										  
 																											  
 																											  
 																										   
@@ -5717,7 +5769,7 @@
 ]
 
 @PointClass base(BaseVehicle) studioprop() = prop_vehicle :
-	"Studiomodel vehicle that can be driven via inputs."
+	"Vehicle that can be driven via inputs."
 [
 	// Inputs
 	input Steer(float) : "Steer the vehicle +/-1"
@@ -5837,9 +5889,9 @@
 	input SetCargoHopperVisibility ( bool ) : "Set the strider buster hopper thingy to be visible, or invisible."
 	input EnableHazardLights ( void ) : "Enables the jalopy's hazard lights."
 	input DisableHazardLights ( void ) : "Disables the jalopy's hazard lights."
-
-	input DisablePhysGun(void) : "Disable physgun interactions with the jeep."
-	input EnablePhysGun(void) : "Enable physgun interactions with the jeep (default)."
+	input OutsideTransition(void) : "Tells the vehicle to teleport to an info_target_vehicle_transition. Normally sent by trigger_changelevel when the vehicle is not inside a trigger_transition." //added by vizzys
+	input DisablePhysGun(void) : "Disable Gravity Gun interactions with the jeep."
+	input EnablePhysGun(void) : "Enable Gravity Gun interactions with the jeep (default)."
 
 	input CreateLinkController(void) : "Automatically builds and attaches a link controller to the car, which cuts the node connections under the car while the car is standing still."
 	input DestroyLinkController(void) : "Destroys the link controller created by CreateLinkController."
@@ -5880,7 +5932,7 @@
 	"A way to access the original HL2 jeep in Episodic. Just use prop_vehicle_jeep if you're using the original HL2 version."
 [
 	model(studio) : "World model" : "models/buggy.mdl"
-	EnableGun(choices) : "Has Gun" : 0 : "Whether the jeep's tau cannon is enabled or disabled." =
+	EnableGun(choices) : "Has Gun" : 1 : "Whether the jeep's tau cannon is enabled or disabled." =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -5889,8 +5941,8 @@
 	input StartRemoveTauCannon(void) : "Start the tau removal sequence."
 	input FinishRemoveTauCannon(void) : "Finish the tau removal sequence."
 
-	input DisablePhysGun(void) : "Disable physgun interactions with the jeep."
-	input EnablePhysGun(void) : "Enable physgun interactions with the jeep (default)."
+	input DisablePhysGun(void) : "Disable Gravity Gun interactions with the jeep."
+	input EnablePhysGun(void) : "Enable Gravity Gun interactions with the jeep (default)."
 ]
 
 @PointClass base(BaseDriveableVehicle) studioprop() = vehicle_viewcontroller : 
@@ -5901,7 +5953,7 @@
 ]
 
 @PointClass base(BaseDriveableVehicle) studioprop() = prop_vehicle_airboat :
-	"Driveable studiomodel airboat."
+	"Driveable airboat."
 [
 	model(studio) : "World model" : "models/airboat.mdl"
 	vehiclescript(string) : "Vehicle Script File" : "scripts/vehicles/airboat.txt"
@@ -5969,7 +6021,7 @@
 ]
 
 
-@PointClass base(BaseSpeaker) iconsprite("editor/ambient_generic.vmt") = env_speaker : "Announcement Speaker"
+@PointClass base(BaseSpeaker) iconsprite("editor/ambient_generic.vmt") line(255 255 255, targetname, target) = env_speaker : "Announcement Speaker"
 [
 ]
 
@@ -6028,7 +6080,7 @@
 	]
 ]
 
-@PointClass base(Targetname) iconsprite("vizzys-icons/info_player_view_proxy") = info_player_view_proxy : "Copies a player's view as if they're at a different position. Intended to be used with script_intro."
+@PointClass base(Targetname) line(255 255 0, targetname, MeasureReference) line(255 255 0, targetname, TargetReference) iconsprite("vizzys-icons/info_player_view_proxy") = info_player_view_proxy : "Copies a player's view as if they're at a different position. Intended to be used with script_intro."
 [
 	Enabled(choices) : "Start Activated" : 0 : "Starts with position offsetting enabled." =
 	[
@@ -6108,7 +6160,7 @@
 
 
 @PointClass base(BaseDriveableVehicle, Parentname) studioprop() = prop_vehicle_choreo_generic :
-	"Generic Choreo vehicle used for magical events."
+	"Generic Choreo vehicle used for scripted events."
 [
 	model(studio) : "World model" : "models/vehicles/prisoner_pod.mdl"
 	vehiclescript(string) : "Vehicle Script File" : "scripts/vehicles/choreo_vehicle.txt"
@@ -6118,7 +6170,7 @@
 	input EnterVehicle(void) : "Forces the activator (or player) into the vehicle."
 	input EnterVehicleImmediate(void) : "Forces the activator (or player) into the vehicle without enter/exit animations."
 	input ExitVehicle(void) : "Boots the prisoner out of the vehicle."
-	input Viewlock(bool) : "Set true to prevent Gordon from looking around *at all*. Set false to let him look within limits."
+	input Viewlock(bool) : "Set true to prevent player from looking around *at all*. Set false to let them look within limits."
 	input SetAnimation(string) : "Force the prop to play an animation. The parameter should be the name of the animation."
 	
 	output OnOpen(void) : "Fired when the vehicle is open enough to enter."
@@ -6290,6 +6342,16 @@
 	input Explode( void ) : "This input detonates the SLAM."
 ]
 
+@PointClass base(Targetname, EnableDisable) = point_detonatable : "Generic detonatable entity"
+[
+	thrower(target_destination) : "Thrower" : : "Leave blank to use the default player."
+	glowtarget(target_destination) : "Glow Target" : : "Entity which should glow on the thrower's HUD (in other words, representing the point_detonatable). Leave blank for no glow target."
+
+	input SetGlowTarget( target_destination ) : "Sets the glow target."
+	input Detonate( void ) : "Detonates the detonatable."
+	
+	output OnDetonate(void) : "Fires when the point_detonatable is detonated by the player or by inputs."
+]
 @PointClass base(Weapon) studio("models/weapons/w_mp5k.mdl") = weapon_smg2 : "SMG2" []
 @PointClass base(Weapon) studio("models/weapons/w_xengrenade.mdl") = weapon_hopwire : "Xen Grenade" []
 
@@ -6302,6 +6364,7 @@
 @PointClass base(Weapon) studio("models/weapons/w_shotgun.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_flechette_shotgun : "Flechette Shotgun" []
 @PointClass base(Weapon) studio("models/weapons/w_frag.mdl") = weapon_stasis_grenade : "Zero Entropy Grenade" []
 
+@PointClass base(Weapon) studio("models/weapons/w_oicw.mdl") = weapon_oicw : "OICW" []
 // New items for EZ2
 @PointClass base(Item) studioprop() = item_hopwire_holder : "Xen Grenade Holder"
 [

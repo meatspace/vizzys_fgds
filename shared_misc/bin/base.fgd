@@ -2037,7 +2037,7 @@
 		2048: "[2048] Don't clamp Min" : 0
 		4096: "[4096] Don't clamp Max" : 0
 		8192: "[8192] Damage above water surface only" : 0
-		16384: "[16384] Generic damage (DMG_GENERIC damage)" : 0
+		16384: "[16384] Generic damage (Do DMG_GENERIC damage)" : 0
 	]
 
 	ignoredEntity(target_destination) : "Ignored Entity" : : "Do not harm or affect the named entity."
@@ -5335,7 +5335,7 @@
 	output OnTriggerParameter(string) : "Fired when the relay is triggered with a parameter."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/logic_script.vmt") 
+@PointClass base(Targetname) iconsprite("editor/logic_script.vmt")
 	line(200 200 200, targetname, group00) 
 	line(200 200 200, targetname, group01) 
 	line(200 200 200, targetname, group02) 
@@ -7470,7 +7470,6 @@
 	"An entity that does damage to all entities in a radius around itself, with a specified delay." +
 	"If 'Target Entity' is specified, the damage is only done to that entity."
 [
-	
 	spawnflags(flags) =
 	[
 		1 : "[1] Start Active" : 0
@@ -7540,7 +7539,7 @@
 	damagetoenablemotion(integer) : "Health Level to Override Motion" : 0 : "If specified, this object will start motion disabled. Once its health has dropped below this specified amount, it will enable motion."
 	forcetoenablemotion(float) : "Physics Impact Force to Override Motion" : 0 : "If specified, this object will start motion disabled. Any impact that imparts a force greater than this value on the physbox will enable motion."
 	health(integer) : "Strength" : 0 : "Number of points of damage to take before breaking.  0 means don't break."
-	preferredcarryangles(vector) : "Preferred Player-carry Angles" : "0 0 0" : "If the 'Use Preferred Carry Angles' spawnflag is set, this angle is the angle which the object should orient to when the player picks it up, with Gravity Gun or +USE."
+	preferredcarryangles(vector) : "Preferred Player-carry Angles" : "0 0 0" : "If the 'Use Preferred Carry Angles' spawnflag is set, this angle is the angle which the object should orient to when the player picks it up, with the Gravity Gun or +USE."
 	notsolid(choices) : "Not solid to world" : 0 =
 	[
 		0: "Solid to World"
@@ -8252,7 +8251,7 @@
 		"12": "12 : Allow player to hold directly overhead"
 	]
 	
-	preferredcarryangles(angle) : "Preferred Player-carry Angles" : "0" : "The angle which the object should orient to when the player picks it up with Gravity Gun or +USE. Overrides the prop's own QC carry angles if it has any. '0' doesn't override the carry angles."
+	preferredcarryangles(angle) : "Preferred Player-carry Angles" : "0" : "The angle which the object should orient to when the player picks it up with the Gravity Gun or +USE. Overrides the prop's own QC carry angles if it has any. '0' doesn't override the carry angles."
 	
 	// Inputs
 	input Ignite(void) : "Ignite, burst into flames."

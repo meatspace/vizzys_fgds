@@ -1,0 +1,38 @@
+@include "base.fgd"
+
+// start commentary section added by vizzys
+@PointClass iconsprite("vizzys-icons/commentary_auto.vmt") = commentary_auto : "Similar to logic_auto, fires outputs when the commentary system is loaded."
+[
+	// Inputs
+	input MultiplayerSpawned(void) : "Tell the OnCommentaryMultiplayerSpawn output to fire, for if the game is multiplayer."
+	// Outputs
+	output OnCommentaryNewGame(void) : "Fires when a new game is started with commentary enabled."
+	output OnCommentaryMidGame(void) : "Fires when commentary is enabled midgame."
+	output OnCommentaryMultiplayerSpawn(void) : "."
+]
+
+@PointClass base(Targetname, Parentname, Angles, EnableDisable, Origin) studio("models/extras/info_speech.mdl") = point_commentary_node : "Commentary Node"
+[
+	commentaryfile(sound) : "Commentary sound file" : "" : "The commentary sound file that should be played when this node is used by the player."
+	commentaryfile_nohdr(sound) : "Commentary sound NoHDR" : "" : "The commentary sound file that should be played when this node is used by the player. If the player has HDR turned off, this file will be used instead of the commentaryfile. If this entry is not specified, the base commentaryfile entry will still be used."
+	speakers(string) : "Speakers" : "Gabe Newell" : "The name of the speakers of the commentary sound file(s). Will be displayed in the HUD while the commentary sound file is playing."
+	precommands(string) : "semi-colon delimited list start" : "" : "A semi-colon delimited list of commands that should entered into the console when the commentary file starts playing. e.g. ai_disable 1;mat_wireframe 1"
+	postcommands(string) : "semi-colon delimited list end" : "" : "A semi-colon delimited list of commands that should entered into the console when the commentary file finishes playing. e.g. ai_disable 0;mat_wireframe 0"
+	viewposition(target_destination) : "Players view move" : "" : "The targetname of entity to which the players view should move while the commentary file is playing"
+	viewtarget(target_destination) : "Players view track" : "" : "The targetname of entity that the players view should track while the commentary file is playing"
+	printname(float) : "Print Name" : "Welcome to Half-Life 2"
+	teleport_origin(string) : "Teleport to" : ""
+	prevent_movement(choices) : "Prevent Movement" : 0 : "If Yes, the player will not be able to move while the commentary sound file is playing" =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	// Outputs
+	output OnCommentaryStarted(void) : "Sent when Commentary started."
+	output OnCommentaryStopped(void) : "Sent when Commentary stopped."
+	// Inputs
+	input StartCommentary(void) : "Force the commentary node to start."
+	input StopCommentary(void) : "Force the commentary node to stop."
+	input StartUnstoppableCommentary(void) : "Force the commentary node to start, and don't allow the player to stop it in any way."
+]
+//end commentary section added by vizzys
