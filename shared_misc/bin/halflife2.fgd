@@ -270,8 +270,8 @@
 @NPCClass base(Targetname) studio("models/Weapons/w_grenade.mdl") = npc_grenade_frag : "Hand Grenade"
 [
 	input SetTimer(float) : "This input makes the grenade live, and specifies how many seconds before it explodes."
-	input Detonate(void) : "This input makes the grenade Detonate."
-	output OnDetonate(void) : "Fires when the grenade Detonates."
+	input Detonate(void) : "This input makes the grenade Detonate." //added by vizzys
+	output OnDetonate(void) : "Fires when the grenade Detonates." //added by vizzys
 ]
 
 
