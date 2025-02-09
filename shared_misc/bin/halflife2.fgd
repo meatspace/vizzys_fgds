@@ -749,7 +749,6 @@
 		262144 :  "[262144] Don't drown" : 0
 		524288 :  "[524288] No melee insta-kill" : 0
 	]
-
 	input StartHangingFromCeiling(void) : "Start hanging from ceiling."
 	input DropFromCeiling(void) : "Drop if hanging from ceiling."
 	input Unburrow(void) : "Unburrow from the ground"
@@ -4643,7 +4642,6 @@
 	
 	input SetAdditionalButtons(integer) : "Sets the additional suppressed buttons."
 ]
-
 //-------------------------------------------------------------------------
 //
 // Logic Entities
@@ -5136,24 +5134,7 @@
 		"ACHIEVEMENT_EVENT_PORTAL_GET_PORTALGUNS"					: "[PORTAL] Acquire the fully powered Aperture Science Handheld Portal Device."
 		"ACHIEVEMENT_EVENT_PORTAL_KILL_COMPANIONCUBE"					: "[PORTAL] Do whatever it takes to survive."
 		"ACHIEVEMENT_EVENT_PORTAL_ESCAPE_TESTCHAMBERS"					: "[PORTAL] Make the correct party escort submission position decision."
-
-																				 
-																				 
-																				 
-																				 
-																				 
-																				 
-																				 
-																				 
-																				 
-																				  
-																				  
-																	   
-																		
-																		
 		"ACHIEVEMENT_EVENT_PORTAL_BEAT_GAME"					: "[PORTAL] Complete Portal."
-																										   
-
 	]
 
 	// Inputs
