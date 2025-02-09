@@ -846,7 +846,7 @@
 
 @BaseClass base( BaseNPC ) = BaseHelicopter
 [
-	InitialSpeed(string) : "Initial Speed" : "0" : "Sets the helicopter's desired speed that it should try to reach as soon as it's spawned."
+	InitialSpeed(float) : "Initial Speed" : "0" : "Sets the helicopter's desired speed that it should try to reach as soon as it's spawned."
 	target(target_destination) : "Target path_track" : : "(Optional) The name of a path_track entity that this NPC will fly to after spawning."
 	
 	AllowAnyDamage(Choices) : "Allows any damage" : 0 : "Allows this NPC to take any amount of any type of damage, including bullet or melee damage. This is supposed to allow this NPC to be taken down in a previously impossible way and should be used with an actual damage filter." =
@@ -1378,7 +1378,7 @@
 	overlaysize(integer) : "Overlay Size" : -1 : "A value of -1 means the overlay will act the old way."
 	
 	material(sprite) : "Material Name" : "sprites/light_glow02_add_noz" : "Material of the inner glow."
-	overlaymaterial(sprite) : "Overlay Material Name" : "sprites/light_glow02_add_noz" : "Material of the overlay glow."
+	overlaymaterial(material) : "Overlay Material Name" : "sprites/light_glow02_add_noz" : "Material of the overlay glow."
 
 	HDRColorScale(float) : "HDR color scale." : "1.0" : "float value to multiply sprite color by when running in HDR mode."
 
@@ -1707,7 +1707,7 @@
 @BaseClass base(Targetname, Parentname, Angles) = vgui_screen_base
 [
 	panelname(string) : "Panel Name"
-	overlaymaterial(string) : "Overlay Material" : "" : "Name of a material to overlay over the top of the VGUI screen. NOTE: This material must write Z for the VGUI screen to work."
+	overlaymaterial(material) : "Overlay Material" : "" : "Name of a material to overlay over the top of the VGUI screen. NOTE: This material must write Z for the VGUI screen to work."
 	width(integer) : "Panel Width in World" : 32 : "Width of the panel in units."
 	height(integer) : "Panel Height in World" : 32 : "Height of the panel in units."
 
@@ -1847,7 +1847,7 @@
 	life(string) : "Life (seconds 0 = infinite)" : "1" : "Amount of time before the beam dies. Setting to zero will make the beam stay forever."
 	BoltWidth(float) : "Width of beam" : 2 : "Pixel width of the beam."
 	NoiseAmplitude(float) : "Amount of noise (0-255)" : 0 : "The amount of noise in the beam. 0 is a perfectly straight beam."
-	texture(sprite) : "Sprite Name" : "sprites/laserbeam.vmt" : "The material used to draw the beam."
+	texture(material) : "Sprite Name" : "sprites/laserbeam.vmt" : "The material used to draw the beam."
 	TextureScroll(integer) : "Texture Scroll Rate (0-100)" : 35 : "Rate at which the beam texture should scroll along the beam."
 	framerate(integer) : "Frames per 10 seconds" : 0 : "Framerate at which the beam texture should animate, if it has multiple frames."
 	framestart(integer) : "Starting Frame" : 0 : "The frame to start the beam texture on."
@@ -2014,7 +2014,7 @@
 	// If no radius override, magnitude will determine radius.
 	iRadiusOverride(Integer) : "Radius Override" : 0 : "If specified, the radius in which the explosion damages entities. If unspecified, the radius will be based on the magnitude."
 	DamageForce(float) : "Damage Force" : 0 : "Overrides push force. BUG: Very obvious disparity between force applied to players and force applied to physics objects." //added by vizzys
-	fireballsprite(sprite) : "Fireball Sprite" : "sprites/zerogxplode.vmt"
+	fireballsprite(material) : "Fireball Sprite" : "sprites/zerogxplode.vmt"
 	rendermode(choices) : "Render Mode" : 5 =
 	[
 		0: "Normal"
@@ -2064,8 +2064,8 @@
 	endsize(float) : "Ending particle size" : "50" : "Ending particle size."
 	spawnradius(float) : "Spawn radius" : "15" : "Distance from env_smoketrail at which particles are emitted."
 
-	firesprite(sprite) : "Fire Sprite" : "sprites/firetrail.vmt"
-	smokesprite(sprite) : "Smoke Puff" : "sprites/whitepuff.vmt"
+	firesprite(material) : "Fire Sprite" : "sprites/firetrail.vmt"
+	smokesprite(material) : "Smoke Puff" : "sprites/whitepuff.vmt"
 ]
 
 @PointClass base(Targetname, Parentname) sphere(radius) sphere(inner_radius) sphere(radius) iconsprite("editor/env_physexplosion.vmt") = env_physexplosion : 
@@ -2332,8 +2332,8 @@
 	rendercolor(color255) : "Beam Color (R G B)" : "255 255 255"
 	width(float) : "Width of Beam" : 2 : "The width of the laser beam, in pixels."
 	NoiseAmplitude(integer) : "Amount of noise (0-255)" : 0 : "The amount of noise in the beam. 0 is a perfectly straight beam."
-	texture(sprite) : "Sprite Name" : "sprites/laserbeam.vmt" : "The material used to draw the laser beam."
-	EndSprite(sprite) : "End Sprite" : "" : "If specified, this sprite will be drawn at the end of the laser beam."
+	texture(material) : "Sprite Name" : "sprites/laserbeam.vmt" : "The material used to draw the laser beam."
+	EndSprite(material) : "End Sprite" : "" : "If specified, this sprite will be drawn at the end of the laser beam."
 	TextureScroll(integer) : "Texture Scroll Rate (0-100)" : 35 : "Rate at which the beam texture should scroll along the beam."
 	framestart(integer) : "Starting Frame" : 0 : "The frame to start the beam texture on."
 	damage(string) : "Damage / second" : "100" : "How much damage this laser does. per second. to things it hits."
@@ -3148,7 +3148,7 @@
 	m_SourceEntityName(target_destination) : "Source Entity" : "" : "If specified, tesla lightning will originate from the specified entity. Otherwise, they originate from this entity."
 	m_SoundName(sound) : "Sound Name" : "DoSpark" : "Sound to be played whenever lightning is created."
 
-	texture(sprite) : "Sprite Name" : "sprites/physbeam.vmt" : "Material to use for the tesla lightning beams."
+	texture(material) : "Sprite Name" : "sprites/physbeam.vmt" : "Material to use for the tesla lightning beams."
 
 	m_Color(color255) : "Color" : "255 255 255"
 
@@ -3333,7 +3333,7 @@
 	"An entity that places a decal on the world. If the decal has no target name, it will immediately apply itself when the level is loaded. "+
 	"If it has a name specified, it won't apply until it receives the 'Activate' input."
 [
-	texture(decal)
+	texture(material)
 
 	LowPriority(choices) : "Low Priority (can be replaced)" : 0 =
 	[
@@ -3351,7 +3351,7 @@
 	"An entity that projects a decal onto the world (or props). If the decal has no target name, it will immediately apply itself when "+
 	"the level is loaded. If it has a name specified, it won't apply until it receives the 'Activate' input."
 [
-	texture(decal)
+	texture(material)
 	Distance(float) : "Distance" : 64 : "Distance from the origin to project the decal."
 
 	// Inputs
@@ -4241,7 +4241,7 @@
 	
 	Width(float) : "Width" : "2" : "Width of the rope."
 
-	TextureScale(string) : "Texture Scale" : "1" : "This changes the texture resolution. The default resolution is 4 pixels per inch. Larger values stretch the texture and smaller values scrunch it up."
+	TextureScale(float) : "Texture Scale" : "1" : "This changes the texture resolution. The default resolution is 4 pixels per inch. Larger values stretch the texture and smaller values scrunch it up."
 	
 	Collide(choices) : "Collide with world" : 0 =
 	[
@@ -4265,7 +4265,7 @@
 
 	// Inputs
 	input SetScrollSpeed(float) : "Set the speed at which the texture scrolls."
-	input SetForce(string) : "Apply a force instantaneously to the rope. The parameter should be a vector containing the force to be applied (X Y Z)."
+	input SetForce(vector) : "Apply a force instantaneously to the rope. The parameter should be a vector containing the force to be applied (X Y Z)."
 	input SetSlack(integer) : "Set the rope's slack. (Wind may need to be enabled for changes to apply)"
 	input SetWidth(float) : "Set the rope's width."
 	input SetSubdivision(integer) : "Set the rope's subdivision. (Wind may need to be enabled for changes to apply)"
@@ -4545,7 +4545,7 @@
 //
 //-------------------------------------------------------------------------
 
-@BaseClass base(Targetname, Parentname, RenderFields, Global, Shadow) = Door
+@BaseClass base(Targetname, Parentname, RenderFields, Global, Shadow) line(255 255 255, targetname, chainstodoor) = Door
 [
 	speed(integer) : "Speed" : 100 : "The speed at which the door moves."
 	//master(target_destination) : "Master (Obsolete)" : : "Legacy support: The name of a master entity. If the master hasn't been activated, this button cannot be used."
@@ -4643,6 +4643,7 @@
 	input Lock(void) : "Lock the door."
 	input Unlock(void) : "Unlock the door."
 	input SetSpeed(float) : "Set the door speed."
+	input SetToggleState(bool) : "Force the door instantly to currently open or closed." //added by vizzys
 ]
 
 @SolidClass base(Door, Origin) = func_door : 
@@ -9318,7 +9319,7 @@
 	Target(target_destination) : "Entity to Move" : "" : "This entity will be mirrored across the motions of Entity to Measure. (Movement target)"
 	TargetReference(target_destination) : "Movement Reference" : "" : "The Entity to Move will be mirrored relative to this entity. (Mirror target)"
 	
-	input SetTarget(string) : "Set the Target Entity."									//added by vizzys
+	input SetTarget(target_destination) : "Set the Target Entity."				//added by vizzys
 	input SetMirrorTarget(string) : "Set the Mirror Target Entity."			//added by vizzys
 	input SetRemoteTarget(string) : "Set the Remote Target Entity."		//added by vizzys
 	input SetMirrorRelative(string) : "Set the Mirror Relative Entity."	//added by vizzys
@@ -9563,7 +9564,7 @@
 	lifetime(float) : "Lifetime" : "0.5"
 	startwidth(float) : "Start Width" : "8.0"
 	endwidth(float) : "End Width" : "1.0"
-	spritename(string) : "Sprite Name" : "sprites/bluelaser1.vmt"
+	spritename(material) : "Sprite Name" : "sprites/bluelaser1.vmt"
 
 	renderamt(integer) : "FX Amount (0 - 255)" : 255 : "The FX amount is used by the selected Render Mode."
 	rendercolor(color255) : "FX Color (R G B)" : "255 255 255" : "The FX color is used by the selected Render Mode."

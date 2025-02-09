@@ -170,7 +170,7 @@
 	ballcount(integer) : "Ball count" : 3 : "This is how many balls will be bouncing around inside the spawner"
 	minspeed(float) : "Min ball speed" : "300.0" : "The minimum speed of balls that fly in the spawner"
 	maxspeed(float) : "Max ball speed" : "600.0" : "The maximum speed of balls that fly in the spawner"
-	ballradius(float) : "Ball radius" : "20.0" : "The radius of the energy balls"
+	ballradius(float) : "Ball radius" : 12.0 : "The size of the sprite and the collision. This is restricted within 1-12 units."
 	balltype(choices) : "Ball Type" : "Combine Energy Ball 1" =
 	[
 		0 : "Combine Energy Ball 1"
@@ -1769,7 +1769,7 @@
 		4194304 : "[4194304] Aim at enemies even when gun is off" : 0
 	]
 
-	InitialSpeed(string) : "Initial Speed" : "0"
+	InitialSpeed(float) : "Initial Speed" : "0"
 	GracePeriod(float) : "Grace Period" : "2.0" : "Time in seconds the helicopter has to see the player before it starts shooting"
 	PatrolSpeed(float) : "Patrol Speed" : "0" : "Speed at which the helicopter moves if it has no enemy."
 	
