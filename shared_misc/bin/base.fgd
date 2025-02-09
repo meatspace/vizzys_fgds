@@ -1378,7 +1378,7 @@
 	overlaysize(integer) : "Overlay Size" : -1 : "A value of -1 means the overlay will act the old way."
 	
 	material(sprite) : "Material Name" : "sprites/light_glow02_add_noz" : "Material of the inner glow."
-	overlaymaterial(material) : "Overlay Material Name" : "sprites/light_glow02_add_noz" : "Material of the overlay glow."
+	overlaymaterial(sprite) : "Overlay Material Name" : "sprites/light_glow02_add_noz" : "Material of the overlay glow."
 
 	HDRColorScale(float) : "HDR color scale." : "1.0" : "float value to multiply sprite color by when running in HDR mode."
 
@@ -1847,7 +1847,7 @@
 	life(string) : "Life (seconds 0 = infinite)" : "1" : "Amount of time before the beam dies. Setting to zero will make the beam stay forever."
 	BoltWidth(float) : "Width of beam" : 2 : "Pixel width of the beam."
 	NoiseAmplitude(float) : "Amount of noise (0-255)" : 0 : "The amount of noise in the beam. 0 is a perfectly straight beam."
-	texture(material) : "Sprite Name" : "sprites/laserbeam.vmt" : "The material used to draw the beam."
+	texture(sprite) : "Sprite Name" : "sprites/laserbeam.vmt" : "The material used to draw the beam."
 	TextureScroll(integer) : "Texture Scroll Rate (0-100)" : 35 : "Rate at which the beam texture should scroll along the beam."
 	framerate(integer) : "Frames per 10 seconds" : 0 : "Framerate at which the beam texture should animate, if it has multiple frames."
 	framestart(integer) : "Starting Frame" : 0 : "The frame to start the beam texture on."
@@ -2014,7 +2014,7 @@
 	// If no radius override, magnitude will determine radius.
 	iRadiusOverride(Integer) : "Radius Override" : 0 : "If specified, the radius in which the explosion damages entities. If unspecified, the radius will be based on the magnitude."
 	DamageForce(float) : "Damage Force" : 0 : "Overrides push force. BUG: Very obvious disparity between force applied to players and force applied to physics objects." //added by vizzys
-	fireballsprite(material) : "Fireball Sprite" : "sprites/zerogxplode.vmt"
+	fireballsprite(sprite) : "Fireball Sprite" : "sprites/zerogxplode.vmt"
 	rendermode(choices) : "Render Mode" : 5 =
 	[
 		0: "Normal"
@@ -2064,8 +2064,8 @@
 	endsize(float) : "Ending particle size" : "50" : "Ending particle size."
 	spawnradius(float) : "Spawn radius" : "15" : "Distance from env_smoketrail at which particles are emitted."
 
-	firesprite(material) : "Fire Sprite" : "sprites/firetrail.vmt"
-	smokesprite(material) : "Smoke Puff" : "sprites/whitepuff.vmt"
+	firesprite(sprite) : "Fire Sprite" : "sprites/firetrail.vmt"
+	smokesprite(sprite) : "Smoke Puff" : "sprites/whitepuff.vmt"
 ]
 
 @PointClass base(Targetname, Parentname) sphere(radius) sphere(inner_radius) sphere(radius) iconsprite("editor/env_physexplosion.vmt") = env_physexplosion : 
@@ -2332,8 +2332,8 @@
 	rendercolor(color255) : "Beam Color (R G B)" : "255 255 255"
 	width(float) : "Width of Beam" : 2 : "The width of the laser beam, in pixels."
 	NoiseAmplitude(integer) : "Amount of noise (0-255)" : 0 : "The amount of noise in the beam. 0 is a perfectly straight beam."
-	texture(material) : "Sprite Name" : "sprites/laserbeam.vmt" : "The material used to draw the laser beam."
-	EndSprite(material) : "End Sprite" : "" : "If specified, this sprite will be drawn at the end of the laser beam."
+	texture(sprite) : "Sprite Name" : "sprites/laserbeam.vmt" : "The material used to draw the laser beam."
+	EndSprite(sprite) : "End Sprite" : "" : "If specified, this sprite will be drawn at the end of the laser beam."
 	TextureScroll(integer) : "Texture Scroll Rate (0-100)" : 35 : "Rate at which the beam texture should scroll along the beam."
 	framestart(integer) : "Starting Frame" : 0 : "The frame to start the beam texture on."
 	damage(string) : "Damage / second" : "100" : "How much damage this laser does. per second. to things it hits."
@@ -3333,7 +3333,7 @@
 	"An entity that places a decal on the world. If the decal has no target name, it will immediately apply itself when the level is loaded. "+
 	"If it has a name specified, it won't apply until it receives the 'Activate' input."
 [
-	texture(material)
+	texture(decal)
 
 	LowPriority(choices) : "Low Priority (can be replaced)" : 0 =
 	[
@@ -3351,7 +3351,7 @@
 	"An entity that projects a decal onto the world (or props). If the decal has no target name, it will immediately apply itself when "+
 	"the level is loaded. If it has a name specified, it won't apply until it receives the 'Activate' input."
 [
-	texture(material)
+	texture(decal)
 	Distance(float) : "Distance" : 64 : "Distance from the origin to project the decal."
 
 	// Inputs
