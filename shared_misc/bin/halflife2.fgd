@@ -170,7 +170,7 @@
 	ballcount(integer) : "Ball count" : 3 : "This is how many balls will be bouncing around inside the spawner"
 	minspeed(float) : "Min ball speed" : "300.0" : "The minimum speed of balls that fly in the spawner"
 	maxspeed(float) : "Max ball speed" : "600.0" : "The maximum speed of balls that fly in the spawner"
-	ballradius(float) : "Ball radius" : 12.0 : "The size of the sprite and the collision. This is restricted within 1-12 units."
+	ballradius(float) : "Ball radius" : "12.0" : "The size of the sprite and the collision. This is restricted within 1-12 units."
 	balltype(choices) : "Ball Type" : "Combine Energy Ball 1" =
 	[
 		0 : "Combine Energy Ball 1"
