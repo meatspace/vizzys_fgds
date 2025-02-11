@@ -583,7 +583,7 @@
 		2 : "[2] No Interruptions" : 0
 		// 4 : "[4] Snap Shot" : 0 OBSOLETE NOW but don't overwrite, in case some levels need legacy support.
 		8 : "[8] Resume if Interrupted" : 0
-		16: "[16] Snap to me" : 0
+		16 : "[16] Snap to me" : 0
 	]
 ]
 
