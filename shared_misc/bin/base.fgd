@@ -789,6 +789,7 @@
 	MaxNPCCount(integer) : "Num. of NPCs" : 1 : "Number of NPCs that will spawn before this spawner is exhausted."
 	SpawnFrequency(string) : "Frequency" : "5" : "How often (in seconds) a new NPC will be spawned. If set to -1, a new NPC will be made when the last NPC dies."
 	MaxLiveChildren(integer) : "Max Live NPCs" : 5 : "Maximum number of live children allowed at any one time (new ones will not be made until one dies). If set to -1, no limit is applied."
+	ignoreentity(target_destination) : "Entity To Ignore" : : "If set, an entity to ignore when checking if there's room to spawn." //added by vizzys
 	
 	// Outputs
 	output OnSpawnNPC(ehandle) : "Fired when an NPC is spawned. The activator is the NPC, and the parameter is a pointer to the NPC." 
@@ -807,7 +808,7 @@
 	input SetSpawnFrequency(float) : "Sets how often (in seconds) a new NPC will be spawned."
 ]
 
-@PointClass base(BaseNPCMaker) iconsprite("editor-ficool2/npc_template_maker") sphere(Radius) sphere(MinSpawnDistance) line(0 128 0, targetname, TemplateName) = npc_template_maker : 
+@PointClass base(BaseNPCMaker) iconsprite("editor-ficool2/npc_template_maker") sphere(Radius) sphere(MinSpawnDistance) line(0 128 0, targetname, TemplateName) line(255 16 16, targetname, ignoreentity) = npc_template_maker : 
 	"An entity that creates NPCs. The NPCs it creates are clones of a template NPC. NPCs are spawned around this maker's origin, or at specified destination points."
 [
 	spawnflags(Flags) = 
@@ -1844,7 +1845,7 @@
 	renderamt(integer) : "Brightness (1 - 255)" : 100
 	rendercolor(color255) : "Beam Color (R G B)" : "255 255 255"
 	Radius(integer) : "Radius" : 256 : "If the 'Random Strike' spawnflag is set, this radius determines the area within which the endpoints will randomly strike."
-	life(string) : "Life (seconds 0 = infinite)" : "1" : "Amount of time before the beam dies. Setting to zero will make the beam stay forever."
+	life(float) : "Life (seconds 0 = infinite)" : "1" : "Amount of time before the beam dies. Setting to zero will make the beam stay forever."
 	BoltWidth(float) : "Width of beam" : 2 : "Pixel width of the beam."
 	NoiseAmplitude(float) : "Amount of noise (0-255)" : 0 : "The amount of noise in the beam. 0 is a perfectly straight beam."
 	texture(sprite) : "Sprite Name" : "sprites/laserbeam.vmt" : "The material used to draw the beam."
@@ -5031,7 +5032,7 @@
 		1 : "Yes"
 	]
 	CycleFrequency(float) : "Cycle Frequency" : "0.0" : "Base cycles per second from -10.0 to 10.0."
-	FModulationType(choices) : "Frequency Modulation Type" : 0 = 
+	FModType(choices) : "Frequency Modulation Type" : 0 = 
 	[
 		0: "None"
 		1: "Sine"
@@ -8155,7 +8156,7 @@
 	output OnOut(void) : "Fired whenever the prop completes its 'Out' animation."
 ]
 
-@BaseClass base(Targetname, Global, Angles, Studiomodel, BreakableProp, RenderFields, DXLevelChoice, Parentname, BaseFadeProp) = BasePropPhysics
+@BaseClass base(Targetname, Global, Angles, Studiomodel, BreakableProp, RenderFields, DXLevelChoice, Parentname, BaseFadeProp, DamageFilter) = BasePropPhysics
 [ 
 	spawnflags(flags) = 
 	[

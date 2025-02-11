@@ -810,6 +810,10 @@
 		1048576 : "[1048576] Perfect Accuracy (NPCs have perfect accuracy when shooting this target)" : 0
 		2097152 : "[2097152] Collide against physics objects (Creates VPhysics Shadow)" : 0
 	]
+	
+	input InputTargeted(void) : "Fires the OnTargeted output." //added by vizzys
+	input InputReleased(void) : "Fires the OnReleased output." //added by vizzys
+	
 	output OnTargeted(void) : "Fires when targeted"
 	output OnReleased(void) : "Fires when no longer targeted"
 ]
@@ -2363,7 +2367,7 @@
 	input Alpha(integer) : "Set Alpha Value"
 ]
 
-@PointClass base(Angles, BaseNPCMaker) iconsprite("editor/npc_maker.vmt") = npc_maker : "NPC Maker"
+@PointClass base(Angles, BaseNPCMaker) iconsprite("editor/npc_maker.vmt") line(255 16 16, targetname, ignoreentity) = npc_maker : "NPC Maker"
 [
 	spawnflags(Flags) = 
 	[
@@ -2393,7 +2397,7 @@
 	]
 ]
 
-@PointClass base(Angles, BaseNPCMaker) iconsprite("vizzys-icons/npc_antlion_template_maker") = npc_antlion_template_maker : "Antlion Template Maker"
+@PointClass base(Angles, BaseNPCMaker) iconsprite("vizzys-icons/npc_antlion_template_maker") line(255 16 16, targetname, ignoreentity) = npc_antlion_template_maker : "Antlion Template Maker"
 [
 	spawnflags(Flags) = 
 	[
@@ -3808,7 +3812,7 @@
 // Tanks
 //
 //-------------------------------------------------------------------------
-@BaseClass base(Targetname, Parentname, Origin, Angles, RenderFields, Global, Shadow) = BaseTank
+@BaseClass base(Targetname, Parentname, Origin, Angles, RenderFields, Global, Shadow) line(255 255 255, targetname, control_volume) sphere(maxrange) = BaseTank
 [
 	spawnflags(flags) =
 	[
