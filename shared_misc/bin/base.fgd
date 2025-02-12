@@ -7896,7 +7896,7 @@
 	spinup(string) : "Spin up time" : "1" : "spin up time in seconds (also affects the rate at which speed changes happen)"
 	inertiafactor(float) : "System Inertia Scale" : "1.0" : "Make this larger if the object being driven is constrained to a set of heavier objects."
 	axis(vecline) : "Rotation Axis" : ""
-	addangaccel(float) : "Additional Angular Acceleration" : "0.0" : "Increase this if you want the object to have more acceleration."
+	addangaccel(float) : "Additional Angular Acceleration" : "0.0" : "Increase this if you want the object to have more acceleration." //added by vizzys
 
 	spawnflags(flags) =
 	[
@@ -9568,7 +9568,7 @@
 	lifetime(float) : "Lifetime" : "0.5"
 	startwidth(float) : "Start Width" : "8.0"
 	endwidth(float) : "End Width" : "1.0"
-	spritename(sprite) : "Sprite Name" : "sprites/bluelaser1.vmt"
+	spritename(string) : "Sprite Name" : "sprites/bluelaser1.vmt"
 
 	renderamt(integer) : "FX Amount (0 - 255)" : 255 : "The FX amount is used by the selected Render Mode."
 	rendercolor(color255) : "FX Color (R G B)" : "255 255 255" : "The FX color is used by the selected Render Mode."
