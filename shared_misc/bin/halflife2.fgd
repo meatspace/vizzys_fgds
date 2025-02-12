@@ -501,6 +501,12 @@
 	input TurnOn(void) : "Restore this rollermine to normal functionality."
 	input TurnOff(void) : "Make this rollermine completely inert. Does not run AI and NPCs will ignore it." 
 
+	input ConstraintBroken(void) : "Make the rollermine fall off of a vehicle." //added by vizzys
+	input RespondToChirp(void) : "Play a chirp, used to respond to other rollermines nearby." //added by vizzys
+	input RespondToExplodeChirp(void) : "Play a different chirp, then explode." //added by vizzys
+	input JoltVehicle(void) : "Zap the vehicle we're on. This is automatically fired when it attaches, then re-fired with a delay to make it zap." //added by vizzys
+	input PowerDown(void) : "EPISODIC ONLY. Shut down a hacked rollermine, then explode it after 4 seconds." //added by vizzys
+
 	output OnPhysGunPickup(void) : "Picked up with Gravity Gun"
 	output OnPhysGunDrop(void) : "Released by Gravity Gun"
 ]
@@ -663,7 +669,7 @@
 
 ]
 
-@NPCClass base(BaseNPC) studio("models/antlion_guard.mdl") = npc_antlionguard : "Antlion Guard"
+@NPCClass base(BaseNPC) studio("models/antlion_guard.mdl") line(128 0 0, targetname, shovetargets) = npc_antlionguard : "Antlion Guard"
 [
 	spawnflags(Flags) =
 	[
@@ -677,7 +683,7 @@
 		1 : "Yes"
 	]
 
-	allowbark(choices) : "Allow Bark" : "No" =
+	allowbark(choices) : "Allow Bark (Antlion Summon)" : "No" =
 	[
 		0 : "No"
 		1 : "Yes"
