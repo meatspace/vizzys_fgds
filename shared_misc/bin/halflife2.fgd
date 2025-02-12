@@ -278,11 +278,8 @@
 @NPCClass base(BaseNPC) sphere(sightdist) studio("models/combine_soldier.mdl") = npc_combine_cannon : "Combine Autocannon"
 [
 
-	spawnflags(flags): "spawnflags" =
+	spawnflags(flags) =
 		[
-		// These two are forcefully enabled:
-		// 256: "Long Visibility/Shoot" : 0
-		// 1024: "Think outside PVS" : 0
 		524288: "Start Disabled" : 0
 		]
 
