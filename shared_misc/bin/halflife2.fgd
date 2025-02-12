@@ -5393,7 +5393,7 @@
 	output OnDamagedByPlayer(void) : "Fired when the APC is damaged by the player."
 ]
 
-@SolidClass base(Targetname, Origin, Angles, EnableDisable) = info_apc_missile_hint :
+@SolidClass base(Targetname, Origin, Angles, EnableDisable) line(255 0 0, targetname, target) = info_apc_missile_hint :
 	"Something that helps APC missiles guide. If the missile can hit the associated target entity"+
 	"between the time it takes the current enemy to enter + leave the hint, then the missile will guide to the entity."
 [
@@ -5734,7 +5734,7 @@
 	]	
 ]
 
-@PointClass base(Targetname) iconsprite("editor-ficool2/env_entity_dissolver") = env_entity_dissolver: "Entity Dissolver"
+@PointClass base(Targetname) iconsprite("editor-ficool2/env_entity_dissolver") line(255 255 255, targetname, target) = env_entity_dissolver: "Entity Dissolver"
 [
 	input Dissolve(target_destination) : "Dissolve target, if no target is passed it'll use the target specified in the target field."
 	target(target_destination) : "Target to Dissolve" : "" : "Targetname of the entity you want to dissolve."

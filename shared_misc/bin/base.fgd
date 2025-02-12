@@ -2221,7 +2221,7 @@
 	output OnHeatLevelEnd(void) : "Fires when the heat level drops below the target level."
 ]
 
-@PointClass base(Targetname) iconsprite("editor-ficool2/env_entity_igniter") = env_entity_igniter : 
+@PointClass base(Targetname) iconsprite("editor-ficool2/env_entity_igniter") line(255 128 0, targetname, target) = env_entity_igniter : 
 	"An entity that catches a target entity on fire. If the entity is an animating model, it will have sprite flames attached to its skeleton. Otherwise the entity will emit particle flame puffs."
 [
 	target(target_destination) : "Entity to ignite" : : "Name of the entity to catch on fire."
@@ -4837,9 +4837,9 @@
 
 	Color(color255) : "Particle Color (R G B)" : "255 255 255"
 	SpawnRate(integer) : "Particle Per Second" : 40 : "Number of particles to spawn, per second."
-	SpeedMax(string) : "Maximum Particle Speed" : 13 : "Maximum speed that the particles can move after spawning."
-	LifetimeMin(string) : "Minimum Particle Lifetime" : 3 : "Minimum number of seconds until each particle dies. Particles live for a random duration between this and 'Maximum Particle Lifetime'."
-	LifetimeMax(string) : "Maximum Particle Lifetime" : 5 : "Maximum number of seconds until each particle dies. Particles live for a random duration between 'Minimum Particle Lifetime' and this."
+	SpeedMax(integer) : "Maximum Particle Speed" : 13 : "Maximum speed that the particles can move after spawning."
+	LifetimeMin(integer) : "Minimum Particle Lifetime" : 3 : "Minimum number of seconds until each particle dies. Particles live for a random duration between this and 'Maximum Particle Lifetime'."
+	LifetimeMax(integer) : "Maximum Particle Lifetime" : 5 : "Maximum number of seconds until each particle dies. Particles live for a random duration between 'Minimum Particle Lifetime' and this."
 	DistMax(integer) : "Maximum Visible Distance" : 1024 : "Maximum distance at which particles are visible. They fade to translucent at this distance."
 
 	Frozen(choices) : "Frozen" : 0 : "When set, this entity spawns the number of particles in SpawnRate immediately, and then goes inactive." =
@@ -5483,7 +5483,7 @@
 ]
 
 
-@PointClass base(Targetname, Parentname, EnableDisable) iconsprite("editor/env_microphone.vmt") sphere(MaxRange) color(0 0 255) = env_microphone :
+@PointClass base(Targetname, Parentname, EnableDisable) iconsprite("editor/env_microphone.vmt") sphere(MaxRange) color(0 0 255) line(255 255 0, targetname, target, targetname, SpeakerName) = env_microphone :
 	"An entity that acts as a microphone. It works in one of two modes. If it has a 'Speaker' set, it picks up all sounds within the specified sound range, " +
 	"and rebroadcasts them through the Speaker entity. In this Speaker mode, it ignores the Hears X spawnflags and does not fire the SoundLevel output. " +
 	"If it has no Speaker set, it measures the sound level at a point, and outputs the sound level as a value between 0 and 1. In Measuring mode, it only hears sounds that match the Hear X spawnflags."
@@ -7663,7 +7663,7 @@
 	massScale(float) : "Amount to scale the mass of this body in the constraint solver" : "1"
 ]
 
-@PointClass iconsprite("editor-ficool2/info_mass_center") = info_mass_center :
+@PointClass iconsprite("editor-ficool2/info_mass_center") line(128 128 128, targetname, target) = info_mass_center :
 	"An entity that overrides the mass center of the target physics prop, or func_physbox, by moving it to the info_mass_center's location."
 [
 	target(target_destination) : "Target object" : ""  : "The entity whose mass center will be overridden."
@@ -8761,7 +8761,7 @@
 	output OnDeath(void) : "Fired when the tank is killed."
 ]
 
-@SolidClass base(Parentname,Global) = func_traincontrols :
+@SolidClass base(Parentname,Global) line(255 255 255, targetname, target) = func_traincontrols :
 	"When used by the player, this entity overrides the player's controls to let them drive a train."
 [
 	target(target_destination) : "Train Name" : : "The target train to control when the player uses these controls."
