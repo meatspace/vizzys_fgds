@@ -284,7 +284,7 @@
 		]
 
 	sightdist(float) : "Sight radius" : 1024 : "Radius distance at which the cannon is able to acquire enemies."
-	
+	// Inputs
 	input InputEnableSniper(void) : "Enable the cannon." //added by vizzys
 	input InputDisableSniper(void) : "Disable the cannon." //added by vizzys
 ]
@@ -890,11 +890,11 @@
 	]
 
 	// Inputs
-	input TurnOn(void) : "Turn on: Look for enemies"  //added by vizzys
-	input TurnOff(void) : "Turn off: Stop looking for enemies"  //added by vizzys
+	input TurnOn(void) : "Turn on: Look for enemies"
+	input TurnOff(void) : "Turn off: Stop looking for enemies"
 	input FieldOfView(float) : "Sets the Field of View."  //added by vizzys
-	input MinSearchDist(integer) : "Sets the minimum search distance."
-	input MaxSearchDist(integer) : "Sets the maximum search distance."
+	input MinSearchDist(integer) : "Sets the minimum search distance." //added by vizzys
+	input MaxSearchDist(integer) : "Sets the maximum search distance." //added by vizzys
 
 	output OnLostEnemies(void) : "Fires when the enemy finder has no enemies."
 	output OnAcquireEnemies(void) : "Fires when the enemy finder acquires enemies."
@@ -4090,7 +4090,7 @@
 		100679691: "MASK_SHOT_HULL (hits NPCs)"
 	]
 
-	input ShootGun(void) : "Manually shoots the gun." //added by vizzys
+	input ShootGun(void) : "Manually shoots the mortar." //added by vizzys
 	input FireAtWill(void) : "Allow tank to fire next shot as soon as ready."
 ]
 
