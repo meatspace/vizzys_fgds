@@ -277,7 +277,19 @@
 
 @NPCClass base(BaseNPC) sphere(sightdist) studio("models/combine_soldier.mdl") = npc_combine_cannon : "Combine Autocannon"
 [
+
+	spawnflags(flags): "spawnflags" =
+		[
+		// These two are forcefully enabled:
+		// 256: "Long Visibility/Shoot" : 0
+		// 1024: "Think outside PVS" : 0
+		524288: "Start Disabled" : 0
+		]
+
 	sightdist(float) : "Sight radius" : 1024 : "Radius distance at which the cannon is able to acquire enemies."
+	
+	input InputEnableSniper(void) : "Enable the cannon." //added by vizzys
+	input InputDisableSniper(void) : "Disable the cannon." //added by vizzys
 ]
 
 @NPCClass base(BaseNPC) sphere(innerradius) sphere(outerradius) studio("models/combine_camera/combine_camera.mdl") = npc_combine_camera :
@@ -829,8 +841,8 @@
 		524288  : "[524288] Can be an enemy (Allows this entity to be considered an enemy by other combat characters)" : 0
 	]
 	FieldOfView(float) : "FieldOfView" : "0.2" : "The enemy finder's viewcone. (1.0 = straight ahead, 0.0 = +/- 90 degrees, -1.0 = all directions)"
-	MinSearchDist(integer) : "Min Search Dist" : 0
-	MaxSearchDist(integer) : "Max Search Dist" : 2048
+	MinSearchDist(integer) : "Min Search Distance" : 0
+	MaxSearchDist(integer) : "Max Search Distance" : 2048
 
 	freepass_timetotrigger(float) : "Player pass issue time" : 0 : "Amount of time an enemy is hidden after which a 'free pass' on reacquire is granted"
 	freepass_duration(float) : "Player pass duration" : 0 : "After granted 'free pass', the amount of time a target is allowed before reacquire"
@@ -875,8 +887,11 @@
 	]
 
 	// Inputs
-	input TurnOn(void) : "Turn on: Look for enemies"
-	input TurnOff(void) : "Turn off: Stop looking for enemies"
+	input TurnOn(void) : "Turn on: Look for enemies"  //added by vizzys
+	input TurnOff(void) : "Turn off: Stop looking for enemies"  //added by vizzys
+	input FieldOfView(float) : "Sets the Field of View."  //added by vizzys
+	input MinSearchDist(integer) : "Sets the minimum search distance."
+	input MaxSearchDist(integer) : "Sets the maximum search distance."
 
 	output OnLostEnemies(void) : "Fires when the enemy finder has no enemies."
 	output OnAcquireEnemies(void) : "Fires when the enemy finder acquires enemies."
@@ -1543,30 +1558,31 @@
 
 	input StartPatrol(void) : "Start patrolling back and forth along the current track."
 	input StopPatrol(void) : "Stop patrolling back and forth along the track. This will cause the helicopter to come to rest at the track which it's currently flying toward."
-	input ChooseFarthestPathPoint(void) : "When tracking an enemy, choose the point on the path furthest from the enemy, but still in firing range"
-	input ChooseNearestPathPoint(void) : "When tracking an enemy, choose the point on the path nearest from the enemy"
-	input Crouch(void) : "Crouch down"
+	input ChooseFarthestPathPoint(void) : "When tracking an enemy, choose the point on the path furthest from the enemy, but still in firing range."
+	input ChooseNearestPathPoint(void) : "When tracking an enemy, choose the point on the path nearest from the enemy."
+	input Crouch(void) : "Crouch down."
 	input CrouchInstantly(void) : "Crouch instantly. This makes the Strider pop to a crouch. Do not do this where players can observe."
-	input Stand(void) : "Stand up from crouch"
+	input Stand(void) : "Stand up from crouch."
 	input DisableCrouchWalk(void)
 	input EnableCrouchWalk(void)
 	
 	input SetTargetPath(target_destination) : "Set a path for the strider to patrol. The strider will first move to the closest point on the path"
 	input ClearTargetPath(void) : "Clear the strider patrol path"
 
-	input EnableAggressiveBehavior(void) : "Use aggressive behavior. Fire faster, more frequently"
+	input EnableAggressiveBehavior(void) : "Use aggressive behavior. Fire faster, more frequently."
 	input DisableAggressiveBehavior(void) : "Stop using aggressive behavior. (Revert to normal)"
 
-	input StopShootingMinigunForSeconds(float) : "Stop shooting the minigun for a period of time (specify seconds as parameter)"
-
-	input DisableCrouch(void) : "Prevent the Strider from crouching"
-	input EnableCrouch(void) : "Allow the Strider to crouch again if it was prevented before"
+	input StopShootingMinigunForSeconds(float) : "Stop shooting the minigun for a period of time. (specify seconds as parameter)"
+	input DisableCrouch(void) : "Prevent the Strider from crouching."
+	input EnableCrouch(void) : "Allow the Strider to crouch again if it was prevented before."
 	input DisableMoveToLOS(void) : "Prevent the Strider from seeking Line of Sight to target. (Hold position)"
 	
 	input DisableCollisionWith(target_destination) : "Disable collision with a given object."
 	input EnableCollisionWith(target_destination) : "Reenable collision with a given object."
 	
-	input ScaleGroundSpeed(float) : "Scale the movement speed of the strider"
+	input ScaleGroundSpeed(float) : "Scale the movement speed of the strider."
+	input Explode(void) : "Immediately kill the strider." // added by vizzys
+	input SetHeight(float) : "Set the height of the strider above the ground. Valid values range from 200-490 units." // added by vizzys
 	
 	input SetStompFilter(target_destination) : "Sets the strider's stomp filter."
 
@@ -1644,6 +1660,9 @@
 
 	input EnableRotorSound(void) : "Turns on rotor sounds"
 	input DisableRotorSound(void) : "Turns off rotor sounds"
+	
+	input GunOn(void) : "Enable the gun." // added by vizzys
+	input GunOff(void) : "Disable the gun." //added by vizzys
 
 	// Outputs
 	output OnFireCannon(void)  : "Fires when the gunship fires a cannon round"
@@ -1742,7 +1761,7 @@
 	input DisableRotorSound(void) : "Turns off rotor sounds"
 
 	input StopWaitingForDropoff(void) : "Stop waiting for the dropoff. Dropoff as soon as possible."
-
+	input NPCFinishDustoff(string) : "Notifies the dropship that a soldier has finished the scripted sequence for exiting the crate." // added by vizzys
 
 	// Outputs
 	output OnFinishedDropoff(void)  : "Fires when the dropship has finished a dropoff."
@@ -2378,6 +2397,7 @@
 	NPCTargetname(target_source) : "Childrens' Name"
 	NPCSquadname(string) : "Childrens' Squad Name"
 	NPCHintGroup(string) : "Childrens' Hint Group"
+	relationship(string) : "Relationship" : : "Sets whether the spawned NPC likes or dislikes certain others. Format is: <string|targetname or classname> <string|disposition> <integer|rank>. Values for disposition are: D_HT (Hate), D_FR (Fear), D_LI (Like), D_NU, (Neutral)." //added by vizzys
 	
 	additionalequipment(choices) : "Weapons" : "0" =
 	[
@@ -3519,7 +3539,7 @@
 	// Outputs
 	output OnConditionsSatisfied(void) : "Fires when AI conditions satisfied"
 	output OnConditionsTimeout(void)   : "Fires when AI conditions timed out"
-	output NoValidActor(void) : "Fires if/when there are no matching actors in the map."
+	output NoValidActors(void) : "Fires if/when there are no matching actors in the map."
 ]
 
 @PointClass base(BaseScripted, Angles, DXLevelChoice) studio("models/editor/scriptedsequence.mdl") sphere(m_flRadius) = scripted_sequence :
@@ -4050,7 +4070,7 @@
 ]
 
 
-@SolidClass base(BaseTank) sphere(radius) = func_tankmortar : "Brush Mortar Turret" 
+@SolidClass base(BaseTank) sphere(radius) = func_tankmortar : "Brush Mortar Turret aka the Combine Nexus Supression Device" 
 [
 	iMagnitude(Integer) : "Explosion Magnitude" : 100
 	firedelay(string) : "Shell travel time" : 2 : "How long after the turret fires before the shell impacts"
@@ -4067,10 +4087,11 @@
 		100679691: "MASK_SHOT_HULL (hits NPCs)"
 	]
 
+	input ShootGun(void) : "Manually shoots the gun." //added by vizzys
 	input FireAtWill(void) : "Allow tank to fire next shot as soon as ready."
 ]
 
-@SolidClass base(BaseTank) = func_tankphyscannister : "PhysCannister Turret"
+@SolidClass base(BaseTank) line(255 255 255, targetname, barrel_volume) = func_tankphyscannister : "PhysCannister Turret"
 [
 	barrel_volume(target_destination) : "Barrel Volume" : "" : "Name of a trigger the specifies the volume in which cannisters must be placed."
 ]

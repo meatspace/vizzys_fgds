@@ -865,6 +865,8 @@
 	input SetTrack(target_destination) : "Set a track for the helicopter to adhere to. The helicopter will do nothing if it's on the same path, and will move to the closest point on the specified track if it's on a different path."
 	input FlyToSpecificTrackViaPath(target_destination) : "The helicopter will first fly to the closest point on the path if it's on a different path. Then it'll fly along the path to the specified track point."
 	input FlyToPathTrack(target_destination) : "The helicopter will fly to the given path_track." //added by vizzys
+	input InputStartLeading(integer) : "Starts leading enemy vehicles with the specified distance."  //added by vizzys
+	input InputStopLeading(void) : "Stops leading enemy vehicles."  //added by vizzys
 	input StartPatrol(void) : "Start patrolling back and forth along the current track."
 	input StopPatrol(void) : "Stop patrolling back and forth along the track. This will cause the helicopter to come to rest at the track which it's currently flying toward."
 	input ChooseFarthestPathPoint(void) : "When tracking an enemy, choose the point on the path furthest from the enemy, but still in firing range."
@@ -1797,7 +1799,7 @@
 //-------------------------------------------------------------------------
 
 @PointClass base(Targetname, Parentname, Angles, RenderFxChoices, RenderFields) studio() = cycler : 
-	"An entity used to display a model for testing purposes. Shooting it with cycle through the model's animations."
+	"An entity used to display a model for testing purposes. Shooting it will cycle through the model's animations."
 [
 	spawnflags(flags) =
 	[
@@ -1829,6 +1831,7 @@
 	m_flVariance(string) : "Course Variance" : "0.15" : "How much variance in the direction gibs are fired."
 	m_flGibLife(string) : "Gib Life" : "4" : "Time in seconds for gibs to live +/- 5%"
 	lightingorigin(target_destination) : "Lighting Origin" : "" : "Select an info_lighting to specify a location to sample lighting from for all gibs spawned by this shooter, instead of their own origins."
+	nogibshadows(boolean) : "Disable Shadows on Gibs" : 0 // added by vizzys
 
 	spawnflags(Flags) = 
 	[
@@ -2498,7 +2501,7 @@
 	]
 
 	gibgravityscale(float) : "Gib gravity scale" : "1" : "ONLY WORKS FOR POINT GIBS. This field allows you to scale gravity so that gibs fall faster, slower, or not at all."
-	
+	nogibshadows(boolean) : "Disable Shadows on Gibs" : 0
 	massoverride(float) : "Mass override" : "0" : "EPISODIC ONLY. Specify an arbitrary mass for the gibs emitted by me."
 ]
 
@@ -2596,7 +2599,7 @@
 	
 	// Inputs
 	input Enable(void) : "Enable the soundscape."
-	input Disabled(void) : "Disable the soundscape."
+	input Disable(void) : "Disable the soundscape."
 	input ToggleEnabled(void) : "Toggle the soundscape enabled state."
 	// Outputs
 	output OnPlay(void) : "Fired when this soundscape becomes the active one."
@@ -2650,7 +2653,7 @@
 
 	// Inputs
 	input Enable(void) : "Enable the soundscape."
-	input Disabled(void) : "Disable the soundscape."
+	input Disable(void) : "Disable the soundscape."
 	input ToggleEnabled(void) : "Toggle the soundscape enabled state."
 
 	// Outputs
@@ -4199,17 +4202,18 @@
 [
 ]
 
-@MoveClass base(Targetname, Parentname, Mover, KeyFrame)  iconsprite("vizzys-icons/move_track") animator() = move_track : 
-	"Track Move Behavior"
-[
-	WheelBaseLength(integer) : "Distance between the wheels" : 50
-	Damage(integer) : "Damage done to blocking entities" : 0
-	NoRotate(choices) : "Turn to face down path" : 0 =
-	[
-		0 : "Yes"
-		1 : "No"
-	]
-]
+// disabled this because it literally does not exist -vizzys
+//@MoveClass base(Targetname, Parentname, Mover, KeyFrame)  iconsprite("vizzys-icons/move_track") animator() = move_track : 
+//	"Track Move Behavior"
+//[
+//	WheelBaseLength(integer) : "Distance between the wheels" : 50
+//	Damage(integer) : "Damage done to blocking entities" : 0
+//	NoRotate(choices) : "Turn to face down path" : 0 =
+//	[
+//		0 : "Yes"
+//		1 : "No"
+//	]
+//]
 
 //-------------------------------------------------------------------------
 //
@@ -5408,8 +5412,8 @@
 		1 : "Yes"
 	]
 	
-	LowerRandomBound(string) : "Minimum Random Interval" : : "If 'Use Random Time' is set, this is the minimum time between timer fires. The time will be a random number between this and the 'Maximum Random Interval'."
-	UpperRandomBound(string) : "Maximum Random Interval" : : "If 'Use Random Time' is set, this is the maximum time between timer fires. The time will be a random number between the 'Minimum Random Interval' and this."
+	LowerRandomBound(float) : "Minimum Random Interval" : : "If 'Use Random Time' is set, this is the minimum time between timer fires. The time will be a random number between this and the 'Maximum Random Interval'."
+	UpperRandomBound(float) : "Maximum Random Interval" : : "If 'Use Random Time' is set, this is the maximum time between timer fires. The time will be a random number between the 'Minimum Random Interval' and this."
 	RefireTime(string) : "Refire Interval" : : "If 'Use Random Time' isn't set, this is the time between timer fires, in seconds."
 	
 	UseBoundsForTimerInputs(choices) : "Limit Timer Inputs" : 0 : "Allows the Minimum/Maximum Random Interval keyvalues to limit the total timer value when it receives AddToTimer or SubtractFromTimer inputs." =
@@ -7619,6 +7623,7 @@
 	// Inputs
 	input TurnOn(void) : "Enable the controller."
 	input TurnOff(void) : "Disable the controller." 
+	input SetAngularLimit(float) : "Change the angular limit." // added by vizzys
 ]
 
 @PointClass base(Targetname, Angles, Studiomodel) sphere(expradius) studioprop() = physics_cannister : 
@@ -7894,6 +7899,7 @@
 	spinup(string) : "Spin up time" : "1" : "spin up time in seconds (also affects the rate at which speed changes happen)"
 	inertiafactor(float) : "System Inertia Scale" : "1.0" : "Make this larger if the object being driven is constrained to a set of heavier objects."
 	axis(vecline) : "Rotation Axis" : ""
+	addangaccel(float) : "Additional Angular Acceleration" : "0.0" : "Increase this if you want the object to have more acceleration."
 
 	spawnflags(flags) =
 	[
@@ -8947,7 +8953,7 @@
 @SolidClass base(Trigger) = trigger_multiple :
 	"A trigger volume that can be triggered multiple times."
 [
-	wait(integer) : "Delay Before Reset" : 1 : "Amount of time, in seconds, after the trigger_multiple has triggered before it can be triggered again. If set to -1, it will never trigger again (in which case you should just use a trigger_once)."
+	wait(float) : "Delay Before Reset" : 1 : "Amount of time, in seconds, after the trigger_multiple has triggered before it can be triggered again. If set to -1, it will never trigger again (If set to 0, it will be reset to 0.2 seconds)."
 
 	// Touch test stuff is now on all trigger entities.
 	 
@@ -9409,7 +9415,7 @@
 	input RollCredits(void) : "Start the intro credits rolling."
 	input RollOutroCredits(void) : "Start the outro credits rolling."
 	input ShowLogo(void) : "Show the HL2 logo."
-	
+	input SetLogoLength(float) : "Sets the amount of time the logo is displayed. Default is 5.0." //added by vizzys
 	// Outputs
 	output OnCreditsDone(void)  : "Fired when the credits having finished rolling."
 ]
@@ -9418,8 +9424,8 @@
 	"An entity that can be used to directly control material vars. To use it, you need to read the .vmt of the material you "+
 	"intend to change. Parent this entity to a brush model entity who's material you want to control."
 [
-	materialName(string) : "Material to modify."
-	materialVar(string) : "Material variable to modify."
+	materialName(string) : "The single material to modify on the parent. 'materials/' and '.vmt' is not required. Maximum of 255 characters allowed."
+	materialVar(string) : "Material variable to modify, '$frame' for example. Maximum of 255 characters allowed."
 
 	// Inputs
 	input SetMaterialVar(string) : "Fire to modify a material variable. The argument is the value to set the variable to."
