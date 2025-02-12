@@ -1831,7 +1831,6 @@
 	m_flVariance(string) : "Course Variance" : "0.15" : "How much variance in the direction gibs are fired."
 	m_flGibLife(string) : "Gib Life" : "4" : "Time in seconds for gibs to live +/- 5%"
 	lightingorigin(target_destination) : "Lighting Origin" : "" : "Select an info_lighting to specify a location to sample lighting from for all gibs spawned by this shooter, instead of their own origins."
-	nogibshadows(boolean) : "Disable Shadows on Gibs" : 0 // added by vizzys
 
 	spawnflags(Flags) = 
 	[
@@ -2501,7 +2500,6 @@
 	]
 
 	gibgravityscale(float) : "Gib gravity scale" : "1" : "ONLY WORKS FOR POINT GIBS. This field allows you to scale gravity so that gibs fall faster, slower, or not at all."
-	nogibshadows(boolean) : "Disable Shadows on Gibs" : 0
 	massoverride(float) : "Mass override" : "0" : "EPISODIC ONLY. Specify an arbitrary mass for the gibs emitted by me."
 ]
 
