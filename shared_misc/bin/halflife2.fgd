@@ -280,7 +280,7 @@
 
 	spawnflags(flags) =
 		[
-		524288 : "Start Disabled" : 0
+		524288 : "[524288] Start Disabled" : 0
 		]
 
 	sightdist(float) : "Sight radius" : 1024 : "Radius distance at which the cannon is able to acquire enemies."
