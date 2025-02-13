@@ -7940,6 +7940,7 @@
 	// Inputs
 	input TurnOn(void) : "Turn the magnet on."
 	input TurnOff(void) : "The the magnet off. This will detach anything current stuck to the magnet."
+	input Toggle(void) : "Toggle the magnet on or off." //added by vizzys
 	
 	input SetCycle(float) : "Skip to a specific point in the CURRENT animation. Needs to be set AFTER setting the animation and starting playback." //added by vizzys
 	input SetModel(string) : "Changes the model to the specified path. Form of models/ammo/ammo_us.mdl. Absolutely NO quotes. Make sure you use forward slash." //added by vizzys

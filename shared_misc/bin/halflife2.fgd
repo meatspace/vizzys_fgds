@@ -5340,7 +5340,7 @@
 [
 ]
 
-@PointClass base(Targetname, Angles) iconsprite("vizzys-icons/point_apc_controller") = point_apc_controller : "APC Controller"
+@PointClass base(Targetname, Angles) iconsprite("vizzys-icons/point_apc_controller") line(255 255 255, targetname, targetentityname) = point_apc_controller : "APC Controller"
 [
 	spawnflags(flags) =
 	[
