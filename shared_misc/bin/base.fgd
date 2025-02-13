@@ -2658,7 +2658,17 @@
 	output OnPlay(void) : "Fired when this soundscape becomes the active one."
 ]
 
-@PointClass base(env_soundscape) sphere(radius) iconsprite("editor/env_soundscape.vmt") = env_soundscape_triggerable : 
+@PointClass base(env_soundscape) sphere(radius) iconsprite("editor/env_soundscape.vmt") 
+	line(255 255 255, targetname, MainSoundscapeName) 
+	line(128 128 128, targetname, position0) 
+	line(128 128 128, targetname, position1) 
+	line(128 128 128, targetname, position2) 
+	line(128 128 128, targetname, position3) 
+	line(128 128 128, targetname, position4) 
+	line(128 128 128, targetname, position5) 
+	line(128 128 128, targetname, position6) 
+	line(128 128 128, targetname, position7)
+= env_soundscape_triggerable : 
 	"An entity that works like env_soundscape except that it works in conjunction with trigger_soundscape to determine when a player hears it."
 [
 ]
@@ -8760,7 +8770,7 @@
 	output OnDeath(void) : "Fired when the tank is killed."
 ]
 
-@SolidClass base(Parentname,Global) line(255 255 255, targetname, target) = func_traincontrols :
+@SolidClass base(Parentname,Global) line(255 255 255, targetname, target) line(255 255 255, targetname, target) = func_traincontrols :
 	"When used by the player, this entity overrides the player's controls to let them drive a train."
 [
 	target(target_destination) : "Train Name" : : "The target train to control when the player uses these controls."

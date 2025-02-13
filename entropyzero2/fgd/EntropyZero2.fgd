@@ -1,4 +1,4 @@
-//====== Copyright � 1996-2005, Valve Corporation, All rights reserved. =======
+//====== Copyright © 1996-2005, Valve Corporation, All rights reserved. =======
 //
 // Purpose: Entropy Zero 2 Mod (.fgd) - John Richardson 2018
 //
@@ -211,7 +211,7 @@
 	ballcount(integer) : "Ball count" : 3 : "This is how many balls will be bouncing around inside the spawner"
 	minspeed(float) : "Min ball speed" : "300.0" : "The minimum speed of balls that fly in the spawner"
 	maxspeed(float) : "Max ball speed" : "600.0" : "The maximum speed of balls that fly in the spawner"
-	ballradius(float) : "Ball radius" : "20.0" : "The radius of the energy balls"
+	ballradius(float) : "Ball radius" : "12.0" : "The size of the sprite and the collision. This is restricted within 1-12 units."
 	balltype(choices) : "Ball Type" : "Combine Energy Ball 1" =
 	[
 		0 : "Combine Energy Ball 1"
@@ -352,8 +352,15 @@
 
 
 @NPCClass base(BaseNPC) sphere(sightdist) studio("models/combine_soldier.mdl") = npc_combine_cannon : "Combine Cannon"
-[
+[	
+	spawnflags(flags) =
+		[
+		524288 : "[524288] Start Disabled" : 0
+		]
 	sightdist(float) : "Sight radius" : 1024 : "Radius distance at which the cannon is able to acquire enemies."
+	// Inputs
+	input InputEnableSniper(void) : "Enable the cannon." //added by vizzys
+	input InputDisableSniper(void) : "Disable the cannon." //added by vizzys
 ]
 
 @NPCClass base(BaseNPC) sphere(innerradius) sphere(outerradius) studio("models/combine_camera/combine_camera.mdl") = npc_combine_camera :
@@ -605,6 +612,11 @@
 	input TurnOn(void) : "Restore this rollermine to normal functionality."
 	input TurnOff(void) : "Make this rollermine completely inert. Does not run AI and NPCs will ignore it." 
 
+	input ConstraintBroken(void) : "Make the rollermine fall off of a vehicle." //added by vizzys
+	input RespondToChirp(void) : "Play a chirp, used to respond to other rollermines nearby." //added by vizzys
+	input RespondToExplodeChirp(void) : "Play a different chirp, then explode." //added by vizzys
+	input JoltVehicle(void) : "Zap the vehicle we're on. This is automatically fired when it attaches, then re-fired with a delay to make it zap." //added by vizzys
+	input PowerDown(void) : "EPISODIC ONLY. Shut down a hacked rollermine, then explode it after 4 seconds." //added by vizzys
 	output OnPhysGunPickup(void) : "Picked up with Gravity Gun"
 	output OnPhysGunDrop(void) : "Released by Gravity Gun"
 ]
@@ -775,7 +787,7 @@
 
 ]
 
-@NPCClass base(BaseNPC, EZVariable) studio("models/antlion_guard.mdl") = npc_antlionguard : "Antlion Guard"
+@NPCClass base(BaseNPC, EZVariable) studio("models/antlion_guard.mdl") line(128 0 0, targetname, shovetargets) = npc_antlionguard : "Antlion Guard"
 [
 	spawnflags(Flags) =
 	[
@@ -789,7 +801,7 @@
 		1 : "Yes"
 	]
 
-	allowbark(choices) : "Allow Bark" : "No" =
+	allowbark(choices) : "Allow Bark (Antlion Summon)" : "No" =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -939,6 +951,9 @@
 		1048576 : "[1048576] Perfect Accuracy (NPCs have perfect accuracy when shooting this target)" : 0
 		2097152 : "[2097152] Collide against physics objects (Creates VPhysics Shadow)" : 0
 	]
+	
+	input InputTargeted(void) : "Fires the OnTargeted output." //added by vizzys
+	input InputReleased(void) : "Fires the OnReleased output." //added by vizzys
 	output OnTargeted(void) : "Fires when targeted"
 	output OnReleased(void) : "Fires when no longer targeted"
 ]
@@ -954,8 +969,8 @@
 		524288  : "[524288] Can be an enemy (Allows this entity to be considered an enemy by other combat characters)" : 0
 	]
 	FieldOfView(float) : "FieldOfView" : "0.2" : "The enemy finder's viewcone. (1.0 = straight ahead, 0.0 = +/- 90 degrees, -1.0 = all directions)"
-	MinSearchDist(integer) : "Min Search Dist" : 0
-	MaxSearchDist(integer) : "Max Search Dist" : 2048
+	MinSearchDist(integer) : "Min Search Distance" : 0
+	MaxSearchDist(integer) : "Max Search Distance" : 2048
 
 	freepass_timetotrigger(float) : "Player pass issue time" : 0 : "Amount of time an enemy is hidden after which a 'free pass' on reacquire is granted"
 	freepass_duration(float) : "Player pass duration" : 0 : "After granted 'free pass', the amount of time a target is allowed before reacquire"
@@ -1002,6 +1017,9 @@
 	// Inputs
 	input TurnOn(void) : "Turn on: Look for enemies"
 	input TurnOff(void) : "Turn off: Stop looking for enemies"
+	input FieldOfView(float) : "Sets the Field of View."  //added by vizzys
+	input MinSearchDist(integer) : "Sets the minimum search distance." //added by vizzys
+	input MaxSearchDist(integer) : "Sets the maximum search distance." //added by vizzys
 
 	output OnLostEnemies(void) : "Fires when the enemy finder has no enemies."
 	output OnAcquireEnemies(void) : "Fires when the enemy finder acquires enemies."
@@ -1111,7 +1129,7 @@
 		"Pistol" : "Pistol"
 		"SMG1" : "SMG1"
 		"SMG1_Grenade" : "SMG1 Grenade"
-		"AR2" : "AR2"
+		"AR2" : "AR2 (Pulse Rifle)"
 		"Buckshot" : "Shotgun"
 		"RPG_Round" : "RPG"
 		"Grenade" : "Grenade"
@@ -1833,6 +1851,8 @@
 		1 : "Yes"
 	]
 
+	OverrideZapRange(float) : "Override Zap Range" : -1 : "How far away can this Zombigaunt attack from? If -1, defaults to the max range - defined by the convar sk_zombigaunt_zap_range for zombie vorts. Defaults for those are 1200 and 360 respectively. For close range brutes, I would recommend something like 256 to 384."
+
 	// Inputs
 	input EnableArmorRecharge(void) : "Allow armor recharging on players"
 	input DisableArmorRecharge(void) : "Do not allow armor recharging on players"
@@ -1913,30 +1933,32 @@
 
 	input StartPatrol(void) : "Start patrolling back and forth along the current track."
 	input StopPatrol(void) : "Stop patrolling back and forth along the track. This will cause the helicopter to come to rest at the track which it's currently flying toward."
-	input ChooseFarthestPathPoint(void) : "When tracking an enemy, choose the point on the path furthest from the enemy, but still in firing range"
-	input ChooseNearestPathPoint(void) : "When tracking an enemy, choose the point on the path nearest from the enemy"
-	input Crouch(void) : "Crouch down"
+	input ChooseFarthestPathPoint(void) : "When tracking an enemy, choose the point on the path furthest from the enemy, but still in firing range."
+	input ChooseNearestPathPoint(void) : "When tracking an enemy, choose the point on the path nearest from the enemy."
+	input Crouch(void) : "Crouch down."
 	input CrouchInstantly(void) : "Crouch instantly. This makes the Strider pop to a crouch. Do not do this where players can observe."
-	input Stand(void) : "Stand up from crouch"
+	input Stand(void) : "Stand up from crouch."
 	input DisableCrouchWalk(void)
 	input EnableCrouchWalk(void)
 	
 	input SetTargetPath(target_destination) : "Set a path for the strider to patrol. The strider will first move to the closest point on the path"
 	input ClearTargetPath(void) : "Clear the strider patrol path"
 
-	input EnableAggressiveBehavior(void) : "Use aggressive behavior. Fire faster, more frequently"
+	input EnableAggressiveBehavior(void) : "Use aggressive behavior. Fire faster, more frequently."
 	input DisableAggressiveBehavior(void) : "Stop using aggressive behavior. (Revert to normal)"
 
-	input StopShootingMinigunForSeconds(float) : "Stop shooting the minigun for a period of time (specify seconds as parameter)"
+	input StopShootingMinigunForSeconds(float) : "Stop shooting the minigun for a period of time. (specify seconds as parameter)"
 
-	input DisableCrouch(void) : "Prevent the Strider from crouching"
-	input EnableCrouch(void) : "Allow the Strider to crouch again if it was prevented before"
+	input DisableCrouch(void) : "Prevent the Strider from crouching."
+	input EnableCrouch(void) : "Allow the Strider to crouch again if it was prevented before."
 	input DisableMoveToLOS(void) : "Prevent the Strider from seeking Line of Sight to target. (Hold position)"
 	
 	input DisableCollisionWith(target_destination) : "Disable collision with a given object."
 	input EnableCollisionWith(target_destination) : "Reenable collision with a given object."
 	
-	input ScaleGroundSpeed(float) : "Scale the movement speed of the strider"
+	input ScaleGroundSpeed(float) : "Scale the movement speed of the strider."
+	input Explode(void) : "Immediately kill the strider." // added by vizzys
+	input SetHeight(float) : "Set the height of the strider above the ground. Valid values range from 200-490 units." // added by vizzys
 	
 	input SetStompFilter(target_destination) : "Sets the strider's stomp filter."
 
@@ -2015,6 +2037,8 @@
 	input EnableRotorSound(void) : "Turns on rotor sounds"
 	input DisableRotorSound(void) : "Turns off rotor sounds"
 
+	input GunOn(void) : "Enable the gun." // added by vizzys
+	input GunOff(void) : "Disable the gun." //added by vizzys
 	// Outputs
 	output OnFireCannon(void)  : "Fires when the gunship fires a cannon round"
 	output OnFirstDamage( void ) : "Fired when the first damage is done to the gunship."
@@ -2112,7 +2136,7 @@
 	input DisableRotorSound(void) : "Turns off rotor sounds"
 
 	input StopWaitingForDropoff(void) : "Stop waiting for the dropoff. Dropoff as soon as possible."
-
+	input NPCFinishDustoff(string) : "Notifies the dropship that a soldier has finished the scripted sequence for exiting the crate." // added by vizzys
 
 	// Outputs
 	output OnFinishedDropoff(void)  : "Fires when the dropship has finished a dropoff."
@@ -2142,7 +2166,7 @@
 		4194304 : "[4194304] Aim at enemies even when gun is off" : 0
 	]
 
-	InitialSpeed(string) : "Initial Speed" : "0"
+	InitialSpeed(float) : "Initial Speed" : "0"
 	GracePeriod(float) : "Grace Period" : "2.0" : "Time in seconds the helicopter has to see the player before it starts shooting"
 	PatrolSpeed(float) : "Patrol Speed" : "0" : "Speed at which the helicopter moves if it has no enemy."
 	
@@ -2624,7 +2648,7 @@
 		1 : "Yes"	
 	]
 
-	ShouldHaveEMP(choices) : "Should alyx have her EMP?" : "1" =
+	ShouldHaveEMP(choices) : "Should Alyx have her EMP?" : "1" =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -2804,7 +2828,7 @@
 	input Alpha(integer) : "Set Alpha Value"
 ]
 
-@PointClass base(Angles, BaseNPCMaker) iconsprite("editor/npc_maker.vmt") = npc_maker : "NPC Maker"
+@PointClass base(Angles, BaseNPCMaker) iconsprite("editor/npc_maker.vmt") line(255 16 16, targetname, ignoreentity) = npc_maker : "NPC Maker"
 [
 	spawnflags(Flags) = 
 	[
@@ -2815,7 +2839,7 @@
 	NPCTargetname(target_source) : "Childrens' Name"
 	NPCSquadname(string) : "Childrens' Squad Name"
 	NPCHintGroup(string) : "Childrens' Hint Group"
-	
+	relationship(string) : "Relationship" : : "Sets whether the spawned NPC likes or dislikes certain others. Format is: <string|targetname or classname> <string|disposition> <integer|rank>. Values for disposition are: D_HT (Hate), D_FR (Fear), D_LI (Like), D_NU, (Neutral)." //added by vizzys
 	additionalequipment(choices) : "Weapons" : "0" =
 	[
 		"weapon_357" : ".357 Magnum (Revolver)"
@@ -2839,7 +2863,7 @@
 	]
 ]
 
-@PointClass base(Angles, BaseNPCMaker) iconsprite("vizzys-icons/npc_antlion_template_maker") = npc_antlion_template_maker : "Antlion Template Maker"
+@PointClass base(Angles, BaseNPCMaker) iconsprite("vizzys-icons/npc_antlion_template_maker") line(255 16 16, targetname, ignoreentity) = npc_antlion_template_maker : "Antlion Template Maker"
 [
 	spawnflags(Flags) = 
 	[
@@ -3769,7 +3793,7 @@
 @PointClass base(Targetname) iconsprite("editor/ai_goal_fear.vmt") = ai_goal_fear :
 	"AI Goal Fear\n\n" +
 	"Allows player allies to use fear withdrawal points and other fear behavior otherwise unique with npc_hunters. " +
-	"Citizens will still engage in fear behavior with npc_hunters, but this allows them to use it with other NPCs." +
+	"Citizens will still engage in fear behavior with npc_hunters, but this allows them to use it with other NPCs." 
 [
 	actor(target_name_or_class) : "Actor(s) to affect" : "" : "NPC(s) that should engage in fear behavior."
 	target(target_destination) : "Fear Target" : "" : "Target to fear. Only applies whenever the actors' relationship to the target is D_FR. Supports wildcards and can be a classname or an entity name."
@@ -3963,7 +3987,7 @@
 	// Outputs
 	output OnConditionsSatisfied(void) : "Fires when AI conditions satisfied"
 	output OnConditionsTimeout(void)   : "Fires when AI conditions timed out"
-	output NoValidActor(void) : "Fires if/when there are no matching actors in the map."
+	output NoValidActors(void) : "Fires if/when there are no matching actors in the map."
 ]
 
 @PointClass base(BaseScripted, Angles, DXLevelChoice) studio("models/editor/scriptedsequence.mdl") sphere(m_flRadius) = scripted_sequence :
@@ -4263,7 +4287,7 @@
 // Tanks
 //
 //-------------------------------------------------------------------------
-@BaseClass base(Targetname, Parentname, Origin, Angles, RenderFields, Global, Shadow) = BaseTank
+@BaseClass base(Targetname, Parentname, Origin, Angles, RenderFields, Global, Shadow) line(255 255 255, targetname, control_volume) sphere(maxrange) = BaseTank
 [
 	spawnflags(flags) =
 	[
@@ -4346,8 +4370,8 @@
 	effecthandling(choices) : "Effect Handling" : 0 : "Special effect handling that influences sound and muzzle effects. Individual settings can override parts of it." =
 	[
 		0 : "None"
-		1 : "AR2"
-		2 : "Combine Cannon"
+		1 : "AR2 (Pulse Rifle)"
+		2 : "Combine Autocannon"
 	]
 	
 	TraceFilter(filterclass) : "Trace Filter" : "" : "Entities that pass this filter will be ignored by this func_tank while it's aiming."
@@ -4431,7 +4455,7 @@
 		"" : "None"
 		"Pistol" : "Pistol"
 		"SMG1" : "SMG1"
-		"AR2" : "AR2"
+		"AR2" : "AR2 (Pulse Rifle)"
 		"CombineHeavyCannon" : "Combine Autocannon (Episodic only)"
 		"StriderMinigun" : "Strider Minigun"
 	]
@@ -4501,7 +4525,7 @@
 ]
 
 
-@SolidClass base(BaseTank) sphere(radius) = func_tankmortar : "Brush Mortar Turret" 
+@SolidClass base(BaseTank) sphere(radius) = func_tankmortar : "Brush Mortar Turret aka the Combine Nexus Supression Device" 
 [
 	iMagnitude(Integer) : "Explosion Magnitude" : 100
 	firedelay(string) : "Shell travel time" : 2 : "How long after the turret fires before the shell impacts"
@@ -4518,10 +4542,11 @@
 		100679691: "MASK_SHOT_HULL (hits NPCs)"
 	]
 
+	input ShootGun(void) : "Manually shoots the mortar." //added by vizzys
 	input FireAtWill(void) : "Allow tank to fire next shot as soon as ready."
 ]
 
-@SolidClass base(BaseTank) = func_tankphyscannister : "PhysCannister Turret"
+@SolidClass base(BaseTank) line(255 255 255, targetname, barrel_volume) = func_tankphyscannister : "PhysCannister Turret"
 [
 	barrel_volume(target_destination) : "Barrel Volume" : "" : "Name of a trigger the specifies the volume in which cannisters must be placed."
 ]
@@ -4535,8 +4560,8 @@
 		"" : "None"
 		"Pistol" : "Pistol"
 		"SMG1" : "SMG1"
-		"AR2" : "AR2"
-		"CombineHeavyCannon" : "Combine Heavy Cannon"
+		"AR2" : "AR2 (Pulse Rifle)"
+		"CombineHeavyCannon" : "Combine Autocannon"
 	]
 	
 	ControllableVersion(choices) : "Controllable Version" : 0 : "Enables a tweaked version of func_tank_combine_cannon that is designed to be controlled by players and NPCs." =
@@ -4700,14 +4725,14 @@
 	[
 		0 : "Pistol"
 		1 : "SMG1"
-		2 : "AR2"
+		2 : "AR2 (Pulse Rifle)"
 		3 : "RPG Rounds"
 		4 : "Buckshot"
 		5 : "Grenades"
-		6 : "357 Magnum"
+		6 : ".357 Magnum (Revolver)"
 		7 : "Crossbow"
 		8 : "AR2 Alt-Fire Balls"
-		9 : "SMG Alt-Fire Grenades"
+		9 : "SMG1 Alt-Fire Grenades"
 		10 : "S.L.A.M."
 		11 : "Empty"
 	]
@@ -4867,6 +4892,7 @@
 		16 : "[16] Preserve ammo values when picked up" : 0
 		32 : "[32] Preserve name on player pickup" : 0
 		64 : "[64] Always touchable (no obstruction checking)" : 0
+		1073741824 : "[1073741824] Weapon will not respawn. (multiplayer only)" : 0
 	]
 	
 	SetAmmo1(integer) : "Ammo 1 Override" : 0 : "Overrides the amount of primary ammo this weapon has. Be sure to set 'Preserve ammo values when picked up' for this to be maintained upon pickup."
@@ -5787,7 +5813,7 @@
 [
 ]
 
-@PointClass base(Targetname, Angles) iconsprite("vizzys-icons/point_apc_controller") = point_apc_controller : "APC Controller"
+@PointClass base(Targetname, Angles) iconsprite("vizzys-icons/point_apc_controller") line(255 255 255, targetname, targetentityname) = point_apc_controller : "APC Controller"
 [
 	spawnflags(flags) =
 	[
@@ -5860,7 +5886,7 @@
 	output OnObjectAttached(void) : "Fired when an object is attached to the APC."
 ]
 
-@SolidClass base(Targetname, Origin, Angles, EnableDisable) = info_apc_missile_hint :
+@SolidClass base(Targetname, Origin, Angles, EnableDisable) line(255 0 0, targetname, target) = info_apc_missile_hint :
 	"Something that helps APC missiles guide. If the missile can hit the associated target entity"+
 	"between the time it takes the current enemy to enter + leave the hint, then the missile will guide to the entity."
 [
@@ -6201,7 +6227,7 @@
 	]	
 ]
 
-@PointClass base(Targetname) iconsprite("editor-ficool2/env_entity_dissolver") = env_entity_dissolver: "Entity Dissolver"
+@PointClass base(Targetname) iconsprite("editor-ficool2/env_entity_dissolver") line(255 255 255, targetname, target) = env_entity_dissolver: "Entity Dissolver"
 [
 	input Dissolve(target_destination) : "Dissolve target, if no target is passed it'll use the target specified in the target field."
 	target(target_destination) : "Target to Dissolve" : "" : "Targetname of the entity you want to dissolve."
@@ -6301,7 +6327,7 @@
 
 
 @PointClass base(BasePropPhysics) studioprop() sphere(fademindist) sphere(fademaxdist) studio("models/magnusson_device.mdl") = weapon_striderbuster :
-	"Strider Buster"
+	"Strider Buster aka Magnusson Device"
 [
 	spawnflags(Flags) = 
 	[
