@@ -275,7 +275,7 @@
 ]
 
 
-@NPCClass base(BaseNPC) sphere(sightdist) studio("models/combine_soldier.mdl") = npc_combine_cannon : "Combine Autocannon"
+@NPCClass base(BaseNPC) sphere(sightdist) studio("models/combine_soldier.mdl") = npc_combine_cannon : "OBSOLETE: Unfinished Combine Autocannon entity, use func_tank_combine_cannon"
 [
 
 	spawnflags(flags) =
@@ -4099,7 +4099,7 @@
 	barrel_volume(target_destination) : "Barrel Volume" : "" : "Name of a trigger the specifies the volume in which cannisters must be placed."
 ]
 
-@SolidClass base(BaseTank, TankShootSound) = func_tank_combine_cannon : "Combine sentry cannon"
+@SolidClass base(BaseTank, TankShootSound) = func_tank_combine_cannon : "Combine Autocannon"
 [
 	firerate(string) : "Rate of Fire" : "1.5"
 
