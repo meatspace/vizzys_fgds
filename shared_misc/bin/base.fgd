@@ -5116,7 +5116,24 @@
 ]
 
 
-@PointClass base(Targetname) iconsprite("editor-ficool2/logic_branch_listener") = logic_branch_listener :
+@PointClass base(Targetname) iconsprite("editor-ficool2/logic_branch_listener") 
+	line(255 255 0, targetname, branch01)
+	line(255 255 0, targetname, branch02)
+	line(255 255 0, targetname, branch03)
+	line(255 255 0, targetname, branch04)
+	line(255 255 0, targetname, branch05)
+	line(255 255 0, targetname, branch06)
+	line(255 255 0, targetname, branch07)
+	line(255 255 0, targetname, branch08)
+	line(255 255 0, targetname, branch09)
+	line(255 255 0, targetname, branch10)
+	line(255 255 0, targetname, branch11)
+	line(255 255 0, targetname, branch12)
+	line(255 255 0, targetname, branch13)
+	line(255 255 0, targetname, branch14)
+	line(255 255 0, targetname, branch15)
+	line(255 255 0, targetname, branch16)
+= logic_branch_listener :
 	"Contains a list of logic_branch entities and fires outputs when the state of any of the logic_branches changes.\n\n"+
 	"This entity is used to fire an event when a set of conditions are all satisfied."
 [
@@ -5138,6 +5155,7 @@
 	Branch16(target_destination) : "Logic Branch 16" : : "The name of one or more logic_branches (wildcards allowed)."
 
 	input Test(void) : "Tests the state of all the logic_branches in the list and fires the appropriate output."
+	input _OnLogicBranchChanged(void) : "Sent by a logic_branch when it gets changed for any reason. Makes the entity fire an output, but only if the listener's final result has changed." //added by vizzys
 	input _OnLogicBranchRemoved(void) : "Sent by a logic_branch when it gets removed for any reason. The !activator will no longer be watched by this entity. Makes the entity fire an output, but only if the listener's final result has changed." //added by vizzys
 	output OnAllTrue(void) : "Fired when all the logic_branches in the list become true."
 	output OnAllFalse(void) : "Fired when all the logic_branches in the list become false."

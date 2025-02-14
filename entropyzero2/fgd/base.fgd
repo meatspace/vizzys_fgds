@@ -4329,7 +4329,7 @@
 [
 ]
 
-@MoveClass base(Targetname, Parentname, KeyFrame, RopeKeyFrame) studio("models/editor/axis_helper.mdl") animator() = move_rope : 
+@MoveClass base(Targetname, Parentname, KeyFrame, RopeKeyFrame) studio("models/editor/axis_helper_thick.mdl") animator() = move_rope : 
 	"The first node in set of nodes that are used to place ropes in the world. It should connect to 1 or more keyframe_rope entities."
 [
 	PositionInterpolator(choices) : "Position Interpolator" : 2 : "Curve Type. Currently only type 2 (Rope) is fully supported." =
