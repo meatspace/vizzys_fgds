@@ -1346,7 +1346,7 @@
 	]
 ]
 
-@PointClass base(Parentname) color(180 10 180) iconsprite("editor-ficool2/env_particlelight") = env_particlelight : 
+@PointClass base(Parentname) color(180 10 180) iconsprite("editor-ficool2/env_particlelight") line(200 200 200, targetname, psname) = env_particlelight : 
 	"An entity that can be used to light the smoke particles emitted by env_smokestack entities. Does not light any other particle types."
 [
 	Color(color255) : "Color" : "255 0 0" : "Color emitted by this light." 
@@ -3641,7 +3641,7 @@
 ]
 
 
-@PointClass base(Targetname, EnableDisable, Parentname, Angles) iconsprite("vizzys-icons/phys_ragdollmagnet") sphere(radius) = phys_ragdollmagnet : 
+@PointClass base(Targetname, EnableDisable, Parentname, Angles) iconsprite("vizzys-icons/phys_ragdollmagnet") sphere(radius) line(255 255 0, targetname, target) = phys_ragdollmagnet : 
 	"An entity that acts like a magnet for ragdolls. Useful for crafting exaggerated ragdoll behavior (i.e. guys falling over rails on death). If the "+
 	"Bar Magnet spawnflag is set, the magnet works like it was a cylindrical magnet i.e. it attracts ragdolls to the nearest point on a line."
 [
@@ -3661,7 +3661,7 @@
 	output OnUsed(vector) : "Fires when this magnet is used by a ragdoll. Passes the ragdoll's original force + the force this magnet has applied."
 ]
 
-@PointClass base(Targetname) iconsprite("editor-ficool2/info_lighting") = info_lighting : 
+@PointClass base(Targetname) iconsprite("editor-ficool2/info_lighting") line(255 255 255, lightingorigin, targetname) = info_lighting : 
 	"An entity that can be used to change the lighting origin of a prop_static. Set the prop_static's Lighting Origin to point at this entity to "+
 	"make the prop_static light as if it was at the info_lighting's origin. Good for prop_static entities that are embedded in world geometry (like rocks/windows/etc)."
 [
@@ -6572,7 +6572,7 @@
 	output OnApplyDeath(void) : "Fires for every entity that dies from our damage, using that as the activator."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/point_entity_replace.vmt") = point_entity_replace : 
+@PointClass base(Targetname) iconsprite("editor/point_entity_replace.vmt") line(255 255 0, targetname, Target) line(255 255 0, targetname, ReplacementEntity) = point_entity_replace : 
 	"An entity that replaces."
 [
 	Target(target_destination) : "Entity to be replaced" : : "The entity that should be replaced. This is optional if you're only using the 'ReplaceEntity' input."
@@ -6822,7 +6822,7 @@
 	output OutValue(string) : "Fires each time a key is read from. Passes the value." 
 ]
 
-@PointClass base(Targetname, Parentname, Angles) iconsprite("editor/point_projectile.vmt") = point_projectile : 
+@PointClass base(Targetname, Parentname, Angles) iconsprite("editor/point_projectile.vmt") line(255 255 255, targetname, Owner) = point_projectile : 
 	"An entity that fires projectiles."
 [
 	Target(pointentityclass) : "Projectile Classname" : "crossbow_bolt" : "The classname of the projectile."
@@ -7191,7 +7191,7 @@
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 
-@BaseClass base(BaseFilter) = BaseRedirectFilter
+@BaseClass base(BaseFilter) line(255 0 0, targetname, damagefilter) = BaseRedirectFilter
 [
 	damagefilter(filterclass) : "Target Filter" : "" : "The filter to pass to. You can also use the 'SetField' input."
 	input SetField(target_destination) : "Sets the filter to pass to."
@@ -7386,7 +7386,7 @@
 //
 //-------------------------------------------------------------------------
 
-@PointClass base(Targetname, Parentname, EnableDisable) iconsprite("editor-ficool2/point_anglesensor") = point_anglesensor :
+@PointClass base(Targetname, Parentname, EnableDisable) iconsprite("editor-ficool2/point_anglesensor") line(0 100 250, targetname, target) = point_anglesensor :
 	"An entity that detects if another entity points in a given direction for a period of time."
 [
 	target(target_destination) : "Target Entity Name" : : "Name of the entity whose angles will be sensed."
@@ -7442,7 +7442,7 @@
 	output OnEqualTo(void) : "Fired when the Target Entity reaches the threshold angular velocity from a different velocity."
 ]
 
-@PointClass base(Targetname) iconsprite("editor-ficool2/point_velocitysensor") = point_velocitysensor :
+@PointClass base(Targetname) iconsprite("editor-ficool2/point_velocitysensor") line(0 100 250, targetname, target) = point_velocitysensor :
 	"An entity that detects and outputs an entity's velocity."
 [
 	target(target_destination) : "Target Entity Name" : : "Name of the entity whose velocity will be sensed."
@@ -7779,7 +7779,11 @@
 	] 
 ]
 
-@PointClass halfgridsnap base(TwoObjectPhysics) studio("models/editor/axis_helper.mdl") = phys_slideconstraint : 
+@PointClass halfgridsnap base(TwoObjectPhysics) studio("models/editor/axis_helper.mdl") 
+	line(255 255 255, targetname, attach1) 
+	line(255 255 255, targetname, attach2) 
+	line(128 128 128, targetname, attach1, targetname, attach2) 
+= phys_slideconstraint : 
 	"A constraint that constrains an entity along a line segment."
 [
 	spawnflags(flags) =
@@ -7793,7 +7797,6 @@
 	
 	// Inputs
 	input SetVelocity(float) : "Set linear velocity along the constraint"
-	
 	
 	//// Episodic only -- for now.
 	
@@ -7844,7 +7847,7 @@
 	zfriction(float) : "Z axis friction" : "0"
 ]
 
-@PointClass base(Targetname) iconsprite("editor-ficool2/phys_convert") = phys_convert : 
+@PointClass base(Targetname) iconsprite("editor-ficool2/phys_convert") line(255 255 0, targetname, target) = phys_convert : 
 	"Turns an arbitrary entity into a physically simulated entity. i.e. brush entities will behave like func_physbox, model entities behave like prop_physics."
 [
 	spawnflags(flags) =
@@ -7894,7 +7897,7 @@
 	input Scale(string) : "Set Force Scale"
 ]
 
-@PointClass base(ForceController, Angles) studioprop("models/editor-ficool2/cone_helper_gray.mdl") = phys_thruster : 
+@PointClass base(ForceController, Angles) studioprop("models/editor-ficool2/cone_helper_gray.mdl") line(255 255 255, targetname, attach1) = phys_thruster : 
 	"An entity used to apply constant acceleration to a physics object. "+
 	"The force and torque is calculated using the position and direction of the thruster as an impulse. So moving those off the object's center "+
 	"will cause torque as well. Torque can be removed by unchecking the 'apply torque' flag. The position of the thruster can be forced to be "+
@@ -8568,7 +8571,7 @@
 //	WaveHeight(string) : "Wave Height" : "3.0"
 //]
 
-@SolidClass base(Targetname, Parentname, RenderFields, Global) = func_guntarget :
+@SolidClass base(Targetname, Parentname, RenderFields, Global) line(255 255 0, targetname, target) = func_guntarget :
 	"This is a moving target that moves along a path of path_tracks. It can be shot and killed."
 [
 	speed(integer) : "Speed (units per second)" : 100 : "The speed at which the target moves along its path."
@@ -8994,7 +8997,7 @@
 	output OnTrigger(void) : "Fired whenever the trigger is activated."
 ]
 
-@SolidClass base(Trigger) = trigger_look :
+@SolidClass base(Trigger) line(255 255 0, targetname, target) = trigger_look :
 	"An entity used to trigger something when the player looks at something. It fires 'OnTrigger' when the player "+
 	"looks at a target entity for the given amount of time, while within the trigger volume. If the player leaves "+
 	"the trigger or looks away from the target entity the clock resets. If the 'Use Velocity instead of facing' spawnflag " +
@@ -9081,7 +9084,7 @@
 	output ImpactForce(string) : "Fired after an impact. The parameter passed along is the force of the impact that was generated."
 ]
 
-@SolidClass base(Trigger) = trigger_proximity :
+@SolidClass base(Trigger) sphere(radius) line(255 255 255, targetname, measuretarget) = trigger_proximity :
 	"Measures the distance of the player within the trigger volume from a given point (and within " +
 	"a given radius). The NearestPlayerDistance output will be 0 when the player is at the center point, " +
 	"and 1 when the player is at the radius."
@@ -9095,7 +9098,7 @@
 						"so it will be 0 when the entity is on the point, and 1 when the entity is at the edge of the radius."
 ]
 
-@SolidClass base(Trigger) = trigger_teleport : 
+@SolidClass base(Trigger) line(255 255 255, targetname, filtername) line(255 255 0, targetname, target) line(0 255 0, target, landmark) = trigger_teleport : 
 	"A trigger volume that teleports entities that touch it. Entities are teleported to the Remote Destination, and have their angles "+
 	"set to that of the Remote Destination's. If a Local Destination Landmark is specified, teleported entities are offset from the target "+
 	"by their initial offset from the landmark, and their angles are left alone."
@@ -9155,7 +9158,7 @@
 //
 //-------------------------------------------------------------------------
 
-@PointClass base(Targetname,ResponseContext,EnableDisable) iconsprite("editor-ficool2/ai_speechfilter") = ai_speechfilter : 
+@PointClass base(Targetname,ResponseContext,EnableDisable) iconsprite("editor-ficool2/ai_speechfilter") line(255 255 255, targetname, subject) = ai_speechfilter : 
 	"An entity that can be used to control the idle speech patterns of a set of NPCs."
 [
 	subject(target_destination) : "Subject(s)" : "" : "This is the NPC(s) whose speech we're filtering. May be a targetname or a classname."	
@@ -9190,7 +9193,7 @@
 // Used to allow entities to use point_cameras for their materials
 //-------------------------------------------------------------------------
 
-@PointClass base(Targetname) iconsprite("editor-ficool2/info_camera_link") = info_camera_link :
+@PointClass base(Targetname) iconsprite("editor-ficool2/info_camera_link") line(255 255 0, targetname, target) line(255 255 0, targetname, target, targetname, Pointcamera) = info_camera_link :
 	"An entity that can use point_cameras to render images for materials used by entities. "+
 	"To author the material, use the special identifier _rt_Camera " +
 	"for the $baseTexture (or whatever texture you want, like envmap, etc.) in the .vmt " +
@@ -10151,7 +10154,11 @@
     input SetFocusTargetRange(float) : "Set the distance behind the focal point that will remain in focus."
 ]
 
-@SolidClass base( Targetname, EnableDisable ) = fog_volume : "An entity to control the fog in the map."
+@SolidClass base( Targetname, EnableDisable )
+	line(255 255 0, targetname, fogname) 
+	line(255 255 0, targetname, postprocessname) 
+	line(255 255 0, targetname, colorcorrectionname) 
+ = fog_volume : "An entity to control the fog in the map."
 [
 	FogName(target_destination) : "Fog Name" : : "The name of the fog entity associated with this volume."
 	PostProcessName(target_destination) : "Postprocess Name" : : "The name of the postprocess entity associated with this volume."

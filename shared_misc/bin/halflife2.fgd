@@ -197,7 +197,9 @@
 	// Inputs
 	input Explode(void) : "Explode"
 	input FadeAndRespawn(void) : "Fade And Respawn Ball" //added by vizzys
-	input Socketed(void) : "Ball is Socketed in place" //added by vizzys
+	input Socketed(void) : "Episodic Only. Ball is 'Socketed' in place." //added by vizzys
+	input SetLifetime(float) : "Set the lifetime of the ball to the given duration."
+	input AddLifetime(float) : "Add the given amount of additional lifetime."
 ]
 
 @SolidClass base(Trigger, Angles) = trigger_physics_trap :
@@ -502,7 +504,7 @@
 	input RespondToChirp(void) : "Play a chirp, used to respond to other rollermines nearby." //added by vizzys
 	input RespondToExplodeChirp(void) : "Play a different chirp, then explode." //added by vizzys
 	input JoltVehicle(void) : "Zap the vehicle we're on. This is automatically fired when it attaches, then re-fired with a delay to make it zap." //added by vizzys
-	input PowerDown(void) : "EPISODIC ONLY. Shut down a hacked rollermine, then explode it after 4 seconds." //added by vizzys
+	input PowerDown(void) : "Episodic Only. Shut down a hacked rollermine, then explode it after 4 seconds." //added by vizzys
 
 	output OnPhysGunPickup(void) : "Picked up with Gravity Gun"
 	output OnPhysGunDrop(void) : "Released by Gravity Gun"
@@ -1417,7 +1419,7 @@
 	output OnFire(void) : "Fires for each bullet fired by this entity."
 ]
 
-@PointClass base(Targetname,Parentname,Angles,Shadow) sphere(DamageRadius) studio("models/props_combine/headcrabcannister01b.mdl") = env_headcrabcanister : "Headcrab canister"
+@PointClass base(Targetname,Parentname,Angles,Shadow) sphere(DamageRadius) studio("models/props_combine/headcrabcannister01b.mdl") line(255 255 0, targetname, launchpositionname) = env_headcrabcanister : "Headcrab canister"
 [
 	spawnflags(Flags) = 
 	[
@@ -2633,7 +2635,7 @@
 	output LeaveTarget(void) : "Fires when NPC leaves this target"
 ]
 
-@PointClass base(Targetname) iconsprite("editor/scripted_sound.vmt")  = scripted_sound : "Makes a target entity emit a sound directly, which allows lip syncing, interruption from death or other lines, etc. at the cost of most forms of control. Not exclusive to NPCs."
+@PointClass base(Targetname) iconsprite("editor/scripted_sound.vmt") line(255 255 255, targetname, message) = scripted_sound : "Makes a target entity emit a sound directly, which allows lip syncing, interruption from death or other lines, etc. at the cost of most forms of control. Not exclusive to NPCs."
 [
 	message(sound) : "Sound Name" : : "The sound to play. Supports Game Sounds and direct filenames."
 	target(target_destination) : "Target Entity" : : "The entity that should play the sound."
@@ -2651,7 +2653,7 @@
 	input SetSound(string) : "Sets the sound."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/ai_relationship.vmt") sphere(radius) = ai_relationship : 
+@PointClass base(Targetname) iconsprite("editor/ai_relationship.vmt") sphere(radius) line(255 255 255, targetname, subject) = ai_relationship : 
 	"AI Relationship - Sets relationships between groups of NPCs in the AI."
 [
 	subject(target_name_or_class) : "Subject(s)" : "" : "This is the NPC(s) whose disposition will change. May be a targetname or a classname."
@@ -3585,7 +3587,7 @@
 
 
 // line(255 0 255, targetname, goalent)
-@PointClass base(Targetname) sphere(m_flRadius) color(255 0 255) iconsprite("editor/aiscripted_schedule") = aiscripted_schedule :
+@PointClass base(Targetname) sphere(m_flRadius) color(255 0 255) iconsprite("editor/aiscripted_schedule") line(255 255 255, targetname, m_iszentity) line(255 255 255, targetname, m_iszentity, targetname, goalent) = aiscripted_schedule :
 	"Issues a command to an NPC without taking the NPC out of its AI. This does not seize control of the NPC as " +
 	"a scripted_sequence does" 
 [
@@ -4778,7 +4780,7 @@
 	input Shutdown(void) : "Remove the manager and all scenes referenced by it (and all scenes referenced by logic_scene_list_manager's embedded in this one)."
 ]
 
-@PointClass base(Targetname, Parentname) sphere(volume) iconsprite("editor/ai_sound.vmt") = ai_sound :
+@PointClass base(Targetname, Parentname) sphere(volume) iconsprite("editor/ai_sound.vmt") line(255 255 255, targetname, target, targetname, locationproxy) = ai_sound :
 	"This entity makes sounds or smells that can be sensed by NPCs, but not by the player. This can be used " +
 	"to cause reactions in nearby NPCs.\n\n" +
 	"Sound Types\n" +
@@ -5251,7 +5253,7 @@
 	input SetOrthoRight(string) : "Changes the right ortho over time"
 ]
 
-@SolidClass base(func_brush) = func_monitor :
+@SolidClass base(func_brush) line(255 255 0, targetname, target) = func_monitor :
 	"A monitor that renders the view from a given point_camera entity."
 [
 	target(target_destination) : "Camera name"
@@ -5366,7 +5368,7 @@
 	output OnFireAtTarget(void) : "Fires when a valid target is found and the APC should shoot rockets"
 ]
 
-@PointClass base(BaseDriveableVehicle) studioprop() = prop_vehicle_apc :
+@PointClass base(BaseDriveableVehicle) studioprop() line(192 0 0, targetname, missilehint) = prop_vehicle_apc :
 	"APC with mounted guns, can only be driven by a vehicle driver or a npc_apcdriver."
 [
 	model(studio) : "World model" : "models/combine_apc.mdl"
