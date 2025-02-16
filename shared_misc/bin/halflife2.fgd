@@ -1695,7 +1695,14 @@
 	output OnCrashed(void) : "Fires when the gunship crashes." 	// Output added by vizzy, suggested by xblah
 ]
 
-@NPCClass base(BaseHelicopter) studio("models/combine_dropship.mdl" ) = npc_combinedropship : "Combine Dropship"
+@NPCClass base(BaseHelicopter) studio("models/combine_dropship.mdl" ) 
+	line(192 192 192, targetname, npctemplate)
+	line(192 192 192, targetname, npctemplate2)
+	line(192 192 192, targetname, npctemplate3)
+	line(192 192 192, targetname, npctemplate4)
+	line(192 192 192, targetname, npctemplate5)
+	line(192 192 192, targetname, npctemplate6)
+= npc_combinedropship : "Combine Dropship"
 [
 	spawnflags(Flags) =
 	[
@@ -4677,7 +4684,16 @@
 // Logic Entities
 //
 //-------------------------------------------------------------------------
-@PointClass color(0 0 255) base(Targetname) iconsprite("editor/choreo_scene.vmt") = logic_choreographed_scene :
+@PointClass color(0 0 255) base(Targetname) iconsprite("editor/choreo_scene.vmt") 
+	line(240 180 250, targetname, target1) 
+	line(240 180 250, targetname, target2) 
+	line(240 180 250, targetname, target3) 
+	line(240 180 250, targetname, target4) 
+	line(240 180 250, targetname, target5) 
+	line(240 180 250, targetname, target6) 
+	line(240 180 250, targetname, target7) 
+	line(240 180 250, targetname, target8)
+= logic_choreographed_scene :
 	"Manages a choreographed scene of one or more actors."
 
 [

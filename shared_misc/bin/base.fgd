@@ -2464,7 +2464,7 @@
 [
 ]
 
-@PointClass base(gibshooterbase, RenderFields) iconsprite("editor/env_shooter.vmt") = env_shooter : 
+@PointClass base(gibshooterbase, RenderFields) iconsprite("editor/env_shooter.vmt") line(255 255 255, targetname, lightingorigin) = env_shooter : 
 	"An entity that shoots models, or sprites, out of its origin."
 [
 	shootmodel(studio) : "Model" : "" : "Thing to shoot out. Can be a .mdl or a .vmt."
@@ -6261,7 +6261,7 @@
 	output OutAngles(vector) : "Outputs the angles."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/logic_context_accessor.vmt") = logic_context_accessor :
+@PointClass base(Targetname) iconsprite("editor/logic_context_accessor.vmt") line(255 255 255, targetname, target) = logic_context_accessor :
 	"A logic entity that could read an entity's response contexts. " +
 	"Use the target and context name keyvalues if you want to store a specific target and/or context. " +
 	"Use the 'Test' input to look for the context on the target. " +
@@ -6521,7 +6521,12 @@
 	DamageBonus(integer) : "Damage Bonus" : : "Function unknown, possibly unused"
 ]
 
-@PointClass base(Targetname, PointDamageInfoInit, DamageTypes) iconsprite("editor/point_damageinfo.vmt") = point_damageinfo :
+@PointClass base(Targetname, PointDamageInfoInit, DamageTypes) iconsprite("editor/point_damageinfo.vmt") 
+	line(255 255 255, targetname, target)
+	line(255 255 255, targetname, inflictor)
+	line(255 255 255, targetname, attacker)
+	line(255 255 255, targetname, weapon)
+= point_damageinfo :
 	"Applies damage with full control over the variables of CTakeDamageInfo, providing as much precision as possible."
 [
 	// Keys
@@ -6907,7 +6912,13 @@
 [
 ]
 
-@FilterClass base(BaseFilter) iconsprite("editor/filter_multiple.vmt") = filter_multi :
+@FilterClass base(BaseFilter) iconsprite("editor/filter_multiple.vmt") 
+	line(0 255 0, targetname, filter01)	line(0 255 0, targetname, filter02)	line(0 255 0, targetname, filter03)	line(0 255 0, targetname, filter04)
+	line(0 255 0, targetname, filter05)	line(0 255 0, targetname, filter06)	line(0 255 0, targetname, filter07)	line(0 255 0, targetname, filter08)
+	line(0 255 0, targetname, filter09)	line(0 255 0, targetname, filter10)	line(0 255 0, targetname, filter11)	line(0 255 0, targetname, filter12)
+	line(0 255 0, targetname, filter13)	line(0 255 0, targetname, filter14)	line(0 255 0, targetname, filter15)	line(0 255 0, targetname, filter16)
+	line(0 255 0, targetname, filter17)	line(0 255 0, targetname, filter18)	line(0 255 0, targetname, filter19)	line(0 255 0, targetname, filter20)
+= filter_multi :
 	"A filter that tests the activator against multiple filters. This allows you to build more complex filters, such as"+
 	"'Allow anyone on Team 1 who is also class engineer', or 'Allow everyone except classes npc_zombie and npc_headcrab'."
 [
@@ -6932,7 +6943,7 @@
 	Filter05(filterclass) : "Filter 5" : : "Activator filter to test."
 ]
 
-@FilterClass base(BaseFilter) iconsprite("editor/filter_name.vmt") = filter_activator_name :
+@FilterClass base(BaseFilter) iconsprite("editor/filter_name.vmt") line(0 255 0, targetname, filtername) = filter_activator_name :
 	"A filter that filters by the name of the activator."
 [
 	filtername(target_destination) : "Filter Name" : : "The name to filter by. If the filter mode is Allow, only entities whose "+
@@ -7010,7 +7021,7 @@
 	]
 ]
 
-@FilterClass base(BaseFilter) iconsprite("vizzys-icons/filter_enemy") sphere(filter_radius) sphere(filter_outer_radius) = filter_enemy :
+@FilterClass base(BaseFilter) iconsprite("vizzys-icons/filter_enemy") sphere(filter_radius) sphere(filter_outer_radius) sphere(filter_outer_radius) line(0 255 0, targetname, filtername) = filter_enemy :
 	"A filter that filters a potential enemy entity by a set of criteria."
 [
 	filtername(string) : "Name/Classname" : : "The classname or entity name to filter by. If the filter mode is Allow, only entities whose "+
@@ -7163,7 +7174,7 @@
 	]
 ]
 
-@FilterClass base(BaseFilter) iconsprite("editor/filter_involume.vmt") = filter_activator_involume :
+@FilterClass base(BaseFilter) iconsprite("editor/filter_involume.vmt") line(255 255 255, targetname, target) line(0 255 255, targetname, tester) = filter_activator_involume :
 	"A filter that tests whether the activator is within a volume."
 [
 	target(target_destination) : "Volume" : : "The volume to be tested with. This filter passes if the activator is within this volume. Intended to be a brush entity. (e.g. a trigger)"
@@ -7197,17 +7208,17 @@
 	input SetField(target_destination) : "Sets the filter to pass to."
 ]
 
-@FilterClass base(BaseRedirectFilter) iconsprite("vizzys-icons/filter_redirect_inflictor.vmt") = filter_redirect_inflictor :
+@FilterClass base(BaseRedirectFilter) iconsprite("vizzys-icons/filter_redirect_inflictor.vmt") line(255 255 255, targetname, damagefilter) = filter_redirect_inflictor :
 	"A filter that passes the inflictor of damage (e.g. the crossbow bolt instead of the crossbow user) to a separate filter."
 [
 ]
 
-@FilterClass base(BaseRedirectFilter) iconsprite("vizzys-icons/filter_redirect_weapon.vmt") = filter_redirect_weapon :
+@FilterClass base(BaseRedirectFilter) iconsprite("vizzys-icons/filter_redirect_weapon.vmt") line(255 255 255, targetname, damagefilter) = filter_redirect_weapon :
 	"A filter that passes the activator's weapon OR the weapon causing damage to a separate filter, depending on what this filter is filtering."
 [
 ]
 
-@FilterClass base(BaseRedirectFilter) iconsprite("vizzys-icons/filter_redirect_owner.vmt") = filter_redirect_owner :
+@FilterClass base(BaseRedirectFilter) iconsprite("vizzys-icons/filter_redirect_owner.vmt") line(255 255 255, targetname, damagefilter) = filter_redirect_owner :
 	"A filter that passes the activator's owner entity to a separate filter."
 [
 ]
@@ -7628,7 +7639,11 @@
 	output OnBreak(void) : "Fired when the constraint breaks."
 ]
 	
-@PointClass base(Targetname) iconsprite("editor-ficool2/phys_constraintsystem") = phys_constraintsystem : 
+@PointClass base(Targetname) iconsprite("editor-ficool2/phys_constraintsystem") 
+	line(255 255 255, targetname, attach1)
+	line(255 255 255, targetname, attach2)
+	line(128 128 128, targetname, attach1, targetname, attach2)
+= phys_constraintsystem : 
 	"An entity used to manage a group of interacting constraints and keep them stable. " +
 	"All constraints on a set of entities should be placed in the same system, or they will fight each other during simulation."
 [
@@ -7898,7 +7913,7 @@
 	input SetConversionType(integer) : "Sets this entity's conversion type. 0 = Simple, 1 = Conventional" 
 ]
 
-@BaseClass base(Targetname) = ForceController
+@BaseClass base(Targetname) line(128 128 128, targetname, attach1) = ForceController
 [
 	spawnflags(flags) =
 	[
