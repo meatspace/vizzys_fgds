@@ -3419,7 +3419,7 @@
 
 
 
-@PointClass base(Targetname) sphere(PlayerActorProximity) sphere(ActorTargetProximity) sphere(PlayerTargetProximity) iconsprite("editor-ficool2/ai_script_conditions") = ai_script_conditions : "AI Script Conditions"
+@PointClass base(Targetname) sphere(PlayerActorProximity) sphere(ActorTargetProximity) sphere(PlayerTargetProximity) iconsprite("editor-ficool2/ai_script_conditions") line(255 255 0, targetname, actor) line(255 255 255, targetname, target) = ai_script_conditions : "AI Script Conditions"
 [
 	Actor(target_destination) : "Actor" : : "NPC Target"
 	

@@ -1614,7 +1614,7 @@
 	// TODO:  Allow specifying radius within with you must be in order to +use to get on the ladder
 ]
 
-@PointClass base(Parentname) size( -16 -16 0, 16 16 4 ) color(255 128 255)  line(0 128 0, targetname, target) = info_ladder_dismount : 
+@PointClass base(Parentname) size( -16 -16 0, 16 16 4 ) color(255 128 255) line(0 128 0, targetname, target) = info_ladder_dismount : 
 	"An entity to handle endpoints for multiple ladders that are too close to each other."
 [
 	target(target_destination) : "LadderName" : : "If multiple ladders are near multiple endpoints, use this to stop them from interfering with each other."
@@ -2071,7 +2071,7 @@
 	smokesprite(sprite) : "Smoke Puff" : "sprites/whitepuff.vmt"
 ]
 
-@PointClass base(Targetname, Parentname) sphere(radius) sphere(inner_radius) sphere(radius) iconsprite("editor/env_physexplosion.vmt") = env_physexplosion : 
+@PointClass base(Targetname, Parentname) sphere(radius) sphere(inner_radius) sphere(radius) iconsprite("editor/env_physexplosion.vmt") line(255 255 0, targetname, targetEntityName) = env_physexplosion : 
 	"An entity that creates an explosion at its origin. If the no-damage spawnflag is set, the explosion won't be visible, but will apply force to any physics objects within its radius."
 [
 	magnitude(string) : "Magnitude" : "100" : "Amount of physics force applied by the explosion."
@@ -2503,7 +2503,7 @@
 	massoverride(float) : "Mass override" : "0" : "EPISODIC ONLY. Specify an arbitrary mass for the gibs emitted by me."
 ]
 
-@PointClass base(gibshooterbase, RenderFields) iconsprite("editor-ficool2/env_rotorshooter") = env_rotorshooter : 
+@PointClass base(gibshooterbase, RenderFields) iconsprite("editor-ficool2/env_rotorshooter") line(255 255 255, targetname, lightingorigin) = env_rotorshooter : 
 	"An entity that creates gibs when it's within the influence of a helicopter's rotor wash."
 [
 	shootmodel(studio) : "Model" : "" : "Thing to shoot out.  Can be a .mdl or a .vmt."
@@ -3047,7 +3047,7 @@
 	input Trigger(void) : "Causes the current sky texture to change to the one specified in this entity."
 ]
 
-@PointClass base(Parentname, Angles) iconsprite("editor-ficool2/point_enable_motion_fixup") = point_enable_motion_fixup : 
+@PointClass base(Parentname, Angles) iconsprite("editor-ficool2/point_enable_motion_fixup") line(255 255 255, targetname, parentname) = point_enable_motion_fixup : 
 	"An entity used to move a motion-disabled prop when it enables motion. Parent this entity to the prop, and when the prop has its motion enabled, it will immediately teleport to the origin of this entity."
 [
 ]
@@ -3869,7 +3869,7 @@
 	input SetInvert(integer) : "Change the invert exclusion rule"
 ]
 
-@PointClass wirebox(mins, maxs) base(info_node_link_controller) iconsprite("vizzys-icons/info_template_link_controller") = info_template_link_controller :
+@PointClass wirebox(mins, maxs) base(info_node_link_controller) iconsprite("vizzys-icons/info_template_link_controller") line(255 255 255, targetname, ReferenceTemplate) = info_template_link_controller :
 	"An entity that controls all connections between nodes that intersect the controller's volume. "+
 	"This allows for mass enabling/disabling of all node connections through a volume.\n\n"+
 	"NOTE: Due to the way this works, using info_node_link_logic may cause several identical instances of the outputs to be fired instead of one. One way to remedy this by passing your action through a relay with fast refire disabled."
@@ -4808,7 +4808,7 @@
 //
 //-------------------------------------------------------------------------
 
-@PointClass color(0 0 255) sidelist(sides) iconsprite("editor/env_cubemap.vmt") = env_cubemap : 
+@PointClass color(0 0 255) sidelist(sides) iconsprite("editor/env_cubemap.vmt") line(255 255 255, targetname, parallaxobb) = env_cubemap : 
 	"An entity that creates a sample point for the Cubic Environment Map."
 [
 	cubemapsize(choices) : "Cubemap Size" : 0 =
@@ -4982,7 +4982,7 @@
 	output OnMultiNewRound(void) : "Fired only in multiplayer, when a new round is started. Only fired in multiplayer games that use round-based gameplay."
 ]
 
-@PointClass base(Targetname,Angles,Parentname) studioprop("models/editor/camera.mdl") frustum(fov,4,250,250 250 250,-1) = point_viewcontrol : 
+@PointClass base(Targetname,Angles,Parentname) studioprop("models/editor/camera.mdl") frustum(fov,4,250,250 250 250,-1) line(255 255 0, targetname, target) line(255 255 0, targetname, moveto) = point_viewcontrol : 
 	"A camera entity that controls the player's view. While it's active, the player will see out of the camera." 
 [
 	target(target_destination) : "Entity to Look At" : : "Name of the entity that the camera should point at and track while active."
@@ -5491,7 +5491,7 @@
 ]
 
 
-@PointClass base(Targetname) iconsprite("editor-ficool2/logic_collision_pair") = logic_collision_pair : 
+@PointClass base(Targetname) iconsprite("editor-ficool2/logic_collision_pair") line(128 128 128, attach1, attach2) = logic_collision_pair : 
 	"An entity that can be used to enables/disable vphysics collisions between two target entities."
 [
 	attach1(target_destination) : "Attachment 1" : "" : "The first entity."
@@ -5712,7 +5712,7 @@
 	input SetLerpPercent(float) : "Sets the lerp percent."
 ]
 
-@PointClass base(Targetname) iconsprite("editor-ficool2/logic_lineto") = logic_lineto : 
+@PointClass base(Targetname) iconsprite("editor-ficool2/logic_lineto") line(255 255 0, targetname, source, targetname, target) = logic_lineto : 
 	"An entity that calculates and outputs a vector from one entity to another." 
 [
 	source(target_destination) : "Start entity" : : "Name of the entity the line should start from."
@@ -6022,7 +6022,7 @@
 	output OutFormattedValue(string) : "Fired when the formatted value is requested. Outputs the formatted value."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/logic_keyfield.vmt") = logic_keyfield :
+@PointClass base(Targetname) iconsprite("editor/logic_keyfield.vmt") line(255 255 255, targetname, target) = logic_keyfield :
 	"A logic entity that could read an entity's keyfields. " +
 	"Use the target and key name options if you want to store a specific target and/or keyvalue. " +
 	"Use the 'Test' input to look for the key within the target's datadesc. " +
@@ -6046,7 +6046,7 @@
 	output OnFailed(void) : "Fires when this entity fails to find the specified keyfield."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/logic_datadesc_accessor.vmt") = logic_datadesc_accessor :
+@PointClass base(Targetname) iconsprite("editor/logic_datadesc_accessor.vmt") line(255 255 255, targetname, target) = logic_datadesc_accessor :
 	"A logic entity that could read or write any field in an entity's data description, keyvalue or not, based on its internal name. It otherwise functions identically to logic_keyfield.\n\n" +
 	"You'd better know what you're doing."
 [
@@ -6194,7 +6194,7 @@
 	output OutVector(vector) : "Outputs the modified vector."
 ]
 
-@PointClass base(Targetname, EnableDisable) iconsprite("vizzys-icons/logic_modelinfo") = logic_modelinfo :
+@PointClass base(Targetname, EnableDisable) iconsprite("vizzys-icons/logic_modelinfo") line(255 255 255, targetname, target) = logic_modelinfo :
 	"Gets and outputs some model information from an entity."
 [
 	target(target_destination) : "Target" : "" : "The entity whose model will be evaluated."
@@ -6641,7 +6641,7 @@
 ]
 
 // TODO: TASK SUPPORT
-@PointClass base(Targetname, EnableDisable) iconsprite("editor/ai_monitor.vmt") = ai_monitor :
+@PointClass base(Targetname, EnableDisable) iconsprite("editor/ai_monitor.vmt") line(255 255 255, targetname, target) = ai_monitor :
 	"Monitors NPCs for conditions and schedules. " +
 	"You can use this entity to either watch an entity for conditions/schedules or test whether they have them. "+
 	"TODO: Task support."
@@ -6749,7 +6749,7 @@
 	output OnCopy(void) : "Fires each time the size is successfully copied with the target as the activator." 
 ]
 
-@PointClass base(Targetname, EnableDisable) iconsprite("vizzys-icons/ai_weaponmodifier") = ai_weaponmodifier : 
+@PointClass base(Targetname, EnableDisable) iconsprite("vizzys-icons/ai_weaponmodifier") line(255 255 255, targetname, target) = ai_weaponmodifier : 
 	"Modifies a NPC's weapon shot regulation."
 [
 	Target(target_destination) : "Target(s)" : : "The NPC(s) that will be modified by default."
@@ -7460,7 +7460,7 @@
 	input Disable(void) : "Disable the sensor."
 ]
 
-@PointClass base(Targetname, Parentname, EnableDisable, Angles) iconsprite("editor-ficool2/point_proximity_sensor") = point_proximity_sensor :
+@PointClass base(Targetname, Parentname, EnableDisable, Angles) iconsprite("editor-ficool2/point_proximity_sensor") line(0 100 250, targetname, target) = point_proximity_sensor :
 	"An entity that detects another entity's proximity to a target position."
 [
 	target(target_destination) : "Target Entity Name" : : "Name of the entity whose angles will be sensed."
@@ -7479,7 +7479,7 @@
 ]
 
 
-@PointClass base(Targetname, Parentname, Angles) iconsprite("editor-ficool2/point_teleport") = point_teleport : 
+@PointClass base(Targetname, Parentname, Angles) iconsprite("editor-ficool2/point_teleport") line(255 255 255, targetname, target) = point_teleport : 
 	"An entity that teleports a target entity to this position and angles. "+
 	"If 'Teleport Home' spawn flag is set, teleports the target entity to its spawn position instead." +
 	"If object is physically simulated, simulation is turned off when teleported."
@@ -7497,7 +7497,7 @@
 	input TeleportToCurrentPos(void) : "Teleport to the current position."
 ]
 
-@PointClass base(Targetname, Parentname, DamageTypes) iconsprite("editor-ficool2/point_hurt") sphere(DamageRadius) = point_hurt :
+@PointClass base(Targetname, Parentname, DamageTypes) iconsprite("editor-ficool2/point_hurt") sphere(DamageRadius) line(255 0 0, targetname, damagetarget) = point_hurt :
 	"An entity that does damage to all entities in a radius around itself, with a specified delay." +
 	"If 'Target Entity' is specified, the damage is only done to that entity."
 [
@@ -7695,7 +7695,11 @@
 	target(target_destination) : "Target object" : ""  : "The entity whose mass center will be overridden."
 ]
 
-@PointClass halfgridsnap base(Targetname) iconsprite("editor-ficool2/phys_spring") = phys_spring : 
+@PointClass halfgridsnap base(Targetname) iconsprite("editor-ficool2/phys_spring") 
+	line(128 128 128, targetname, attach1) 
+	line(128 128 128, targetname, attach2) 
+	line(128 128 128, targetname, attach1, targetname, attach2) 
+= phys_spring : 
 	"A physically simulated spring. "+
 	"'Length' is what's known as the 'natural spring length'. This is how long the spring would "+
 	"be if it was at rest (nothing hanging on it or attached). When you attach something to the "+
@@ -7724,7 +7728,11 @@
 	input SetSpringDamping(float) : "Set the Spring Damping."
 ]
 
-@PointClass halfgridsnap iconsprite("editor-ficool2/phys_hinge") base(TwoObjectPhysics) = phys_hinge : 
+@PointClass halfgridsnap iconsprite("editor-ficool2/phys_hinge") base(TwoObjectPhysics)
+	line(128 128 128, targetname, attach1) 
+	line(128 128 128, targetname, attach2) 
+	line(128 128 128, targetname, attach1, targetname, attach2) 
+ = phys_hinge : 
 	"A physically simulated hinge. Use the helper to define the axis of rotation."
 [
 	hingefriction(float) : "Friction" : "0" : "Resistance/friction in the hinge"
@@ -7752,7 +7760,11 @@
 	reversalsoundLarge(sound) : "Reversal sound (large)" : "" : "Episodic only. Play this sound when making a hard reverse over the large threshold"
 ]
 
-@PointClass base(TwoObjectPhysics) iconsprite("editor/phys_ballsocket.vmt") = phys_ballsocket : 
+@PointClass base(TwoObjectPhysics) iconsprite("editor/phys_ballsocket.vmt") 
+	line(255 255 255, targetname, attach1) 
+	line(255 255 255, targetname, attach2) 
+	line(128 128 128, targetname, attach1, targetname, attach2) 
+= phys_ballsocket : 
 	"A constraint that keeps the position of two objects fixed, relative to the constraint's origin. It does not affect rotation."
 [
 	spawnflags(flags) =
@@ -7760,12 +7772,20 @@
 	]
 ]
 
-@PointClass base(TwoObjectPhysics) studio("models/editor/axis_helper.mdl") = phys_constraint : 
+@PointClass base(TwoObjectPhysics) studio("models/editor/axis_helper.mdl") 
+	line(255 255 255, targetname, attach1)
+	line(255 255 255, targetname, attach2)
+	line(128 128 128, targetname, attach1, targetname, attach2)
+= phys_constraint : 
 	"A constraint that keeps the relative position and orientation of two objects fixed."
 [
 ]
 
-@PointClass base(TwoObjectPhysics) studio("models/editor/axis_helper.mdl") = phys_pulleyconstraint : 
+@PointClass base(TwoObjectPhysics) studio("models/editor/axis_helper.mdl")
+	line(255 255 255, targetname, attach1)
+	line(255 255 255, targetname, attach2)
+	line(128 128 128, targetname, attach1, targetname, attach2)
+ = phys_pulleyconstraint : 
 	"A constraint that is essentially two length constraints and two points. Imagine it as a virtual rope connected to two objects, each suspended from a pulley above them."+
 	"The constraint keeps the sum of the distances between the pulley points and their suspended objects constant."
 [
@@ -7814,7 +7834,12 @@
 	reversalsoundLarge(sound) : "Reversal sound (large)" : "" : "Play this sound when making a hard reverse over the large threshold"
 ]
 
-@PointClass base(TwoObjectPhysics) studio("models/editor/axis_helper.mdl") = phys_lengthconstraint : 
+@PointClass base(TwoObjectPhysics) studio("models/editor/axis_helper.mdl") 
+	line(255 255 255, targetname, attach1) 
+	line(255 255 255, targetname, attach2) 
+	line(128 128 128, targetname, attach1, targetname, attach2) 
+	sphere(minlength) 
+= phys_lengthconstraint : 
 	"A constraint that preserves the distance between two entities. If the 'Keep Rigid' flag is set, think of it as a rod. If not, think off it as a virtual rope."
 [
 	addlength(float) : "Additional Length" : "0" : "Add (or subtract) this amount to the rest length of the rope."
@@ -7912,7 +7937,7 @@
 	force(string) : "Force" : "0" : "Force (will be integrated, units are force kg*in/s^2)"
 ]
 
-@PointClass halfgridsnap base(ForceController) studioprop("models/editor-ficool2/cone_helper_gray.mdl") = phys_torque : 
+@PointClass halfgridsnap base(ForceController) studioprop("models/editor-ficool2/cone_helper_gray.mdl") line(255 255 255, targetname, attach1) = phys_torque : 
 	"An angular thruster. Use it to apply angular force to an entity."
 [
 	// Angular acceleration (units are degress/s^2)
@@ -7920,7 +7945,7 @@
 	axis(vecline) : "Rotation Axis" : ""
 ]
 
-@PointClass base(Targetname) halfgridsnap iconsprite("editor-ficool2/phys_motor") = phys_motor : 
+@PointClass base(Targetname) halfgridsnap iconsprite("editor-ficool2/phys_motor") line(128 128 128, targetname, attach1) = phys_motor : 
 	"An entity that tries to spin a target entity at a particular speed."
 [
 	speed(string) : "Rotation Speed" : "0" : "Angular speed (units are degrees/second)"
@@ -8797,14 +8822,14 @@
 	target(target_destination) : "Train Name" : : "The target train to control when the player uses these controls."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/tanktrain_aitarget.vmt") = tanktrain_aitarget : 
+@PointClass base(Targetname) iconsprite("editor/tanktrain_aitarget.vmt") line(255 255 255, targetname, target) line(255 255 255, targetname, newtarget) = tanktrain_aitarget : 
 	"An entity that changes the target of a tanktrain_ai entity."
 [
 	target(target_destination) : "Tank AI Entity" : : "The tanktrain_ai entity to change the target of."
 	newtarget(target_destination) : "New Target Entity" : : "The entity to tell the tanktrain_ai to target."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/tanktrain_ai.vmt") = tanktrain_ai : 
+@PointClass base(Targetname) iconsprite("editor/tanktrain_ai.vmt") line(255 255 255, targetname, target) = tanktrain_ai : 
 	"Train chase AI"			// NEEDHELP
 [
 	target(target_destination) : "Train Name"
@@ -9241,7 +9266,7 @@
 	output OnEventFired(void)  : "Fires when the event has been detected."
 ]
 
-@PointClass base(logic_eventlistener) iconsprite("vizzys-icons/point_event") = point_event :
+@PointClass base(logic_eventlistener) iconsprite("vizzys-icons/point_event") line(255 255 0, targetname, Target) line(255 255 0, targetname, ReplacementEntity)= point_event :
 	"An entity that can listen to events fired from code and fire " +
 	"an output when it happens."
 [
@@ -9291,7 +9316,12 @@
 // Used to allow entities to mimic the motions of other entities
 //-------------------------------------------------------------------------
 
-@PointClass base(Targetname) iconsprite("editor-ficool2/logic_measure_movement") = logic_measure_movement :
+@PointClass base(Targetname) iconsprite("editor-ficool2/logic_measure_movement") 
+	line(255 255 0, targetname, measureReference) 
+	line(255 0 255, targetname, measureTarget, targetname, measureReference) 
+	line(255 255 0, targetname, targetReference) 
+	line(255 0 255, targetname, target, targetname, TargetReference) 
+= logic_measure_movement :
 	"An entity that can measure the movement of an entity relative to another entity " +
 	"and apply that movement to a third entity."
 [
@@ -9449,7 +9479,7 @@
 	output OnCreditsDone(void)  : "Fired when the credits having finished rolling."
 ]
 
-@PointClass base(Parentname, Targetname) iconsprite("editor-ficool2/material_modify_control") = material_modify_control : 
+@PointClass base(Parentname, Targetname) iconsprite("editor-ficool2/material_modify_control") line(255 255 0, targetname, parentname) = material_modify_control : 
 	"An entity that can be used to directly control material vars. To use it, you need to read the .vmt of the material you "+
 	"intend to change. Parent this entity to a brush model entity who's material you want to control."
 [
@@ -9624,7 +9654,7 @@
 // 
 // ASW-based Projected Texture
 // 
-@PointClass base(Targetname, Parentname, Angles) studio("models/editor/cone_projected_helper.mdl") frustum(lightfov,nearz,farz,lightcolor,-1) = env_projectedtexture : 
+@PointClass base(Targetname, Parentname, Angles) studio("models/editor/cone_projected_helper.mdl") frustum(lightfov,nearz,farz,lightcolor,-1) line(255 255 255, targetname, target) = env_projectedtexture : 
 	"Projected texture entity."
 [
 	spawnflags(flags) =
@@ -10124,7 +10154,7 @@
     ]
 ]
 
-@PointClass base(Targetname) sphere(near_blur) sphere(near_focus) sphere(far_blur) sphere(far_focus) sphere(focus_range) iconsprite("editor/env_dof_controller.vmt") = env_dof_controller : 
+@PointClass base(Targetname) sphere(near_blur) sphere(near_focus) sphere(far_blur) sphere(far_focus) sphere(focus_range) iconsprite("editor/env_dof_controller.vmt") line(255 255 0, targetname, focus_target) = env_dof_controller : 
     "An entity that controls the depth of field settings for the player. Depth of field simulates camera blur of out-of-focus regions of the scene."
 [
     enabled(choices) : "Enabled" : 0 : "Whether the effect should be active" =
