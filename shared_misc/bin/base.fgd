@@ -3741,7 +3741,7 @@
 	nodeheight(integer) : "NodeHeight"  : 0
 ]
 
-@PointClass base(Targetname, Angles, HintNode) studio("models/editor/node_hint.mdl") sphere(radius) color(255 255 255) frustum(nodeFOV,-1,128,250 250 250,-1) = info_hint :
+@PointClass base(Targetname, Angles, HintNode) studio("models/editor/node_hint.mdl") sphere(radius) color(255 255 255) frustum(nodeFOV,-1,128,250 250 250,-1) line(255 255 255, nodeid, TargetNode) = info_hint :
 	"A hint that is not used for navigation. They don't go into the nodegraph, nor do they fall to the ground. Use these to provide " +
 	"some spatial context for NPCs, such as 'look here if you can't find the player' or 'throw rocks at this spot'."
 [
@@ -6424,7 +6424,7 @@
 
 //
 
-@PointClass base(Targetname) iconsprite("vizzys-icons/point_ragdollboogie") = point_ragdollboogie : 
+@PointClass base(Targetname) iconsprite("vizzys-icons/point_ragdollboogie") line(255 255 255, targetname, target) = point_ragdollboogie : 
 	"An entity that makes ragdolls dance."
 [
 	spawnflags(flags) =
