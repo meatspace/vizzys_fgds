@@ -5030,7 +5030,7 @@
 	output OnStartFollow(void) : "Fired when the point_viewcontrol activates, usually due to the Enable input being received."
 ]
 
-@PointClass base(Targetname) iconsprite("editor-ficool2/point_posecontroller") = point_posecontroller : 
+@PointClass base(Targetname) iconsprite("editor-ficool2/point_posecontroller") line(255 255 0, targetname, propname) = point_posecontroller : 
 	"An entity that controls a pose parameter of a prop and cycles the pose clientside." 
 [
 	PropName(target_destination) : "Target" : : "Name of the prop to control. Can be any animating entity."
@@ -9281,7 +9281,7 @@
 	output OnEventFired(void)  : "Fires when the event has been detected."
 ]
 
-@PointClass base(logic_eventlistener) iconsprite("vizzys-icons/point_event") line(255 255 0, targetname, Target) line(255 255 0, targetname, ReplacementEntity)= point_event :
+@PointClass base(logic_eventlistener) iconsprite("vizzys-icons/point_event") line(255 255 0, targetname, Target) line(255 255 0, targetname, ReplacementEntity) = point_event :
 	"An entity that can listen to events fired from code and fire " +
 	"an output when it happens."
 [
