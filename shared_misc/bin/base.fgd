@@ -7787,7 +7787,7 @@
 	]
 ]
 
-@PointClass base(TwoObjectPhysics) studio("models/editor/axis_helper.mdl") 
+@PointClass base(TwoObjectPhysics) studio("models/editor/axis_helper_thick.mdl") 
 	line(255 255 255, targetname, attach1)
 	line(255 255 255, targetname, attach2)
 	line(128 128 128, targetname, attach1, targetname, attach2)
@@ -7796,7 +7796,7 @@
 [
 ]
 
-@PointClass base(TwoObjectPhysics) studio("models/editor/axis_helper.mdl")
+@PointClass base(TwoObjectPhysics) studio("models/editor/axis_helper_thick.mdl")
 	line(255 255 255, targetname, attach1)
 	line(255 255 255, targetname, attach2)
 	line(128 128 128, targetname, attach1, targetname, attach2)
@@ -7814,7 +7814,7 @@
 	] 
 ]
 
-@PointClass halfgridsnap base(TwoObjectPhysics) studio("models/editor/axis_helper.mdl") 
+@PointClass halfgridsnap base(TwoObjectPhysics) studio("models/editor/axis_helper_thick.mdl") 
 	line(255 255 255, targetname, attach1) 
 	line(255 255 255, targetname, attach2) 
 	line(128 128 128, targetname, attach1, targetname, attach2) 
@@ -7849,7 +7849,7 @@
 	reversalsoundLarge(sound) : "Reversal sound (large)" : "" : "Play this sound when making a hard reverse over the large threshold"
 ]
 
-@PointClass base(TwoObjectPhysics) studio("models/editor/axis_helper.mdl") 
+@PointClass base(TwoObjectPhysics) studio("models/editor/axis_helper_thick.mdl") 
 	line(255 255 255, targetname, attach1) 
 	line(255 255 255, targetname, attach2) 
 	line(128 128 128, targetname, attach1, targetname, attach2) 
