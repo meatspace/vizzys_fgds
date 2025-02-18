@@ -5401,11 +5401,12 @@
 	Group13(target_destination) : "EntityGroup[13]"
 	Group14(target_destination) : "EntityGroup[14]"
 	Group15(target_destination) : "EntityGroup[15]"
-	rendercolor(color255) : "Sprite Icon Color" : "255 255 255" : "Helper color to differentiate your script icons. Only works in Hammer++."
+	rendercolor(color255) : "Sprite Icon Color" : "255 255 255" : "Helper color to differentiate your script icons. Only shows up in Hammer++."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/logic_script_client.vmt") = logic_script_client : "An entity capable of running client-side scripts"
+@PointClass base(Targetname) iconsprite("vizzys-icons/logic_script_client.vmt") = logic_script_client : "An entity capable of running client-side scripts"
 [
+	rendercolor(color255) : "Sprite Icon Color" : "100 200 255" : "Helper color to differentiate your script icons. Only shows up in Hammer++."
 	ClientThink(choices) : "Client Think" : 0 : "Allows client-side VScript to run a think function in the form of a 'ClientThink' hook. (NOTE: The 'Script think function' keyvalue is not related to this!)" =
 	[
 		0 : "No"
