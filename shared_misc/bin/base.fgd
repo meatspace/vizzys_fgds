@@ -2579,7 +2579,7 @@
 	input SetGibFlags(integer) : "Sets the flags for each gib."
 ]
 
-@PointClass base(Targetname,Parentname) sphere(radius) iconsprite("editor/env_soundscape.vmt")
+@PointClass base(Targetname,Parentname) sphere(radius) iconsprite("vizzys-icons/env_soundscape_proxy.vmt")
 	line(255 255 255, targetname, MainSoundscapeName) 
 	line(128 128 128, targetname, position0) 
 	line(128 128 128, targetname, position1) 
