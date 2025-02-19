@@ -472,8 +472,8 @@
 	input StartForward(void) : "Tell the driver to start driving."
 	input Stop(void) : "Tell the driver to stop driving."
 
-	input DisableFiring(float) : "Disables firing from happening"
-	input EnableFiring(float) : "Enables firing to start. Firing is enabled by default"
+	input DisableFiring(void) : "Disables firing from happening"
+	input EnableFiring(void) : "Enables firing to start. Firing is enabled by default"
 ]
 
 
@@ -575,7 +575,7 @@
 		2 : "Dog"
 		3 : "Ally Installation (Blue triangle with a dot)"
 		4 : "Enemy (Red dot)"
-		5 : "Large Enemy (Striders, big red dot)"
+		5 : "Large Enemy (Striders, big Red dot)"
 	]
 
 	mode(choices) : "Mode" : 0 =
@@ -2594,7 +2594,7 @@
 	]
 
 	sentence(string) : "Sentence Name" : ""
-	entity(string) : "Speaker Type"
+	entity(string) : "Speaker Entity"
 	delay(string) : "Additional Sentence Time" : "0"
 	radius(integer) : "Search Radius" : 512
 	refire(string) : "Delay Before Refire" : "3"
@@ -4153,7 +4153,7 @@
 // Items
 //
 //-------------------------------------------------------------------------
-@BaseClass color(0 0 200) base(Targetname, Angles, Shadow) sphere(fademindist) sphere(fademaxdist) = Item
+@BaseClass color(0 0 200) base(Targetname, Angles, Shadow, RenderFields) sphere(fademindist) sphere(fademaxdist) = Item
 [
 	output OnPlayerTouch(void) : "Fires when the player touches this object"
 

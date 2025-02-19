@@ -594,7 +594,7 @@
 	target(target_destination) : "Target Path Corner" : : "If set, the name of a path corner entity that this NPC will walk to, after spawning."
 	squadname(String) : "Squad Name" : : "NPCs that are in the same squad (i.e. have matching squad names) will share information about enemies, take turns attacking and covering each other, etc. Squads work differently from NPC to NPC and some don't support them by default."
 	hintgroup(String) : "Hint Group" : "" : "Hint groups are used by NPCs to restrict their hint searching to a subset of the map's hint nodes. Only hint nodes with matching hint group names will be considered by this NPC."
-	hintlimiting(choices) : "Hint Limit Nav" : 0 : "Limits NPC to using its specified hint group for navigation requests, but does not limit local navigation." =
+	hintlimiting(choices) : "Hint Limit Nav" : 0 : "Limits NPC to using it's specified hint group for navigation requests, but does not limit local navigation." =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -1252,6 +1252,11 @@
 		0: "Solid"
 		1: "Nonsolid"
 	]
+	vrad_brush_cast_shadows(choices) : "Shadows" : 0 : "Set this if this brush casts lightmap shadows." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]	
 ]
 
 @PointClass base(Targetname) frustum(FOV,4,250,250 250 250,-1) iconsprite("editor-ficool2/env_zoom") = env_zoom : 
@@ -1469,7 +1474,7 @@
 	
 	rendercolor(color255) : "Base Color (R G B)" : "255 255 255"
 
-	renderamt(integer) : "Translucency" : 255
+	renderamt(integer) : "Alpha" : 255
 	
 	// Inputs
 	input TurnOn(void) : "Turn on the smokestack."
@@ -1777,7 +1782,7 @@
 		1 : "Yes"
 	]
 	
-	muted(choices) : "Mute Movie" : 1 =
+	muted(choices) : "Mute Sound" : 1 =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -1798,7 +1803,7 @@
 //
 //-------------------------------------------------------------------------
 
-@PointClass base(Targetname, Parentname, Angles, RenderFxChoices, RenderFields) studio() = cycler : 
+@PointClass base(Targetname, Parentname, Angles, RenderFxChoices, RenderFields, Shadow) studio() = cycler : 
 	"An entity used to display a model for testing purposes. Shooting it will cycle through the model's animations."
 [
 	spawnflags(flags) =
@@ -1809,9 +1814,12 @@
 	skin(integer) : "Skin" : 0 : "Some models have multiple versions of their textures, called skins. Set this to a number other than 0 to use that skin instead of the default."
 
 	sequence(integer) : "Sequence" : 0 : "Default animation sequence for the model to be playing after spawning."
+	modelscale(float) : "Model scale" : "1.0" : "Set the size of the model as it is to appear in-game"
 
 	// Inputs
 	input SetSequence(string) : "Sets the cycler's sequence."
+	input SetModelScale(float) : "Set model scale for the prop" //added by vizzys
+	input SetBodyGroup(integer) : "Sets this model's body group (from 0 - n). You'd better know what you are doing!" //added by vizzys
 ]
 
 //-------------------------------------------------------------------------
@@ -2148,7 +2156,7 @@
 //	input TurnOff(void) : "Turns particles off"
 //]
 
-@PointClass base(Targetname, Parentname, EnableDisable) iconsprite("editor/env_fire") color(0 180 0) = env_fire : 
+@PointClass base(Targetname, Parentname, EnableDisable) iconsprite("editor/env_fire") color(0 180 0) sphere(firesize) = env_fire : 
 	"An entity that handles a single flame at its origin. The flame causes heat 'damage' to other env_fire entities around it, and will eventually ignite non-flaming env_fire entities nearby, causing the fire to spread."
 [
 	health(integer) : "Duration" : 30 : "Amount of time the fire will burn."
@@ -2988,7 +2996,7 @@
 	y(string) : "Y (0 - 1.0 = top to bottom) (-1 centers)" : "-1" : "Vertical position on the player's screens to draw the text. The value should be between 0 and 1, where 0 is the top of the screen and 1 is the bottom. -1 centers the text."
 	effect(Choices) : "Text Effect" : 0 =
 	[
-		0 : "Fade In/Out (The whole text fades in and fades out)"
+		0 : "Fade In/Out (Entire text fades in and fades out)"
 		1 : "Credits"
 		2 : "Scan Out (Puts each letter in one by one, gives the letters an alternative color if they were just put in)"
 	]
@@ -3884,7 +3892,13 @@
 ]
 
 @PointClass base(Targetname, Angles, HintNode) studio("models/editor/climb_node.mdl") color(153 215 103) = info_node_climb : 
-	"A climb-node for AI navigation. Only usable by NPCs that can climb."
+	"A climb-node for AI navigation. Only usable by NPCs that can climb. " + 
+	"In order for it to work, the following conditions need to be observed: " + 
+	"1) Place the nodes so that their centers are 8 units away from the wall surface; " + 
+	"2) Make sure their angles are facing the wall surface (similar to how cover nodes need to face their cover); " + 
+	"3) Align the bottom node on the ground plane and top node on the upper plane; " + 
+	"4) If using a ladder with a model, make it non-solid, or it'll interfere with the nodes; " + 
+	"5) Check the node connection in-game with ai_show_connect - climb nodes are connected by purple lines. " 
 [
 ]
 
@@ -3922,7 +3936,7 @@
 	target(target_destination) : "Entity to point at" : : "The name of an entity in the map that the spotlight will point at. This will override the spotlight's angles."
 	_inner_cone(integer) : "Inner (bright) angle" : 30
 	_cone(integer) : "Outer (fading) angle" : 45
-	_exponent(integer) : "Focus" : 1
+	_exponent(integer) : "Focus" : 1 : "Higher focus creates sharper lighting, and focus below 1 makes it softer."
 	_distance(integer) : "Maximum distance" : 0 : "This is the distance that light is allowed to cast."
 	pitch(angle_negative_pitch) : "Pitch" : -90
 	spawnflags(Flags) = [ 1 : "[1] Initially dark" : 0 ]
@@ -4251,7 +4265,7 @@
 		1 : "Yes"
 	] 
 	
-	Width(float) : "Width" : "2" : "Width of the rope."
+	Width(float) : "Width (1-64)" : "2" : "Width of the rope."
 
 	TextureScale(float) : "Texture Scale" : "1" : "This changes the texture resolution. The default resolution is 4 pixels per inch. Larger values stretch the texture and smaller values scrunch it up."
 	
@@ -5033,7 +5047,7 @@
 @PointClass base(Targetname) iconsprite("editor-ficool2/point_posecontroller") line(255 255 0, targetname, propname) = point_posecontroller : 
 	"An entity that controls a pose parameter of a prop and cycles the pose clientside." 
 [
-	PropName(target_destination) : "Target" : : "Name of the prop to control. Can be any animating entity."
+	PropName(target_destination) : "Prop Targetname" : : "Name of the prop to control. Can be any animating entity."
 	PoseParameterName(string) : "Pose Parameter Name" : : "Name of the pose parameter to control."
 	PoseValue(float) : "Pose Parameter Value" : "0.0" : "Normalized value for the pose parameter from 0.0 and 1.0 (maps to min and max range)."
 	InterpolationTime(float) : "Interpolation Time" : "0.0" : "Number of seconds (0.0 to 10.0) for client to match absolute pose values."
@@ -5231,15 +5245,15 @@
 	"There is currently no way to remove inputs."
 [
 	// Keys
-	IntegerValue(string) : "Reference Value (optional)" : : "The value all inputs are compared to if ''Should use Reference Value'' is enabled."
-	ShouldComparetoValue(choices) : "Should use Reference Value" : 0 : "If enabled, all inputs are compared to the reference value. If not enabled, they are instead compared to the last input added." =
+	IntegerValue(integer) : "Integer Value (optional)" : : "The value all inputs are compared to if ''Should use Reference Value'' is enabled."
+	ShouldComparetoValue(choices) : "Should use Integer Value" : 0 : "If enabled, all inputs are compared to the reference value. If not enabled, they are instead compared to the last input added." =
 	[
 		0 : "No"
 		1 : "Yes"
 	]
 
 	// Inputs
-	input InputValue(string) : "Adds a value to our set of inputs and fires CompareValues automatically, comparing existing inputs to this one if set to do so."
+	input InputValue(integer) : "Adds a value to our set of inputs and fires CompareValues automatically, comparing existing inputs to this one if set to do so."
 	input InputValueNoFire(string) : "Adds a value to our set of inputs without firing CompareValues."
 	input SetReferenceValue(string) : "Sets our reference value."
 	input CompareValues(void) : "Compares the values and fires appropriate outputs."
@@ -8338,7 +8352,7 @@
 	input IgniteHitboxFireScale(float) : "Ignite, with a parameter hitbox fire scale."
 ]
 
-@PointClass base(BasePropPhysics) studioprop() sphere(fademindist) sphere(fademaxdist) = prop_physics :
+@PointClass base(BasePropPhysics, RenderFields) studioprop() sphere(fademindist) sphere(fademaxdist) = prop_physics :
 	"A prop that physically simulates as a single rigid body. It can be constrained to other physics objects using hinges "+
 	"or other constraints. It can also be configured to break when it takes enough damage. "+
 	"Note that the health of the object will be overridden by the health inside the model, to ensure consistent health game-wide. "+
@@ -8352,7 +8366,7 @@
 	input IgniteHitboxFireScale(float) : "Ignite, with a parameter hitbox fire scale."
 ]
 
-@PointClass base(prop_physics) studioprop() sphere(fademindist) sphere(fademaxdist) = prop_physics_multiplayer :
+@PointClass base(BasePropPhysics, RenderFields) studioprop() sphere(fademindist) sphere(fademaxdist) = prop_physics_multiplayer :
 	"This class is the same as prop_physics, except the runtime collisions use a more bouncy method that avoids " +
 	"the prediction errors normal physics objects get."
 [
@@ -8980,7 +8994,7 @@
 	"It is not necessary to create outputs for this trigger. It automatically will trigger the " +
 	"soundscape referred to by its 'Soundscape' property."
 [
-	soundscape(target_source) : "Soundscape" 
+	soundscape(target_source) : "Soundscape Entity" 
 ]
 
 @SolidClass base(Trigger, Targetname, DamageTypes) = trigger_hurt :
@@ -9029,6 +9043,7 @@
 	 
 	// Outputs
 	output OnTrigger(void) : "Fired whenever the trigger is activated."
+
 ]
 
 @SolidClass base(TriggerOnce) = trigger_once :
