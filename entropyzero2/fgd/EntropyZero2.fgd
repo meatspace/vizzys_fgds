@@ -4045,7 +4045,7 @@
 
 	spawnflags(Flags) = 
 	[
-		4 : "[4] Repeatable (Otherwise, removes itself after firing)" : 1
+		4 : "[4] Repeatable (Otherwise, mark as unusable after firing)" : 1
 		1024 : "[1024] Search Cyclically (If found multiple entities, cycle through a list instead of random choice)" : 0
 		2048 : "[2048] Don't Complain (Suppresses some error messages)" : 0
 	]

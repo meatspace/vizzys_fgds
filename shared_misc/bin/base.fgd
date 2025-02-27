@@ -1782,7 +1782,7 @@
 		1 : "Yes"
 	]
 	
-	muted(choices) : "Mute Sound" : 1 =
+	muted(choices) : "Mute Movie Sound?" : 1 =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -5245,8 +5245,8 @@
 	"There is currently no way to remove inputs."
 [
 	// Keys
-	IntegerValue(integer) : "Integer Value (optional)" : : "The value all inputs are compared to if ''Should use Reference Value'' is enabled."
-	ShouldComparetoValue(choices) : "Should use Integer Value" : 0 : "If enabled, all inputs are compared to the reference value. If not enabled, they are instead compared to the last input added." =
+	IntegerValue(integer) : "Reference Value (optional)" : : "The value all inputs are compared to if ''Should use Reference Value'' is enabled."
+	ShouldComparetoValue(choices) : "Should use Reference Value" : 0 : "If enabled, all inputs are compared to the reference value. If not enabled, they are instead compared to the last input added." =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -7847,7 +7847,6 @@
 	
 	// Inputs
 	input SetVelocity(float) : "Set linear velocity along the constraint"
-	
 	//// Episodic only -- for now.
 	
 	minSoundThreshold(float) : "Minimum Sound Velocity" : "6" : "When travelling below this many units/sec, will not play any sound."
