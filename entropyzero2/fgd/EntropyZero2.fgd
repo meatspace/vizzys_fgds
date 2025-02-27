@@ -1466,6 +1466,7 @@
 	
 	input EnablePlayerGive(void) : "Allow this soldier to be given weapons and items by the player"
 	input DisablePlayerGive(void) : "Prevent this soldier from being given weapons and items by the player"
+	input SetLookForItems(bool) : "Allow ability to look for health supplies such as healthkits or batteries" //added by vizzys
 
 	// Outputs
 	output OutManhack(ehandle) : "Fired the moment when this NPC spawns a manhack. Passes the manhack."

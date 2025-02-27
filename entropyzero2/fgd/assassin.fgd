@@ -40,7 +40,7 @@
 	additionalequipment(choices) : "Weapons" : "weapon_pistol" : "Weapons with asterisks can be dual-wielded by assassins." =
 	[
 		"weapon_ar2_proto" : "Prototype AR2"
-		"weapon_ar2" : "AR2"
+		"weapon_ar2" : "AR2 (Pulse Rifle)"
 		"weapon_shotgun" : "Shotgun"
 		"weapon_arbeit_shotgun" : "Arbeit Shotgun"
 		"weapon_flechette_shotgun" : "Flechette Shotgun"
@@ -52,7 +52,7 @@
 		"weapon_pistol" : "Pistol (*)"
 		"weapon_arbeit_pistol" : "Arbeit Pistol"
 		"weapon_pulsepistol" : "Pulse Pistol (*)"
-		"weapon_357" : "357 (*)"
+		"weapon_357" : ".357 Revolver (*)"
 		"weapon_citizenpackage" : "Citizen Package"
 		"weapon_citizensuitcase" : "Citizen Suitcase"
 		"0" : "Nothing"
