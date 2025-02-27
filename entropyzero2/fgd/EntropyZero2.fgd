@@ -1421,7 +1421,7 @@
 		1 : "Yes"	
 	]
 	
-		DisablePlayerUse(choices) : "Ignore player use" : "0" : "Prevent this Combine soldier from responding to player +USE. Can be changed with inputs EnablePlayerUse and DisablePlayerUse." =
+	DisablePlayerUse(choices) : "Ignore player use" : "0" : "Prevent this Combine soldier from responding to player +USE. Can be changed with inputs EnablePlayerUse and DisablePlayerUse." =
 	[
 		0 : "No"
 		1 : "Yes"	
