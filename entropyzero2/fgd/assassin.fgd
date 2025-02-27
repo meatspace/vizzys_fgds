@@ -1,0 +1,124 @@
+//=============================================================================
+//
+// Purpose: Half-Life 2 mod game definition file (.fgd) 
+//			Defines new entities for the Combine assassin.
+//
+//=============================================================================
+
+//-------------------------------------------------------------------------
+//
+// NPCs
+//
+//-------------------------------------------------------------------------
+@NPCClass base(BaseCombine, TalkNPC) studio() = npc_assassin : "Combine Assassin"
+[
+	model(studio) : "Model" : "models/combine_assassin.mdl" : "Sets this assassin's model."
+
+	//model(choices) : "Model" : "models/combine_assassin.mdl" : "Sets this assassin's model." = 
+	//[
+	//	"models/combine_assassin.mdl" : "Regular Assassin"
+	//]
+
+	tacticalvariant(choices) : "Tactical Variant" : "0" =
+	[
+		"0" : "Normal Tactics"
+		"1" : "Pressure the enemy (Keep advancing)"
+		"2" : "Pressure until within 30ft, then normal"
+		"3" : "Grenade Happy"
+	]
+	
+	spawnflags(Flags) = 
+	[
+		65536 :  "[65536] Start LookOff" : 0
+		131072	: "[131072] Don't drop grenades" : 0
+		262144  : "[262144] Don't drop ar2 alt fire (elite only) " : 0
+		524288  : "[524288] Can Join Player Squad" : 1
+		1048576 : "[1048576] Regenerate Health" : 1
+		2097152 : "[2097152] Prevent manhack toss" : 0
+	]
+	
+	additionalequipment(choices) : "Weapons" : "weapon_pistol" : "Weapons with asterisks can be dual-wielded by assassins." =
+	[
+		"weapon_ar2_proto" : "Prototype AR2"
+		"weapon_ar2" : "AR2"
+		"weapon_shotgun" : "Shotgun"
+		"weapon_arbeit_shotgun" : "Arbeit Shotgun"
+		"weapon_flechette_shotgun" : "Flechette Shotgun"
+		"weapon_smg1" : "SMG1"
+		"weapon_smg2" : "MP5K"
+		"weapon_rpg" : "RPG"
+		"weapon_crossbow" : "Crossbow"
+		"weapon_stunstick" : "Stun Stick"
+		"weapon_pistol" : "Pistol (*)"
+		"weapon_arbeit_pistol" : "Arbeit Pistol"
+		"weapon_pulsepistol" : "Pulse Pistol (*)"
+		"weapon_357" : "357 (*)"
+		"weapon_citizenpackage" : "Citizen Package"
+		"weapon_citizensuitcase" : "Citizen Suitcase"
+		"0" : "Nothing"
+	]
+	
+	NumGrenades(choices) : "Number of Grenades" : "10" =
+	[
+		"0" : "None"
+		"1" : "1"
+		"2" : "2"
+		"3" : "3"
+		"4" : "4"
+		"5" : "5"
+		"10" : "10"
+		"999999" : "Unlimited"
+	]
+	
+	DualWeapons(choices) : "Dual Weapons" : "1" : "Allows the assassin to dual wield applicable weapons." =
+	[
+		"0" : "No"
+		"1" : "Yes"
+	]
+	
+	UseEyeTrail(choices) : "Use eye trail" : "1" : "If this is disabled, the assassin will not have a trail of sprites following their eye." =
+	[
+		"0" : "No"
+		"1" : "Yes"
+	]
+	
+	SetCloakDuringAI(choices) : "Can cloak during AI" : "1" : "Allows the assassin to cloak and uncloak itself during combat. If this is disabled, cloaking can only be controlled via inputs." =
+	[
+		"0" : "No"
+		"1" : "Yes"
+	]
+	
+	SetSuppressCloakSound(choices) : "Suppress cloak sound" : "0" : "Prevents the assassin from making any noise when cloaking or uncloaking." =
+	[
+		"0" : "No"
+		"1" : "Yes"
+	]
+	
+	StartCloaked(choices) : "Start Cloaked" : "0" : "Makes the assassin spawn already cloaked." =
+	[
+		"0" : "No"
+		"1" : "Yes"
+	]
+	
+	// Inputs
+	input Assault(target_destination) : "Start an assault. Parameter passed in should be the name of the rally point."
+	input SetTacticalVariant(integer) : "Sets this assassin's tactical variant based on integer value."
+	input SetCommandable(void) : "Make a previously uncommandable Combine assassin commandable"
+	input SetNonCommandable(void) : "Make a previously commandable Combine assassin uncommandable"
+	input AddToPlayerSquad(void) : "Add to player squad, instantly."
+	input RemoveFromPlayerSquad(void) : "Remove from player squad, instantly."
+	input StartCloaking(void) : "Start cloaking. Works best without AI."
+	input StopCloaking(void) : "Stop cloaking. Works best without AI."
+	input SetCloakDuringAI(bool) : "Sets whether to cloak during AI."
+	input TurnOnEyeTrail(void) : "Turns on the eye trail if it's currently off."
+	input TurnOffEyeTrail(void) : "Turns off the eye trail if it's currently on."
+	
+	// Outputs
+	output OnPlayerUse(void) : "Fires when a player +USEs the assassin."
+	
+	output OnDualWeaponDrop(void) : "Fires when this assassin drops their second weapon, including when they die."
+	output OnStartCloaking(void) : "Fires when this assassin starts cloaking."
+	output OnStopCloaking(void) : "Fires when this assassin stops cloaking."
+	output OnFullyCloaked(void) : "Fires when this assassin becomes fully cloaked."
+	output OnFullyUncloaked(void) : "Fires when this assassin becomes fully uncloaked."
+]

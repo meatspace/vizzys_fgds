@@ -1,0 +1,171 @@
+//=============================================================================
+//
+// Purpose: Half-Life 2 mod game definition file (.fgd) 
+//			Defines new entities for the husks.
+//
+//=============================================================================
+
+@BaseClass = BaseHusk
+[
+	AlwaysHostile(choices) : "Always hostile" : "0" : "Makes this husk always attack neutral targets on sight." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
+	SuspiciousRadius(float) : "Suspicious radius" : "256.0" : "The radius in which this husk becomes suspicious of a neutral target, and starts staring or aiming at them."
+	HostileRadius(float) : "Hostile radius" : "48.0" : "The radius in which this husk becomes hostile."
+	
+	blind(choices) : "Cognition: Blind" : "0" : "Makes this husk unable to see anything outside of their hostile radius. If it has a gun and it acquires an enemy, it will shoot at wherever it hears sounds." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
+	deaf(choices) : "Cognition: Deaf" : "0" : "Makes this husk unable to hear any sounds outside of their hostile radius." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
+	hyperfocused(choices) : "Cognition: Hyperfocused" : "0" : "Makes this husk only focus on one enemy. Once it acquires one, it will not switch to another unless the enemy dies." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
+	short_memory(choices) : "Cognition: Short Memory" : "0" : "Makes this husk forget about enemies it's angry at after 5 seconds of not seeing them." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
+	//miscount_ammo(choices) : "Cognition: Miscount Ammo" : "0" : "Makes this husk miscount ammo." =
+	//[
+	//	0 : "No"
+	//	1 : "Yes"
+	//]
+	
+	broken_radio(choices) : "Cognition: Broken Radio" : "0" : "Makes this husk unable to communicate with squad members it can't see." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	// Inputs
+	input MakeCalm(target_destination) : "Makes this husk calm."
+	input MakeSuspicious(target_destination) : "Makes this husk suspicious of the specified target."
+	input MakeAngry(target_destination) : "Makes this husk angry at the specified target."
+	
+	input SetHuskAggression(integer) : "Manually sets the husk's aggression value."
+	input AddHuskAggression(integer) : "Manually adds onto the husk's aggression value."
+	
+	input SetHuskCognitionFlags(integer) : "Manually sets the husk's cognition flags."
+	input AddHuskCognitionFlags(integer) : "Manually adds onto the husk's cognition flags."
+	input RemoveHuskCognitionFlags(integer) : "Manually removes from the husk's cognition flags."
+	
+	input AddPassiveTarget(target_destination) : "Adds the specified entity as a ''passive'' target, meaning this husk won't attack it unless explicitly provoked."
+	input RemovePassiveTarget(target_destination) : "Stops considering the specified entity as a ''passive'' target."
+
+	// Outputs
+	output OnAggressionCalm(void) : "Fires when this husk becomes calm after previously becoming angry or suspicious."
+	output OnAggressionSuspicious(void) : "Fires when this husk becomes suspicious."
+	output OnAggressionAngry(void) : "Fires when this husk becomes angry."
+]
+
+@BaseClass = HuskSoldierVariable
+[
+	HuskSoldierType(choices) : "Soldier Type Override" : "0" : "Overrides the husk's type. Normally determined based on the selected model." =
+	[
+		"0" : "None"
+		"1" : "Regular Soldier"
+		"2" : "Elite"
+		"3" : "Grunt"
+		"4" : "Ordinal"
+		"5" : "Charger"
+		"6" : "Suppressor"
+	]
+]
+
+//-------------------------------------------------------------------------
+//
+// NPCs
+//
+//-------------------------------------------------------------------------
+@NPCClass base(BaseCombine, TalkNPC, BaseHusk, HuskSoldierVariable, EZVariable) studio() = npc_husk_soldier : "Husk Soldier"
+[
+	model(choices) : "Model" : "models/husks/husk_soldier.mdl" : "Sets this husk's model. Type is automatically determined." = 
+	[
+		"models/husks/husk_soldier.mdl" : "Regular Soldier Husk"
+		//"models/husks/husk_soldier_prisonguard.mdl" : "Nova Prospekt Soldier Husk"
+		"models/husks/husk_super_soldier.mdl" : "Elite Husk"
+		"models/husks/husk_grunt.mdl" : "Grunt Husk"
+		"models/husks/husk_ordinal.mdl" : "Ordinal Husk"
+		"models/husks/husk_charger.mdl" : "Charger Husk"
+		"models/husks/husk_suppressor.mdl" : "Suppressor Husk"
+	]
+	
+	NoDynamicDamage(choices) : "No dynamic damage" : "0" : "Prevents this husk from dynamically becoming more impaired after receiving damage. (e.g. headshots causing helmet to break and/or go blind)" =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
+	spawnflags(Flags) = 
+	[
+		65536 :  "[65536] Start LookOff" : 0
+		131072	: "[131072] Don't drop grenades" : 0
+		262144  : "[262144] Don't drop ar2 alt fire (elite only) " : 0
+		524288  : "[524288] Can Join Player Squad (if friendly or made passive)" : 1
+		1048576 : "[1048576] Regenerate Health" : 0
+		2097152 : "[2097152] Prevent manhack toss" : 0
+	]
+	
+	NumGrenades(choices) : "Number of Grenades" : "-1" : "Default makes the number of grenades vary by soldier husk type. (e.g. regular soldiers get 3 grenades, chargers get none)" =
+	[
+		"-1" : "Default"
+		"0" : "None"
+		"1" : "1"
+		"2" : "2"
+		"3" : "3"
+		"4" : "4"
+		"5" : "5"
+		"999999" : "Unlimited"
+	]
+	
+	// Inputs
+	input Assault(target_destination) : "Start an assault. Parameter passed in should be the name of the rally point."
+	input SetTacticalVariant(integer) : "Sets this husk's tactical variant based on integer value."
+	input SetCommandable(void) : "Make a previously uncommandable Combine husk commandable"
+	input SetNonCommandable(void) : "Make a previously commandable Combine husk uncommandable"
+	input AddToPlayerSquad(void) : "Add to player squad, instantly."
+	input RemoveFromPlayerSquad(void) : "Remove from player squad, instantly."
+	
+	// Outputs
+	output OnPlayerUse(void) : "Fires when a player +USEs the husk."
+	
+	output OnGiftAccept(void) : "Fires when the husk accepts a ''gift'', such as a weapon or item."
+	output OnGiftReject(void) : "Fires when the husk rejects a ''gift'', such as a weapon with less value than the one it's holding."
+]
+
+@NPCClass base(npc_zombine, HuskSoldierVariable) studio() = npc_husk_zombine : "Husk Zombine"
+[
+	model(studio) : "Model" : "models/zombie/zombie_soldier.mdl" : "Sets this husk zombine's model. Type is automatically determined. (Note that regular husk zombines currently act identical to regular zombines)"
+	
+	// Can't do it this way due to BaseZombie using model(studio)
+	//model(choices) : "Model" : "models/zombie/zombie_soldier.mdl" : "Sets this husk zombine's model. Type is automatically determined. (Note that regular husk zombines currently act identical to regular zombines)" = 
+	//[
+	//	"models/zombie/zombie_soldier.mdl" : "Regular Soldier Zombie"
+	//	//"models/zombie/zombie_soldier_prisonguard.mdl" : "Nova Prospekt Soldier Zombie"
+	//	//"models/zombie/zombie_super_soldier.mdl" : "Elite Zombie"
+	//	"models/zombie/zombie_grunt.mdl" : "Grunt Zombie"
+	//	"models/zombie/zombie_ordinal.mdl" : "Ordinal Zombie"
+	//	"models/zombie/zombie_charger.mdl" : "Charger Zombie"
+	//	"models/zombie/zombie_suppressor.mdl" : "Suppressor Zombie"
+	//]
+]
+
+@NPCClass base(npc_metropolice,BaseHusk,EZVariable) studio() = npc_husk_police : "Husk Police"
+[
+	model(studio) : "Model" : "models/husks/husk_police.mdl" : "The model of this npc_husk_police."
+]

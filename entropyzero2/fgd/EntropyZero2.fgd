@@ -238,7 +238,9 @@
 	// Inputs
 	input Explode(void) : "Explode"
 	input FadeAndRespawn(void) : "Fade And Respawn Ball" //added by vizzys
-	input Socketed(void) : "Ball is Socketed in place" //added by vizzys
+	input Socketed(void) : "Episodic Only. Ball is 'Socketed' in place." //added by vizzys
+	input SetLifetime(float) : "Set the lifetime of the ball to the given duration."
+	input AddLifetime(float) : "Add the given amount of additional lifetime."
 ]
 
 @SolidClass base(Trigger, Angles) = trigger_physics_trap :
@@ -583,8 +585,8 @@
 	input StartForward(void) : "Tell the driver to start driving."
 	input Stop(void) : "Tell the driver to stop driving."
 
-	input DisableFiring(float) : "Disables firing from happening"
-	input EnableFiring(float) : "Enables firing to start. Firing is enabled by default"
+	input DisableFiring(void) : "Disables firing from happening"
+	input EnableFiring(void) : "Enables firing to start. Firing is enabled by default"
 ]
 
 
@@ -616,7 +618,7 @@
 	input RespondToChirp(void) : "Play a chirp, used to respond to other rollermines nearby." //added by vizzys
 	input RespondToExplodeChirp(void) : "Play a different chirp, then explode." //added by vizzys
 	input JoltVehicle(void) : "Zap the vehicle we're on. This is automatically fired when it attaches, then re-fired with a delay to make it zap." //added by vizzys
-	input PowerDown(void) : "EPISODIC ONLY. Shut down a hacked rollermine, then explode it after 4 seconds." //added by vizzys
+	input PowerDown(void) : "Episodic Only. Shut down a hacked rollermine, then explode it after 4 seconds." //added by vizzys
 	output OnPhysGunPickup(void) : "Picked up with Gravity Gun"
 	output OnPhysGunDrop(void) : "Released by Gravity Gun"
 ]
@@ -686,7 +688,7 @@
 		2 : "Dog"
 		3 : "Ally Installation (Blue triangle with a dot)"
 		4 : "Enemy (Red dot)"
-		5 : "Large Enemy (Striders, big red dot)"
+		5 : "Large Enemy (Striders, big Red dot)"
 	]
 
 	mode(choices) : "Mode" : 0 =
@@ -1519,7 +1521,7 @@
 ]
 
 
-@PointClass base(Parentname, BaseNPC) size( -4 -16 -16, 4 16 16 ) studio("models/weapons/w_rocket_launcher.mdl") = npc_launcher : "Launcher"
+@PointClass base(Parentname, BaseNPC) size( -4 -16 -16, 4 16 16 ) studio("models/weapons/w_rocket_launcher.mdl") sphere(maxrange) line(255 0 0, targetname, pathcornername) = npc_launcher : "Launcher"
 [
 
 	spawnflags(Flags) = 
@@ -1750,7 +1752,7 @@
 	output OnFire(void) : "Fires for each bullet fired by this entity."
 ]
 
-@PointClass base(Targetname,Parentname,Angles,Shadow) sphere(DamageRadius) studio("models/props_combine/headcrabcannister01b.mdl") = env_headcrabcanister : "Headcrab canister"
+@PointClass base(Targetname,Parentname,Angles,Shadow) sphere(DamageRadius) studio("models/props_combine/headcrabcannister01b.mdl") line(255 255 0, targetname, launchpositionname) = env_headcrabcanister : "Headcrab canister"
 [
 	spawnflags(Flags) = 
 	[
@@ -2065,8 +2067,14 @@
 	output OnCrashed(void) : "Fires when the gunship crashes."	// Output added by vizzy, suggested by xblah
 ]
 
-@NPCClass base(BaseHelicopter) studio("models/combine_dropship.mdl" ) = npc_combinedropship : "Combine Dropship"
-[
+@NPCClass base(BaseHelicopter) studio("models/combine_dropship.mdl" ) 
+	line(192 192 192, targetname, npctemplate)
+	line(192 192 192, targetname, npctemplate2)
+	line(192 192 192, targetname, npctemplate3)
+	line(192 192 192, targetname, npctemplate4)
+	line(192 192 192, targetname, npctemplate5)
+	line(192 192 192, targetname, npctemplate6)
+= npc_combinedropship : "Combine Dropship"
 	spawnflags(Flags) =
 	[
 		32768 : "[32768] Wait for input before dropoff (Waits for the StopWaitingForDropoff input before releasing cargo)" : 0
@@ -3028,7 +3036,7 @@
 	]
 
 	sentence(string) : "Sentence Name" : ""
-	entity(string) : "Speaker Type"
+	entity(string) : "Speaker Entity"
 	delay(string) : "Additional Sentence Time" : "0"
 	radius(integer) : "Search Radius" : 512
 	refire(string) : "Delay Before Refire" : "3"
@@ -3076,7 +3084,7 @@
 	output LeaveTarget(void) : "Fires when NPC leaves this target"
 ]
 
-@PointClass base(Targetname) iconsprite("editor/scripted_sound.vmt")  = scripted_sound : "Makes a target entity emit a sound directly, which allows lip syncing, interruption from death or other lines, etc. at the cost of most forms of control. Not exclusive to NPCs."
+@PointClass base(Targetname) iconsprite("editor/scripted_sound.vmt") line(255 255 255, targetname, message) = scripted_sound : "Makes a target entity emit a sound directly, which allows lip syncing, interruption from death or other lines, etc. at the cost of most forms of control. Not exclusive to NPCs."
 [
 	message(sound) : "Sound Name" : : "The sound to play. Supports Game Sounds and direct filenames."
 	target(target_destination) : "Target Entity" : : "The entity that should play the sound."
@@ -3094,7 +3102,7 @@
 	input SetSound(string) : "Sets the sound."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/ai_relationship.vmt") sphere(radius) = ai_relationship : 
+@PointClass base(Targetname) iconsprite("editor/ai_relationship.vmt") sphere(radius) line(255 255 255, targetname, subject) = ai_relationship : 
 	"AI Relationship - Sets relationships between groups of NPCs in the AI."
 [
 	subject(target_name_or_class) : "Subject(s)" : "" : "This is the NPC(s) whose disposition will change. May be a targetname or a classname."
@@ -3862,7 +3870,7 @@
 
 
 
-@PointClass base(Targetname) sphere(PlayerActorProximity) sphere(ActorTargetProximity) sphere(PlayerTargetProximity) iconsprite("editor-ficool2/ai_script_conditions") = ai_script_conditions : "AI Script Conditions"
+@PointClass base(Targetname) sphere(PlayerActorProximity) sphere(ActorTargetProximity) sphere(PlayerTargetProximity) iconsprite("editor-ficool2/ai_script_conditions") line(255 255 0, targetname, actor) line(255 255 255, targetname, target) = ai_script_conditions : "AI Script Conditions"
 [
 	Actor(target_destination) : "Actor" : : "NPC Target"
 	
@@ -4030,7 +4038,7 @@
 
 
 // line(255 0 255, targetname, goalent)
-@PointClass base(Targetname) sphere(m_flRadius) color(255 0 255) iconsprite("editor/aiscripted_schedule") = aiscripted_schedule :
+@PointClass base(Targetname) sphere(m_flRadius) color(255 0 255) iconsprite("editor/aiscripted_schedule") line(255 255 255, targetname, m_iszentity) line(255 255 255, targetname, m_iszentity, targetname, goalent) = aiscripted_schedule :
 	"Issues a command to an NPC without taking the NPC out of its AI. This does not seize control of the NPC as " +
 	"a scripted_sequence does" 
 [
@@ -5166,7 +5174,16 @@
 // Logic Entities
 //
 //-------------------------------------------------------------------------
-@PointClass color(0 0 255) base(Targetname) iconsprite("editor/choreo_scene.vmt") = logic_choreographed_scene :
+@PointClass color(0 0 255) base(Targetname) iconsprite("editor/choreo_scene.vmt") 
+	line(240 180 250, targetname, target1) 
+	line(240 180 250, targetname, target2) 
+	line(240 180 250, targetname, target3) 
+	line(240 180 250, targetname, target4) 
+	line(240 180 250, targetname, target5) 
+	line(240 180 250, targetname, target6) 
+	line(240 180 250, targetname, target7) 
+	line(240 180 250, targetname, target8)
+= logic_choreographed_scene :
 	"Manages a choreographed scene of one or more actors."
 
 [
@@ -5269,7 +5286,7 @@
 	input Shutdown(void) : "Remove the manager and all scenes referenced by it (and all scenes referenced by logic_scene_list_manager's embedded in this one)."
 ]
 
-@PointClass base(Targetname, Parentname) sphere(volume) iconsprite("editor/ai_sound.vmt") = ai_sound :
+@PointClass base(Targetname, Parentname) sphere(volume) iconsprite("editor/ai_sound.vmt") line(255 255 255, targetname, target, targetname, locationproxy) = ai_sound :
 	"This entity makes sounds or smells that can be sensed by NPCs, but not by the player. This can be used " +
 	"to cause reactions in nearby NPCs.\n\n" +
 	"Sound Types\n" +
@@ -5436,21 +5453,21 @@
 	output OnExplode(void) : "Fires when this mine actually explodes."
 ]
 
-@PointClass iconsprite("vizzys-icons/env_ar2explosion") base(Targetname, Parentname) = env_ar2explosion :
+@PointClass base(Targetname, Parentname) iconsprite("vizzys-icons/env_ar2explosion") = env_ar2explosion :
 	"AR2 explosion visual effect. Big, volume-filling brown cloud. Does not cause damage or emit sound."
 [
 	input Explode(Void) : "Make the explosion effect."
 	material(material) : "Particle Material" : "particle/particle_noisesphere" : "The material to use for each particle in the explosion."
 ]
 
-@PointClass iconsprite("vizzys-icons/env_starfield") base(Targetname) = env_starfield : "Starfield effect" 
+@PointClass base(Targetname) iconsprite("vizzys-icons/env_starfield") = env_starfield : "Starfield effect" 
 [
 	input TurnOn(void) : "Turn on"
 	input TurnOff(void) : "Turn off"
 	input SetDensity(float) : "Set the density of the starfield. It's a multiplier, so 1 is the default."
 ]
 
-@PointClass size( -4 -4 -4, 4 4 4 ) base(Targetname, Parentname, Angles) = env_flare : "Flare"
+@PointClass base(Targetname, Parentname, Angles) size( -4 -4 -4, 4 4 4 ) = env_flare : "Flare"
 [
 	scale(float) : "Scale" : 1
 	duration(float) : "Duration" : 30
@@ -5724,7 +5741,7 @@
 	input SetOrthoRight(string) : "Changes the right ortho over time"
 ]
 
-@SolidClass base(func_brush) = func_monitor :
+@SolidClass base(func_brush) line(255 255 0, targetname, target) = func_monitor :
 	"A monitor that renders the view from a given point_camera entity."
 [
 	target(target_destination) : "Camera name"
@@ -5839,7 +5856,7 @@
 	output OnFireAtTarget(void) : "Fires when a valid target is found and the APC should shoot rockets"
 ]
 
-@PointClass base(BaseDriveableVehicle) studioprop() = prop_vehicle_apc :
+@PointClass base(BaseDriveableVehicle) studioprop() line(192 0 0, targetname, missilehint) = prop_vehicle_apc :
 	"APC with mounted guns, can only be driven by a vehicle driver or a npc_apcdriver."
 [
 	model(studio) : "World model" : "models/combine_apc.mdl"

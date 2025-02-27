@@ -1,0 +1,163 @@
+//=============================================================================
+//
+// Purpose: Half-Life 2 mod game definition file (.fgd) 
+//			Defines new entities for Wilson
+//
+//=============================================================================
+
+//-------------------------------------------------------------------------
+//
+// NPCs
+//
+//-------------------------------------------------------------------------
+@NPCClass base(Targetname, Angles, ResponseContext) studio("models/props/will_e.mdl") = npc_wilson : "Wilson/Willie/Will-E"
+[
+	spawnflags(Flags) = 
+	[
+		2 : "[2] Gag (No speech allowed)" : 0
+	]
+	
+	model(studio) : "Override Model" : "" : "A model path to use instead."
+
+	static(choices) : "Static" : 0 : "Makes Wilson immobile and saves resources. This is for background maps and dev commentary to keep Will-E from moving, but he's still fully functional." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
+	SetOmniscient(choices) : "Omniscient" : 0 : "Makes Wilson ''omniscient'' (or ''omnipresent''), which lets him answer concepts and find speech targets from anywhere on the map." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
+	CameraTargets(target_destination) : "Camera Targets" : "" : "point_wilson_camera entity/entities which Wilson can use to see enemies and speech targets."
+	
+	SeeThroughPlayer(choices) : "See through player" : 0 : "Allows Wilson to see through the player's eyes." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
+	SetCanBeEnemy(choices) : "Can Be Enemy" : 0 : "Allows some NPCs to recognize Wilson as an enemy. Default relationship is equivalent to npc_arbeit_turret_floor." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
+	AutoSetLocator(choices) : "Auto Set Locator" : 0 : "Automatically sets the player's locator compass (normally set via logic_playerproxy) to follow this Wilson entity upon spawning. Overrides any existing locator entity, including other Wilsons." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
+	damaged(choices) : "Is Damaged" : 0 : "Is Wilson hurt? (Use damaged model and spark)" =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	dead(choices) : "Is Dead" : 0 : "Is Wilson dead? (This is for scenes where Wilson appears lifeless, not to be confused with literal NPC death.)" =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
+	// Inputs
+	input DispatchResponse(string) : "Causes this NPC to speak the specified response concept."
+	input SelfDestruct(void) : "Causes Wilson to explode."
+	input SetOmniscient(bool) : "Sets omniscience on Wilson."
+	input SetCanBeEnemy(bool) : "Sets whether Wilson can be an enemy of NPCs."
+	
+	input TurnOnEyeLight(void) : "Turns on Wilson's eye light if it was disabled before."
+	input TurnOffEyeLight(void) : "Turns off Wilson's eye light if it was enabled before."
+	
+	input EnableMotion(void) : "Enable physics motion/collision response."
+	input DisableMotion(void) : "Disable physics motion/collision response."
+
+	input TurnOnDamagedMode(void) : "Set Wilson into damaged mode (use models/will_e_damaged.mdl, spark, etc)"
+	input TurnOffDamagedMode(void) : "Turn off Wilsons' damaged mode (restore default model and behavior)"
+
+	input TurnOnDeadMode(void) : "Set Wilson into dead mode (turn off eye light and do not speak responses)"
+	input TurnOffDeadMode(void) : "Turn off Wilsons' dead mode (turn on eye light and use responses as normal)"
+	
+	input SetCameraTargets(target_destination) : "Sets the camera targets."
+	input ClearCameraTargets(void) : "Removes all camera targets."
+
+	input EnableSeeThroughPlayer(void) : "Allows Wilson to see through the player's eyes."
+	input DisableSeeThroughPlayer(void) : "Stops Wilson from seeing through the player's eyes."
+	
+	// Outputs
+	output OnTipped(void) : "Turret has been tipped over and is inactive."
+	output OnPlayerUse(void) : "Fires when a player +USEs the turret."
+	output OnPhysGunPickup(void) : "Picked up with physgun"
+	output OnPhysGunDrop(void) : "Released by physgun"
+	output OnDestroyed(void) : "Fires when Wilson has been destroyed. WILSOOOOON!!!"
+]
+
+@PointClass base(Targetname, Angles, EnableDisable, ResponseContext) sphere(InnerRadius) sphere(OuterRadius) studioprop() = prop_wilson_scanner : "The Arbeit door scanners seen throughout Chapter 3."
+[
+	model(studio) : "World model" : "models/props_lab/arbeitscanner01.mdl"
+	lightingorigin(target_destination) : "Lighting Origin" : "" : "Select an info_lighting to specify a location to sample lighting from, instead of using this entity's origin."
+	disableshadows(choices) : "Disable Shadows" : 0 : "Used to disable dynamic shadows on this entity." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
+	spawnflags(Flags) = 
+	[
+		1 : "[1] Stay scanning when target leaves radius" : 0
+	]
+
+	target(npcclass) : "Scannable Class" : "npc_wilson" : "Only NPCs that match this class can be detected by this scanner. Wildcards are supported. Use '*' to pass any NPC."
+	ScanFilter(filterclass) : "Scan Filter" : "" : "An optional filter that can be used in addition to the Scannable Class keyvalue. If specified, only entities that pass the Scannable Class keyvalue AND pass this filter will be detected by the scanner. If no filter is specified, any entity that matches the Scannable Class will pass."
+	damagefilter(filterclass) : "Authorization Filter" : "" : "If specified, only scannable entities that pass this filter will be detected as 'authorized' by the scanner. If no filter is specified, any scannable entity will pass."
+
+	Cooldown(float) : "Cooldown" : "-1" : "The amount of time after finishing a scan before this scanner becomes usable again. -1 means the scanner cannot be used again. (it can still be re-activated with the 'Enable' input)"
+	
+	InnerRadius(float) : "Inner radius" : "72" : "The radius in which the scanner can begin scanning."
+	OuterRadius(float) : "Outer radius" : "128" : "The radius in which scannable entities can be detected. (scanner deploys when target is in this radius)"
+	
+	ScanTime(float) : "Scan time" : "2.0" : "How long scanning should take. Use -1 to scan infinitely, or until the FinishScan input is received."
+
+	ScanDeploySound(sound) : "Scan Deploy/Spot Sound" : "WilsonScanner.Deploy" : "The sound to play when a scannable entity is detected by the scanner."
+	ScanSound(sound) : "Scanning Sound" : "WilsonScanner.StartScan" : "The sound to play when the scanner begins scanning."
+	ScanDoneSound(sound) : "Scan Done Sound" : "WilsonScanner.AccessGranted" : "The sound to play when the scanner successfully scans an entity."
+	ScanRejectSound(sound) : "Scan Reject Sound" : "" : "The sound to play when the scanner rejects a scannable entity."
+	
+	WaitForScene(choices) : "Wait for scene" : 0 : "Don't stop scanning until the target has finished speaking." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
+	// Inputs
+	input FinishScan(void) : "Finishes an active scan immediately."
+	input ForceScanNPC(target_destination) : "Forces a scan to begin on a NPC."
+	input SetOuterRadius(float) : "Sets the outer radius."
+	input SetInnerRadius(float) : "Sets the inner radius."
+	input SetAuthorizationFilter(target_destination) : "Sets the authorization filter."
+	input SetScanFilter(target_destination) : "Sets the scan filter."
+
+	// Outputs
+	output OnScanDone(void) : "Fires when this scanner successfully scans an entity."
+	output OnScanReject(void) : "Fires when this scanner rejects an entity."
+	output OnScanStart(void) : "Fires when this scanner starts scanning entity."
+	output OnScanInterrupt(void) : "Fires when a scan is interrupted by the target falling out of range, being destroyed, etc."
+]
+
+@PointClass base(Targetname, Angles, EnableDisable, ResponseContext) studioprop("models/editor/wilson_camera.mdl") frustum(FieldOfView,0,LookDist,250 250 250,0) = point_wilson_camera : "Camera entity that Wilson can use to see outside of his body."
+[
+	FieldOfView(float) : "Field of View" : "90" : "The camera's FOV."
+	LookDist(float) : "Look distance" : "1024" : "How far the camera can see."
+	Use3DViewCone(choices) : "3D viewcone" : 0 : "Makes the camera use a true 3D viewcone instead of a tall pie slice. Use this if the camera's pitch is important (e.g. facing down or upwards)." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
+	// Inputs
+	input SetFOV(float) : "Sets the FOV."
+	input SetLookDist(float) : "Sets the look distance."
+]

@@ -1,0 +1,54 @@
+//=============================================================================
+//
+// Purpose: Half-Life 2 mod game definition file (.fgd) 
+//			Defines new entities for the Arbeit personality core.
+//
+//=============================================================================
+
+//-------------------------------------------------------------------------
+//
+// NPCs
+//
+//-------------------------------------------------------------------------
+@NPCClass base(TalkNPC,Parentname) studioprop() = npc_arbeit_personality_core : "Arbeit Personality Core"
+[
+	model(studio) : "Model" : "models/npcs/personality_sphere/personality_sphere_arbeit.mdl" : ""
+	
+	CustomIdleSequence(string) : "Custom Idle Sequence" : "" : "A custom sequence for the core to use when idle."
+	CustomAlertSequence(string) : "Custom Alert Sequence" : "" : "A custom sequence for the core to use when alert."
+	CustomStareSequence(string) : "Custom Stare Sequence" : "" : "A custom sequence for the core to use when staring at an enemy."
+	CustomPanicSequence(string) : "Custom Panic Sequence" : "" : "A custom sequence for the core to use when panicking."
+	
+	motiondisabled(choices) : "Motion Disabled" : 0 : "Whether or not the core starts with physics motion disabled." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	// Inputs
+	input EnableMotion(void) : "Enable physics motion/collision response."
+	input DisableMotion(void) : "Disable physics motion/collision response."
+	
+	input ForcePickup(void) : "Force the player to pickpup the sphere."
+	input EnablePickup(void) : "Allow player pickup."
+	input DisablePickup(void) : "Disable player pickup."
+	
+	input PlayAttach(void) : "Play the attach animation, used for syncing with the socket animation."
+	input PlayDetach(void) : "Play the detach animation, used for syncing with the socket animation."
+	input PlayLock(void) : "Play the lock animation, used for syncing with the socket animation."
+	
+	input SetCustomIdleSequence(string) : "Sets a custom idle sequence."
+	input SetCustomAlertSequence(string) : "Sets a custom alert sequence."
+	input SetCustomStareSequence(string) : "Sets a custom stare sequence."
+	input SetCustomPanicSequence(string) : "Sets a custom panic sequence."
+	
+	input ClearCustomIdleSequence(void) : "Clears any custom idle sequence."
+	input ClearCustomAlertSequence(void) : "Clears any custom alert sequence."
+	input ClearCustomStareSequence(void) : "Clears any custom stare sequence."
+	input ClearCustomPanicSequence(void) : "Clears any custom panic sequence."
+
+	// Outputs
+	output OnPlayerUse(void) : "Fires when the player +USEs the core."
+	output OnPlayerPickup(void) : "Fired whenever the player picks up the core."
+	output OnPlayerDrop(void) : "Fired whenever the player drops the core."
+]

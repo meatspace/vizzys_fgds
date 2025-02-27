@@ -1,0 +1,84 @@
+//=============================================================================
+//
+// Purpose: Half-Life 2 mod game definition file (.fgd) 
+//			Defines new entities for Clone Cop, Bad Cop's nemesis.
+//
+//=============================================================================
+
+//-------------------------------------------------------------------------
+//
+// NPCs
+//
+//-------------------------------------------------------------------------
+@NPCClass base(BaseCombine, TalkNPC, EZVariable) studio() = npc_clonecop : "Clone Cop"
+[
+	spawnflags(Flags) = 
+	[
+		65536 :  "[65536] Start LookOff" : 0
+		131072	: "[131072] Don't drop grenades" : 0
+		262144  : "[262144] Don't drop ar2 alt fire" : 0
+		524288  : "[524288] Can Join Player Squad" : 1
+		1048576 : "[1048576] Regenerate Health" : 1
+		2097152 : "[2097152] Prevent manhack toss" : 0
+	]
+	
+	additionalequipment(choices) : "Weapons" : "weapon_ar2_proto" =
+	[
+		"weapon_ar2_proto" : "Prototype AR2"
+		"weapon_ar2" : "AR2"
+		"weapon_shotgun" : "Shotgun"
+		//"weapon_stunstick" : "Stun Stick"
+		"weapon_smg1" : "SMG1"
+		"weapon_smg2" : "MP5K"
+		"weapon_rpg" : "RPG"
+		"weapon_crossbow" : "Crossbow"
+		"0" : "Nothing"
+	]
+	
+	manhacks(choices) : "Number of Manhacks" : 0 : "Sets this clone's number of manhacks." =
+	[
+		0 : "None"
+		1 : "1"
+		2 : "2"
+		999999 : "Unlimited"
+	]
+
+	SetArmor(integer) : "Armor" : 200 : "Sets this clone's armor value, which acts identically to the player's."
+	
+	SetThrowXenGrenades(choices) : "Throw Xen Grenades" : 1 : "Sets whether or not this clone should throw Xen grenades instead of frag grenades, when advantageous." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	EZvariant(choices) : "Variant" : 2 : "Sets this entity's 'variant', e.g. slimy zombies that create radioactive puddles." =
+	[
+		0 : "Default"
+		1 : "Xen"
+		2 : "Radioactive/Slimy"
+		3 : "Temporal"
+		4 : "Arbeit"
+		5 : "Bloodlion"
+		6 : "Athenaeum"
+		7 : "Ash"
+	]
+	
+	model(studio) : "Model" : "models/clone_cop.mdl" : "Sets this clone's model."
+	
+	// Inputs
+	input SetCommandable(void) : "Make a previously uncommandable clone commandable"
+	input SetNonCommandable(void) : "Make a previously commandable clone uncommandable"
+	input AddToPlayerSquad(void) : "Add to player squad, instantly."
+	input RemoveFromPlayerSquad(void) : "Remove from player squad, instantly."
+
+	input SetArmor(integer) : "Sets this clone's armor value, which acts identically to the player's."
+	input SetThrowXenGrenades(bool) : "Sets whether or not this clone should throw Xen grenades instead of frag grenades, when advantageous."
+	
+	// Outputs
+	output OnPlayerUse(void) : "Fires when a player +USEs the soldier."
+]
+
+@NPCClass base(npc_clonecop) studio() = npc_badcop : "Bad Cop"
+[
+	model(studio) : "Model" : "models/bad_cop.mdl" : "Sets this clone's model."
+]

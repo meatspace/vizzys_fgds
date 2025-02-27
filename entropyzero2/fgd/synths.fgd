@@ -1,0 +1,67 @@
+//=============================================================================
+//
+// Purpose: Half-Life 2 mod game definition file (.fgd) 
+//			Defines new entities for the crab and mortar synths.
+//
+//=============================================================================
+
+//-------------------------------------------------------------------------
+//
+// NPCs
+//
+//-------------------------------------------------------------------------
+@NPCClass base(BaseNPC, GrenadeUser) studio() = npc_crabsynth : "Combine Crab Synth"
+[
+	model(studio) : "Model" : "models/synth_npc.mdl" : "Sets this crab synth's model."
+	
+	NumGrenades(choices) : "Number of Grenades" : "5" =
+	[
+		"0" : "None"
+		"1" : "1"
+		"2" : "2"
+		"3" : "3"
+		"4" : "4"
+		"5" : "5"
+		"999999" : "Unlimited"
+	]
+
+	disablephysics(choices) : "Disable bone follower physics" : 0 : "If set to Yes, this crab synth will use cheaper hull-based collisions, which are less accurate to the model but are more stable and performant. Use this if you're having problems with the crab synth's physics or want to reduce CPU usage." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	ProjectedLightEnabled(choices) : "Projected Light Enabled" : 1 : "Allows projected textures to emit from the crab synth's lights." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	ProjectedLightShadowsEnabled(choices) : "Projected Light Shadows Enabled" : 0 : "Whether or not the projected lights cast shadows. If you use this, be sure to make the vertical and horizontal FOV the same." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
+	ProjectedLightBrightnessScale(float) : "Projected Light Brightness Scale" : "1.0" : "Sets the projected lights' brightness scale."
+	ProjectedLightFOV(float) : "Projected Light Vertical FOV" : "90.0" : "Sets the projected lights' vertical FOV."
+	ProjectedLightHorzFOV(float) : "Projected Light Horizontal FOV" : "120.0" : "Sets the projected lights' horizontal FOV."
+	
+	// Inputs
+	input StartPatrolling(void) : "Patrol whenever I'm idle or alert."
+	input StopPatrolling(void) : "Stop patrolling when I'm idle or alert."
+	input SetChargeTarget(target_destination) : "Sets a charge target to attack.  Parameters are the name of the entity to start at and the name of the entity to charge towards, separated by a space (i.e. start target)"
+	input ClearChargeTarget(void) : "Clear the charge target"
+	
+	input TurnOnProjectedLights(void) : "Turn on projected lights"
+	input TurnOffProjectedLights(void) : "Turn off projected lights"
+	input SetProjectedLightEnableShadows(bool) : "Set whether the projected lights cast shadows"
+	input SetProjectedLightBrightnessScale(float) : "Set the projected lights' brightness scale"
+	input SetProjectedLightFOV(float) : "Set the projected lights' vertical FOV"
+	input SetProjectedLightHorzFOV(float) : "Set the projected lights' horizontal FOV"
+]
+
+@NPCClass base(BaseNPC) studio() = npc_mortarsynth : "Combine Mortar Synth"
+[
+	model(studio) : "Model" : "models/mortarsynth_npc.mdl" : "Sets this mortar synth's model."
+]
