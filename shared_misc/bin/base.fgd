@@ -2619,7 +2619,7 @@
 	[
 		"Nothing" : "Nothing (DSP:None)"
 		"Automatic" : "Automatic (DSP:Auto)"
-		"Automatic_Dialog" : "Automatic_Dialog (DSP:Auto 50% volume)"
+		"Automatic_Dialog" : "Automatic_Dialog (DSP:Auto, 50% vol)"
 		"GenericIndoor" : "Indoor (DSP:Auto)"
 		"GenericOutdoor" : "Outdoor (DSP:Concrete Large)"
 		//adding some of the more generic (atmospheric, simple) sounding base hl2 soundscapes and their DSP settings here - vizzys
