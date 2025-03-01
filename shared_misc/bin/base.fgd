@@ -2617,11 +2617,11 @@
 	radius(integer) : "Radius" : 128 : "If set to -1, then the player can hear the soundscape as long as they can see it (regardless of distance to it)."
 	soundscape(choices) : "Soundscape" : "Nothing" : "The name of the soundscape to use. Corresponds to an entry in the soundscapes*.txt file in the hl2\scripts directory." =
 	[
-		"Nothing" : "Nothing (DSP:None)"
-		"Automatic" : "Automatic (DSP:Auto)"
-		"Automatic_Dialog" : "Automatic_Dialog (DSP:Auto, 50% vol)"
-		"GenericIndoor" : "Indoor (DSP:Auto)"
-		"GenericOutdoor" : "Outdoor (DSP:Concrete Large)"
+		"Nothing" : "Nothing (DSP: None)"
+		"Automatic" : "Automatic (DSP: Auto)"
+		"Automatic_Dialog" : "Automatic_Dialog (DSP: Auto, 50% Volume)"
+		"GenericIndoor" : "Indoor (DSP: Auto)"
+		"GenericOutdoor" : "Outdoor (DSP: Concrete Large)"
 		//adding some of the more generic (atmospheric, simple) sounding base hl2 soundscapes and their DSP settings here - vizzys
 		"e3_Techdemo_02" : "e3_Techdemo_02 (DSP:Big 1)"
 		"e3_Techdemo_05" : "e3_Techdemo_05 (DSP:Chamber Large)"
