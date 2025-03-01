@@ -1326,7 +1326,7 @@
 	input   StopEffect(float) : "Fade out the effect out over this many seconds."
 ]
 
-@PointClass base(Targetname) iconsprite("editor-ficool2/env_texturetoggle") = env_texturetoggle : 
+@PointClass base(Targetname) iconsprite("editor-ficool2/env_texturetoggle") line(255 255 0, targetname, target) = env_texturetoggle : 
 	"An entity that allows you to change the textures on other brush-built entities."
 [
 	target(target_destination) : "Target Brush(es)" :  : "Name of the entities. All ToggleTexture materials on all entities (including sprites) matching the targetname will be affected."
@@ -1448,7 +1448,7 @@
 	]
 ]
 
-@PointClass base(Targetname, Parentname, Angles) studioprop("models/editor-ficool2/cone_helper_gray.mdl") = env_smokestack : 
+@PointClass base(Targetname, Parentname, Angles) studioprop("models/editor-ficool2/cone_helper_gray.mdl") sphere(jetlength) = env_smokestack : 
 	"An entity that spits out a constant stream of smoke. See particlezoo.vmf for sample usage. You can place up to two env_particlelight entities near the smoke stack to add ambient light to its particles."
 [
 	//targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
