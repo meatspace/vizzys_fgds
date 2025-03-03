@@ -1468,7 +1468,7 @@
 	JetLength(integer) : "Length of smoke trail" : 180 : "Length of the smokestack. Lifetime of the smoke particles is derived from this & particle speed."
 	WindAngle(integer) : "Wind X/Y Angle" : 0 : "This specifies the wind direction. It is an angle in the XY plane. WindSpeed specifies the strength of the wind."
 	WindSpeed(integer) : "Wind Speed" : 0 : "The strength of the wind."
-	SmokeMaterial(string) : "Particle material" : "particle/SmokeStack.vmt" : "Material of the smoke particles emitted by this stack."
+	SmokeMaterial(material) : "Particle material" : "particle/SmokeStack.vmt" : "Material of the smoke particles emitted by this stack."
 	twist(integer) : "Twist" : 0 : "The amount, in degrees per second, that the smoke particles twist around the origin."
 	roll(float)			: "Roll Speed": 0 : "Amount of roll in degrees per second."
 	
@@ -2716,7 +2716,7 @@
 	output OnSpark(void) : "Fired whenever sparks are emitted." // added by Vizzys
 ]
 
-@PointClass base(Targetname, Parentname, RenderFields,DXLevelChoice) size(-2 -2 -2, 2 2 2) sprite() color(20 140 20) sphere(GlowProxySize) = env_sprite : 
+@PointClass base(Targetname, Parentname, RenderFields,DXLevelChoice) sprite() studio("models/editor/axis_helper_white.mdl") color(20 140 20) sphere(GlowProxySize) = env_sprite : 
 	"An entity that controls the drawing of a sprite in the world." 
 [
 	framerate(string) : "Framerate" : "10.0" : "Rate at which the sprite should animate, if at all."
@@ -3232,7 +3232,7 @@
 
 	// Inputs
 	input Deactivate(void) : "Return Player Control."
-	input Activate(string) : "Take Player Control."
+	input Activate(void) : "Take Player Control."
 	
 	input GetButtons(void) : "Fires OutButtons with the player's current button flags."
 
