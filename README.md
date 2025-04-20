@@ -2,9 +2,12 @@
 
 **Mapbase install instructions:** Click download .zip, extract, copy & overwrite shared_misc folder at:
 `steamapps\sourcemods\mapbase_shared\shared_misc`
+then add half-life2.fgd to hammmer config.
 
 **Entropy Zero 2 install instructions:** Click download .zip, extract, copy & overwrite entropyzero2 folder at:
 `steamapps\common\EntropyZero2\entropyzero2`
+then add EntropyZero2.fgd to hammmer config.
+
 
 .psd files are for Adobe Photoshop
 ----
