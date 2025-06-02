@@ -23,6 +23,7 @@ then add EntropyZero2.fgd to hammmer config.
 | Brokkhouse | And when spud lord left, Brokkhouse rose to take the team fortress 2 .fgd throne. A valuable reference point using their inherited .FGD knowledge. | https://tf2maps.net/downloads/an-fgd-fit-for-a-lord-brokk-edition.15924/ |
 | MrFunReal | Some sort of gooner that also makes .FGD's. Very cool and relatable. Some clever ideas taken from their L4D2 .FGD's | https://steamcommunity.com/id/funreal (nsfw) |
 | Pinsplash | The obscure source engine knowledge king. You bow to no one. I Used many of their descriptions and found many hidden gems of knowledge long forgotten. | https://github.com/Pinsplash/SEFGD |
+| Cvoxalury | Added some stuff unnoticed by perusing their Dark Interval fgd's. | https://www.moddb.com/mods/dark-interval/downloads/dark-interval-part-2-source-files |
 | Vizzys | Thas me. I wrote this. I made the bad icons. I'm thanking myself. I also hate myself. | https://developer.valvesoftware.com/wiki/User:Vizzys |
 ----
 **Valve Developer Community:** 
