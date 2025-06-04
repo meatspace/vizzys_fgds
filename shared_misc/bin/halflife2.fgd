@@ -116,6 +116,7 @@
 	input EnableWeaponPickup(void) : "Enable Weapon Pickup"
 	input DisableWeaponPickup(void) : "Disable Weapon Pickup"
 	
+	input GiveWeapon(string) : "Gives the NPC a weapon of the specified entity name." //added by vizzys 
 	input SetReadinessPanic(void) : "Set readiness to panic state (Special)"
 	input SetReadinessLow(void) : "Set readiness to calmest state (Bored)"
 	input SetReadinessMedium(void) : "Set readiness to moderate (Alert)"
@@ -164,7 +165,7 @@
 	spawnflags(Flags) = 
 	[
 		4096 : "[4096] Start inactive" : 1
-		8192 : "[8192] Combine power supply (Balls behave like the ones seen in the Overwatch Nexus and bounce around)" : 0
+		8192 : "[8192] Combine power supply (Balls behave like the ones in Overwatch Nexus and bounce around)" : 0
 	]
 
 	ballcount(integer) : "Ball count" : 3 : "This is how many balls will be bouncing around inside the spawner"
@@ -291,7 +292,7 @@
 	input InputDisableSniper(void) : "Disable the cannon." //added by vizzys
 ]
 
-@NPCClass base(BaseNPC) sphere(innerradius) sphere(outerradius) studio("models/combine_camera/combine_camera.mdl") = npc_combine_camera :
+@NPCClass base(BaseNPC) sphere(innerradius) sphere(outerradius) studio() = npc_combine_camera :
 	"Combine security camera"
 [
 	spawnflags(Flags) = 
@@ -300,6 +301,8 @@
 		64 : "[64] Ignore Enemies (Scripted Targets Only)" : 0
 		128 : "[128] Start Inactive" : 0
 	]
+	
+	model(studio) : "Model" : "models/combine_camera/combine_camera.mdl"
 	
 	innerradius(integer) : "Inner radius" : 300 : "The camera will only lock onto enemies that are within the inner radius."
 	outerradius(integer) : "Outer radius" : 450 : "The camera will flash amber when enemies are within the outer radius, but outside the inner radius."
@@ -315,6 +318,7 @@
 	input SetTargetEntity(target_destination) : "Sets the entity for the camera to track now, by name."
 	input SetAngry(void) : "Causes the camera to become angry as if it has seen something upsetting."
 	input SetIdle(void) : "Causes the camera to calm down if it is angry."
+	input SetRelationship(string) : "Changes this entity's relationship with another entity or class. Format: <entityname/classname> <D_HT/D_FR/D_LI/D_NU> <priority>"								
 	
 	output OnFoundPlayer(string) : "Fired when the player is spotted within the inner radius."
 	output OnFoundEnemy(void) : "Fired when a non-player enemy is spotted within the inner radius."
@@ -358,6 +362,7 @@
 	input DestroySprite(void) : "Destroys the turret's light sprite."
 	input FieldOfView(float) : "Sets this turret's field of view."
 
+	input SetRelationship(string) : "Changes this entity's relationship with another entity or class. Format: <entityname/classname> <D_HT/D_FR/D_LI/D_NU> <priority>"										
 	// Outputs
 	output OnDeploy(void) : "Turret is becoming active and dangerous."
 	output OnRetire(void) : "Turret is becoming inactive and harmless."
@@ -404,6 +409,7 @@
 	input CreateSprite(void) : "Creates the turret's light sprite if it was previously destroyed."
 	input DestroySprite(void) : "Destroys the turret's light sprite."
 	input SelfDestruct(void) : "Causes the turret to warn and then explode."
+	input SetRelationship(string) : "Changes this entity's relationship with another entity or class. Format: <entityname/classname> <D_HT/D_FR/D_LI/D_NU> <priority>"									
 
 	// Outputs
 	output OnDeploy(void) : "Turret is becoming active and dangerous."
@@ -625,6 +631,8 @@
 @NPCClass base(BaseNPC) studio("models/antlion.mdl") sphere(radius) = npc_antlion :
 	"Antlions will run away from ai_sound, type: Thumper."
 [
+	model(studio) : "Model Override" : ""
+
 	startburrowed(choices) : "Start Burrowed" : "No" =
 	[
 		0 : "No"
@@ -1105,8 +1113,9 @@
 	output OnEndTouchAll(void) : "Fires when a player or a member of the player's squad stops touching this trigger, and no other members are touching it."
 ]
 
-@NPCClass base(BaseNPC) studio("models/lostcoast/fisherman/fisherman.mdl") = npc_fisherman : "Fisherman"
+@NPCClass base(BaseNPC) studio() = npc_fisherman : "Fisherman"
 [
+	model(studio) : "Model" : "models/lostcoast/fisherman/fisherman.mdl"
 	ExpressionOverride(string) : "Facial expression override"
 	input SetExpressionOverride(string) : "Set facial expression override"
 ]
@@ -1638,6 +1647,8 @@
 
 @NPCClass base(BaseHelicopter) studio("models/gunship.mdl" ) = npc_combinegunship : "Combine Gunship"
 [
+	model(studio) : "Model Override" : ""
+	
 	HealthIncrements(integer) : "Health Increments" : 0 : "The number of times this gunship must be damaged before dying. This value is multiplied by 0.5 on Easy and 1.5 on Hard. 0 = the value stored in sk_gunship_health_increments (default 5)."
 
 	CanGroundAttack(choices) : "Can use ground attack automatically" : 0 : "Allows this gunship to use its belly cannon automatically during combat." =
@@ -1683,19 +1694,26 @@
 	]
 ]
 
-@PointClass base(Targetname, Parentname) iconsprite("vizzys-icons/info_target_helicopter_crash") = info_target_helicopter_crash : "Helicopter Crash Target"
-[
-]
-
-@PointClass base(Targetname, Parentname) iconsprite("vizzys-icons/info_target_gunshipcrash") = info_target_gunshipcrash : "Gunship Crash Target"
+@BaseClass = CrashPoint
 [
 	input Enable(void) : "Enable the crash target."
 	input Disable(void) : "Disable the crash target."
 
-	output OnCrashed(void) : "Fires when the gunship crashes." 	// Output added by vizzy, suggested by xblah
+	output OnCrashed(void)  : "Fires when the aircraft crashes on this point."
+	output OnBeginCrash(void)  : "Fires when the aircraft begins navigating to this point."
 ]
 
-@NPCClass base(BaseHelicopter) studio("models/combine_dropship.mdl" ) 
+@PointClass base(Targetname, Parentname, CrashPoint) iconsprite("vizzys-icons/info_target_helicopter_crash")  = info_target_helicopter_crash : "Helicopter Crash Target"
+[
+												
+												  
+]
+
+@PointClass base(Targetname, Parentname, CrashPoint) iconsprite("vizzys-icons/info_target_gunshipcrash")  = info_target_gunshipcrash : "Gunship Crash Target"
+[
+]
+
+@NPCClass base(BaseHelicopter) studio()
 	line(192 192 192, targetname, npctemplate)
 	line(192 192 192, targetname, npctemplate2)
 	line(192 192 192, targetname, npctemplate3)
@@ -1709,6 +1727,7 @@
 		32768 : "[32768] Wait for input before dropoff (Waits for the StopWaitingForDropoff input before releasing cargo)" : 0
 	]
 
+	model(studio) : "Model" : "models/combine_dropship.mdl"
 	LandTarget(target_destination) : "Land target name"
 	GunRange(float) : "Crate Gun Range" : 2048 : "If the dropship's carrying a crate with a gun on it, it'll only shoot targets within this range."
 
@@ -1815,6 +1834,30 @@
 		1 : "Yes"
 	]
 
+	IdleAimAround(choices) : "Aim around while idle" : "No" : "If enabled, this helicopter will aim its gun in random locations while searching for enemies without changing the helicopter's overall facing direction. If there are any visually interesting info_hints nearby, the helicopter will aim at them. Intended for use with a spotlight." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	DisableSmokeTrails(choices) : "Disable Smoke Trails" : "No" : "Stops smoke trails from appearing while the helicopter is damaged." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	DisableCorpses(choices) : "Disable Corpses" : "No" : "Stops corpses from falling when the helicopter is damaged." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	DisableExplosions(choices) : "Disable Explosions" : "No" : "Stops explosions from occuring when the helicopter is damaged." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
 	// Inputs
 	input GunOn(void) : "GunOn"
 	input GunOff(void) : "GunOff"
@@ -1854,6 +1897,8 @@
 
 	input StartCarpetBombing(void) : "Starts the helicopter constantly dropping megabombs until StopCarpetBombing input"
 	input StopCarpetBombing(void) : "Stop the carpet bombing behavior"
+
+	input SelfDestructNoFX(void) : "Identical to SelfDestruct, except the helicopter won't throw out chunks while flying to a crash point. If there are no crash points, the helicopter will explode in place as normal. Intended for when the pilot is killed and there's not supposed to be anything wrong with the helicopter itself."
 
 	// Outputs
 	output OnHealthChanged(integer) : "Fires when the helicopter health changes. The integer is the percentage of health the chopper has from 0-100."
@@ -1923,8 +1968,10 @@
 	output OnCrab(ehandle) : "Fires when the zombie releases a headcrab, passing the headcrab as the activator and parameter."
 ]
 
-@NPCClass base(BaseZombie) studio("models/Zombie/fast.mdl") = npc_fastzombie : "Fast Zombie"
+@NPCClass base(BaseZombie) studio() = npc_fastzombie : "Fast Zombie"
 [
+	model(studio) : "Model" : "models/Zombie/fast.mdl"
+	
 	input AttachToVehicle(target_destination) : "Attach to a specified vehicle entity"
 ]
 
@@ -1933,8 +1980,10 @@
 
 ]
 
-@NPCClass base(BaseZombie) studio("models/Zombie/Classic.mdl") = npc_zombie : "Zombie"
+@NPCClass base(BaseZombie) studio() = npc_zombie : "Zombie"
 [
+	model(studio) : "Model" : "models/Zombie/Classic.mdl"
+	
 	MeleeReach(float) : "Melee Reach" : : "Overrides the maximum distance in which this zombie should be able to swat at enemies. Default is 55"
 ]
 
@@ -1968,8 +2017,10 @@
 ]
 // ------------------
 
-@NPCClass base(BaseZombie) studio("models/Zombie/zombie_soldier.mdl") = npc_zombine : "Combine Soldier Zombie"
+@NPCClass base(BaseZombie) studio() = npc_zombine : "Combine Soldier Zombie"
 [
+	model(studio) : "Model" : "models/Zombie/zombie_soldier.mdl"
+	
 	NumGrenades(choices) : "Number of Grenades" : "1" : "The number of grenades this zombine can pull out." =
 	[
 		"0" : "None"
@@ -1988,9 +2039,11 @@
 	// Outputs
 	output OnPullGrenade(ehandle) : "Fires when the zombine pulls a grenade. Passes the grenade."
 ]
-@NPCClass base(BaseZombie) studio("models/Zombie/Poison.mdl") = npc_poisonzombie :
+@NPCClass base(BaseZombie) studio() = npc_poisonzombie :
 	"A bloated, disgusting, fluid-spurting zombie created by a poison headcrab."
 [
+	model(studio) : "Model" : "models/Zombie/Poison.mdl"
+	
 	crabcount(choices) : "Crabs in nest" : 3 =
 	[
 		1 : "1 Crab"
@@ -2165,8 +2218,10 @@
 [
 ]
 
-@NPCClass base(TalkNPC) studio("models/Monk.mdl") = npc_monk : "Monk"
+@NPCClass base(TalkNPC) studio() = npc_monk : "Monk"
 [
+	model(studio) : "Model" : "models/Monk.mdl"
+	
 	additionalequipment(choices) : "Weapons" : "weapon_annabelle" =
 	[
 		"weapon_357" : ".357 Magnum (Revolver)"
@@ -2309,16 +2364,20 @@
 	]
 ]
 
-@NPCClass base(TalkNPC) studio("models/mossman.mdl") = npc_mossman : "Dr Mossman"
+@NPCClass base(TalkNPC) studio() = npc_mossman : "Dr Mossman"
 [
+	model(studio) : "Model" : "models/mossman.mdl"
 ]
 
-@NPCClass base(TalkNPC) studio("models/gman.mdl") = npc_gman : "The G-Man"
+@NPCClass base(TalkNPC) studio() = npc_gman : "The G-Man"
 [
+	model(studio) : "Model" : "models/gman.mdl"
 ]
 
-@NPCClass base(BaseNPC) studio("models/dog.mdl") = npc_dog : "d0g"
+@NPCClass base(BaseNPC) studio() = npc_dog : "d0g"
 [
+	model(studio) : "Model" : "models/dog.mdl"
+	
 	// Inputs
 	input SetPickupTarget(target_destination) : "Sets the target entity for dog to pickup."
 	input StartCatchThrowBehavior(target_destination) : "Tells d0g to start playing with the player. You can pass in the name of the object you want him to play with otherwise he'll find the closes phys_object."
@@ -4153,7 +4212,7 @@
 // Items
 //
 //-------------------------------------------------------------------------
-@BaseClass color(0 0 200) base(Targetname, Angles, Shadow, RenderFields) sphere(fademindist) sphere(fademaxdist) = Item
+@BaseClass color(0 0 200) base(Targetname, Angles, BaseFadeProp, Shadow, RenderFields) sphere(fademindist) sphere(fademaxdist) = Item
 [
 	output OnPlayerTouch(void) : "Fires when the player touches this object"
 
@@ -4273,6 +4332,16 @@
 	
 	// Inputs
 	input SetHealthAmount(float) : "Sets the amount of health this item gives."
+]
+
+@PointClass base(Item, Studiomodel) studioprop() = item_battery_custom : "Custom Battery"
+[
+	model(studio) : "Model" : "models/items/battery.mdl" : "The battery's model."
+	PowerAmount(float) : "Power Amount" : "15" : "The amount of power this item gives."
+	//TouchSound(sound) : "Touch Sound" : "ItemBattery.Touch" : "The sound to make when this item is picked up and used."
+	
+	// Inputs
+	input SetPowerAmount(float) : "Sets the amount of power this item gives."
 ]
 
 @PointClass base(Targetname, Parentname, Angles, RenderFields, BaseFadeProp) studio("models/items/ammocrate_empty.mdl") = item_ammo_crate : "Ammo Crate"
@@ -4723,6 +4792,7 @@
 	// Inputs
 	input Start(void) : "Starts playback of the scene file"
 	input Pause(void) : "Pauses playback of the scene file"
+	input PauseAtLastInterrupt(void) : "Pauses playback of the scene and rewinds it to the last interrupt event in the scene."
 	input Resume(void) : "Resumes playback of the scene if it has been paused"
 	input Cancel(void) : "Cancels playback of the scene"
 	input CancelAtNextInterrupt(void) : "Cancels playback of the scene at the next interrupt event in the scene."
