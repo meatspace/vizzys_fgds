@@ -85,7 +85,7 @@
 		1 : "Yes"
 	]
 	
-	CanUseFlyNav(choices) : "Can Use Fly Nav" : 0 : "If set to 1, this stukabat will be capable of using air nodes in the vicinity, allowing it to fly around and circle enemies." =
+	CanUseFlyNav(choices) : "Can Use Fly Nav" : 1 : "If set to 1, this stukabat will be capable of using air nodes in the vicinity, allowing it to fly around and circle enemies." =
 	[
 		0 : "No"
 		1 : "Yes"
