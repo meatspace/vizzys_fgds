@@ -5488,7 +5488,7 @@
 @PointClass base(BaseDriveableVehicle) studioprop() = prop_vehicle_jeep :
 	"Driveable studiomodel jeep."
 [
-	model(studio) : "World model" : "models/buggy.mdl" : "Use jalopy.mdl if you're using Episodic. If you want to use the original HL2 buggy in Episodic, use prop_vehicle_jeep_old."
+	model(studio) : "World model" : "models/vehicle.mdl" : "Use vehicle.mdl if you're using Episodic. If you want to use the original HL2 buggy in Episodic, use prop_vehicle_jeep_old."
 
 	input StartRemoveTauCannon(void) : "Start the tau removal sequence."
 	input FinishRemoveTauCannon(void) : "Finish the tau removal sequence."
