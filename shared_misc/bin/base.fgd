@@ -4624,7 +4624,7 @@
 	startclosesound(sound) : "Start Close Sound" : : "(Optional) Sound to play when the door starts closing."
 	closesound(sound) : "Stop Close Sound" : : "(Optional) Sound to play when the door stops closing."
 	wait(integer) : "Delay Before Reset (-1 stay)" : 4 : "Amount of time, in seconds, after the door has opened before it closes. Once it has closed, it can be used again. If the value is set to -1, the door never closes itself."
-	lip(integer) : "Lip" : 0 : "The amount, in units, of the button to leave sticking out of the wall it recedes into when pressed. Negative values make the button recede even further into the wall."
+	lip(integer) : "Lip" : 0 : "The amount, in units, of the door to leave sticking out of the wall when pressed. Negative values make the door recede into the wall. Not for prop doors."
 	dmg(integer) : "Blocking Damage" : 0 : "Amount of damage done to entities that block the movement of this door, per frame."
 	chainstodoor(target_destination) : "Linked Door" :  : "Passes the door's +use inputs and touch events onto a different door, so it also is activated." //added by vizzys
 	forceclosed(choices) : "Force Closed" : 0 : "If set, this door will close no matter what. Useful for doors that have to close even if the player tries to block them with objects." =
