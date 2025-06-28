@@ -8958,7 +8958,7 @@
 
 //-------------------------------------------------------------------------
 //
-// Test Entities
+// Test Entities and other esoteric stuff
 //
 //-------------------------------------------------------------------------
 @PointClass base(Angles) iconsprite("editor-ficool2/test_traceline") = test_traceline : 
@@ -8966,6 +8966,31 @@
 [
 ]
 
+@SolidClass base(Targetname, Parentname, Global, Inputfilter, EnableDisable) = trigger_brush :
+	"Deprecated trigger entity. Sole difference compared to other triggers is that it has OnUse output."
+[
+	InputFilter(choices) : "Input Filter" : 0 : "Used to specify which inputs this entity will accept. Add multiple values together to ignore multiple types of inputs (ex: 1+2=3 to ignore both players and NPCs)." =
+	[
+		0 : "0 - Allow all inputs"
+		1 : "1 - Ignore Players"
+		2 : "2 - Ignore NPCs"
+		4 : "4 - Ignore Pushables"
+		8 : "8 - Ignore Touch/Untouch"
+		16 : "16 - Ignore Use"
+		32 : "32 - Ignore All"
+	]
+
+	DontMessageParent(choices) : "Alert parent?" : 0 : "When 0, forwards OnStartTouch, OnEndTouch outputs or Use input to parented entity." =
+	[
+		0 : "Alert parent"
+		1 : "Don't alert parent"
+	]
+
+	input Use(void) : "Fires the OnUse output."
+	output OnUse(void) : "Fired when the Use input is given."
+	output OnStartTouch(void) : "Fired when an entity starts touching this trigger. The touching entity must pass this trigger's InputFilter to cause this output to fire."
+	output OnEndTouch(void) : "Fired when an entity stops touching this trigger. Only entities that passed this trigger's InputFilter will cause this output to fire."
+]
 
 //-------------------------------------------------------------------------
 //
