@@ -191,7 +191,7 @@
 	output OnFirstBallReinserted(void) : "Fired when the first combine ball is reinserted into the field (only gets triggered when Combine Power supply is checked)"
 ]
 
-@PointClass base(BasePropPhysics) studioprop() = prop_combine_ball :
+@PointClass base(BasePropPhysics) studioprop("models/effects/combineball.mdl") = prop_combine_ball :
 	"A prop that physically simulates as a single rigid body. It can be constrained to other physics objects using hinges "+
 	"or other constraints. It can also be configured to break when it takes enough damage."
 [
@@ -4372,7 +4372,7 @@
 	input Skin(integer) : "Changes the model skin to the specified number."
 ]
 
-@PointClass base(BasePropPhysics, Targetname, Angles, DamageFilter, BaseFadeProp) studioprop() = item_item_crate : "Item Crate" // studio("models/items/item_item_crate.mdl")
+@PointClass base(BasePropPhysics, Targetname, Angles, DamageFilter, BaseFadeProp, RenderFields, Global, Shadow) studioprop() = item_item_crate : "Item Crate" // studio("models/items/item_item_crate.mdl")
 [
 	model(studio) : "Model" : "models/items/item_item_crate.mdl" : "The model of this item_item_crate. Only works when this crate's appearance is set to use a custom model."
 
