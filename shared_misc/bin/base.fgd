@@ -8580,11 +8580,11 @@
 		0 : "Glass"
 		1 : "Tile"
 	]
-	upperleft(vector) : "Upper-left corner" : : "Read-only keyvalue for quad bound testing."
-	upperright(vector) : "Upper-right corner" : : "Read-only keyvalue for quad bound testing."
-	lowerleft(vector) : "Lower-left corner" : : "Read-only keyvalue for quad bound testing."
-	lowerright(vector) : "Lower-right corner" : : "Read-only keyvalue for quad bound testing."
-	error(choices) : "Error Type" : 0 : "Set automatically by Hammer to indicate an invalid surface." = 
+	upperleft(vector) readonly : "Upper-left corner" : : "Read-only keyvalue for quad bound testing."
+	upperright(vector) readonly : "Upper-right corner" : : "Read-only keyvalue for quad bound testing."
+	lowerleft(vector) readonly : "Lower-left corner" : : "Read-only keyvalue for quad bound testing."
+	lowerright(vector) readonly : "Lower-right corner" : : "Read-only keyvalue for quad bound testing."
+	error(choices) readonly : "Error Type" : 0 : "Set automatically by Hammer to indicate an invalid surface. Dont Change." = 
 	[
 		0 : "No Error"
 		1 : "Multiple Textured Faces - All except one must have nodraw"
