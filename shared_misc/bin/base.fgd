@@ -8832,6 +8832,7 @@
 	input Resume(void) : "Resume the train moving in the current direction after it was stopped via the 'Stop' or 'Toggle' input."
 	input Reverse(void) : "Reverse the direction of the train."
 	input Toggle(void) : "Toggle the train between start and stop."
+	input TeleportToPathTrack(target_destination) : "Teleport train to the designated path track."
 ]
 
 @SolidClass base(Trackchange) = func_trackautochange : 
@@ -8874,7 +8875,6 @@
 	ManualDecelSpeed(float) : "Manual Decel Speed" : 0 : "Units per second to decelerate to target speed."
 	
 	input SetSpeedDirAccel(float) : "Accel/Decel to the specified speed, as a ratio of max speed. Negative values reverse the direction [-1, 1]"
-	input TeleportToPathTrack(target_destination) : "Teleport train to the designated path track."
 	input SetSpeedForwardModifier(float) : "Applies the given modifier to all forward speeds. [0, 1]"
 ]
 
