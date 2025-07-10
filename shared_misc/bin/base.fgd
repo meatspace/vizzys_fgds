@@ -8977,7 +8977,7 @@
 ]
 
 @SolidClass base(Targetname, Parentname, Global, Inputfilter, EnableDisable) = trigger_brush :
-	"Deprecated trigger entity. Sole difference compared to other triggers is that it has OnUse output."
+	"Deprecated trigger entity. Sole difference compared to other triggers is that it has OnUse output. WARNING: Seems to block bullets & crossbow bolts."
 [
 	InputFilter(choices) : "Input Filter" : 0 : "Used to specify which inputs this entity will accept. Add multiple values together to ignore multiple types of inputs (ex: 1+2=3 to ignore both players and NPCs)." =
 	[
