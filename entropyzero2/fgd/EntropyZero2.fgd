@@ -1252,7 +1252,10 @@
 	output OnHealedNPC(void) : "Fires when this citizen heals a NPC."
 	output OnHealedPlayer(void) : "Fires when this citizen heals a player."
 	output OnTossMedkit(ehandle) : "Fires when a medkit is tossed. Passes the medkit."
-	output OnGiveAmmo(void) : "Fires when ammo is given to the player."
+	output OnGiveAmmo(void) : "Fires when ammo is given to the player."	
+	
+	output OnSurrender(void) : "Fires when citizen surrenders." //added by vizzys
+	output OnStopSurrendering(void) : "Fires when citizen stops surrendering." //added by vizzys
 ]
 
 @SolidClass base(Targetname, Parentname, Origin, EnableDisable, Global) = func_commandredirect :
@@ -6071,7 +6074,7 @@
 ]
 
 
-@PointClass base(BaseSpeaker) iconsprite("editor/ambient_generic.vmt") line(255 255 255, targetname, target) = env_speaker : "Announcement Speaker"
+@PointClass base(BaseSpeaker) iconsprite("vizzys-icons/env_speaker") line(255 255 255, targetname, target) = env_speaker : "Announcement Speaker"
 [
 ]
 

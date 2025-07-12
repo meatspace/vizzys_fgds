@@ -5639,7 +5639,7 @@
 ]
 
 
-@PointClass base(BaseSpeaker) iconsprite("editor/ambient_generic.vmt") line(255 255 255, targetname, target) = env_speaker : "Announcement Speaker"
+@PointClass base(BaseSpeaker) iconsprite("vizzys-icons/env_speaker") line(255 255 255, targetname, target) = env_speaker : "Announcement Speaker"
 [
 ]
 
