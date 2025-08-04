@@ -9668,8 +9668,9 @@
 	"An entity that can be used to directly control material vars. To use it, you need to read the .vmt of the material you "+
 	"intend to change. Parent this entity to a brush model entity who's material you want to control."
 [
-	materialName(string) : "The single material to modify on the parent. 'materials/' and '.vmt' is not required. Maximum of 255 characters allowed."
-	materialVar(string) : "Material variable to modify, '$frame' for example. Maximum of 255 characters allowed."
+
+	materialName(material) : "Material to Modify" :  : "The material .vmt to modify, without the extension. Specified material must have either MaterialModify or MaterialModifyAnimated proxy. Max of 255 characters allowed."
+	materialVar(string) : "Material Variable to Modify" :  : "The variable in the .vmt to modify, including the $. E.g. $color. Not all material variables are supported. Max of 255 characters allowed."
 
 	// Inputs
 	input SetMaterialVar(string) : "Fire to modify a material variable. The argument is the value to set the variable to."
