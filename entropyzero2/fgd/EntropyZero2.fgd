@@ -1450,6 +1450,37 @@
 		2 : "Only if commandable"
 	]
 
+		SetTossMedkits(choices) : "Toss medkits?" : 0 : "Episodic only. Griggs in Half-Life 2: Episode Two uses experimental code that allows him to toss medkits at the player from a distance. This activates that code on this NPC if it is a medic. Does not work with ammo resuppliers." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	// 1.10 update
+	IsMedic(choices) : "Medic?" : 0 : "Mark this combine as Medic" = 
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	IsAmmoResupplier(choices) : "Ammo Resupplier?" : 0 : "Mark this combine as Ammo Resupplier" = 
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	ammosupply(choices) : "Ammo to Resupply (if keyvalue set)" : "SMG1" =
+	[
+		"Pistol" : "Pistol"
+		"SMG1" : "SMG1"
+		"SMG1_Grenade" : "SMG1 Grenade"
+		"AR2" : "AR2 (Pulse Rifle)"
+		"Buckshot" : "Shotgun"
+		"RPG_Round" : "RPG"
+		"Grenade" : "Grenade"
+		"XBowBolt" : "Crossbow Bolt"
+	]
+	ammoamount(integer) : "Amount of ammo to give" : 1
+
 	// Inputs
 	input LookOn(void) : "Look normally"	
 	input LookOff(void) : "Don't look for myself, use other squad member's eyes"
@@ -1476,9 +1507,19 @@
 	input EnablePlayerGive(void) : "Allow this soldier to be given weapons and items by the player"
 	input DisablePlayerGive(void) : "Prevent this soldier from being given weapons and items by the player"
 	input SetLookForItems(bool) : "Allows ability to look for supplies such as healthkits or batteries for themselves" //added by vizzys
+	// 1.10 update
+	input SetMedicOn(void) : "Set the medic flag on. Will not change the model or skin of the Combine."
+	input SetMedicOff(void) : "Set the medic flag off. Will not change the model or skin of the Combine."
+	input SetAmmoResupplierOn(void) : "Set the ammo-resupplier flag on. Will not change the model or skin of the Combine."
+	input SetAmmoResupplierOff(void) : "Set the ammo-resupplier flag off. Will not change the model or skin of the Combine."
+	input SetTossMedkits(bool) : "Sets whether this NPC can toss medkits."
 
 	// Outputs
 	output OutManhack(ehandle) : "Fired the moment when this NPC spawns a manhack. Passes the manhack."
+	// 1.10 update
+	output OnHealedNPC(void) : "Fires when this citizen heals a NPC."
+	output OnHealedPlayer(void) : "Fires when this citizen heals a player."
+	output OnTossMedkit(ehandle) : "Fires when a medkit is tossed. Passes the medkit."
 ]
 
 
