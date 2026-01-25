@@ -3859,7 +3859,7 @@
 	nodeheight(integer) : "NodeHeight"  : 0
 ]
 
-@PointClass base(Angles, Targetname, HintNode) studio("models/editor/air_node_hint.mdl") sphere(radius) color(232 171 8) line(255 255 255, nodeid, TargetNode) = info_node_air_hint :
+@PointClass base(Angles, Targetname, HintNode) studio("models/editor/air_node_hint.mdl") sphere(radius) color(232 171 8)  line(255 255 255, nodeid, TargetNode) = info_node_air_hint :
 	"A navigation node for flying NPCs that includes some context information for NPCs that are interested in it. The hint might " +
 	"indicate a window that could be looked into, or an item of interest that could be commented on. Many hint nodes are NPC-specific, " +
 	"so it's helpful to use naming conventions like 'Crow: Fly to point' in the hint choices list. The angles of a hint node indicate what direction " +
@@ -3869,7 +3869,7 @@
 	nodeheight(integer) : "NodeHeight"  : 0
 ]
 
-@PointClass base(Targetname, Angles, HintNode) studio("models/editor/node_hint.mdl") sphere(radius) color(255 255 255) frustum(nodeFOV,-1,128,250 250 250,-1) line(255 255 255, nodeid, TargetNode) = info_hint :
+@PointClass base(Targetname, Angles, HintNode) studio("models/editor/node_hint.mdl") sphere(radius) color(255 255 255) line(255 255 255, nodeid, TargetNode) = info_hint :
 	"A hint that is not used for navigation. They don't go into the nodegraph, nor do they fall to the ground. Use these to provide " +
 	"some spatial context for NPCs, such as 'look here if you can't find the player' or 'throw rocks at this spot'."
 [
