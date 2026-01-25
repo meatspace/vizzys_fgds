@@ -2756,7 +2756,7 @@
 	input ToggleSprite(void) : "Toggle the sprite between hidden and shown."
 ]
 
-@PointClass base(env_sprite, Angles) sphere(GlowProxySize) frustum( fov,near,far,rendercolor,-1 ) sprite() = env_sprite_oriented :
+@PointClass base(env_sprite, Angles) sphere(GlowProxySize) frustum( fov,near,far,rendercolor,-1 ) sprite() studio("models/editor/axis_helper_white.mdl") = env_sprite_oriented :
     "A env_sprite that allows orientation."
 [
 	framerate(string) : "Framerate" : "10.0" : "Rate at which the sprite should animate, if at all."
