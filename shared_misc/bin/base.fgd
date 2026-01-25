@@ -2426,7 +2426,7 @@
 	[
 		1: "[1] Global Shake" : 0
 		//2: "[2] Disrupt player control" : 0 // doesn't work
-		4: "[4] In Air" : 0		// shakes objects even if they are not onground
+		4: "[4] In Air" : 0		// shakes objects even if they are not on the ground
 		8: "[8] Physics Objects" : 0	// shakes physically as well as the camera
 		16: "[16] Ropes" : 0		// shakes ropes too.
 		32: "[32] DON'T shake view (for shaking ropes or physics only)" : 0
@@ -2998,7 +2998,7 @@
 	[
 		0 : "Fade In/Out (Entire text fades in and fades out)"
 		1 : "Credits"
-		2 : "Scan Out (Puts each letter in one by one, gives the letters an alternative color if they were just put in)"
+		2 : "Scan Out (Puts each letter in 1 by 1, giving letters Color2 as they are put in)"
 	]
 	color(color255) : "Color1" : "100 100 100"
 	color2(color255) : "Color2" : "240 110 0"
@@ -4047,7 +4047,7 @@
 	_ambientHDR(color255) : "AmbientHDR" : "-1 -1 -1 1"
 	_AmbientScaleHDR(float) : "AmbientScaleHDR" : "1" : "Amount to scale the ambient light by when compiling for hdr."
 	pitch(integer) : "Pitch" : 0 : "The downward pitch of the light from the sun. 0 is horizontal, -90 is straight down."
-	SunSpreadAngle(float) : "SunSpreadAngle" : 0 : "The angular extent of the sun for casting soft shadows. Higher numbers are more diffuse. 5 is a good starting value."
+	SunSpreadAngle(float) : "SunSpreadAngle" : 0 : "The angular extent of the sun for casting soft shadows. Higher numbers are more diffuse. 0.5 is a good starting value. 3 for cloudy skies."
 ]
 
 @PointClass base(Targetname, Angles, Light) lightprop("models/editor/spot.mdl") lightcone() sphere(_fifty_percent_distance) sphere(_zero_percent_distance) sphere(_hardfalloff) sphere(_distance) line(0 128 0, targetname, target) = light_spot :
@@ -9728,7 +9728,7 @@
 	
 	input SetHUDVisibility(bool) : "Sets whether the HUD should be disabled. Also disables most forms of weapon switching."
 	input SetSuppressAttacks(bool) : "Sets whether attacks should be suppressed."
-	
+	input SetFogController(target_destination) : "Sets the players active fog controller."
 	input SetCycle(float) : "Skip to a specific point in the CURRENT animation. Needs to be set AFTER setting the animation and starting playback." //added by vizzys
 	input SetModel(string) : "Changes the model to the specified path. Form of models/ammo/ammo_us.mdl. Absolutely NO quotes. Make sure you use forward slash." //added by vizzys
 	input SetPlayBackRate(float) : "Change the animation speed multiplier (default: 1). Needs to be set AFTER setting the animation, starting playback, and setting the animation point (if needed)." //added by vizzys
