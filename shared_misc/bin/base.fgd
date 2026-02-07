@@ -488,7 +488,7 @@
 	]
 
 	health(integer) : "Strength" : 1 : "Number of points of damage to take before breaking. 0 means don't break."
-	material(choices) :"Material Type" : 0 : "Set to the material type of the brush. Used to decide what sounds to make when damaged, and what gibs to produce when broken." =
+	material(choices) : "Material Type" : 0 : "Set to the material type of the brush. If Nonzero, this decides what sound to play when damaged, and what gibs to spawn when broken." =
 	[
 		0: "Glass"
 		1: "Wood"
@@ -1377,7 +1377,7 @@
 		1 : "Yes"
 	]
 
-	pitch(integer) : "Pitch" : 0
+	pitch(integer) : "Pitch" : 0  : "The downward pitch of the light from the sun. 0 is horizontal, -90 is straight down. Overrides the Pitch in Pitch Yaw Roll, even if left at 0."
 
 	rendercolor(color255) : "Sun Color (R G B)" : "100 80 80"
 	overlaycolor(color255) : "Overlay Color (R G B)" : "0 0 0" : "A value of 0 0 0 will act the old way."
@@ -5964,7 +5964,7 @@
 [
 	spawnflags(flags) =
 	[
-		1 : "[1] Don't remove template entities" : 0
+		1 : "[1] Don't remove template entities (Prevent 'to be spawned' entities from being deleted on map spawn)" : 0
 		2 : "[2] Preserve entity names (Don't do name fixup)" : 1
 	]
 
@@ -8438,7 +8438,7 @@
 	output OnOutOfWorld(void) : "Fired whenever the prop is out of the allowed world bounds."
 ]
 
-@PointClass base(BasePropPhysics) studioprop() sphere(fademindist) sphere(fademaxdist) = prop_physics_override :
+@PointClass base(BasePropPhysics, BaseFadeProp, RenderFields) studioprop() sphere(fademindist) sphere(fademaxdist) = prop_physics_override :
 	"A prop that physically simulates as a single rigid body. It can be constrained to other physics objects using hinges "+
 	"or other constraints. It can also be configured to break when it takes enough damage. Props not meant to be used with prop_physics (dynamic or static props) can be used with this and it can also override health or interactions."
 [
