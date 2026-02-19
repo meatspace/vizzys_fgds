@@ -920,8 +920,8 @@
 		524288  : "[524288] Can be an enemy" : 0
 	]
 	FieldOfView(string) : "FieldOfView" : "0.2" : "How far to look (1.0 = straight ahead, 0.0 = +/- 90 degrees, -1.0 = all directions)"
-	MinSearchDist(integer) : "Min Search Dist" : 0
-	MaxSearchDist(integer) : "Max Search Dist" : 2048
+	MinSearchDist(integer) : "Min Search Distance" : 0
+	MaxSearchDist(integer) : "Max Search Distance" : 2048
 
 	SnapToEnt(target_destination) : "Name of entity to snap to" : "" : "Since it can be hard to position these entities with respect to the func_tank brushwork, you can specify an entity name here and this enemyfinder will position itself at the center of that entity."
 
@@ -1373,7 +1373,7 @@
 
 @PointClass base(Targetname, Parentname, EnableDisable) iconsprite("editor-ficool2/env_sporeexplosion") = env_sporeexplosion : "Bugbait Spore Effect"
 [
-	spawnrate(float) : "Spawn Rate (as percentage)" : "25" : "How dense the spore effect is. This percentage is not bound to 100; even values in the thousands are acceptable."
+	spawnrate(float) : "Spawn Rate (as percentage)" : "25" : "How dense the spore effect is. This percentage is not bound to 100, even values in the thousands are acceptable."
 ]
 
 @PointClass base(Targetname, Parentname, Targetname, EnableDisable) line(255 255 255, targetname, target) iconsprite("editor-ficool2/env_gunfire")  = env_gunfire : "Gunfire Effect"
@@ -2686,11 +2686,11 @@
 	m_iszEntity(npcclass) : "Target NPC"
 	m_flRadius(integer) : "Search Radius (0=everywhere)" : 0 : "Radius to search within for an NPC to use. 0 searches everywhere."
 
-	MoveSpeed(integer) : "Move Speed" : 5			// How quickly should target move between scripted targets
-	PauseDuration(integer) : "Pause Duration" : 0		// How long should target pause at scripted target
-	EffectDuration(integer) : "Effect Duration" : 2		// How long should any associated effect last
+	MoveSpeed(integer) : "Move Speed" : 5 : "How quickly should target move between scripted targets."
+	PauseDuration(integer) : "Pause Duration" : 0	 : "How long should target pause at scripted target."
+	EffectDuration(integer) : "Effect Duration" : 2	 : "How long should any associated effect last."
 
-	target(target_destination) : "Next Target"		// Next scripted target
+	target(target_destination) : "Next Target" :  : "Next scripted target."
 
 	// Inputs
 	input Enable(void) : "Enable this entity"
@@ -3444,11 +3444,11 @@
 @PointClass base(Targetname) iconsprite("editor-ficool2/ai_changetarget") = ai_changetarget : "Change Target"
 [
 	target(target_destination) : "Target entity" : : "Name of entity whose target will be changed."
-	m_iszNewTarget(target_destination) : "New Target"
+	m_iszNewTarget(target_destination) : "New Target"  : : "New targetname for the targeted entity(s) to target."
 
 	// Inputs
 	input Kill( void ) : "Removes this entity from the world"
-	input Activate( void ) : "Changes the entities target"
+	input Activate( void ) : "Trigger the target change"
 ]
 
 @PointClass base(Targetname) iconsprite("editor-ficool2/ai_npc_eventresponsesystem") = ai_npc_eventresponsesystem : "An entity that allows you to generate events for nearby friendly NPCs to respond to."
@@ -3630,7 +3630,7 @@
 [
 	spawnflags(Flags) = 
 	[
-		4 : "[4] Repeatable (Otherwise, removes itself after)" : 0
+		4 : "[4] Repeatable (Otherwise, removes itself after firing)" : 0
 		8 : "[8] Leave Corpse" : 0
 		16 : "[16] Start on Spawn (Emulates sending MoveToPosition input when this entity spawns)" : 0
 		32: "[32] No Interruptions (Disallows the NPC from being interrupted by damage)" : 1
@@ -3687,8 +3687,8 @@
 		1 : "Walk to Goal Entity"
 		2 : "Run to Goal Entity"
 		3 : "Set enemy to Goal Entity"
-		4 : "Walk Goal Path (Make NPC walk along path made by path_tracks)"
-		5 : "Run Goal Path (Make NPC run along path made by path_tracks)"
+		4 : "Walk Goal Path (Make NPC walk path made by path_tracks)"
+		5 : "Run Goal Path (Make NPC run path made by path_tracks)"
 		6 : "Set enemy to Goal Entity AND Run to Goal Entity"
 	]
 	
@@ -4680,8 +4680,8 @@
 		2: "[2] Teleport to THIS path_corner" : 0
 	]
 	target(target_destination) : "Next stop target"
-	wait(integer) : "Wait here (secs)" : 0
-	speed(integer) : "New Train Speed" : 0
+	wait(integer) : "Wait here (secs)" : 0 : "When passing this point, wait here for this many seconds."
+	speed(integer) : "New Train Speed" : 0 : "If nonzero, when an entity reaches this path_track, it will set its speed to this. This speed must be a positive value less than the entity's max speed (if it has such). A value of 0 will cause no change in the entity's speed. For train entities, a positive value must be specified for them to properly reverse over the path."
 	yaw_speed(integer) : "New Train rot. Speed" : 0
 
 	// Inputs 
@@ -4691,9 +4691,9 @@
 	output OnPass(void) : "Fires when a path follower passes this point"
 ]
 
-@PointClass base(Targetname) iconsprite("editor-ficool2/path_corner_crash") color(255 0 0) = path_corner_crash : "Helicopter Crash Path"
+@PointClass base(path_corner) iconsprite("editor-ficool2/path_corner_crash") color(255 0 0)  line(255 255 255, targetname, target) = path_corner_crash : "Helicopter Crash Path_Corner"
 [
-	target(target_destination) : "Next stop target"
+//inherits from path_corner 
 ]
 
 
@@ -4914,9 +4914,9 @@
 		1048576 : "From Sniper (react ai_sound, not Location Proxy. Use with Danger. Allies speak TLK_DANGER concepts, take cover.)"
 		2097152 : "Gunfire (Use with combat sound type, Alerts Alyx)"
 		4194304 : "Mortar (Allies avoid pending explosion)"
-		8388608 : "Only Combine can hear (But does not always alert)"
+		8388608 : "Only Combine can hear/smell (But does not always alert)"
 		67108864 : "Combine cannot can hear"
-		16777216 : "React to source (face sound owner)"
+		16777216 : "React to source (faces sound owner not location proxy)"
 		33554432 : "Explosion (use with combat sound type. Picked up by env_microphone. Alyx may flinch.)"
 		134217728 : "Danger approach (run if see sound owner, turn to face if not)"
 		268435456 : "Only allies can hear"
@@ -4932,7 +4932,7 @@
 [
 	spawnflags(Flags) =
 	[
-		1 : "[1] Ignore solid" : 0
+		1 : "[1] Ignore solids" : 0
 	]
 
 	input DoEffect(Void) : "Make a rotor puff"
@@ -5033,13 +5033,6 @@
 [
 	input Explode(Void) : "Make the explosion effect."
 	material(material) : "Particle Material" : "particle/particle_noisesphere" : "The material to use for each particle in the explosion."
-]
-
-@PointClass base(Targetname) iconsprite("vizzys-icons/env_starfield") = env_starfield : "Starfield effect" 
-[
-	input TurnOn(void) : "Turn on"
-	input TurnOff(void) : "Turn off"
-	input SetDensity(float) : "Set the density of the starfield. It's a multiplier, so 1 is the default."
 ]
 
 @PointClass base(Targetname, Parentname, Angles) size(-4 -4 -4, 4 4 4) = env_flare : "Flare"
@@ -5633,6 +5626,12 @@
 
 @PointClass base(Targetname) iconsprite("vizzys-icons/env_starfield") = env_starfield : "Starfield effect" 
 [
+
+	m_bOn(choices) : "Start On?" : 1 : "env_starfield already on?" = [
+		0 : "No"
+		1 : "Yes"
+	]
+
 	input TurnOn(void) : "Turn on"
 	input TurnOff(void) : "Turn off"
 	input SetDensity(float) : "Set the density of the starfield. It's a multiplier, so 1 is the default."

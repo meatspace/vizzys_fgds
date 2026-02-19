@@ -908,7 +908,7 @@
 		0 : "Normal"
 		10: "Fluorescent flicker"
 		2 : "Slow, strong pulse"
-		11: "Slow pulse, noblack"
+		11: "Slow pulse, no black"
 		5 : "Gentle pulse"
 		1 : "Flicker A"
 		6 : "Flicker B"
@@ -1201,22 +1201,27 @@
 		26: "Planet X"
 		27: "Haunted"
 	]
-	volstart(integer) : "Start Volume" : 0							// NEEDHELP
-	fadeinsecs(integer) : "Fade in time in seconds (0-100)" : 0		// NEEDHELP
-	fadeoutsecs(integer) : "Fade out time in seconds (0-100)" : 0	// NEEDHELP
-	pitch(integer) : "Pitch" : 100 : "Sound pitch, expressed as a range from 1 to 255, where 100 is the sound's default pitch."
-	pitchstart(integer) : "Start Pitch" : 100						// NEEDHELP
-	spinup(integer) : "Spin up time (0-100)" : 0					// NEEDHELP
-	spindown(integer) : "Spin down time (0-100)" : 0				// NEEDHELP
-	lfotype(integer) : "LFO type 0)off 1)sqr 2)tri 3)rnd" : 0		// NEEDHELP
-	lforate(integer) : "LFO rate (0-1000)" : 0						// NEEDHELP
-	lfomodpitch(integer) : "LFO mod pitch (0-100)" : 0				// NEEDHELP
-	lfomodvol(integer) : "LFO mod vol (0-100)" : 0					// NEEDHELP
-	cspinup(integer) : "Incremental Spinup Count" : 0				// NEEDHELP
-	radius(string) : "Max Audible Distance" : "1250" : "Maximum distance at which this sound is audible."
+	volstart(integer) : "Start Volume" : 0 : "The starting volume of this sound. When the entity is triggered, the volume will either go down to 0 or up to the Full Volume, depending on which input you send the ambient_generic."
+	fadeinsecs(integer) : "Fade In time (0-100)" : 0 : "Time taken to fade the sound from 0 volume to 100% volume.  Measured as a percentage of the sound's length."
+	fadeoutsecs(integer) : "Fade Out time (0-100)" : 0 : "Time taken to fade the sound from 100% volume to 0 volume.  Measured as a percentage of the sound's length."
+	pitch(integer) : "Full Pitch" : 100 : "Sound pitch, expressed as a range from 1 to 255, where 100 is the sound's default pitch."
+	pitchstart(integer) : "Start Pitch" : 100 : "The starting pitch of the sound."
+	spinup(integer) : "Spin Up time (0-100)" : 0 : "Same as fade in time, but for pitch, not volume."
+	spindown(integer) : "Spin Down time (0-100)" : 0 : "Same as fade out time, but for pitch, not volume."
+	lfotype(choices) : "LFO type" : 0 : "The type of vibrato to apply to the sound.  (LFO = low-frequency oscillator = vibrato)" = [
+		0 : "Off"
+		1 : "Square: full up or down, never middle"
+		2 : "Triangle:  fade between up and down"
+		3 : "Random"
+	] // end lfotype
+	lforate(integer) : "LFO rate (0-1000)" : 0 : "Rate of pitch changes if an LFO type is specified."
+	lfomodpitch(integer) : "LFO mod pitch (0-100)" : 0 : "Amount by which to change the pitch if an LFO type is selected."
+	lfomodvol(integer) : "LFO mod volume (0-100)" : 0 : "Amount by which to change the volume if an LFO type is selected."
+	cspinup(integer) : "Incremental Spinup Count (1-100)" : 0 : "When nonzero, scales the amount by which the pitch of the sound is increased with each PlaySound input until the pitch reaches the maximum supported."
+
 	spawnflags(flags) =
 	[
-		1 : "[1] Play everywhere" : 0
+		1 : "[1] Play everywhere (Ignore Max Range, don't fade over distance. No effect on soundscripts)" : 0
 		16 : "[16] Start Silent": 1
 		32 : "[32] Is NOT Looped": 1
 	]
@@ -1873,15 +1878,15 @@
 	spawnflags(flags) = 
 	[
 		1 : "[1] Start On" : 0
-		2 : "[2] Toggle" : 0
-		4 : "[4] Random Strike" : 0
+		2 : "[2] Toggle (Obsolete, replaced by the Toggle input)" : 0
+		4 : "[4] Random Strike (When beam has died, it will strike again randomly within the time set by Striketime in seconds)" : 0
 		8 : "[8] Ring (non-functional)" : 0
-		16: "[16] StartSparks" : 0
-		32: "[32] EndSparks" : 0
-		64: "[64] Decal End" : 0
-		128: "[128] Shade Start" : 0
-		256: "[256] Shade End" : 0
-		512: "[512] Taper Out" : 0
+		16: "[16] StartSparks (Every time the beam strikes or is turned on, the beam emits a small shower of sparks at its Start Entity)" : 0
+		32: "[32] EndSparks (Every time the beam strikes or is turned on, the beam emits a small shower of sparks at its Ending Entity)" : 0
+		64: "[64] Decal End (Places a decal scorch mark where a damaging beam hits the first solid world brush / entity)" : 0
+		128: "[128] Shade Start (Fades out toward its Start Entity. Overrides Shade End. Does not work on striking beams/beam rings)" : 0
+		256: "[256] Shade End (Fades out toward its Ending Entity. Is overridden by Shade Start. Does not work on striking beams/beam rings)" : 0
+		512: "[512] Taper Out (Taper out into a point towards its Ending Entity. Does not work on striking beams/beam rings)" : 0
 	]
 
 	TouchType(choices) : "Touch Type (tripwire)" : 0 : "If you want the beam to fire an output when touched by entities, choose the entity type here." =
@@ -1944,10 +1949,10 @@
 		2 : "Pulled"
 	]
 
-	density(integer) : "Density (particles per second)" : 50
-	lifetime(integer) : "Particle Lifetime (seconds)" : 4
-	speed(integer) : "Particle Speed (units per second)" : 32
-	rendercolor(color255) : "Ember Color (R G B)" : "255 255 255"	
+	density(integer) : "Density (particles per second)" : 50 : "Number of particles spawned each second."
+	lifetime(integer) : "Particle Lifetime (seconds)" : 4 : "Number of seconds each particle lasts for. A certain amount of randomness is added proportional to the time specified here."
+	speed(integer) : "Particle Speed (units per second)" : 32 : "The move speed of the particles in Hammer Units."
+	rendercolor(color255) : "Ember Color (R G B)" : "255 255 255" : "Color of the ember sprites."
 
 	spawnflags(Flags) = 
 	[
@@ -1986,7 +1991,7 @@
 	[
 		1: "[1] Random Direction" : 0
 		2: "[2] Blood Stream" : 0
-		4: "[4] On Player" : 0
+		4: "[4] Spray On Player" : 0
 		8: "[8] Spray decals" : 0
 		// dvs: support these flags
 		16: "[16] Cloud (emits larger cloud of blood)" : 0	//added by vizzys
@@ -2041,12 +2046,12 @@
 		16: "[16] No Decal" : 0
 		32: "[32] No Sparks" : 0
 		64: "[64] No Sound" : 0
-		128: "[128] Random Orientation" : 0
+		128: "[128] Random Orientation for Sprite" : 0
 		256: "[256] No Fireball Smoke" : 0
-		512: "[512] No particles" : 0
+		512: "[512] No Particles" : 0
 		1024: "[1024] No DLights" : 0
-		2048: "[2048] Don't clamp Min" : 0
-		4096: "[4096] Don't clamp Max" : 0
+		2048: "[2048] Don't clamp Min Sprite scale" : 0
+		4096: "[4096] Don't clamp Max Sprite scale" : 0
 		8192: "[8192] Damage above water surface only" : 0
 		16384: "[16384] Generic damage (Do DMG_GENERIC damage)" : 0
 	]
@@ -2165,7 +2170,7 @@
 	firetype(choices) : "Type" : 0 =
 	[
 		0 : "Natural"
-		1 : "Plasma"
+		1 : "Plasma (Obsolete)"
 	]
 	spawnflags(flags) =
 	[
@@ -2274,14 +2279,14 @@
 		0 : "No"
 		1 : "Yes"
 	]
-	fogcolor(color255) : "Primary Fog Color" : "255 255 255"
-	fogcolor2(color255) : "Secondary Fog Color" : "255 255 255"
-	fogdir(string) : "Primary Fog Direction" : "1 0 0"
-	fogstart(string) : "Fog Start" : "500.0"
-	fogend(string) : "Fog End" : "2000.0"
-	fogmaxdensity(float) : "Fog Max Density [0..1]" : "1"
+	fogcolor(color255) : "Primary Fog Color" : "255 255 255" : "Primary Fog Color."
+	fogcolor2(color255) : "Secondary Fog Color" : "255 255 255" : "Secondary Fog Color. If Fog Blend is disabled, this color will never appear."
+	fogdir(string) : "Primary Fog Direction" : "1 0 0" : "A vector (X Y Z) which the viewer camera is checked against to figure out the blend between the primary and secondary fog colors."
+	fogstart(string) : "Fog Start" : "500.0" : "How far away from the viewer the fog should start."
+	fogend(string) : "Fog End" : "2000.0" : "How far away from the viewer the fog reaches Fog Max Density."
+	fogmaxdensity(float) : "Fog Max Density [0..1]" : "1" : "Maximum density the fog may reach. Expressed as a decimal, so for 45% put 0.45."
 
-	foglerptime(float) : "Interpolate time" : "0"
+	foglerptime(float) : "Interpolate time" : "0" : "Fade time for the StartFogTransition input, in seconds."
 	
 	farz(string) : "Far Z Clip Plane" : "-1"
 	
@@ -2498,7 +2503,7 @@
 	[
 		1 : "[1] Repeatable (Otherwise, remove itself after firing.)" : 0
 		2 : "[2] Gibs On fire" : 0
-		4 : "[4] Strict remove after lifetime" : 0
+		4 : "[4] Strict remove after lifetime (needed if 'Gibs On Fire' is checked)" : 0
 	]
 
 	nogibshadows(choices) :"Disable Shadows on Gibs" : 0 =
@@ -2537,7 +2542,7 @@
 	[
 		1 : "[1] Repeatable (Otherwise, remove itself after firing.)" : 0
 		2 : "[2] Gibs On fire" : 0
-		4 : "[4] Strict remove after lifetime" : 0
+		4 : "[4] Strict remove after lifetime (needed if 'Gibs On Fire' is checked)" : 0
 	]
 
 	rotortime(float) : "Time Under Rotor" : "1" : "The average time it has to be under the rotor before it shoots a gib."
@@ -3188,7 +3193,7 @@
 		1: "[1] Start Disabled" : 0
 	]
 
-	message(string) : "Entity Message"
+	message(string) : "Entity Message" :  : "Message text to display."
 	radius(integer) : "Show message radius" : 128 : "Distance the player must be within to see this message."
 	developeronly(choices) : "Developer Only?" : 0 : "If set, this message will only be visible when developer mode is on." =
 	[
@@ -3290,7 +3295,6 @@
 	texture(sprite) : "Sprite Name" : "sprites/physbeam.vmt" : "Material to use for the tesla lightning beams."
 
 	m_Color(color255) : "Color" : "255 255 255"
-
 	m_flRadius(integer) : "Radius" : 200 : "Radius around the origin to find a point to strike with a tesla lightning beam."
 
 	beamcount_min(integer) : "Min # of Beams" : 6 : "Minimum number of tesla lightning beams to create when creating an arc."
@@ -3304,6 +3308,11 @@
 	
 	interval_min(string) : "Min Time Between Arcs":"0.5" : "Minimum time delay between random arcing."
 	interval_max(string) : "Max Time Between Arcs":"2" : "Maximum time delay between random arcing."
+
+	m_bOn(choices) : "Start On?" : 1 : "Start the point_tesla already on?" = [
+		0 : "No"
+		1 : "Yes"
+	]
 
 	// Inputs
 	input TurnOn(void) : "Turn emitter on." 
@@ -3322,7 +3331,7 @@
 	"An entity that issues commands to the server console."
 [
 	// Inputs
-	input Command(string) : "Command to execute."
+	input Command(string) : "Execute this command, as though it were typed into the server console."
 ]
 
 @PointClass base(Targetname) iconsprite("editor-ficool2/point_bonusmaps_accessor") = point_bonusmaps_accessor : 
@@ -3486,12 +3495,12 @@
 
 // A decal to be applied to a prop or the world using specified origin and orientation and radius, uses an orientation angle and a radius to determine
 //  ray to cast for projection
-@PointClass base(Angles, Targetname, Parentname) decal() studio("models/editor/axis_helper_thick.mdl") = info_projecteddecal : 
+@PointClass base(Angles, Targetname, Parentname) decal() sphere(Distance) studio("models/editor/axis_helper_thick.mdl") = info_projecteddecal : 
 	"An entity that projects a decal onto the world (or props). If the decal has no target name, it will immediately apply itself when "+
 	"the level is loaded. If it has a name specified, it won't apply until it receives the 'Activate' input."
 [
-	texture(decal)
-	Distance(float) : "Distance" : 64 : "Distance from the origin to project the decal."
+	texture(decal) : "Texture" :  : "The Texture to apply as a decal."
+	Distance(float) : "Distance" : 64 : "Distance from the origin to project the decal. Max 1024."
 
 	// Inputs
 	input Activate(void) : "Force the decal to apply itself to the world."
@@ -3534,8 +3543,8 @@
 	uv1(vector) readonly : "Overlay Point 2(Read-Only)"
 	uv2(vector) readonly : "Overlay Point 3(Read-Only)"
 	uv3(vector) readonly : "Overlay Point 4(Read-Only)"
-	fademindist(float) : "Start Fade Dist" : -1 : "Distance at which the overlay starts to fade (<0 = use fademaxdist)."
-	fademaxdist(float) : "End Fade Dist" : 0 : "Maximum distance at which the overlay is visible (0 = don't fade out)."
+	fademindist(float) : "Start Fade Distance" : -1 : "Distance at which the overlay starts to fade (<0 = use fademaxdist)."
+	fademaxdist(float) : "End Fade Distance" : 0 : "Maximum distance at which the overlay is visible (0 = don't fade out)."
 ]
 
 @PointClass sidelist(sides) sidelist(sides2) overlay_transition() iconsprite("vizzys-icons/info_overlay_transition") = info_overlay_transition : "Overlay Transition" 
@@ -3578,7 +3587,7 @@
 [
 	spawnflags( Flags ) =
 	[
-		1 : "[1] Transmit to client" : 0
+		1 : "[1] Transmit to client (respect PVS)" : 0
 		2 : "[2] Always transmit to client (ignore PVS)" : 0
 	]
 ]
@@ -4041,7 +4050,7 @@
 [
 	pitch(integer) : "Pitch" : 0 : "The downward pitch of the light from the sun. 0 is horizontal, -90 is straight down."
 	_light(color255) : "Brightness" : "255 255 255 200"
-	_ambient(color255) : "Ambient" : "255 255 255 20"
+	_ambient(color255) : "Ambient" : "255 255 255 20" : "Color and brightness of diffuse skylight."
 	_lightHDR(color255) : "BrightnessHDR" : "-1 -1 -1 1"
 	_lightscaleHDR(float) : "BrightnessScaleHDR" : "1" : "Amount to scale the light by when compiling for HDR."
 	_ambientHDR(color255) : "AmbientHDR" : "-1 -1 -1 1"
@@ -4056,7 +4065,7 @@
 	target(target_destination) : "Entity to point at" : : "The name of an entity in the map that the spotlight will point at. This will override the spotlight's angles."
 	_inner_cone(integer) : "Inner (bright) angle" : 30
 	_cone(integer) : "Outer (fading) angle" : 45
-	_exponent(integer) : "Focus" : 1 : "Higher focus creates sharper lighting, and focus below 1 makes it softer."
+	_exponent(integer) : "Focus" : 1 : "Higher focus creates a sharper light edge, and focus below 1 makes it softer."
 	_distance(integer) : "Maximum distance" : 0 : "This is the distance that light is allowed to cast."
 	pitch(angle_negative_pitch) : "Pitch" : -90
 	spawnflags(Flags) = [ 1 : "[1] Initially dark" : 0 ]
@@ -4115,13 +4124,13 @@
 // Shadow control
 //-------------------------------------------------------------------------
 
-@PointClass base(Targetname, Angles) iconsprite("editor/shadow_control.vmt") = shadow_control : 
+@PointClass base(Targetname, Angles) iconsprite("editor/shadow_control.vmt") sphere(distance) = shadow_control : 
 	"An entity to control the entity shadows in the map. Such as players, weapons and dynamic props."
 [
 	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "80 30 0" : "This is the shadow direction. Pitch is rotation around the Y axis, yaw is the rotation around the Z axis, and roll is the rotation around the X axis."
 
 	color(color255) : "Shadow Color" : "128 128 128" : "This is the color of the shadows."
-	distance(float) : "Maximum Distance" : 75 : "This is the maximum distance the shadow is allowed to cast, in units."
+	distance(float) : "Maximum Distance" : 75 : "This is the maximum distance the shadow is allowed to cast, in units. Maximum is 4096"
 	disableallshadows(Choices) : "All Shadows Disabled" : 0 = 
 	[
 		0 : "No"
@@ -4136,7 +4145,7 @@
 
 	// Inputs
 	input color(color255) : "Set the shadow color."
-	input direction(vector) : "Set the shadow direction."
+	input direction(vector) : "Set the shadow direction, using a vector instead of angles"
 	input SetDistance(float) : "Set the maximum shadow cast distance."
 	input SetAngles(string) : "Set the shadow direction."
 	input SetShadowsDisabled(bool) : "Set shadows disabled state."
@@ -4151,10 +4160,10 @@
 @PointClass base(Targetname, EnableDisable) sphere(minfalloff) sphere(maxfalloff) iconsprite("editor/color_correction.vmt") = color_correction : 
 	"An entity to control the color correction in the map."
 [
-	minfalloff(float) : "Lookup Falloff Start Distance" : "0.0"   : "This is the distance to the start of the falloff region (-1 = everywhere)"
-	maxfalloff(float) : "Lookup Falloff End Distance"   : "200.0" : "This is the distance to the end of the falloff region (-1 = everywhere)"
+	minfalloff(float) : "Lookup Falloff Start Distance" : "0.0"   : "This is the distance to the start of the falloff region (-1 = everywhere) If larger than the End Distance, the effect will apply to the entire map."
+	maxfalloff(float) : "Lookup Falloff End Distance"   : "200.0" : "This is the maximum distance to the end of the falloff region (-1 = everywhere)"
 	maxweight(float)  : "Maximum Weight"				: "1.0"   : "This is the maximum weight for this lookup"
-	filename(string)  : "Lookup Table Filename"			: ""	  : "This is the lookup table filename"
+	filename(string)  : "Lookup Table Filename"			: ""	  : "Path to the .raw file containing the lookup table."
 	fadeInDuration(float)   : "Lookup Fade In Duration"		: "0.0"	  : "Duration of fade in on when enabled."
 	fadeOutDuration(float)   : "Lookup Fade out Duration"		: "0.0"	  : "Duration of fade out on when disabled."
 	exclusive(choices) : "Exlusive" : 0 : "An exclusive color_correction entity disables and fades out all other color corrections when it is enabled. There should only be one active exclusive color_correction ent at any time." = 
@@ -4468,7 +4477,7 @@
 	output OnOut(void) : "Fired when the button reaches the out/released position."
 ]
 
-@SolidClass base(Targetname, Parentname, Origin, RenderFields,DamageFilter, Button) = func_button : 
+@SolidClass base(Targetname, Parentname, Origin, RenderFields, DamageFilter, Button) = func_button : 
 	"A brush entity that's designed to be used for a player-useable button. When used by the player, it moves to a pressed position."
 [
 	movedir(angle) : "Move Direction (Pitch Yaw Roll)" : "0 0 0" : "Specifies the direction of motion to move when the button is used."
@@ -4586,7 +4595,7 @@
 	_minlight(string) : "Minimum Light Level" : : "The minimum level of ambient light that hits this brush."
 ]
 
-@SolidClass base(Targetname, Parentname, Origin, Angles, Global, Button, EnableDisable) = func_rot_button : 
+@SolidClass base(Targetname, Parentname, Origin, Angles, Global, Button, EnableDisable, DamageFilter) = func_rot_button : 
 	"A brush entity that's designed to be used for a rotating player-useable button. When used by the player, it rotates to a pressed position."
 [
 	//master(target_destination) : "Master (Obsolete)" : : "Legacy support: The name of a master entity. If the master hasn't been activated, this button cannot be used."
@@ -4805,10 +4814,10 @@
 [
 	spawnflags(flags) =
 	[
-		2 : "[2] Reverse Dir" : 0
-		16: "[16] One-way" : 0
-		64: "[64] X Axis" : 0
-		128: "[128] Y Axis" : 0
+		2 : "[2] Reverse Dir (Door always opens in the opposite direction than it otherwise would)" : 0
+		16: "[16] One-way (Door only opens in one direction, defaulting to counter clockwise)" : 0
+		64: "[64] X Axis - Rotate on the X axis (Both unchecked = rotate on Z axis)" : 0
+		128: "[128] Y Axis - Rotate on the Y axis (Both unchecked = rotate on Z axis)" : 0
 	]
 	distance(integer) : "Distance" : 90 : "The amount, in degrees, that the button should rotate when it's pressed."
 
@@ -6430,7 +6439,7 @@
 		0 : "Normal"
 		10: "Fluorescent flicker"
 		2 : "Slow, strong pulse"
-		11: "Slow pulse, noblack"
+		11: "Slow pulse, no black"
 		5 : "Gentle pulse"
 		1 : "Flicker A"
 		6 : "Flicker B"
@@ -7159,7 +7168,7 @@
 @FilterClass base(BaseFilter) iconsprite("vizzys-icons/filter_enemy") sphere(filter_radius) sphere(filter_outer_radius) sphere(filter_outer_radius) line(0 255 0, targetname, filtername) = filter_enemy :
 	"A filter that filters a potential enemy entity by a set of criteria."
 [
-	filtername(string) : "Name/Classname" : : "The classname or entity name to filter by. If the filter mode is Allow, only entities whose "+
+	filtername(string) : "Name/Classname to Exclude" : : "The classname or entity name to filter by. If the filter mode is Allow, only entities whose "+
 		"class name matches the given string will pass the filter. If the filter mode is Disallow, "+
 		"all entities EXCEPT those whose class name matches the given string will pass the filter."
 		
@@ -7169,7 +7178,7 @@
 
 	filter_outer_radius(float) : "Outer Radius" : 0 : "Enemies outside this radius are considered invalid if Allow is set and valid if Disallow is set."
 	
-	filter_max_per_enemy(integer) : "Max Squadmates Per Enemy" : 0 : "Maximum number of squadmates allowed to target any given entity."
+	filter_max_per_enemy(integer) : "Max Squadmates Per Enemy" : 0 : "Maximum number of squadmates allowed to target any given entity. The Squadmates test always passes if this is zero."
 	
 	spawnflags(Flags) =
 	[
@@ -7592,7 +7601,7 @@
 	"An entity that detects and outputs an entity's velocity."
 [
 	target(target_destination) : "Target Entity Name" : : "Name of the entity whose velocity will be sensed."
-	axis(vecline) : "Measurement Axis"
+	axis(vecline) : "Measurement Axis" :  : "The axis to measure the velocity along with."
 	enabled(choices) : "Start Enabled" : 1 : "Whether or not to start enabled and active." =
 	[
 		0 : "No"
@@ -7633,8 +7642,8 @@
 	target(target_destination) : "Entity To Teleport" : : "Name of the entity that will be teleported."
 	spawnflags(flags) =
 	[
-		1 : "[1] Teleport Home" : 0
-		2 : "[2] Into Duck (episodic)" : 0
+		1 : "[1] Teleport Home (Target MUST exist when I spawn)" : 0
+		2 : "[2] Into Duck (Episodic)" : 0
 	]
 
 	// Inputs
@@ -8212,8 +8221,8 @@
 
 @BaseClass = BaseFadeProp
 [
-	fademindist(float) : "Start Fade Dist" : -1 : "Distance at which the prop starts to fade (<0 = use fademaxdist)."
-	fademaxdist(float) : "End Fade Dist" : 0 : "Max fade distance at which the prop is visible (0 = don't fade out)"
+	fademindist(float) : "Start Fade Distance" : -1 : "Distance at which the prop starts to fade (<0 = use fademaxdist)."
+	fademaxdist(float) : "End Fade Distance" : 0 : "Max fade distance at which the prop is visible (0 = don't fade out)"
 	fadescale(float) : "Fade Scale" : 1 : "If you specify a fade in the worldspawn, or if the engine is running under dx7, then the engine will forcibly fade out props even if fademindist/fademaxdist isn't specified." +
 												 " This scale factor gives you some control over the fade. Using 0 here turns off the forcible fades." +
 												 " Numbers smaller than 1 cause the prop to fade out at further distances, and greater than 1 cause it to fade out at closer distances."
@@ -8639,7 +8648,7 @@
 	physdamagescale(float) : "Physics Impact Damage Scale" : "1.0" : "Scales damage energy when this object is hit by a physics object. NOTE: 0 means this feature is disabled for backwards compatibility.\nSet to 1.0 for materials as strong as flesh, smaller numbers indicate stronger materials."
 ]
 
-@SolidClass quadbounds() base(BreakableBrush, RenderFields, Shadow) = func_breakable_surf : 
+@SolidClass quadbounds() base(BreakableBrush, RenderFields, Shadow) sphere(exploderadius) = func_breakable_surf : 
 	"A breakable surface, for partially breakable glass / tile / etc.  All faces but the desired visible one must be marked as NODRAW and that" +
 	"face must be 4 sided.  The material applied to the visible face must be set up to be breakable." 
 [
@@ -8991,10 +9000,10 @@
 @PointClass base(Targetname) iconsprite("editor/tanktrain_ai.vmt") line(255 255 255, targetname, target) = tanktrain_ai : 
 	"Train chase AI"			// NEEDHELP
 [
-	target(target_destination) : "Train Name"
-	startsound(sound) : "Start Moving Sound" : "vehicles/diesel_start1.wav"
-	enginesound(sound) : "Engine Loop Sound" : "vehicles/diesel_turbo_loop1.wav"
-	movementsound(sound) : "Vehicle Movement Sound" : "vehicles/tank_treads_loop1.wav"
+	TargetEntity(target_destination) : "Target" :  : "The entity that the train should move towards."
+	startsound(sound) : "Start Moving Sound" : "vehicles/diesel_start1.wav" : "The sound to play when the train starts moving."
+	enginesound(sound) : "Engine Loop Sound" : "vehicles/diesel_turbo_loop1.wav" : "The engine sound is looped when it plays."
+	movementsound(sound) : "Vehicle Movement Sound" : "vehicles/tank_treads_loop1.wav" : "The looping sound to play while the train is moving."
 ]
 
 @PointClass base(Targetname, Parentname, Angles) cylinder(255 255 255, targetname, target, radius, targetname, targetname, radius) iconsprite("editor-ficool2/path_track") = path_track : 
@@ -9002,11 +9011,11 @@
 [
 	spawnflags(Flags) =
 	[
-		1:  "[1] Disabled" : 0
+		1:  "[1] Disabled (Trains cannot move to this path while disabled)" : 0
 		2:  "[2] Fire once" : 0
-		4:  "[4] Branch Reverse" : 0
-		8:  "[8] Disable train" : 0
-		16: "[16] Teleport to THIS path track" : 0
+		4:  "[4] Branch Reverse (Alternate path used for reversing trains instead of forward trains)" : 0
+		8:  "[8] Disable train (Activate 'No User Control' on passing trains)" : 0
+		16: "[16] Teleport to THIS path track (When I am a forward-moving train's next path target)" : 0
 		32: "[32] Part of an uphill path" : 0
 		64: "[64] Part of a downhill path" : 0
 		32768 : "[32768] Start on Branch (Sends trains to Branch Path by default.)" : 0
@@ -9218,7 +9227,7 @@
 	spawnflags(flags) = 
 	[ 
 		128: "[128] Fire Once" : 1 
-		256: "[256] Use Velocity instead of facing (Use the direction the player is going, instead of the direction they're looking)" : 0
+		256: "[256] Use Velocity instead of facing (Use the direction the player is moving, instead of the direction they're looking)" : 0
 	]
 	
 	target(target_destination) : "Look Target" : : "The name of the entity to be looked at."
@@ -9387,7 +9396,7 @@
 // Water LOD control
 //-------------------------------------------------------------------------
 
-@PointClass base(Targetname) iconsprite("editor/waterlodcontrol.vmt") = water_lod_control : 
+@PointClass base(Targetname) iconsprite("editor/waterlodcontrol.vmt") sphere(cheapwaterstartdistance) sphere(cheapwaterenddistance) = water_lod_control : 
 	"An entity used to control the LOD behavior of any water in the map. If your map has water, this entity is required."
 [
 	cheapwaterstartdistance(float) : "Start Transition to Cheap Water" : 1000 : "This is the distance from the camera that water will start transitioning to cheap water, in units."
@@ -9512,7 +9521,7 @@
 [
 	MeasureTarget(target_destination) : "Entity to Measure" : "" : "Entity whose movement you want to measure."
 	MeasureReference(target_destination) : "Measure Reference" : "" : "The movement of Entity to Measure will be measured relative to this entity."
-	Target(target_destination) : "Entity to Move" : "" : "This entity will be moved to mimic the motions of Entity to Measure."
+	SetTarget(target_destination) : "Entity to Move" : "" : "This entity will be moved to mimic the motions of Entity to Measure."
 	TargetReference(target_destination) : "Movement Reference" : "" : "The Entity to Move will move relative to this entity."
 	TargetScale(float) : "Movement scale" : "1" : "A scale to *divide* the measured movements by before applying those movements to the Entity to Move. 1 = target entity moves as much as the measured entity, 2 = target entity moves half as far as the measured entity, and 0.5 = target entity moves twice as far as the measured entity."
 	ShouldOutputPosition(choices) : "Fire position outputs" : 0 : "Allows OutPosition and OutAngles to be fired with the resulting position while this entity is active. Does not apply to the GetPosition input." =
