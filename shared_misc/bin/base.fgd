@@ -1218,6 +1218,7 @@
 	lfomodpitch(integer) : "LFO mod pitch (0-100)" : 0 : "Amount by which to change the pitch if an LFO type is selected."
 	lfomodvol(integer) : "LFO mod volume (0-100)" : 0 : "Amount by which to change the volume if an LFO type is selected."
 	cspinup(integer) : "Incremental Spinup Count (1-100)" : 0 : "When nonzero, scales the amount by which the pitch of the sound is increased with each PlaySound input until the pitch reaches the maximum supported."
+	radius(string) : "Max Audible Distance" : "1250" : "Maximum distance at which this sound is audible."
 
 	spawnflags(flags) =
 	[
