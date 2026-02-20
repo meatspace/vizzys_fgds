@@ -3309,7 +3309,7 @@
 	interval_min(string) : "Min Time Between Arcs":"0.5" : "Minimum time delay between random arcing."
 	interval_max(string) : "Max Time Between Arcs":"2" : "Maximum time delay between random arcing."
 
-	m_bOn(choices) : "Start On?" : 1 : "Start the point_tesla already on?" = [
+	m_bOn(choices) : "Start On?" : 1 : "point_tesla already on?" = [
 		0 : "No"
 		1 : "Yes"
 	]
