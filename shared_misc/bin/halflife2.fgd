@@ -1852,7 +1852,7 @@
 		1 : "Yes"
 	]
 
-	DisableExplosions(choices) : "Disable Explosions" : "No" : "Stops explosions from occuring when the helicopter is damaged." =
+	DisableExplosions(choices) : "Disable Explosions" : "No" : "Stops explosions from occurring when the helicopter is damaged." =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -5416,9 +5416,24 @@
 ]
 
 
-@PointClass base(BaseDriveableVehicle) studioprop() = prop_vehicle_driveable :
-	"Generic driveable studiomodel vehicle."
+@PointClass base(BaseDriveableVehicle) sphere(fademindist) sphere(fademaxdist) studioprop(models/buggy.mdl) = prop_vehicle_driveable : 
+"Generic drivable studiomodel vehicle."
 [
+	
+	EnableGun(choices) : "Gun Enabled?" : 0 : "Whether the vehicle's gun is enabled or disabled." = 
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	input EnableGun(bool) : "Enables or disables the vehicle gun. 1 = enabled, 0 = disabled."
+	output AttackAxis(string) : "State of attack button [0,1]."
+	output Attack2Axis(string) : "State of attack2 button [0,1]."
+	output PlayerOff(void) : "Player exited the vehicle."
+	output PlayerOn(void) : "Player entered the vehicle."
+	output PressedAttack(void) : "Player pressed +attack."
+	output PressedAttack2(void) : "Player pressed +attack2."
+	
 ]
 
 @PointClass base(Targetname, Angles) iconsprite("vizzys-icons/point_apc_controller") line(255 255 255, targetname, targetentityname) = point_apc_controller : "APC Controller"
@@ -5627,7 +5642,7 @@
 @PointClass base(Targetname) iconsprite("vizzys-icons/env_starfield") = env_starfield : "Starfield effect" 
 [
 
-	m_bOn(choices) : "Start On?" : 1 : "env_starfield already on?" = [
+	m_bOn(choices) : "Start On?" : 1 : "Start env_starfield already on?" = [
 		0 : "No"
 		1 : "Yes"
 	]

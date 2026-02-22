@@ -3310,7 +3310,7 @@
 	interval_min(string) : "Min Time Between Arcs":"0.5" : "Minimum time delay between random arcing."
 	interval_max(string) : "Max Time Between Arcs":"2" : "Maximum time delay between random arcing."
 
-	m_bOn(choices) : "Start On?" : 1 : "point_tesla already on?" = [
+	m_bOn(choices) : "Start On?" : 1 : "Start point_tesla already on?" = [
 		0 : "No"
 		1 : "Yes"
 	]
@@ -9800,14 +9800,15 @@
 	input DisableCappedPhysicsDamage(void) : "Undo effects of EnableCappedPhysicsDamage"
 	input SetLocatorTargetEntity(target_destination) : "Set the entity that the HUD locator should track. (Usually a vehicle)"
 	
-	input SetHandModel(string) : "Sets player's hand viewmodel. Obsolete?" //added by vizzys	
-	input SetHandModelSkin(string) : "Sets player's hand viewmodel skin. Obsolete? Consider ent_fire viewmodel skin 1  instead." //added by vizzys
-	input SetDrawPlayerModelExternally(string) : "Sets the player model to draw in mirrors and thirdperson (does not affect hand viewmodels)" //added by vizzys
+	input SetHandModel(string) : "Obsolete? Sets player's hand viewmodel. Consider ent_fire hand_viewmodel * instead."
+	input SetHandModelSkin(integer) : "Obsolete? Sets player's hand viewmodel skin. Consider ent_fire viewmodel skin * instead."
+	input SetHandModelBodyGroup(integer) : "Sets the bodygroup of the player's hands viewmodel."
+	input SetPlayerDrawExternally(bool) : "Sets whether the player should show up in mirrors, cameras, etc."
+	input SetDrawPlayerModelExternally(string) : "Obsolete? Sets the player model to draw in mirrors and thirdperson (does not affect hand viewmodels)"
 	input SetMaxInputArmor(integer) : "Sets the maximum armor value that could be set by armor inputs."
 	input SetSuitZoomFOV(integer) : "Sets the FOV used by suit zoom."
-	
 	input SetProtagonist(string) : "Sets the player's protagonist entry."
-	input SetPlayerDrawLegs(string)	: "Sets the player's leg model." //added by vizzys
+	input SetPlayerDrawLegs(bool)	: "Sets the player's leg model." //added by vizzys
 	output OnPlayerSpawn(void) : "Fired when the player spawns or respawns, using the spawn point as the caller."
 ]
 
