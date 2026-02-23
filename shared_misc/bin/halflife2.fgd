@@ -641,7 +641,7 @@
 
 	spawnflags(Flags) =
 	[
-		65536 : "[65536] Burrow away when eluded" : 0
+		65536 : "[65536] Burrow away when eluded (When enemies are too far away or unreachable)" : 0
 		131072 : "[131072] Use Ground Checks" : 0
 		262144 : "[262144] Worker Type (Make into acid antlion)" : 0
 	]
@@ -4785,8 +4785,8 @@
 	[
 		0: "Start immediately"
 		1: "Wait for actor to finish"
-		2: "Interrupt at next interrupt event"
-		3: "Cancel at next interrupt event"
+		2: "Interrupt at next interrupt event (Actor waits until good point to quit speaking, then goes back to previous)"
+		3: "Cancel at next interrupt event (Actor waits until good point to quit speaking, then forgets about previous)"
 	]
 
 	// Inputs

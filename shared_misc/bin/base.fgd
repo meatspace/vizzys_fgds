@@ -1442,7 +1442,7 @@
 	MinDist(integer) : "Minimum Distance" : 500 : "The distance at which this effect will be fully translucent."
 	MaxDist(integer) : "Maximum Distance" : 2000 : "The distance at which this effect will be at full intensity."
 	OuterMaxDist(integer) : "Outer Maximum Distance" : 0 : "If larger than the maximum distance, this is the length at which the glow will fade completely out, between the span of the maximum distance and this length."
-	GlowProxySize(float) : "Glow Proxy Geometry Size" : "2.0" : "Size of the glow to be rendered for visibility testing. Must be larger than the distance from the sprite center to empty space. So if this glow is inside geometry (like a light bulb), set this value to be bigger than the bulb's radius. Any time a sphere of this radius would be visible (poking through any nearby geometry), the glow will be rendered."
+	GlowProxySize(float) : "Glow Proxy Geometry Size (0-64)" : "2.0" : "Size of the glow to be rendered for visibility testing. Must be larger than the distance from the sprite center to empty space. So if this glow is inside geometry (like a light bulb), set this value to be bigger than the bulb's radius. Any time a sphere of this radius would be visible (poking through any nearby geometry), the glow will be rendered."
 	HDRColorScale(float) : "HDR color scale." : "1.0" : "float value to multiply sprite color by when running in HDR mode."
 
 	// Inputs
@@ -1524,7 +1524,7 @@
 [
 	gamematerial(choices) : "Game Material to Watch" : "0" : "The material to watch. When the player stands on/off this material, this entity's outputs will be fired." =
 	[
-		0 : "None (player's in the air)"
+		0 : "None (Player is in the air)"
 		67 : "Concrete"
 		77 : "Metal"
 		68 : "Dirt"
@@ -2094,7 +2094,7 @@
 
 	spawnflags(flags) =
 	[
-		1 : "[1] No Damage - Only Force" : 1
+		1 : "[1] No Damage (Only Force. Player will never be damaged even without this flag.)" : 1
 		2 : "[2] Push players" : 0
 		4 : "[4] Push radially (Not as a sphere, as a cylinder. No upward or downward force will be generated.)" : 0
 		8 : "[8] Test LOS before pushing (Otherwise, the force will travel through solid things.)" : 0
@@ -2121,7 +2121,7 @@
 
 	spawnflags(flags) =
 	[
-		1: "[1] No fall-off" : 0
+		1: "[1] No fall-off (Force does not weaken with distance.)" : 0
 		2: "[2] Infinite Length" : 0
 		4: "[4] Ignore Mass" : 0
 		8: "[8] Ignore Surface Normal When Applying Force (more predictable movement in some circumstances)" : 1
@@ -2417,7 +2417,7 @@
 		1: "[1] All Players" : 0
 	]
 
-	message(string) : "Hint Text (localized)" : "" : "This should be set to match the desired HUD hint entry in the hl2\resource\valve_english.txt."
+	message(string) : "Hint Text (localized)" : "" : "This should be set to match the desired HUD hint entry in valve_english.txt."
 
 	// Inputs
 	input ShowHudHint(void) : "Shows the hint message."
@@ -2430,19 +2430,19 @@
 [
 	spawnflags(flags) =
 	[
-		1: "[1] Global Shake" : 0
+		1: "[1] Global Shake (Ignore radius)" : 0
 		//2: "[2] Disrupt player control" : 0 // doesn't work
-		4: "[4] In Air" : 0		// shakes objects even if they are not on the ground
-		8: "[8] Physics Objects" : 0	// shakes physically as well as the camera
-		16: "[16] Ropes" : 0		// shakes ropes too.
-		32: "[32] DON'T shake view (for shaking ropes or physics only)" : 0
+		4: "[4] In Air (Shake players even in the air)" : 0		
+		8: "[8] Physics Objects (Shake physics objects, not just the camera)" : 0	// shakes physically as well as the camera
+		16: "[16] Ropes (Shake Ropes. Works independently from 'Physics Objects' flag)" : 0		// shakes ropes too.
+		32: "[32] DON'T shake view (For shaking ropes or physics only)" : 0
 		64: "[64] DON'T Rumble Controller" : 0
 	]
 
 	amplitude(float) : "Amplitude (0-16)" : "4" : "The amount of noise in the screen shake. Should be a range between 0 and 16."
 	radius(float) : "Effect Radius" : "500" : "The radius around this entity in which to affect players."
-	duration(float) : "Duration (seconds)" : "1" : "The length of time in which to shake the player's screens."
-	frequency(float) : "Frequency" : "2.5" : "The frequency used to apply the screen shake. Should be a value between 0 and 255, where 0.1 = jerk, and 255.0 = rumble."
+	duration(float) : "Duration (seconds)" : "1" : "The length of time in which to shake the player's screen."
+	frequency(float) : "Frequency" : "2.5" : "The amount of times per second to apply screen shake. A value between 0 and 255, where 0.1 = jerk, and 255.0 = rumble. 40 is a good start."
 
 	// Inputs
 	input Amplitude(string) : "Set the amplitude (0-16)"
@@ -2456,7 +2456,7 @@
 [
 	spawnflags(flags) =
 	[
-		1: "[1] Punch all players (ignore radius)" : 0
+		1: "[1] Punch all players (Ignore radius)" : 0
 		2: "[2] Punch players in the air" : 0
 	]
 
@@ -2493,7 +2493,7 @@
 	]
 	simulation(choices) :"Simulate" : 0 =
 	[
-		0: "Point"
+		0: "Point (very cheap)"
 		1: "Physics"
 		2: "Ragdoll"
 	]
@@ -2532,7 +2532,7 @@
 	]
 	simulation(choices) :"Simulate" : 0 =
 	[
-		0: "Point"
+		0: "Point (very cheap)"
 		1: "Physics"
 		2: "Ragdoll"
 	]
@@ -3352,10 +3352,10 @@
 [
 	spawnflags(flags) =
 	[
-		32 : "[32] Freeze Player" : 1
-		64 : "[64] Hide Weapon" : 1
-		128 : "[128] +Use Deactivates" : 1
-		256 : "[256] Jump Deactivates" : 1
+		32 : "[32] Freeze Player (Sets player's walk speed to 0 while the entity is active.)" : 1
+		64 : "[64] Hide Weapon (Makes the player's weapon be hidden. BUG: player goes to reference pose.)" : 1
+		128 : "[128] +Use Deactivates (Stops monitoring the player if they press E.)" : 1
+		256 : "[256] Jump Deactivates (Stops monitoring the player if they jump.)" : 1
 	]
 	
 	FieldOfView(float) : "FieldOfView" : "-1.0" : "The amount of tolerance in the view checking when determining whether the player's input is still under control. 1.0 = straight ahead, 0.0 = +/- 90 degrees, -1.0 = all directions. If the player isn't within the tolerance, the player regains control."
@@ -3783,7 +3783,7 @@
 	"An entity that acts like a magnet for ragdolls. Useful for crafting exaggerated ragdoll behavior (i.e. guys falling over rails on death). If the "+
 	"Bar Magnet spawnflag is set, the magnet works like it was a cylindrical magnet i.e. it attracts ragdolls to the nearest point on a line."
 [
-	axis(vecline) : "Bar Magnet Axis"
+	axis(vecline) : "Bar Magnet Axis" :  : "Axis of the bar magnet, if the spawnflag is active."
 	radius(float) : "Effective Radius" : "512" : "Radius in which ragdolls are affected around this entity's origin."
 	force(float) : "Force" : "5000" : "Magnetic force to apply to ragdolls within the radius. Expressed as kilograms per inch per second. So a force of 1000 will add 10 units/second to a 100kg man. It will add 100 units per second to a 10kg headcrab."
 	BoneTarget(string) : "Bone Target" : : "Targets a specific bone to apply the force to. (e.g. ValveBiped.Bip01_R_Foot)"
@@ -4293,8 +4293,8 @@
 	[
 		1 : "[1] Start ON"  : 0
 		2 : "[2] Reverse Direction" : 0
-		4 : "[4] X Axis"  : 0
-		8 : "[8] Y Axis"  : 0
+		4 : "[4] X Axis Rotation"  : 0
+		8 : "[8] Y Axis Rotation"  : 0
 		16: "[16] Acc/Dcc (See Friction)" : 0
 		32: "[32] Fan Pain (If something blocks the brush, it will be hurt. Rotation speed/10)" : 0
 		64: "[64] Not Solid" : 0
@@ -4332,8 +4332,8 @@
 	spawnflags(Flags) =
 	[
 		1: "[1] Toggle" : 1
-		64: "[64] X Axis" : 0
-		128: "[128] Y Axis" : 0
+		64: "[64] X Axis Rotation (Both unchecked = rotate on Z axis)" : 0
+		128: "[128] Y Axis Rotation (Both unchecked = rotate on Z axis)" : 0
 	]
 	noise1(sound) : "Movement Sound" : : "The sound to play when the brush moves."
 	noise2(sound) : "Stop Sound" : : "The sound to play when the brush stops moving."
@@ -4617,13 +4617,13 @@
 	spawnflags(flags) =
 	[
 		1 : "[1] Not solid" : 0
-		2 : "[2] Reverse Dir" : 0
-		32: "[32] Toggle" : 0
-		64: "[64] X Axis" : 0
-		128: "[128] Y Axis" : 0
+		2 : "[2] Reverse Direction" : 0
+		32: "[32] Toggle (Disable Auto Return.)" : 0
+		64: "[64] X Axis Rotation" : 0
+		128: "[128] Y Axis Rotation" : 0
 		256: "[256] Touch Activates": 0
 		512: "[512] Damage Activates": 0
-		1024: "[1024] Use Activates": 0
+		1024: "[1024] Use Activates (Otherwise, it will only move by inputs.)": 0
 		2048: "[2048] Starts locked" : 0
 	]
 	_minlight(string) : "Minimum Light Level" : : "The minimum level of ambient light that hits this brush."
@@ -4657,10 +4657,10 @@
 	spawnflags(flags) =
 	[
 		1: "[1] Not Solid" : 1
-		32: "[32] Toggle (Disable Auto Return)" : 1
-		64: "[64] X Axis" : 0
-		128: "[128] Y Axis" : 0
-		1024: "[1024] Use Activates" : 1
+		32: "[32] Toggle (Disable Auto Return.)" : 1
+		64: "[64] X Axis Rotation" : 0
+		128: "[128] Y Axis Rotation" : 0
+		1024: "[1024] Use Activates (Otherwise, it will only move by inputs.)" : 1
 		2048: "[2048] Starts locked" : 0
 		8192: "[8192] Jiggle when used while locked" : 0
 	]
@@ -4740,8 +4740,8 @@
 	[
 		//1 : "[1] Starts Open - OBSOLETE, use 'Spawn Position' key instead" : 0
 		4 : "[4] Non-solid to Player" : 0
-		8: "[8] Passable" : 0
-	    32: "[32] Toggle" : 0
+		8: "[8] Passable (Non-Solid to everything)" : 0
+	    32: "[32] Toggle (Door can be closed by +Use even if Delay Before Reset is not over)" : 0
 		256:"[256] Use Opens" : 0
 		512: "[512] NPCs Can't Open" : 0
 		1024: "[1024] Touch Opens" : 0
@@ -4817,8 +4817,8 @@
 	[
 		2 : "[2] Reverse Dir (Door always opens in the opposite direction than it otherwise would)" : 0
 		16: "[16] One-way (Door only opens in one direction, defaulting to counter clockwise)" : 0
-		64: "[64] X Axis - Rotate on the X axis (Both unchecked = rotate on Z axis)" : 0
-		128: "[128] Y Axis - Rotate on the Y axis (Both unchecked = rotate on Z axis)" : 0
+		64: "[64] X Axis Rotation (Both unchecked = rotate on Z axis)" : 0
+		128: "[128] Y Axis Rotation (Both unchecked = rotate on Z axis)" : 0
 	]
 	distance(integer) : "Distance" : 90 : "The amount, in degrees, that the button should rotate when it's pressed."
 
@@ -5097,7 +5097,7 @@
 [
 	spawnflags(Flags) =
 	[
-		1 : "[1] Remove after firing" : 1
+		1 : "[1] Remove after firing (Removes entity after firing outputs. Delayed inputs will work.)" : 1
 	]
 	
 	globalstate(choices) : "Global State to Read" : : "If set, this specifies a global state to check before firing. The OnMapSpawn output will only fire if the global state is set." =
@@ -5142,14 +5142,14 @@
 	spawnflags(flags) =
 	[
 		1: "[1] Start At Player" : 1
-		2: "[2] Follow Player" : 1
+		2: "[2] Follow Player (Look at the Player)" : 1
 		4: "[4] Freeze Player" : 0
-		8: "[8] Infinite Hold Time" : 0
+		8: "[8] Infinite Hold Time (Until told to shut off via Disable)" : 0
 		16:"[16] Snap to goal angles" : 0
 		32:"[32] Make Player non-solid" : 0
-		64:"[64] Interruptible by Player" : 0
+		64:"[64] Interruptible by Player (Allows player to regain control by shooting, moving, etc)" : 0
 		128:"[128] Set FOV" : 0
-		256:"[256] Allow fixed behavior (can move without look target, removal stops softlock, etc.)" : 1
+		256:"[256] Allow fixed behavior (Can move without look target, removal stops softlock, etc.)" : 1
 	]
 	
 	speed(float) : "Initial Speed" : "0" : "The starting speed that the camera moves at, if it's on a path track."
@@ -5412,7 +5412,7 @@
 	OnTriggerChance7(float) : "OnTrigger8 Chance" : "1.0" : "Chance (from 0 to 1) of the OnTrigger8 output firing when this entity is triggered."
 
 	// Inputs
-	input Trigger(void) : "Trigger this entity, causing its OnTrigger outputs to fire if it is enabled."
+	input Trigger(void) : "Trigger this entity (or dont) by causing its OnTriggerChance outputs to fire if it is enabled."
 	input Toggle(void) : "Toggle this entity between enabled and disabled."
 	input CancelPending(void) : "Cancel any events fired by this entity that are currently pending in the I/O event queue."
 	input EnableRefire(void) : "Allow this relay to trigger again quickly, if allow fast retrigger is disabled." //added by vizzys
@@ -5698,7 +5698,7 @@
 		2 : "[2] Hears world sounds" : 1
 		4 : "[4] Hears player sounds" : 1
 		8 : "[8] Hears bullet impacts" : 1
-		16: "[16] Swallows sounds routed through speakers" : 0
+		16: "[16] Swallows sounds routed through speakers (Original sound erased)" : 0
 		32: "[32] Hears explosions" : 0
 		64: "[64] Ignores non-attenuated sounds (Ignores sounds set to play everywhere in the map)" : 0
 		128 : "[128] Hears sentences (Combine dialogue, etc.)" : 1
@@ -7955,7 +7955,7 @@
 	spawnflags(flags) =
 	[
 		1: "[1] No Collision until break" : 1
-		2: "[2] Keep Rigid" : 0
+		2: "[2] Keep Rigid (Makes the minimum length the same as the maximum length)" : 0
 	] 
 ]
 
@@ -8040,7 +8040,7 @@
 		2: "[2] Convert As Debris" : 0
 	]
 	target(target_destination) : "Entity to convert" : : "Name of the entity that will be converted to a physics object when the ConvertTarget input is fired."
-	swapmodel(target_destination) : "Model Swap Entity"
+	swapmodel(target_destination) : "Model Swap Entity" :  : "If specified, the model of the entity specified here will replace the model of the target object when it is converted."
 	massoverride(float) : "Mass Override" : "0" : "Sets the mass when the object(s) are converted (0 means auto-calculate)"
 	
 	SetConversionType(choices) : "Conversion Type" : 0 : "How this phys_convert should convert objects." =
@@ -9827,10 +9827,10 @@
 @PointClass base(Targetname, Parentname) iconsprite("vizzys-icons/env_spritetrail") = env_spritetrail : 
 	"A sprite trail you can parent to anything you heart desires."
 [
-	lifetime(float) : "Lifetime" : "0.5"
-	startwidth(float) : "Start Width" : "8.0"
-	endwidth(float) : "End Width" : "1.0"
-	spritename(string) : "Sprite Name" : "sprites/bluelaser1.vmt"
+	lifetime(float) : "Lifetime" : "0.5" : "How long the beam lasts. Trails with a longer lifetime will draw less precise paths."
+	startwidth(float) : "Start Width" : "8.0" : "The width of the beam at the beginning."
+	endwidth(float) : "End Width" : "1.0" : "The width of the beam segment at the end of its lifetime."
+	spritename(string) : "Sprite Name" : "sprites/bluelaser1.vmt" : "The material to draw. The entity will only use the top row of pixels for the trail."
 
 	renderamt(integer) : "FX Amount (0 - 255)" : 255 : "The FX amount is used by the selected Render Mode."
 	rendercolor(color255) : "FX Color (R G B)" : "255 255 255" : "The FX color is used by the selected Render Mode."
@@ -9883,8 +9883,8 @@
 	]
 	shadowquality(Choices) : "Shadow Quality" : 1 : "Quality of shadows." =
 	[
-		0 : "Low"
-		1 : "High"
+		0 : "Low (Sharp, pixelated shadows)"
+		1 : "High (Smooth shadows)"
 	]
 	shadowatten(float)			: "Shadow Atten" : "0.0" : "The attenuation of the shadows, or how much the shadows should fade into the light of the projected texture, if at all. The player's flashlight uses 0.35 by default, although higher values may be needed for a visible effect."
 	shadowfilter(float)			: "Shadow Filter Size" : "0.5" : "The amount to filter the shadows. This blurs shadows to make them appear less pixelated, but higher values may have more visible noise."
@@ -9937,6 +9937,7 @@
 	input SetSpotlightFrame(string)		: "Sets the spotlight texture frame"
 	input EnableShadows(bool)		: "Set the if shadows are enabled"
 	input LightColor(color255)		: "Change the light color"
+	input LightOnlyTarget(integer) : "Sets Light Only Target."  //added by vizzys
 	input LightWorld(integer) : "Sets Light the World." //added by vizzys
 	input SetBrightness(float)		: "Sets brightness."
 	input SetColorTransitionTime(float)		: "Sets the color transition time."
@@ -10267,7 +10268,7 @@
 		3 : "Urgent Pulse"
 	]
 	
-	hint_alphaoption(Choices) : "Alpha Pulsing" : 0 : "The icon alpha can pulsate" =
+	hint_alphaoption(Choices) : "Alpha Pulsing" : 0 : "Can the icon alpha pulsate?" =
 	[
 		0 : "No Pulse"
 		1 : "Slow Pulse"
@@ -10275,21 +10276,21 @@
 		3 : "Urgent Pulse"
 	]
 	
-	hint_shakeoption(Choices) : "Shaking" : 0 : "The icon can shake" =
+	hint_shakeoption(Choices) : "Shaking" : 0 : "Can the icon shake?" =
 	[
 		0 : "No Shaking"
 		1 : "Narrow Shake"
 		2 : "Wide Shake"
 	]
 
-	hint_local_player_only(choices) : "Only Local Player" : 0 : "The hint will only be shown to the local player." =
+	hint_local_player_only(choices) : "Only Local Player" : 0 : "Will the hint only be shown to the local player?" =
 	[
 		0 : "No"
 		1 : "Yes"
 	]
 	
 	hint_timeout(integer) : "Timeout" : 0 : "The automatic timeout for the hint. 0 will persist until stopped with EndHint."
-	hint_range(float) : "Display Range" : 0 : "The visible range of the hint."	
+	hint_range(float) : "Display Range" : 0 : "Visible range of the hint."	
 	
 	hint_start_sound(sound) : "Sound" : "Instructor.LessonStart" : "The sound to play when the hint is first displayed."
 	

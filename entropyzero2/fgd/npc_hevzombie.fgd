@@ -1,0 +1,44 @@
+//=============================================================================
+//
+// Purpose: Half-Life 2 mod game definition file (.fgd) 
+//			Defines new entity the HEV Zombie
+//
+//=============================================================================
+
+@NPCClass base(BaseZombie) studio("models/Zombie/zombie_hev.mdl") = npc_hevzombie : "HEV Zombie"
+[
+    GrenadeType(choices) : "Grenade Type" : "" =
+    [
+        "weapon_crowbar"  : "Crowbar"
+		"weapon_stunstick" : "Stunstick"
+		"npc_grenade_frag" : "Grenade"
+		"npc_grenade_hopwire" : "Xen Grenade"
+		"npc_manhack" : "Manhack"
+		"" : "Random" //not tested but probably works
+    ]
+
+	NumGrenades(choices) : "Number of Grenades" : "1" : "The number of grenades this HEV Zombie can pull out." =
+	[
+		"0" : "None"
+		"1" : "1"
+		"2" : "2"
+		"3" : "3"
+		"4" : "4"
+		"5" : "5"
+		"999999" : "Unlimited"
+	]
+
+	m_bDropItems(choices) : "Drop Items" : 1 : "Drop a battery on death?" = [
+		0 : "No"
+		1 : "Yes"
+	]
+
+    // Inputs
+    input StartSprint(void) : "Forces the HEV zombie to sprint."
+	input PullGrenade(void) : "Forces the HEV Zombie to pull a grenade." //not tested but probably works
+	input SetArmor(integer) : "Set the HEV Zombies armor value."
+	
+	// Outputs
+	output OnPullGrenade(ehandle) : "Fires when the HEV Zombie pulls a grenade. Passes the grenade."
+	
+]

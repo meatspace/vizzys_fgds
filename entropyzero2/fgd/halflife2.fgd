@@ -6199,5 +6199,6 @@
 @include "wilson.fgd"
 @include "arbeit_helicopter.fgd"
 @include "css_weapons_in_hl2.fgd"
+@include "npc_hevzombie.fgd"
 
 //=============================================================================
