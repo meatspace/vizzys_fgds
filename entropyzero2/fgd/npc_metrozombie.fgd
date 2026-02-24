@@ -1,0 +1,39 @@
+//=============================================================================
+//
+// Purpose: Half-Life 2 mod game definition file (.fgd) 
+//			Defines new entity: the combine metrocop zombie aka Metrozombie
+//			This .fgd was shamelessly cribbed from Entropy Zero Uprising, go play it!
+//			https://www.moddb.com/mods/entropy-zero-uprising
+//=============================================================================
+
+
+@NPCClass base(BaseZombie) studio("models/zombie/zombiecop.mdl") = npc_metrozombie : "Metrozombie"
+[
+	NumGrenades(choices) : "Number of Grenades" : "1" : "The number of grenades this Metrozombie can pull out." =
+	[
+		"0" : "None"
+		"1" : "1"
+		"2" : "2"
+		"3" : "3"
+		"4" : "4"
+		"5" : "5"
+		"999999" : "Unlimited"
+	]
+	
+	GrenadeType(choices) : "Grenade Type" : "" =
+	[
+		"npc_manhack"  : "Manhack"
+		"weapon_stunstick"  : "Stunstick"
+		"weapon_crowbar" : "Crowbar"
+		"npc_grenade_frag" : "Grenade"
+		"npc_grenade_hopwire" : "Xen Grenade"
+		"" : "Random"
+	]
+	
+	// Inputs
+	input StartSprint(void) : "Forces the Metrozombie to sprint."
+	input PullGrenade(void) : "Forces the Metrozombie to pull a grenade."
+	
+	// Outputs
+	output OnPullGrenade(ehandle) : "Fires when the Metrozombie pulls a grenade. Passes the grenade."
+]

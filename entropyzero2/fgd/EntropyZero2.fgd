@@ -6559,5 +6559,7 @@
 @include "husks.fgd"
 @include "arbeit_personality_core.fgd"
 @include "css_weapons_in_hl2.fgd"
+@include "npc_metrozombie.fgd"
+@include "npc_hevzombie.fgd"
 
 //=============================================================================

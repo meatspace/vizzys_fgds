@@ -504,7 +504,7 @@
 	]
 
 	health(integer) : "Strength" : 1 : "Number of points of damage to take before breaking. 0 means don't break."
-	material(choices) :"Material Type" : 0 : "Set to the material type of the brush. Used to decide what sounds to make when damaged, and what gibs to produce when broken." =
+	material(choices) : "Material Type" : 0 : "Set to the material type of the brush. If Nonzero, this decides what sounds to play when damaged, and what gibs to spawn when broken." =
 	[
 		0: "Glass"
 		1: "Wood"
@@ -7553,8 +7553,8 @@
 	target(target_destination) : "Entity To Teleport" : : "Name of the entity that will be teleported."
 	spawnflags(flags) =
 	[
-		1 : "[1] Teleport Home" : 0
-		2 : "[2] Into Duck (episodic)" : 0
+		1 : "[1] Teleport Home (Target MUST exist when I spawn)" : 0
+		2 : "[2] Into Duck (Episodic)" : 0
 	]
 
 	// Inputs
@@ -10179,21 +10179,21 @@
 		3 : "Urgent Pulse"
 	]
 	
-	hint_shakeoption(Choices) : "Shaking" : 0 : "The icon can shake" =
+	hint_shakeoption(Choices) : "Shaking" : 0 : "Can the icon shake?" =
 	[
 		0 : "No Shaking"
 		1 : "Narrow Shake"
 		2 : "Wide Shake"
 	]
 
-	hint_local_player_only(choices) : "Only Local Player" : 0 : "The hint will only be shown to the local player." =
+	hint_local_player_only(choices) : "Only Local Player" : 0 : "Will the hint only be shown to the local player?" =
 	[
 		0 : "No"
 		1 : "Yes"
 	]
 	
 	hint_timeout(integer) : "Timeout" : 0 : "The automatic timeout for the hint. 0 will persist until stopped with EndHint."
-	hint_range(float) : "Display Range" : 0 : "The visible range of the hint."	
+	hint_range(float) : "Display Range" : 0 : "Visible range of the hint."	
 	
 	hint_start_sound(sound) : "Sound" : "Instructor.LessonStart" : "The sound to play when the hint is first displayed."
 	
