@@ -835,7 +835,7 @@
 		2 : "Don't Care"
 	]
 
-	MinSpawnDistance(integer) : "Minimum spawn distance from player" : 0 : "The spawn destination node distance to the player will have to be further or equal than this value."
+	MinSpawnDistance(integer) : "Minimum spawn distance from player" : 0 : "The spawn destination node distance to the player will have to be further or equal than this value. Ignored if 'Distance to player' criteria is set to 'Don't Care'."
 
 	// Inputs
 	input SpawnNPCInRadius(void) : "Spawn an NPC somewhere within the maker's radius."
@@ -3310,7 +3310,8 @@
 	interval_min(string) : "Min Time Between Arcs":"0.5" : "Minimum time delay between random arcing."
 	interval_max(string) : "Max Time Between Arcs":"2" : "Maximum time delay between random arcing."
 
-	m_bOn(choices) : "Start On?" : 1 : "Start point_tesla already on?" = [
+	m_bOn(choices) : "Start On?" : 1 : "Start point_tesla already on?" = 
+	[
 		0 : "No"
 		1 : "Yes"
 	]
@@ -6010,7 +6011,7 @@
 	output OutSpawnedEntity(ehandle) : "Fired for each entity spawned by this template, passing said entity as the parameter and activator."
 ]
 
-@PointClass base(Targetname,Parentname,Angles) iconsprite("editor-ficool2/env_entity_maker") = env_entity_maker : 
+@PointClass base(Targetname,Parentname,Angles) iconsprite("editor-ficool2/env_entity_maker") 	line(255 255 0, targetname, entitytemplate) = env_entity_maker : 
 	"Spawns the specified entity template at its origin. If set to auto-spawn, it will spawn the template whenever there's room and the player "+
 	"is looking elsewhere." 
 [
@@ -7846,13 +7847,13 @@
 	"An entity used to attach constraints to a local position on an entity. Usually constraints will attach to the center of mass of an object. "+
 	"Attach the desired constraint to this entity, and then parent this entity to the entity you want the constraint to apply to."
 [
-	massScale(float) : "Amount to scale the mass of this body in the constraint solver" : "1"
+	massScale(float) : "Mass Scale" : 1 : "Amount to scale the mass of this body in the constraint solver."
 ]
 
 @PointClass iconsprite("editor-ficool2/info_mass_center") line(128 128 128, targetname, target) = info_mass_center :
 	"An entity that overrides the mass center of the target physics prop, or func_physbox, by moving it to the info_mass_center's location."
 [
-	target(target_destination) : "Target object" : ""  : "The entity whose mass center will be overridden."
+	target(target_destination) : "Target object" : "" : "The entity whose mass center will be overridden."
 ]
 
 @PointClass halfgridsnap base(Targetname) iconsprite("editor-ficool2/phys_spring") 
@@ -8974,7 +8975,7 @@
 	input SetSpeedForwardModifier(float) : "Applies the given modifier to all forward speeds. [0, 1]"
 ]
 
-@SolidClass base(BaseTrain) = func_tanktrain :
+@SolidClass base(BaseTrain) line(255 255 0, targetname, target) = func_tanktrain :
 	"A moving train that follows a path of path_track entities, shoots at the player, and can be killed.\n" + 
 	"NOTE: Build your train so that the front of the train is facing down the X axis. " +
 	"When it spawns it will automatically rotate to face the next path_track on the path."
@@ -10148,7 +10149,7 @@
 	input ApplyImpulse(void)  : "Apply impulse to touching entities"
 ]
 
-@PointClass base(Targetname) sphere(hint_range) iconsprite("editor/env_instructor_hint.vmt") = env_instructor_hint : "An entity that allows for creation and control of instructor lessons by map logic"
+@PointClass base(Targetname) sphere(hint_range) iconsprite("editor/env_instructor_hint.vmt") line(255 255 0, targetname, hint_target) = env_instructor_hint : "An entity that allows for creation and control of instructor lessons by map logic"
 [
 	hint_replace_key(string) : "Replace Key" : : "Hints with the same Replace Key will replace each other when displayed at the same time. Use different values for each hint if you would like to have multiple hints displaying at once."
 	hint_target(target_destination) : "Target Entity" : : "The entity to show this hint on top of. The entity used must exist on the client, info_target_instructor_hint can be parented to server only entities for this purpose."

@@ -142,6 +142,7 @@
 	input EnableWeaponPickup(void) : "Enable Weapon Pickup"
 	input DisableWeaponPickup(void) : "Disable Weapon Pickup"
 	
+	input GiveWeapon(string) : "Gives the NPC a weapon of the specified entity name." //added by vizzys 
 	input SetReadinessPanic(void) : "Set readiness to panic state (Special)"
 	input SetReadinessLow(void) : "Set readiness to calmest state (Bored)"
 	input SetReadinessMedium(void) : "Set readiness to moderate (Alert)"
@@ -205,7 +206,7 @@
 	spawnflags(Flags) = 
 	[
 		4096 : "[4096] Start inactive" : 1
-		8192 : "[8192] Combine power supply (Balls behave like the ones seen in the Overwatch Nexus and bounce around)" : 0
+		8192 : "[8192] Combine power supply (Balls behave like the ones in Overwatch Nexus and bounce around)" : 0
 	]
 
 	ballcount(integer) : "Ball count" : 3 : "This is how many balls will be bouncing around inside the spawner"
@@ -389,6 +390,7 @@
 	input SetTargetEntity(target_destination) : "Sets the entity for the camera to track now, by name."
 	input SetAngry(void) : "Causes the camera to become angry as if it has seen something upsetting."
 	input SetIdle(void) : "Causes the camera to calm down if it is angry."
+	input SetRelationship(string) : "Changes this entity's relationship with another entity or class. Format: <entityname/classname> <D_HT/D_FR/D_LI/D_NU> <priority>"							
 	
 	output OnFoundPlayer(string) : "Fired when the player is spotted within the inner radius."
 	output OnFoundEnemy(void) : "Fired when a non-player enemy is spotted within the inner radius."
@@ -432,6 +434,7 @@
 	input DestroySprite(void) : "Destroys the turret's light sprite."
 	input FieldOfView(float) : "Sets this turret's field of view."
 
+	input SetRelationship(string) : "Changes this entity's relationship with another entity or class. Format: <entityname/classname> <D_HT/D_FR/D_LI/D_NU> <priority>"																												
 	// Outputs
 	output OnDeploy(void) : "Turret is becoming active and dangerous."
 	output OnRetire(void) : "Turret is becoming inactive and harmless."
@@ -478,6 +481,7 @@
 	input CreateSprite(void) : "Creates the turret's light sprite if it was previously destroyed."
 	input DestroySprite(void) : "Destroys the turret's light sprite."
 	input SelfDestruct(void) : "Causes the turret to warn and then explode."
+	input SetRelationship(string) : "Changes this entity's relationship with another entity or class. Format: <entityname/classname> <D_HT/D_FR/D_LI/D_NU> <priority>"																								   
 
 	// Outputs
 	output OnDeploy(void) : "Turret is becoming active and dangerous."
@@ -746,7 +750,7 @@
 
 	spawnflags(Flags) =
 	[
-		65536 : "[65536] Burrow away when eluded" : 0
+		65536 : "[65536] Burrow away when eluded (When enemies are too far away or unreachable)" : 0
 		131072 : "[131072] Use Ground Checks" : 0
 		262144 : "[262144] Worker Type (Make into acid antlion)" : 0
 	]
@@ -1037,8 +1041,8 @@
 		524288  : "[524288] Can be an enemy" : 0
 	]
 	FieldOfView(string) : "FieldOfView" : "0.2" : "How far to look (1.0 = straight ahead, 0.0 = +/- 90 degrees, -1.0 = all directions)"
-	MinSearchDist(integer) : "Min Search Dist" : 0
-	MaxSearchDist(integer) : "Max Search Dist" : 2048
+	MinSearchDist(integer) : "Min Search Distance" : 0
+	MaxSearchDist(integer) : "Max Search Distance" : 2048
 
 	SnapToEnt(target_destination) : "Name of entity to snap to" : "" : "Since it can be hard to position these entities with respect to the func_tank brushwork, you can specify an entity name here and this enemyfinder will position itself at the center of that entity."
 
@@ -1748,7 +1752,7 @@
 
 @PointClass base(Targetname, Parentname, EnableDisable) iconsprite("editor-ficool2/env_sporeexplosion") = env_sporeexplosion : "Bugbait Spore Effect"
 [
-	spawnrate(float) : "Spawn Rate (as percentage)" : "25" : "How dense the spore effect is. This percentage is not bound to 100; even values in the thousands are acceptable."
+	spawnrate(float) : "Spawn Rate (as percentage)" : "25" : "How dense the spore effect is. This percentage is not bound to 100, even values in the thousands are acceptable."
 ]
 
 @PointClass base(Targetname, Parentname, Targetname, EnableDisable) line(255 255 255, targetname, target) iconsprite("editor-ficool2/env_gunfire") = env_gunfire : "Gunfire Effect"
@@ -3120,11 +3124,11 @@
 	m_iszEntity(npcclass) : "Target NPC"
 	m_flRadius(integer) : "Search Radius (0=everywhere)" : 0 : "Radius to search within for an NPC to use. 0 searches everywhere."
 
-	MoveSpeed(integer) : "Move Speed" : 5			// How quickly should target move between scripted targets
-	PauseDuration(integer) : "Pause Duration" : 0		// How long should target pause at scripted target
-	EffectDuration(integer) : "Effect Duration" : 2		// How long should any associated effect last
+	MoveSpeed(integer) : "Move Speed" : 5 : "How quickly should target move between scripted targets."
+	PauseDuration(integer) : "Pause Duration" : 0 : "How long should target pause at scripted target."
+	EffectDuration(integer) : "Effect Duration" : 2	 : "How long should any associated effect last."
 
-	target(target_destination) : "Next Target"		// Next scripted target
+	target(target_destination) : "Next Target" :  : "Next scripted target."
 
 	// Inputs
 	input Enable(void) : "Enable this entity"
@@ -3880,11 +3884,12 @@
 @PointClass base(Targetname) iconsprite("editor-ficool2/ai_changetarget") = ai_changetarget : "Change Target"
 [
 	target(target_destination) : "Target entity" : : "Name of entity whose target will be changed."
-	m_iszNewTarget(target_destination) : "New Target"
+	m_iszNewTarget(target_destination) : "New Target" : : "New targetname for the targeted entity(s) to target."
+
 
 	// Inputs
 	input Kill( void ) : "Removes this entity from the world"
-	input Activate( void ) : "Changes the entities target"
+	input Activate( void ) : "Trigger the target change" : : "New targetname for the targeted entity(s) to target."
 ]
 
 @PointClass base(Targetname) iconsprite("editor-ficool2/ai_npc_eventresponsesystem") = ai_npc_eventresponsesystem : "An entity that allows you to generate events for nearby friendly NPCs to respond to."
@@ -4066,7 +4071,7 @@
 [
 	spawnflags(Flags) = 
 	[
-		4 : "[4] Repeatable (Otherwise, removes itself after)" : 0
+		4 : "[4] Repeatable (Otherwise, removes itself after firing)" : 0
 		8 : "[8] Leave Corpse" : 0
 		16 : "[16] Start on Spawn (Emulates sending MoveToPosition input when this entity spawns)" : 0
 		32: "[32] No Interruptions (Disallows the NPC from being interrupted by damage)" : 1
@@ -4655,7 +4660,7 @@
 // Items
 //
 //-------------------------------------------------------------------------
-@BaseClass color(0 0 200) base(Targetname, Angles, Shadow, EZVariable) sphere(fademindist) sphere(fademaxdist) = Item
+@BaseClass color(0 0 200) base(Targetname, Angles, BaseFadeProp, Shadow, RenderFields, EZVariable) sphere(fademindist) sphere(fademaxdist) = Item
 [
 	output OnPlayerTouch(void) : "Fires when the player touches this object"
 
@@ -4806,7 +4811,7 @@
 	input Skin(integer) : "Changes the model skin to the specified number."
 ]
 
-@PointClass base(BasePropPhysics, Targetname, Angles, DamageFilter, BaseFadeProp, EZVariable) studioprop() = item_item_crate : "Item Crate" // studio("models/items/item_item_crate.mdl")
+@PointClass base(BasePropPhysics, Targetname, Angles, DamageFilter, BaseFadeProp, RenderFields, Global, Shadow, EZVariable) studioprop() = item_item_crate : "Item Crate" // studio("models/items/item_item_crate.mdl")
 [
 	model(studio) : "Model" : "models/items/item_item_crate.mdl" : "The model of this item_item_crate. Only works when this crate's appearance is set to use a custom model."
 
@@ -5151,8 +5156,8 @@
 		2: "[2] Teleport to THIS path_corner" : 0
 	]
 	target(target_destination) : "Next stop target"
-	wait(integer) : "Wait here (secs)" : 0
-	speed(integer) : "New Train Speed" : 0
+	wait(integer) : "Wait here (secs)" : 0 : "When passing this point, wait here for this many seconds."
+	speed(integer) : "New Train Speed" : 0 : "If nonzero, when an entity reaches this path_track, it will set its speed to this. This speed must be a positive value less than the entity's max speed (if it has such). A value of 0 will cause no change in the entity's speed. For train entities, a positive value must be specified for them to properly reverse over the path."
 	yaw_speed(integer) : "New Train rot. Speed" : 0
 
 	// Inputs 
@@ -5162,9 +5167,9 @@
 	output OnPass(void) : "Fires when a path follower passes this point"
 ]
 
-@PointClass base(Targetname) iconsprite("editor-ficool2/path_corner_crash") color(255 0 0) = path_corner_crash : "Helicopter Crash Path"
+@PointClass base(path_corner) iconsprite("editor-ficool2/path_corner_crash") color(255 0 0) line(255 255 255, targetname, target) = path_corner_crash : "Helicopter Crash Path_Corner"
 [
-	target(target_destination) : "Next stop target"
+//inherits from path_corner 
 ]
 
 
@@ -5257,13 +5262,14 @@
 	[
 		0: "Start immediately"
 		1: "Wait for actor to finish"
-		2: "Interrupt at next interrupt event"
-		3: "Cancel at next interrupt event"
+		2: "Interrupt at next interrupt event (Actor waits until good point to quit speaking, then goes back to previous)"
+		3: "Cancel at next interrupt event (Actor waits until good point to quit speaking, then forgets about previous)"
 	]
 
 	// Inputs
 	input Start(void) : "Starts playback of the scene file"
 	input Pause(void) : "Pauses playback of the scene file"
+	input PauseAtLastInterrupt(void) : "Pauses playback of the scene and rewinds it to the last interrupt event in the scene."
 	input Resume(void) : "Resumes playback of the scene if it has been paused"
 	input Cancel(void) : "Cancels playback of the scene"
 	input CancelAtNextInterrupt(void) : "Cancels playback of the scene at the next interrupt event in the scene."
@@ -5382,14 +5388,14 @@
 	soundcontext(choices) : "Additional sound context (optional)" : 0 : "Optional settings specifying such things as who can or cannot hear the sound." =
 	[
 		0 : "Select one"
-		1048576 : "From Sniper (react ai_sound, not Location Proxy. Use with Danger. Allies speak TLK_DANGER concepts, take cover.)"
+		1048576 : "From Sniper (React ai_sound, not Location Proxy. Use with Danger. Allies speak TLK_DANGER concepts, take cover.)"
 		2097152 : "Gunfire (Use with combat sound type, Alerts Alyx)"
 		4194304 : "Mortar (Allies avoid pending explosion)"
-		8388608 : "Only Combine can hear (But does not always alert)"
+		8388608 : "Only Combine can hear/smell (But does not always alert)"
 		67108864 : "Combine cannot can hear"
-		16777216 : "React to source (face sound owner)"
-		33554432 : "Explosion (use with combat sound type. Picked up by env_microphone. Alyx may flinch.)"
-		134217728 : "Danger approach (run if see sound owner, turn to face if not)"
+		16777216 : "React to source (Faces sound owner not location proxy)"
+		33554432 : "Explosion (Use with combat sound type. Picked up by env_microphone. Alyx may flinch.)"
+		134217728 : "Danger approach (Run if see sound owner, turn to face if not)"
 		268435456 : "Only allies can hear"
 		536870912 : "Player vehicle (Hunters will prepare to dodge)"
 	]
@@ -5403,7 +5409,7 @@
 [
 	spawnflags(Flags) =
 	[
-		1 : "[1] Ignore solid" : 0
+		1 : "[1] Ignore solids" : 0
 	]
 
 	input DoEffect(Void) : "Make a rotor puff"
@@ -5509,13 +5515,6 @@
 [
 	input Explode(Void) : "Make the explosion effect."
 	material(material) : "Particle Material" : "particle/particle_noisesphere" : "The material to use for each particle in the explosion."
-]
-
-@PointClass base(Targetname) iconsprite("vizzys-icons/env_starfield") = env_starfield : "Starfield effect" 
-[
-	input TurnOn(void) : "Turn on"
-	input TurnOff(void) : "Turn off"
-	input SetDensity(float) : "Set the density of the starfield. It's a multiplier, so 1 is the default."
 ]
 
 @PointClass base(Targetname, Parentname, Angles) size( -4 -4 -4, 4 4 4 ) = env_flare : "Flare"
@@ -6109,6 +6108,12 @@
 
 @PointClass base(Targetname) iconsprite("vizzys-icons/env_starfield") = env_starfield : "Starfield effect" 
 [
+
+	m_bOn(choices) : "Start On?" : 1 : "Start env_starfield already on?" = 
+	[
+		0 : "No"
+		1 : "Yes"
+	]
 	input TurnOn(void) : "Turn on"
 	input TurnOff(void) : "Turn off"
 	input SetDensity(float) : "Set the density of the starfield. It's a multiplier, so 1 is the default."

@@ -1321,7 +1321,10 @@
 	input DisableUnplantedShooting(void) : "Returns the hunter to normal after a call to EnableUnplantedShooting."
 
 	input DoPhysicsBlast(void) : "Hunter will instantly do the defensive physics blast."
-
+	
+	input Dodge(void) : "Force this Hunter to start dodging." // added by vizzys
+	input FlankEnemy(void) : "Force this Hunter to flank the enemy it's currently targeting." // added by vizzys
+	
 	input Crouch(void) : "Crouch down."
 	input Stand(void) : "Stand up from crouch."
 	input DisableCrouchWalk(void) : "UNUSED: Prevents the hunter from crouch walking."
@@ -1980,7 +1983,7 @@
 
 ]
 
-@NPCClass base(BaseZombie) studio() = npc_zombie : "Zombie"
+@NPCClass base(BaseZombie) studio() = npc_zombie : "A headcrab Zombie"
 [
 	model(studio) : "Model" : "models/Zombie/Classic.mdl"
 	
@@ -3444,7 +3447,7 @@
 @PointClass base(Targetname) iconsprite("editor-ficool2/ai_changetarget") = ai_changetarget : "Change Target"
 [
 	target(target_destination) : "Target entity" : : "Name of entity whose target will be changed."
-	m_iszNewTarget(target_destination) : "New Target"  : : "New targetname for the targeted entity(s) to target."
+	m_iszNewTarget(target_destination) : "New Target" : : "New targetname for the targeted entity(s) to target."
 
 	// Inputs
 	input Kill( void ) : "Removes this entity from the world"
@@ -3687,8 +3690,8 @@
 		1 : "Walk to Goal Entity"
 		2 : "Run to Goal Entity"
 		3 : "Set enemy to Goal Entity"
-		4 : "Walk Goal Path (Make NPC walk path made by path_tracks)"
-		5 : "Run Goal Path (Make NPC run path made by path_tracks)"
+		4 : "Walk Goal Path (Make NPC walk along path made by path_tracks)"
+		5 : "Run Goal Path (Make NPC run along path made by path_tracks)"
 		6 : "Set enemy to Goal Entity AND Run to Goal Entity"
 	]
 	
@@ -4078,7 +4081,7 @@
 ]
 
 
-@SolidClass base(BaseTank) = func_tankpulselaser : "Brush Pulse Laser" 
+@SolidClass base(BaseTank) line(255 255 255, targetname, control_volume) line(255 255 255, targetname, TraceFilter) = func_tankpulselaser : "Brush Pulse Laser" 
 [
 	PulseSpeed(float) : "Pulse Speed" : 1000 : "How fast does pulse travel"
 	PulseColor(color255) : "Pulse Color" : "255 0 0" : "Color of the pulse"
@@ -4536,7 +4539,7 @@
 @PointClass base(Weapon) studio("models/weapons/w_grenade.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_frag : "Frag Grenade" []
 @PointClass base(Weapon) studio("models/weapons/w_physics.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_physcannon : "Gravity Gun" []
 @PointClass base(Weapon) studio("models/weapons/w_bugbait.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_bugbait: "Bugbait" []
-@PointClass base(Weapon) studio("models/weapons/W_Alyx_Gun.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_alyxgun: "Alyx Gun" []
+@PointClass base(Weapon) studio("models/weapons/W_Alyx_Gun.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_alyxgun: "Alyx Vance's pistol." []
 @PointClass base(Weapon) studio("models/weapons/W_annabelle.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_annabelle: "Annabelle (Grigori's Shotgun)" []
 @PointClass base(Weapon) studio("models/weapons/w_slam.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_slam: "SLAM tripmine from HL2:MP.\n\nCome on and slam, and welcome to the jam!\nCome on and slam, if you wanna jam!" []
 
@@ -4911,15 +4914,15 @@
 	soundcontext(choices) : "Additional sound context (optional)" : 0 : "Optional settings specifying such things as who can or cannot hear the sound." =
 	[
 		0 : "Select one"
-		1048576 : "From Sniper (react ai_sound, not Location Proxy. Use with Danger. Allies speak TLK_DANGER concepts, take cover.)"
+		1048576 : "From Sniper (React ai_sound, not Location Proxy. Use with Danger. Allies speak TLK_DANGER concepts, take cover.)"
 		2097152 : "Gunfire (Use with combat sound type, Alerts Alyx)"
 		4194304 : "Mortar (Allies avoid pending explosion)"
 		8388608 : "Only Combine can hear/smell (But does not always alert)"
 		67108864 : "Combine cannot can hear"
-		16777216 : "React to source (faces sound owner not location proxy)"
-		33554432 : "Explosion (use with combat sound type. Picked up by env_microphone. Alyx may flinch.)"
-		134217728 : "Danger approach (run if see sound owner, turn to face if not)"
-		268435456 : "Only allies can hear"
+		16777216 : "React to source (Faces sound owner not location proxy)"
+		33554432 : "Explosion (Use with combat sound type. Picked up by env_microphone. Alyx may flinch.)"
+		134217728 : "Danger approach (Run if see sound owner, turn to face if not)"
+		268435456 : "Only allies can hear/smell"
 		536870912 : "Player vehicle (Hunters will prepare to dodge)"
 	]
 
@@ -5642,7 +5645,8 @@
 @PointClass base(Targetname) iconsprite("vizzys-icons/env_starfield") = env_starfield : "Starfield effect" 
 [
 
-	m_bOn(choices) : "Start On?" : 1 : "Start env_starfield already on?" = [
+	m_bOn(choices) : "Start On?" : 1 : "Start env_starfield already on?" = 
+	[
 		0 : "No"
 		1 : "Yes"
 	]
@@ -5852,9 +5856,9 @@
 
 @PointClass base(Targetname, Angles) studio("models/props_combine/coreball.mdl") = prop_coreball: "Core Ball" 
 [
-	input SetScaleX(vector) : "Scales the coreball in one Axis. Params: <New Size> <Time>"
-	input SetScaleY(vector) : "Scales the coreball in one Axis. Params: <New Size> <Time>"
-	input SetScaleZ(vector) : "Scales the coreball in one Axis. Params: <New Size> <Time>"
+	input SetScaleX(vector) : "Scales the coreball in the X Axis. Parameters: <New Size> <Time>"
+	input SetScaleY(vector) : "Scales the coreball in the Y Axis. Parameters: <New Size> <Time>"
+	input SetScaleZ(vector) : "Scales the coreball in the Z Axis. Parameters: <New Size> <Time>"
 ]
 
 @PointClass base(Targetname, Studiomodel, Angles, RenderFields) studioprop() = prop_scalable : "Scalable Prop" 
