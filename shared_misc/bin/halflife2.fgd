@@ -2065,28 +2065,28 @@
 	
 	CustomFlightSpeed(float) : "Custom Flight Speed" : "0" : "Overrides the scanner's default speed. 0 = use default"
 
-	spotlightlength(integer) : "Spotlight Length" : 500
-	spotlightwidth(integer) : "Spotlight Width" : 50	
+	spotlightlength(integer) : "Spotlight Length" : 500 : "Length of scanner's spotlight."
+	spotlightwidth(integer) : "Spotlight Width" : 50 : "Width of scanner's spotlight."
 	
-	spotlightdisabled(choices) : "Spotlight Disabled" : 0 =
+	spotlightdisabled(choices) : "Spotlight Disabled" : 0 : "Should this scanner's spotlight be disabled?" =
 	[
 		0 : "No"
 		1 : "Yes"
 	]
 
-	ShouldInspect(choices) : "Should inspect" : 1 =
+	ShouldInspect(choices) : "Should inspect" : 1 : "Should this scanner inspect NPCs?" =
 	[
 		0 : "No"
 		1 : "Yes"
 	]
 
-	OnlyInspectPlayers(choices) : "Only Inspect Players" : 0 =
+	OnlyInspectPlayers(choices) : "Only Inspect Players" : 0 : "Should this scanner inspect only player?" =
 	[
 		0 : "No"
 		1 : "Yes"
 	]
 
-	NeverInspectPlayers(choices) : "Never Inspect Players" : 0 =
+	NeverInspectPlayers(choices) : "Never Inspect Players" : 0 : "Should this scanner avoid player?" =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -2313,13 +2313,13 @@
 
 	contexttarget(target_destination) :"Context target" : "" : "(Optional) Name of an entity that the operator will use within context."
 
-	state(choices) : "Initial State" : 0 = 
+	state(choices) : "Initial State" : 0 : "Determines if the item can be used (not blocked or locked)" = 
 	[
 		0 : "Not ready (closed, locked, etc)"
 		1 : "Ready (open and accessible)"
 	]
 
-	moveto(choices) : "How should NPC approach?" : 1 =
+	moveto(choices) : "How should NPC approach?" : 1 : "Should this entity's NPCs run or walk?" =
 	[
 		0 : "DO NOT USE THIS SETTING"
 		1 : "Walk"
@@ -2680,7 +2680,7 @@
 
 @PointClass base(Targetname, Parentname) iconsprite("vizzys-icons/scripted_target") = scripted_target : "Scripted Target"
 [
-	StartDisabled(choices) : "Start Disabled" : 1 =
+	StartDisabled(choices) : "Start Disabled" : 1 : "Should this entity be disabled on spawn?" =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -2736,11 +2736,11 @@
 		4 : "Neutral"
 	]
 
-	radius(float) : "Radius for subject" : 0
+	radius(float) : "Radius for subject" : 0 : "Radius in which to check for relationships"
 
 	rank(integer) : "Disposition Priority" : 0 : "How much the Subject(s) should Like/Hate/Fear the Target(s). Higher priority = stronger feeling."
 
-	StartActive(choices) : "Start Active" : 0 =
+	StartActive(choices) : "Start Active" : 0 : "Should this entity be active on spawn?" =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -2860,8 +2860,8 @@
 
 @PointClass base(Targetname) iconsprite("editor-ficool2/ai_ally_manager") = ai_ally_manager : "AI Ally Manager"
 [
-	maxallies(integer) : "Maximum number of allies" : 5
-	maxmedics(integer) : "Maximum number of medics" : 1
+	maxallies(integer) : "Maximum number of allies" : 5 : "Maximum number of allies."
+	maxmedics(integer) : "Maximum number of medics" : 1 : "Maximum number of allies that are medics."
 
 	// Inputs
 	input SetMaxAllies(integer) : "Set maximum number of allies"
@@ -3013,12 +3013,12 @@
 
 	MaximumState(choices) : "Maximum state" : 1 =
 	[
-		1 : "Idle"
+		1 : "Idle (will never fight)"
 		2 : "Alert"
 		3 : "Combat"
 	]
 
-	Formation(choices) : "Formation" : 0 =
+	Formation(choices) : "Formation" : 0 : "What formation should this entity follow. Some formations are NPC-specific (i.e. Hunter)." =
 	[
 		0 : "Close circle"
 		1 : "Wide circle"
@@ -3304,7 +3304,7 @@
 [
 	actor(target_name_or_class) : "Actor(s) to affect" : "" : "NPC's that should act busy"
 
-	StartActive(choices) : "Start Active" : 0 =
+	StartActive(choices) : "Start Active" : 0 : "Should this entity be active on spawn?" =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -3316,8 +3316,8 @@
 		1 : "Classname"
 	] 
 
-	busysearchrange(float) : "Search Range for Busy Hints" : 2048
-	visibleonly(choices) : "Visible Busy Hints Only" : 0 =
+	busysearchrange(float) : "Search Range for Busy Hints" : 2048 : "Range in which this NPC will search for busy hints."
+	visibleonly(choices) : "Visible Busy Hints Only" : 0 : "Should this NPC use only visible busy hints?" =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -3492,7 +3492,7 @@
 [
 	Actor(target_destination) : "Actor" : : "NPC Target"
 	
-	StartDisabled(choices) : "Start Disabled" : 1 =
+	StartDisabled(choices) : "Start Disabled" : 1 : "Should this entity be disabled on spawn?" =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -3928,27 +3928,27 @@
 	// Mainly for use with 1009 team settings (game_team_master)
 	master(target_destination) : "(Team) Master" 
 
-	yawrate(string) : "Yaw rate" : "30"
-	yawrange(string) : "Yaw range" : "180"
-	yawtolerance(string) : "Yaw tolerance" : "15"
-	pitchrate(string) : "Pitch rate" : "0"
-	pitchrange(string) : "Pitch range" : "0"
-	pitchtolerance(string) : "Pitch tolerance" : "5"
-	barrel(string) : "Barrel Length" : "0"
-	barrely(string) : "Barrel Horizontal" : "0"
-	barrelz(string) : "Barrel Vertical" : "0"
+	yawrate(string) : "Yaw rate" : "30" : "How fast tank can look left or right."
+	yawrange(string) : "Yaw range" : "180" : "How far tank can turn left or right."
+	yawtolerance(string) : "Yaw tolerance" : "15" : "Additional left-right range. If the gun tries to turn beyond Yaw range + Yaw tolerance, the gun will snap back to the maximum Yaw range."
+	pitchrate(string) : "Pitch rate" : "0" : "How fast tank can look up or down"
+	pitchrange(string) : "Pitch range" : "0" : "How fast tank can look up or down"
+	pitchtolerance(string) : "Pitch tolerance" : "5" : "Additional up-down range. If the gun tries to turn beyond Pitch range + Pitch tolerance, the gun will snap back to the maximum Pitch range."
+	barrel(string) : "Barrel Length" : "0" : "Solid length of the tank barrel. Any part of the barrel beyond this length may clip through objects."
+	barrely(string) : "Barrel Horizontal" : "0" : "How wide the tank barrel is, horizontally."
+	barrelz(string) : "Barrel Vertical" : "0" : "How wide the tank barrel is, vertically."
 	spritesmoke(sprite) : "Smoke Sprite" : "" : "A specific sprite to use for the muzzle's smoke effect."
 	spriteflash(sprite) : "Flash Sprite" : "" : "A specific sprite to use for the muzzle's flash effect."
 	spritescale(string) : "Sprite scale" : "1" : "The scale for smoke and flash sprites."
-	rotatestartsound(sound) : "Rotate Start Sound" : ""
-	rotatesound(sound) : "Rotate Loop Sound" : ""
-	rotatestopsound(sound) : "Rotate Stop Sound" : ""
-	firerate(string) : "Rate of Fire" : "1"
+	rotatestartsound(sound) : "Rotate Start Sound" : : "Sound to play when tank starts to turn."
+	rotatesound(sound) : "Rotate Loop Sound" : : "Sound to play when tank is turning."
+	rotatestopsound(sound) : "Rotate Stop Sound" : : "Sound to play when tank stops turning."
+	firerate(string) : "Rate of Fire" : "1" : "Number of bullets to fire in a second."
 	bullet_damage(string) : "Damage Per Bullet" : "0" : "If set to 0, it'll use the base weapon bullet's damage."
 	bullet_damage_vs_player(string) : "Damage Per Bullet Vs Player" : "0" : "If set to 0, it'll use the Damage Per Bullet value."
 	persistence(string) : "Firing persistence" : "1" : "(Seconds) How long to keep firing at last known position after lose sight of target"
 	persistence2(string) : "Firing persistence2" : "0" : "(Seconds) After lost enemy and persistence time has passed, how long to occasionally fire at enemy's last known position"
-	firespread(choices) : "Bullet accuracy" : 0 =
+	firespread(choices) : "Bullet accuracy" : 0 : "How accurately the tank can fire." =
 	[
 		0: "Perfect Shot"
 		1: "Small cone"
@@ -3956,8 +3956,8 @@
 		3: "Large cone"
 		4: "Extra-large cone"
 	]
-	minRange(string) : "Minimum target range" : "0"
-	maxRange(string) : "Maximum target range" : "0"
+	minRange(string) : "Minimum target range" : "0" : "Minimum range to target something (for NPCs). If a target is closer than this amount, the NPC will switch to any close-range weapon they have on them."
+	maxRange(string) : "Maximum target range" : "0" : "Maximum range to target something (for NPCs). Refer as the distance for aim assistance."
 	_minlight(string) : "Minimum light level"
 
 	gun_base_attach(string) : "Gun Base Attachment" : "" : "If Parent is specified, this is the attachment point on the parent to aim from."
@@ -4587,7 +4587,7 @@
 		4096 : "[4096] Can move (through hierarchical attachment)" : 0
 	]
 
-	StartDisabled(choices) : "Start Disabled" : 0 =
+	StartDisabled(choices) : "Start Disabled" : 0 : "Should this entity be disabled on spawn?" =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -5280,7 +5280,7 @@
 		0 : "No"
 		1 : "Yes"
 	]	
-	fogEnable(choices) : "Fog Enable" : 0 =
+	fogEnable(choices) : "Fog Enable" : 0 : "Whether or not the fog should start enabled." =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -5362,7 +5362,7 @@
 @BaseClass base(Targetname, Origin, Global, prop_static_base) = BaseVehicle
 [
 	vehiclescript(string) : "Vehicle Script File" : "scripts/vehicles/jeep_test.txt"
-	actionScale(float) : "Scale of action input / framerate" : "1"
+	actionScale(float) : "Scale of action input (or framerate) for this entity." : "1"
 
 	// Inputs
 	input Action(float) : "Set the speed of the action animation"

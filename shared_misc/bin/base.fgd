@@ -210,7 +210,7 @@
 
 @BaseClass = EnableDisable
 [
-	StartDisabled(choices) : "Start Disabled" : 0 =
+	StartDisabled(choices) : "Start Disabled" : 0 : "Should this entity be disabled on spawn?" =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -289,7 +289,7 @@
 		128 : "[128] Hide projected texture shadows" // VIEW_SHADOW_DEPTH_TEXTURE
 	]
 
-	disablereceiveshadows(choices) : "Disable Receiving Shadows" : 0 =
+	disablereceiveshadows(choices) : "Disable Receiving Shadows" : 0 : "Should this entity receive no dynamic shadows?" =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -771,7 +771,7 @@
 
 @BaseClass base(Targetname, Angles, EnableDisable) iconsprite("editor/npc_maker.vmt") color(0 0 255) = BaseNPCMaker
 [
-	StartDisabled(choices) : "Start Disabled" : 1 =
+	StartDisabled(choices) : "Start Disabled" : 1 : "Should this entity be disabled on spawn?" =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -903,7 +903,7 @@
 	_light(color255) : "Brightness" : "255 255 255 200"
 	_lightHDR(color255) : "BrightnessHDR" : "-1 -1 -1 1"
 	_lightscaleHDR(float) : "BrightnessScaleHDR" : "1" : "Amount to scale the light by when compiling for HDR."
-	style(Choices) : "Appearance" : 0 =
+	style(Choices) : "Appearance" : 0 : "Controls this light's visual appearance." =
 	[
 		0 : "Normal"
 		10: "Fluorescent flicker"
@@ -920,9 +920,9 @@
 		12 : "Underwater light mutation"
 	]
 	pattern(string) : "Custom Appearance" : "" : "Set a custom pattern of light brightness for this light. Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
-	_constant_attn(string)	: "Constant" : "0"
-	_linear_attn(string)	: "Linear" : "0"
-	_quadratic_attn(string)	: "Quadratic" : "1"
+	_constant_attn(string)	: "Constant" : "0" : "A direct light value used for this light source."
+	_linear_attn(string)	: "Linear" : "0" : "A linear falloff value used for this light source."
+	_quadratic_attn(string)	: "Quadratic" : "1" : "An exponential falloff value used for this light source."
 	_fifty_percent_distance(string) : "50 percent falloff distance" : "0" : "Distance at which brightness should fall off to 50%. If set, overrides linear constant and quadratic parameters."
 	_zero_percent_distance(string) : "0 percent falloff distance" : "0" : "Distance at which brightness should fall off to negligible (1/256)%. Must set _fifty_percent_distance to use."
 	_hardfalloff(integer) : "Hard falloff" : 0 : "If set, causes lights to fall to exactly zero beyond the zero percent distance. May cause unrealistic lighting if not used carefully."
@@ -946,7 +946,7 @@
 		65536: "[65536] Allow jump up" : 0
 	]
 	
-	hinttype(choices) : "Hint" : 0 = 
+	hinttype(choices) : "Hint" : 0 : "Type of hint for this node. Basically determines what this node is." = 
 	[
 		  0 : "None"
 
@@ -1134,7 +1134,7 @@
 		//3 : "Lua (Unsupported)"
 		//4 : "Python (Unsupported)"
 	]
-	startdark(choices) : "Level Fade In" : 0 =
+	startdark(choices) : "Level Fade In" : 0 : "Should the map have the fade-in effect upon loading? BUG: Will fade in on every save load." =
 	[	
 		0 : "No"
 		1 : "Yes"
@@ -1144,7 +1144,7 @@
 		0 : "No"
 		1 : "Yes"
 	]
-	coldworld(choices) : "World is cold" : 0 =
+	coldworld(choices) : "World is cold" : 0 : "Shows players breath particle, seems to be in Day of Defeat only." =
 	[	
 		0 : "No"
 		1 : "Yes"
@@ -1594,7 +1594,7 @@
 	point0(vector) : "Start" : : "Ladder end point."
 	point1(vector) : "End" : : "Ladder end point."
 
-	StartDisabled(choices) : "Start Disabled" : 0 =
+	StartDisabled(choices) : "Start Disabled" : 0 : "Should this entity be disabled on spawn?" =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -1858,8 +1858,8 @@
 @PointClass base(Targetname, RenderFxChoices, Parentname) iconsprite("editor-ficool2/env_beam") line(255 255 255, targetname, LightningStart, targetname, LightningEnd) = env_beam : 
 	"An entity that creates a visible beam between two points. The points can be attached to entities to make the beam move around."
 [
-	renderamt(integer) : "Brightness (1 - 255)" : 100
-	rendercolor(color255) : "Beam Color (R G B)" : "255 255 255"
+	renderamt(integer) : "Brightness (1 - 255)" : 100 : "Opacity (Alpha) of the beam."
+	rendercolor(color255) : "Beam Color (R G B)" : "255 255 255" : "RGB color value used for this beam."
 	Radius(integer) : "Radius" : 256 : "If the 'Random Strike' spawnflag is set, this radius determines the area within which the endpoints will randomly strike."
 	life(float) : "Life (seconds 0 = infinite)" : "1" : "Amount of time before the beam dies. Setting to zero will make the beam stay forever."
 	BoltWidth(float) : "Width of beam" : 2 : "Pixel width of the beam."
@@ -2270,7 +2270,7 @@
 		0 : "No"
 		1 : "Yes"
 	]
-	fogblend(choices) : "Fog Blend" : 0 =
+	fogblend(choices) : "Fog Blend" : 0 : "Enables color blending between the primary color and the secondary color." =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -2345,8 +2345,8 @@
 [
 	BoltWidth(float) : "Width of beam" : 2 : "Radius of the beam (i.e. 1 = 2 world units total thickness)." //added by vizzys
 	LaserTarget(target_destination) : "Target of Laser" : : "Name of entity, or entities, to strike at. The target is randomly chosen if there are multiple entities matching the given name."
-	renderamt(integer) : "Brightness (1 - 255)" : 100
-	rendercolor(color255) : "Beam Color (R G B)" : "255 255 255"
+	renderamt(integer) : "Brightness (1 - 255)" : 100 : "Opacity (Alpha) of the beam."
+	rendercolor(color255) : "Beam Color (R G B)" : "255 255 255" : "RGB color value used for this beam."
 	width(float) : "Width of Beam" : 2 : "The width of the laser beam, in pixels."
 	NoiseAmplitude(integer) : "Amount of noise (0-255)" : 0 : "The amount of noise in the beam. 0 is a perfectly straight beam."
 	texture(sprite) : "Sprite Name" : "sprites/laserbeam.vmt" : "The material used to draw the laser beam."
@@ -2491,7 +2491,7 @@
 		3: "Flesh"
 		4: "Concrete"  
 	]
-	simulation(choices) :"Simulate" : 0 =
+	simulation(choices) :"Simulate" : 0 : "How the gibs from this gib shooter will be physically simulated."=
 	[
 		0: "Point (very cheap)"
 		1: "Physics"
@@ -2847,7 +2847,7 @@
 	skycolor(color255) : "Sky Color" : "255 255 255 0" : "Causes the skybox to use a solid color instead of the sky texture specified in worldspawn. Blended alpha is unfortunately not supported, but an alpha of '0' disables the effect and any alpha greater than that (e.g. 255) enables the effect."
 
 	scale(integer) : "3D Skybox scale" : 16 : "Scale of the skybox."
-	fogenable(choices) : "Fog Enable" : 0 =
+	fogenable(choices) : "Fog Enable" : 0 : "Whether or not the fog should be enabled." =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -3900,7 +3900,7 @@
 		1 : "On"
 	]
 
-	linktype(choices) : "Type of Connection" : 1 =
+	linktype(choices) : "Type of Connection" : 1 : "Type of connection between the nodes. NPCs will be forced to do specific actions to move between the nodes." =
 	[
 		1 : "Ground"
 		2 : "Jump"
@@ -4084,7 +4084,7 @@
 	pitch(integer) : "Pitch" : -90
 	distance(float) : "Maximum distance" : 120 : "This is the distance that light is allowed to cast, in units."
 	spotlight_radius(float) : "Spotlight end radius" : 80 : "This is the radius of the light, in units, at the object that it is hitting."
-    style(Choices) : "Appearance" : 0 =
+    style(Choices) : "Appearance" : 0 : "Controls this light's visual appearance." =
 	[
 		0 : "Normal"
 		10: "Fluorescent flicker"
@@ -4132,8 +4132,8 @@
 	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "80 30 0" : "This is the shadow direction. Pitch is rotation around the Y axis, yaw is the rotation around the Z axis, and roll is the rotation around the X axis."
 
 	color(color255) : "Shadow Color" : "128 128 128" : "This is the color of the shadows."
-	distance(float) : "Maximum Distance" : 75 : "This is the maximum distance the shadow is allowed to cast, in units. Maximum is 4096"
-	disableallshadows(Choices) : "All Shadows Disabled" : 0 = 
+	distance(float) : "Maximum Distance" : 75 : "This is the maximum distance the shadow is allowed to cast, in units.(4096)"
+	disableallshadows(Choices) : "All Shadows Disabled" : 0 : "Should all dynamic shadows be disabled on spawn?" = 
 	[
 		0 : "No"
 		1 : "Yes"
@@ -4400,7 +4400,7 @@
 
 	TextureScale(float) : "Texture Scale" : "1" : "This changes the texture resolution. The default resolution is 4 pixels per inch. Larger values stretch the texture and smaller values scrunch it up."
 	
-	Collide(choices) : "Collide with world" : 0 =
+	Collide(choices) : "Collide with world" : 0 : "Should this rope collide with world?" =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -4731,7 +4731,7 @@
 	locked_sound(sound) : "Locked Sound" : : "Sound played when the player tries to use the door, and fails because it's locked."
 	unlocked_sound(sound) : "Unlocked Sound" : : "Sound played when the button is door."
 
-	spawnpos(choices) : "Spawn Position" : 0 =
+	spawnpos(choices) : "Spawn Position" : 0 : "Spawn position of this door." =
 	[
 		0 : "Closed"
 		1 : "Open"
@@ -4956,7 +4956,7 @@
 @PointClass color(0 0 255) sidelist(sides) iconsprite("editor/env_cubemap.vmt") line(255 255 255, targetname, parallaxobb) = env_cubemap : 
 	"An entity that creates a sample point for the Cubic Environment Map."
 [
-	cubemapsize(choices) : "Cubemap Size" : 0 =
+	cubemapsize(choices) : "Cubemap Size" : 0 : "The resolution of this cubemap's texture." =
 	[
 		0 : "Default (32x32)"
 		1 : "1x1"
@@ -4988,7 +4988,7 @@
 		1 : "Yes"
 	]
 
-	Color(color255) : "Particle Color (R G B)" : "255 255 255"
+	Color(color255) : "Particle Color (R G B)" : "255 255 255" : "Color of the particles after spawning."
 	SpawnRate(integer) : "Particle Per Second" : 40 : "Number of particles to spawn, per second."
 	SpeedMax(integer) : "Maximum Particle Speed" : 13 : "Maximum speed that the particles can move after spawning."
 	LifetimeMin(integer) : "Minimum Particle Lifetime" : 3 : "Minimum number of seconds until each particle dies. Particles live for a random duration between this and 'Maximum Particle Lifetime'."
@@ -5023,8 +5023,8 @@
 		1 : "[1] Emissive" : 0
 	]
 
-	Color1(color255) : "Particle Color1 (R G B)" : "255 255 255"
-	Color2(color255) : "Particle Color2 (R G B)" : "255 255 255"
+	Color1(color255) : "Particle Color1 (R G B)" : "255 255 255" : "How dim particles can be."
+	Color2(color255) : "Particle Color2 (R G B)" : "255 255 255" : "How bright particles can be."
 	material(material) : "Material" : "particle/particle_smokegrenade" : "The material to use for the particles"
 	ParticleDrawWidth(float) : "Particle Draw Width (units)" : 120 : "The size of the particles, in units/inches."
 	ParticleSpacingDistance(float) : "Particle Spacing Distance (units)" : 80 : "The distance between the particles inside the volume. The lower the number, the denser the particles, and the more overdraw there will be. It is best to keep it as high as you can without it looking bad."
@@ -6527,7 +6527,7 @@
 	"Continuously generates numbers using various generation modes based on material proxies."
 [
 	// Keys
-	StartDisabled(choices) : "Start Disabled" : 1 =
+	StartDisabled(choices) : "Start Disabled" : 1 : "Should this entity be disabled on spawn?" =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -6797,7 +6797,7 @@
 	"You can use this entity to either watch an entity for conditions/schedules or test whether they have them. "+
 	"TODO: Task support."
 [	
-	StartDisabled(choices) : "Start Disabled" : 1 =
+	StartDisabled(choices) : "Start Disabled" : 1 : "Should this entity be disabled on spawn?" =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -8594,7 +8594,7 @@
 	"could be divided into two areas with a single area portal."
 [
 	target(target_destination) : "Name of Linked Door" : : "(Optional) The name of a door whose open/closed state controls the on/off state of this area portal."
-	StartOpen(choices) : "Initial State" : 1 =
+	StartOpen(choices) : "Initial State" : 1 : "Initial state of this entity." =
 	[
 		0 : "Closed"
 		1 : "Open"
@@ -8902,7 +8902,7 @@
 	
 	wheels(integer) : "Distance Between the Wheels" : 50 : "Used for turning and stopping."
 	height(integer) : "Height above track" : 4 : "The height above the track that this train moves."
-	bank(string) : "Bank Angle on Turns" : "0"			// NEEDHELP
+	bank(string) : "Bank Angle on Turns" : "0" : "Angle that will be banked on turns."	// NEEDHELP
 	
 	dmg(integer) : "Damage on Crush" : 0 : "The amount of damage this train does to entities that block it."
 	
@@ -9119,7 +9119,7 @@
 	"give them the same name as the landmark. Any entities within the trigger_transition(s) will go to the next map."
 [
 	targetname(target_source) : "Name"
-	map(string) : "New Map Name"
+	map(string) : "New Map Name" : : "Name of the map to transition to. Must not include .bsp extension."
 	landmark(target_destination) : "Landmark Name"
 	spawnflags(flags) =
 	[
@@ -9137,7 +9137,7 @@
 @SolidClass base(Trigger) = trigger_gravity : 
 	"A trigger volume that changes the gravity on any entity that touches it. BUG: Filters do not work with this entity."
 [
-	gravity(integer) : "Gravity (0-1)" : 1
+	gravity(integer) : "Gravity (0-1)" : 1 : "How much should gravity change. 0 means no gravity."
 ]
 
 @SolidClass base(Trigger) = trigger_playermovement : 
@@ -9439,7 +9439,7 @@
 [
 	EventName(string) : "Event Name" : "" : "The name of the event that you want to listen for."
 	
-	StartDisabled(choices) : "Start Disabled" : 0 =
+	StartDisabled(choices) : "Start Disabled" : 0 : "Should this entity be disabled on spawn?" =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -9477,7 +9477,7 @@
 	KeyName07(string) : "Key Name 07" : "" : "A keyvalue name to search for in detected events. If an event contains this key, then this entity will fire its respective OutValue output with the value."
 	KeyName08(string) : "Key Name 08" : "" : "A keyvalue name to search for in detected events. If an event contains this key, then this entity will fire its respective OutValue output with the value."
 	
-	StartDisabled(choices) : "Start Disabled" : 0 =
+	StartDisabled(choices) : "Start Disabled" : 0 : "Should this entity be disabled on spawn?" =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -9887,7 +9887,7 @@
 		0 : "Low (Sharp, pixelated shadows)"
 		1 : "High (Smooth shadows)"
 	]
-	shadowatten(float)			: "Shadow Atten" : "0.0" : "The attenuation of the shadows, or how much the shadows should fade into the light of the projected texture, if at all. The player's flashlight uses 0.35 by default, although higher values may be needed for a visible effect."
+	shadowatten(float)			: "Shadow Attenuation" : "0.0" : "The attenuation of the shadows, or how much the shadows should fade into the light of the projected texture, if at all. The player's flashlight uses 0.35 by default, although higher values may be needed for a visible effect."
 	shadowfilter(float)			: "Shadow Filter Size" : "0.5" : "The amount to filter the shadows. This blurs shadows to make them appear less pixelated, but higher values may have more visible noise."
 	
 	lightonlytarget(Choices) : "Light Only Target" : 0 : "Limit flashlight effect to only effect target entity." =
@@ -9979,7 +9979,7 @@
 	
 	brightnessscale(float)		: "Brightness Scale" : "1.0" : "The light color's brightness scale."	
 
-	texturename(material) : "Texture Name" : "effects/flashlight001"
+	texturename(material) : "Texture Name" : "effects/flashlight001" : "The texture which should be used. Please note that env_projectedtexture uses .vtf files directly and does not use .vmt files. The material browser is only available here to assist with finding textures since materials typically have the same name as their textures."
 	textureframe(integer) : "Texture Frame" : 0 : "Sets the frame of the env_global_light. Only relevant if the texture is animated/has multiple frames."
 
 	// Inputs
