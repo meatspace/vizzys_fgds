@@ -1,10 +1,10 @@
 # Vizzy's enhanced Mapbase and Entropy Zero 2 .fgd's! ![alt text](https://cdn.discordapp.com/emojis/860206945943158844.gif?size=32&quality=lossless) 
 
-**Mapbase install instructions:** Click code, Download .zip, extract, copy & overwrite `shared_misc` folder at:
+`Mapbase install instructions:` Click code, Download .zip, extract, copy & overwrite `shared_misc` folder at:
 `steamapps\sourcemods\mapbase_shared\shared_misc`
 then add half-life2.fgd to Hammer config.
 
-**Entropy Zero 2 install instructions:** Click code, Download .zip, extract, copy & overwrite `entropyzero2` folder at:
+`Entropy Zero 2 install instructions:` Click code, Download .zip, extract, copy & overwrite `entropyzero2` folder at:
 `steamapps\common\EntropyZero2\entropyzero2`
 then add EntropyZero2.fgd to Hammer config.
 
