@@ -8,7 +8,7 @@ then add half-life2.fgd to Hammer config.
 `steamapps\common\EntropyZero2\entropyzero2`
 then add EntropyZero2.fgd to Hammer config.
 
-`NOTE: Map Labs FGD's have slightly different default values & are not 100% equivalent to vanilla mapbase FGD's so these are not for that without some minor editing.`
+NOTE: Map Labs FGD's have slightly different default values & are not 100% equivalent to vanilla mapbase FGD's so these are not for that without some minor editing.
 
 .psd files are for Adobe Photoshop
 ----
