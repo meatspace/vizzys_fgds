@@ -8,7 +8,10 @@ then add half-life2.fgd to Hammer config.
 `steamapps\common\EntropyZero2\entropyzero2`
 then add EntropyZero2.fgd to Hammer config.
 
-NOTE: Map Labs FGD's have slightly different default values & are not 100% equivalent to vanilla mapbase FGD's so these are not for that without some minor editing.
+<ins>Map Labs install instructions:</ins> Click code, Download .zip, extract, copy the 3 folders inside maplabs `bin / materials / models` directly to the map lab templates base folder.
+Overwrite any existing files if asked. You can also use a folder within the custom folder for cleaner storage. then add the half-life2.fgd in bin folder to Hammer config.
+
+NOTE: Map Labs FGD's have slightly different default values but are otherwise 99% equivalent to my edited mapbase FGD's 
 
 .psd files are for Adobe Photoshop
 ----
