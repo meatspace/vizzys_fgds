@@ -2900,7 +2900,7 @@ input OutsideTransition(void) : "If the player is in the Scout Car and Always Tr
 	LeadDistance(float) : "Lead Distance" : "64" : "The player is considered to be lagging if they're beyond this distance.  The Actor will consider retrieving when the player is 4x 'Lead Distance' away."
 	RetrieveDistance(float) : "Retrieve Distance" : "96" : "The distance from the player that the NPC should return to when retrieving a lagging player. Must be between ('Lead Distance' + 24) and ('Lead Distance' * 4) to avoid the leader ping-ponging."
 	SuccessDistance(float) : "Success Distance" : "0" : "The distance from the player (to the NPC) that the player must be within for the Lead to succeed, once the NPC has reached the goal. If set to 0, it'll use the lead distance instead (for legacy support)."
-	Run(choices) : "Run instead of Walk" : "0" =
+	Run(choices) : "Run instead of Walk" : "0" : "Should the NPC run instead of walk?" =
 	[
 		"0" : "No"
 		"1" : "Yes"
@@ -3940,9 +3940,9 @@ input OutsideTransition(void) : "If the player is in the Scout Car and Always Tr
 	pitchrate(string) : "Pitch rate" : "0" : "How fast tank can look up or down"
 	pitchrange(string) : "Pitch range" : "0" : "How fast tank can look up or down"
 	pitchtolerance(string) : "Pitch tolerance" : "5" : "Additional up-down range. If the gun tries to turn beyond Pitch range + Pitch tolerance, the gun will snap back to the maximum Pitch range."
-	barrel(string) : "Barrel Length" : "0" : "Solid length of the tank barrel. Any part of the barrel beyond this length may clip through objects."
-	barrely(string) : "Barrel Horizontal" : "0" : "How wide the tank barrel is, horizontally."
-	barrelz(string) : "Barrel Vertical" : "0" : "How wide the tank barrel is, vertically."
+	barrel(string) : "Barrel Length" : "0" : "Length of the tank barrel. If the target is closer than the barrel length, it won't aim at its target."
+	barrely(string) : "Barrel Horizontal" : "0" : "Position of the barrel, horizontally. Ignored if Gun Barrel Attachment is set."
+	barrelz(string) : "Barrel Vertical" : "0" : "Position of the barrel, vertically. Ignored if Gun Barrel Attachment is set."
 	spritesmoke(sprite) : "Smoke Sprite" : "" : "A specific sprite to use for the muzzle's smoke effect."
 	spriteflash(sprite) : "Flash Sprite" : "" : "A specific sprite to use for the muzzle's flash effect."
 	spritescale(string) : "Sprite scale" : "1" : "The scale for smoke and flash sprites."
@@ -3975,7 +3975,7 @@ input OutsideTransition(void) : "If the player is in the Scout Car and Always Tr
 
 	ammo_count(integer) : "Ammunition Count" : -1 : "Only applies to player use. -1 = unlimited ammo."
 
-	LeadTarget(choices) : "Lead Target" : "No" =
+	LeadTarget(choices) : "Lead Target" : "0" : "Should this entity aim ahead to hit moving targets?" =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -5460,8 +5460,8 @@ input OutsideTransition(void) : "If the player is in the Scout Car and Always Tr
 	rotatestartsound(sound) : "Rotate Start Sound" : ""
 	rotatesound(sound) : "Rotate Loop Sound" : ""
 	rotatestopsound(sound) : "Rotate Stop Sound" : ""
-	minRange(string) : "Minimum target range" : "0"
-	maxRange(string) : "Maximum target range" : "0"
+	minRange(string) : "Minimum target range" : "0" : "Minimum distance a target can be to be attacked"
+	maxRange(string) : "Maximum target range" : "0" : "Maximum distance a target can be to be attacked"
 	targetentityname(target_destination) : "Name of entity I should follow/attack" : ""
 
 	// Inputs
