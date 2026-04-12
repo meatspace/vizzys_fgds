@@ -34,5 +34,11 @@
 	input StartCommentary(void) : "Force the commentary node to start."
 	input StopCommentary(void) : "Force the commentary node to stop."
 	input StartUnstoppableCommentary(void) : "Force the commentary node to start, and don't allow the player to stop it in any way."
+	input SetViewPosition(ehandle) : "Set View Position"
+	input SetViewTarget(ehandle) : "Set View Target"
+	input SetViewTargetSpeed(float) : "Set View Target Speed"
+	input SetViewPositionSpeed(float) : "Set View Position Speed"	
+	input SetReturnSpeed(float) : "Set View Return Speed"
+
 ]
 //end commentary section added by vizzys
