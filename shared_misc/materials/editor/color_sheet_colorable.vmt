@@ -1,0 +1,5 @@
+VertexLitGeneric
+{
+$basetexture "Editor/color_sheet"
+$allowdiffusemodulation 1
+}
