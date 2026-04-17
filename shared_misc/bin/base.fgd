@@ -1436,7 +1436,7 @@
 	input SetMaxPiecesDX8(integer)	: "Set the max gib count under DX8."
 ]
 
-@PointClass base(Parentname, Targetname, Angles, EnableDisable) color(255 128 0) studio("models/editor/axis_helper_thick.mdl") sphere(MinDist) sphere(MaxDist) sphere(OuterMaxDist) sphere(GlowProxySize) = env_lightglow : 
+@PointClass base(Parentname, Targetname, Angles, EnableDisable) color(255 128 0) studio("models/editor/axis_helper_thick.mdl") sphere(MinDist) sphere(MaxDist) sphere(OuterMaxDist) = env_lightglow : 
 	"An entity that puts an additive glow in the world, mostly used over light sources."
 [
 	rendercolor(color255) : "Color (R G B)" : "255 255 255"
@@ -2725,7 +2725,7 @@
 	output OnSpark(void) : "Fired whenever sparks are emitted." // added by Vizzys
 ]
 
-@PointClass base(Targetname, Parentname, RenderFields,DXLevelChoice) sprite() studio("models/editor/axis_helper_white.mdl") color(20 140 20) sphere(GlowProxySize) = env_sprite : 
+@PointClass base(Targetname, Parentname, RenderFields,DXLevelChoice) sprite() studio("models/editor/axis_helper_white.mdl") color(20 140 20) = env_sprite : 
 	"An entity that controls the drawing of a sprite in the world." 
 [
 	framerate(string) : "Framerate" : "10.0" : "Rate at which the sprite should animate, if at all."
