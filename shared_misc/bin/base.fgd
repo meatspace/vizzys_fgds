@@ -2179,13 +2179,13 @@
 	spawnflags(flags) =
 	[
 		1: "[1] Infinite Duration" : 0
-		2: "[2] Smokeless (no smoke particle)" : 0
+		2: "[2] Smokeless (No smoke particle)" : 0
 		4: "[4] Start On" : 0
 		8: "[8] Start Full" : 0
 		16: "[16] Don't drop (fall)" : 0
-		32: "[32] No sprite glow" : 0
+		32: "[32] No Sprite glow" : 0
 		128: "[128] Delete when out" : 0
-		256: "[256] Visible from above (sprite based fire)" : 0
+		256: "[256] Visible from above (Sprite based fire)" : 0
 	]
 
 	ignitionpoint(float) : "Ignition Point" : 32 : "Amount of heat 'damage' to take before this flame should ignite."
@@ -2300,7 +2300,7 @@
 	]
 ]
 
-@PointClass base(Targetname, Parentname, Angles) studioprop("models/editor/spot_cone.mdl") color(255 255 255) frustum(spreadspeed, _frustum_near, jetlength, rendercolor, -1) = env_steam : 
+@PointClass base(Targetname, Parentname, Angles) studioprop("models/editor/spot_cone.mdl") = env_steam : 
 	"An entity used to create a jet of steam."
 [
 	spawnflags(flags) =
@@ -2494,7 +2494,7 @@
 		3: "Flesh"
 		4: "Concrete"  
 	]
-	simulation(choices) :"Simulate" : 0 : "How the gibs from this gib shooter will be physically simulated."=
+	simulation(choices) :"Simulate" : 0 : "How the gibs from this gib shooter will be physically simulated." =
 	[
 		0: "Point (very cheap)"
 		1: "Physics"
@@ -2613,8 +2613,8 @@
 	radius(integer) : "Radius" : 128					// NEEDHELP: The datadesc doesn't include this entry. Probably not used.
 	
 	// Inputs
-//	input Enable(void) : "Enable the soundscape."
-//	input Disable(void) : "Disable the soundscape."
+	input Enable(void) : "Enable the soundscape."
+	input Disable(void) : "Disable the soundscape."
 	input ToggleEnabled(void) : "Toggle the soundscape enabled state."
 	// Outputs
 	output OnPlay(void) : "Fired when this soundscape becomes the active one."
@@ -3007,7 +3007,7 @@
 	[
 		0 : "Fade In/Out (Entire text fades in and fades out)"
 		1 : "Credits"
-		2 : "Scan Out (Puts each letter in 1 by 1, giving letters Color2 as they are put in)"
+		2 : "Scan Out (Puts each letter in 1 by 1, giving letters Color2 as they are put in.)"
 	]
 	color(color255) : "Color1" : "100 100 100"
 	color2(color255) : "Color2" : "240 110 0"
@@ -4137,7 +4137,7 @@
 	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "80 30 0" : "This is the shadow direction. Pitch is rotation around the Y axis, yaw is the rotation around the Z axis, and roll is the rotation around the X axis."
 
 	color(color255) : "Shadow Color" : "128 128 128" : "This is the color of the shadows."
-	distance(float) : "Maximum Distance" : 75 : "This is the maximum distance the shadow is allowed to cast, in units.(4096)"
+	distance(float) : "Maximum Distance" : 75 : "This is the maximum distance the shadow is allowed to cast, in units. (4096)"
 	disableallshadows(Choices) : "All Shadows Disabled" : 0 : "Should all dynamic shadows be disabled on spawn?" = 
 	[
 		0 : "No"
@@ -4152,7 +4152,7 @@
 
 	// Inputs
 	input color(color255) : "Set the shadow color."
-	input direction(vector) : "Set the shadow direction, using a vector instead of angles"
+	input direction(vector) : "Set the shadow direction, using a vector instead of angles."
 	input SetDistance(float) : "Set the maximum shadow cast distance."
 	input SetAngles(string) : "Set the shadow direction."
 	input SetShadowsDisabled(bool) : "Set shadows disabled state."
@@ -4167,12 +4167,12 @@
 @PointClass base(Targetname, EnableDisable) sphere(minfalloff) sphere(maxfalloff) iconsprite("editor/color_correction.vmt") = color_correction : 
 	"An entity to control the color correction in the map."
 [
-	minfalloff(float) : "Lookup Falloff Start Distance" : "0.0"   : "This is the distance to the start of the falloff region (-1 = everywhere) If larger than the End Distance, the effect will apply to the entire map."
-	maxfalloff(float) : "Lookup Falloff End Distance"   : "200.0" : "This is the maximum distance to the end of the falloff region (-1 = everywhere)"
-	maxweight(float)  : "Maximum Weight"				: "1.0"   : "This is the maximum weight for this lookup"
-	filename(string)  : "Lookup Table Filename"			: ""	  : "Path to the .raw file containing the lookup table."
-	fadeInDuration(float)   : "Lookup Fade In Duration"		: "0.0"	  : "Duration of fade in on when enabled."
-	fadeOutDuration(float)   : "Lookup Fade out Duration"		: "0.0"	  : "Duration of fade out on when disabled."
+	minfalloff(float) : "Lookup Falloff Start Distance" : "0.0" : "This is the distance to the start of the falloff region (-1 = everywhere) If larger than the End Distance, the effect will apply to the entire map."
+	maxfalloff(float) : "Lookup Falloff End Distance" : "200.0" : "This is the maximum distance to the end of the falloff region (-1 = everywhere)"
+	maxweight(float)  : "Maximum Weight" : "1.0"   : "This is the maximum weight for this lookup"
+	filename(string)  : "Lookup Table Filename" : ""	  : "Path to the .raw file containing the lookup table."
+	fadeInDuration(float)   : "Lookup Fade In Duration" : "0.0"	  : "Duration of fade in on when enabled."
+	fadeOutDuration(float)   : "Lookup Fade out Duration" : "0.0"	  : "Duration of fade out on when disabled."
 	exclusive(choices) : "Exclusive" : 0 : "An exclusive color_correction entity disables and fades out all other color corrections when it is enabled. There should only be one active exclusive color_correction ent at any time." = 
 	[
 		0 : "No"
@@ -4974,7 +4974,7 @@
 		7 : "64x64"
 		8 : "128x128"
 		9 : "256x256"
-		10 : "512x512 Use Sparingly." //added by vizzys
+		10 : "512x512 (Use Sparingly.)" //added by vizzys
 	]
 	sides(sidelist) : "Brush faces": : "(Optional) Brushes faces to directly attach to the env_cubemap. Press Pick then click on faces in the 3D View to select them. Use CTRL while clicking to add or remove from the selection."
 	
@@ -5412,14 +5412,14 @@
 		1: "[1] Only trigger once" : 0
 		2: "[2] Allow fast retrigger (Doesn't 'sleep' after triggering, ignores Trigger inputs while firing)" : 0
 	]
-	OnTriggerChance0(float) : "OnTrigger1 Chance" : "1.0" : "Chance (from 0 to 1) of the OnTrigger1 output firing when this entity is triggered."
-	OnTriggerChance1(float) : "OnTrigger2 Chance" : "1.0" : "Chance (from 0 to 1) of the OnTrigger2 output firing when this entity is triggered."
-	OnTriggerChance2(float) : "OnTrigger3 Chance" : "1.0" : "Chance (from 0 to 1) of the OnTrigger3 output firing when this entity is triggered."
-	OnTriggerChance3(float) : "OnTrigger4 Chance" : "1.0" : "Chance (from 0 to 1) of the OnTrigger4 output firing when this entity is triggered."
-	OnTriggerChance4(float) : "OnTrigger5 Chance" : "1.0" : "Chance (from 0 to 1) of the OnTrigger5 output firing when this entity is triggered."
-	OnTriggerChance5(float) : "OnTrigger6 Chance" : "1.0" : "Chance (from 0 to 1) of the OnTrigger6 output firing when this entity is triggered."
-	OnTriggerChance6(float) : "OnTrigger7 Chance" : "1.0" : "Chance (from 0 to 1) of the OnTrigger7 output firing when this entity is triggered."
-	OnTriggerChance7(float) : "OnTrigger8 Chance" : "1.0" : "Chance (from 0 to 1) of the OnTrigger8 output firing when this entity is triggered."
+	OnTriggerChance0(float) : "OnTrigger0 Chance" : "1.0" : "Chance (from 0 to 1) of the OnTrigger0 output firing when this entity is triggered."
+	OnTriggerChance1(float) : "OnTrigger1 Chance" : "1.0" : "Chance (from 0 to 1) of the OnTrigger1 output firing when this entity is triggered."
+	OnTriggerChance2(float) : "OnTrigger2 Chance" : "1.0" : "Chance (from 0 to 1) of the OnTrigger2 output firing when this entity is triggered."
+	OnTriggerChance3(float) : "OnTrigger3 Chance" : "1.0" : "Chance (from 0 to 1) of the OnTrigger3 output firing when this entity is triggered."
+	OnTriggerChance4(float) : "OnTrigger4 Chance" : "1.0" : "Chance (from 0 to 1) of the OnTrigger4 output firing when this entity is triggered."
+	OnTriggerChance5(float) : "OnTrigger5 Chance" : "1.0" : "Chance (from 0 to 1) of the OnTrigger5 output firing when this entity is triggered."
+	OnTriggerChance6(float) : "OnTrigger6 Chance" : "1.0" : "Chance (from 0 to 1) of the OnTrigger6 output firing when this entity is triggered."
+	OnTriggerChance7(float) : "OnTrigger7 Chance" : "1.0" : "Chance (from 0 to 1) of the OnTrigger7 output firing when this entity is triggered."
 
 	// Inputs
 	input Trigger(void) : "Trigger this entity (or dont) by causing its OnTriggerChance outputs to fire if it is enabled."
@@ -9134,7 +9134,7 @@
 	spawnflags(flags) =
 	[
 		2: "[2] Disable Touch" : 0
-		4: "[4] To Previous Chapter (disable if map was loaded from a new game) " : 0
+		4: "[4] To Previous Chapter (disable if map was loaded from a new game)" : 0
 	]
 	
 	// Inputs
