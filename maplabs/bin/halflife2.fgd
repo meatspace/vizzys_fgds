@@ -668,7 +668,7 @@
 	input Burrow(void) : "Burrow into the ground"
 	input BurrowAway(void) : "Burrow into the ground and remove the antlion"
 	input FightToPosition(target_destination) : "Fight to reach the specified entity."
-	input StopFightToPosition(target_destination) : "Stop fighting to reach a position, if it currently is.The parameter is ignored."
+	input StopFightToPosition(target_destination) : "Stop fighting to reach a position, if it currently is. The parameter is ignored."
 	input EnableJump(void) : "Allow non-navigational jumping"
 	input DisableJump(void) : "Disallow non-navigational jumping"
 	input IgnoreBugbait(void) : "Ignore bugbait"
@@ -958,7 +958,7 @@
 	[
 		65536 : "[65536] Follow player on spawn" : 0
 		131072 : "[131072] Medic" : 0
-		262144 : "[262144] Random Head" : 1
+		262144 : "[262144] Random Head (Will crash game if using Unique model)" : 1
 		524288 : "[524288] Ammo Resupplier" : 0
 		1048576 : "[1048576] Not Commandable" : 0
 		//2097152 : "[2097152] Don't use Speech Semaphore - OBSOLETE" : 0
@@ -1704,15 +1704,12 @@
 [
 	input Enable(void) : "Enable the crash target."
 	input Disable(void) : "Disable the crash target."
-
 	output OnCrashed(void)  : "Fires when the aircraft crashes on this point."
 	output OnBeginCrash(void)  : "Fires when the aircraft begins navigating to this point."
 ]
 
 @PointClass base(Targetname, Parentname, CrashPoint) iconsprite("vizzys-icons/info_target_helicopter_crash")  = info_target_helicopter_crash : "Helicopter Crash Target"
 [
-												
-												  
 ]
 
 @PointClass base(Targetname, Parentname, CrashPoint) iconsprite("vizzys-icons/info_target_gunshipcrash")  = info_target_gunshipcrash : "Gunship Crash Target"
@@ -1956,7 +1953,6 @@
 @BaseClass base(BaseNPC) = BaseZombie
 [
 	Headless(choices) : "Headcrab-less" : "No" : "Toggles whether this zombie should have a headcrab on their head. They usually should." =
-	
 	[
 		0 : "No"
 		1 : "Yes"
@@ -2305,7 +2301,7 @@
 	input ExitVehicle(void) : "Make Alyx exit the vehicle she's in."
 	input CancelEnterVehicle(void) : "Stops Alyx from trying to enter the vehicle if she's outside of it."
 	input VehiclePunted(void) : "If !caller is the vehicle Alyx is riding, she complains about being punted with the Gravity Gun. This is automatically fired by vehicles, but you could also do it manually." //added by vizzys
-input OutsideTransition(void) : "If the player is in the Scout Car and Always Transition is enabled, Alyx teleports into its passenger seat, instead of a nearby hint node."  //added by vizzys
+	input OutsideTransition(void) : "If the player is in the Scout Car and Always Transition is enabled, Alyx teleports into its passenger seat, instead of a nearby hint node."  //added by vizzys
 
 	// Outputs
 	output OnPlayerUse(void) : "Fires when a player +USEs Alyx"
@@ -2900,7 +2896,7 @@ input OutsideTransition(void) : "If the player is in the Scout Car and Always Tr
 	LeadDistance(float) : "Lead Distance" : "64" : "The player is considered to be lagging if they're beyond this distance.  The Actor will consider retrieving when the player is 4x 'Lead Distance' away."
 	RetrieveDistance(float) : "Retrieve Distance" : "96" : "The distance from the player that the NPC should return to when retrieving a lagging player. Must be between ('Lead Distance' + 24) and ('Lead Distance' * 4) to avoid the leader ping-ponging."
 	SuccessDistance(float) : "Success Distance" : "0" : "The distance from the player (to the NPC) that the player must be within for the Lead to succeed, once the NPC has reached the goal. If set to 0, it'll use the lead distance instead (for legacy support)."
-	Run(choices) : "Run instead of Walk" : "0" =
+	Run(choices) : "Run instead of Walk" : "0" : "Should the NPC run instead of walk?" =
 	[
 		"0" : "No"
 		"1" : "Yes"
@@ -3057,7 +3053,7 @@ input OutsideTransition(void) : "If the player is in the Scout Car and Always Tr
 [
 ]
 
-@PointClass size( -4 -4 -4, 4 4 4 ) base(Targetname, Angles, Parentname) studio("models/pigeon.mdl") = ai_battle_line : "Battle line"
+@PointClass base(Targetname, Angles, Parentname) studioprop("models/editor/axis_helper_arrow_x.mdl") = ai_battle_line : "Battle line"
 [																									  
 	// Spawnflags
 	spawnflags(Flags) = 
@@ -3940,9 +3936,9 @@ input OutsideTransition(void) : "If the player is in the Scout Car and Always Tr
 	pitchrate(string) : "Pitch rate" : "0" : "How fast tank can look up or down"
 	pitchrange(string) : "Pitch range" : "0" : "How fast tank can look up or down"
 	pitchtolerance(string) : "Pitch tolerance" : "5" : "Additional up-down range. If the gun tries to turn beyond Pitch range + Pitch tolerance, the gun will snap back to the maximum Pitch range."
-	barrel(string) : "Barrel Length" : "0" : "Solid length of the tank barrel. Any part of the barrel beyond this length may clip through objects."
-	barrely(string) : "Barrel Horizontal" : "0" : "How wide the tank barrel is, horizontally."
-	barrelz(string) : "Barrel Vertical" : "0" : "How wide the tank barrel is, vertically."
+	barrel(string) : "Barrel Length" : "0" : "Length of the tank barrel. If the target is closer than the barrel length, it won't aim at its target."
+	barrely(string) : "Barrel Horizontal" : "0" : "Position of the barrel, horizontally. Ignored if Gun Barrel Attachment is set."
+	barrelz(string) : "Barrel Vertical" : "0" : "Position of the barrel, vertically. Ignored if Gun Barrel Attachment is set."
 	spritesmoke(sprite) : "Smoke Sprite" : "" : "A specific sprite to use for the muzzle's smoke effect."
 	spriteflash(sprite) : "Flash Sprite" : "" : "A specific sprite to use for the muzzle's flash effect."
 	spritescale(string) : "Sprite scale" : "1" : "The scale for smoke and flash sprites."
@@ -3975,7 +3971,7 @@ input OutsideTransition(void) : "If the player is in the Scout Car and Always Tr
 
 	ammo_count(integer) : "Ammunition Count" : -1 : "Only applies to player use. -1 = unlimited ammo."
 
-	LeadTarget(choices) : "Lead Target" : "No" =
+	LeadTarget(choices) : "Lead Target" : "0" : "Should this entity aim ahead to hit moving targets?" =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -4518,7 +4514,7 @@ input OutsideTransition(void) : "If the player is in the Scout Car and Always Tr
 	input SetAmmo2(integer) : "Sets the amount of secondary ammo stored in this weapon."
 	input ForcePrimaryFire(void) : "Forces the weapon to fire its primary attack."
 	input ForceSecondaryFire(void) : "Forces the weapon to fire its secondary attack. Whether or not it actually fires a secondary attack depends on the weapon and who owns it."
-	input HideWeapon(void) : "If the weapon is being held by someone, makes it invisible. The weapon will reappear if they switch weapons." // added by vizzys
+	input HideWeapon(void) : "If the weapon is being held by someone, makes it invisible. The weapon will reappear if they switch weapons."
 
 	// Outputs
 	output OnPlayerUse(void) : "Fires when the player +USEs this weapon"
@@ -4927,7 +4923,7 @@ input OutsideTransition(void) : "If the player is in the Scout Car and Always Tr
 		16777216 : "React to source (Faces sound owner not location proxy)"
 		33554432 : "Explosion (Use with combat sound type. Picked up by env_microphone. Alyx may flinch.)"
 		134217728 : "Danger approach (Run if see sound owner, turn to face if not)"
-		268435456 : "Only allies can hear/smell"
+		268435456 : "Only allies can hear (or smell)"
 		536870912 : "Player vehicle (Hunters will prepare to dodge)"
 	]
 
@@ -5443,7 +5439,6 @@ input OutsideTransition(void) : "If the player is in the Scout Car and Always Tr
 	output PlayerOn(void) : "Player entered the vehicle."
 	output PressedAttack(void) : "Player pressed +attack."
 	output PressedAttack2(void) : "Player pressed +attack2."
-	
 ]
 
 @PointClass base(Targetname, Angles) iconsprite("vizzys-icons/point_apc_controller") line(255 255 255, targetname, targetentityname) = point_apc_controller : "APC Controller"
@@ -5460,8 +5455,8 @@ input OutsideTransition(void) : "If the player is in the Scout Car and Always Tr
 	rotatestartsound(sound) : "Rotate Start Sound" : ""
 	rotatesound(sound) : "Rotate Loop Sound" : ""
 	rotatestopsound(sound) : "Rotate Stop Sound" : ""
-	minRange(string) : "Minimum target range" : "0"
-	maxRange(string) : "Maximum target range" : "0"
+	minRange(string) : "Minimum target range" : "0" : "Minimum distance a target can be attacked from."
+	maxRange(string) : "Maximum target range" : "0" : "Maximum distance a target can be attacked at."
 	targetentityname(target_destination) : "Name of entity I should follow/attack" : ""
 
 	// Inputs
@@ -5704,7 +5699,7 @@ input OutsideTransition(void) : "If the player is in the Scout Car and Always Tr
 		1 : "Yes"
 	]
 	
-	DrawSky(choices) : "Draw skybox" : 0 : "Allows the skybox to be drawn while the script_intro is active. Drawing the skybox *might* break the VortWarp shader used by the transcending vortigaunts in EP1/EP2." =
+	DrawSky(choices) : "Draw skybox" : 0 : "Allows the skybox to be drawn while the script_intro is active. Drawing the skybox *might* break the VortWarp shader used by the transcending Vortigaunts in EP1/EP2." =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -5872,9 +5867,9 @@ input OutsideTransition(void) : "If the player is in the Scout Car and Always Tr
 
 @PointClass base(Targetname, Studiomodel, Angles, RenderFields) studioprop() = prop_scalable : "Scalable Prop" 
 [
-	input SetScaleX(vector) : "Scales the prop in one Axis. Params: <New Size> <Time>"
-	input SetScaleY(vector) : "Scales the prop in one Axis. Params: <New Size> <Time>"
-	input SetScaleZ(vector) : "Scales the prop in one Axis. Params: <New Size> <Time>"
+	input SetScaleX(vector) : "Scales the prop in the X Axis. Parameters: <New Size> <Time>"
+	input SetScaleY(vector) : "Scales the prop in the Y Axis. Parameters: <New Size> <Time>"
+	input SetScaleZ(vector) : "Scales the prop in the Z Axis. Parameters: <New Size> <Time>"
 ]
 
 @PointClass base(BasePropPhysics, Targetname, Angles, DamageFilter, BaseFadeProp) studioprop() = prop_flare : "Flare Prop"
