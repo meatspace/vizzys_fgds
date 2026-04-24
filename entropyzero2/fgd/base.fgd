@@ -3567,10 +3567,10 @@
 	material(material) : "Material"
 	sides(sidelist) : "Brush faces"
 	RenderOrder(integer) : "Render Order" : 0 : "Higher values render after lower values. This value can be 0-3."
-	StartU(float) : "U Start" : "0.0"
-	EndU(float) : "U End" : "1.0"
-	StartV(float) : "V Start" : "0.0"
-	EndV(float) : "V End" : "1.0"
+	StartU(float) : "U Start" : "0.0" : "Start coordinates for the image X axis. Adjust to change position and scaling."
+	EndU(float) : "U End" : "1.0" : "End coordinates for the image X axis. Adjust to change position and scaling."
+	StartV(float) : "V Start" : "0.0" : "Start coordinates for the image Y axis. Adjust to change position and scaling."
+	EndV(float) : "V End" : "1.0" : "End coordinates for the image Y axis. Adjust to change position and scaling."
 	BasisOrigin(Vector) readonly : "Overlay Basis Origin(Read-Only)"
 	BasisU(Vector) readonly : "Overlay Basis U(Read-Only)"
 	BasisV(Vector) readonly : "Overlay Basis V(Read-Only)"
@@ -3621,7 +3621,7 @@
 @PointClass base(Targetname, Parentname, Angles) iconsprite("editor/info_target.vmt")  = info_target : 
 	"An entity that does nothing. Very useful as a positioning entity for other entities to refer to (i.e. the endpoint of an env_beam)"
 [
-	spawnflags( Flags ) =
+	spawnflags(Flags) =
 	[
 		1 : "[1] Transmit to client (respect PVS)" : 0
 		2 : "[2] Always transmit to client (ignore PVS)" : 0
@@ -3824,7 +3824,7 @@
 
 	target(target_destination) : "Entity to affect" : "" : "If specified, the phys_ragdollmagnet will only affect the target entity."
 
-	spawnflags( Flags ) =
+	spawnflags(Flags) =
 	[
 		2 : "[2] Bar Magnet (use axis helper)" : 0
 	]
@@ -3947,7 +3947,7 @@
 		1 : "Yes"
 	]
 
-	spawnflags( Flags ) =
+	spawnflags(Flags) =
 	[
 		1 : "[1] Force human connect" : 0
 		2 : "[2] Force small_centered connect" : 0
@@ -4076,7 +4076,10 @@
 	"An invisible omnidirectional lightsource."
 [
 	target(target_destination) : "Entity To Point At" : : "The name of an entity in the map that the spotlight will point at. This will override the spotlight's angles."
-	spawnflags(Flags) = [ 1 : "[1] Initially dark" : 0 ]
+	spawnflags(Flags) =
+	[
+		1 : "[1] Initially dark" : 0
+	]
 	_distance(integer) : "Maximum Distance" : 0 : "This is the distance that light is allowed to cast."
 ]
 
@@ -4103,7 +4106,10 @@
 	_exponent(integer) : "Focus" : 1 : "Higher focus creates a sharper light edge, and focus below 1 makes it softer."
 	_distance(integer) : "Maximum distance" : 0 : "This is the distance that light is allowed to cast."
 	pitch(angle_negative_pitch) : "Pitch" : -90
-	spawnflags(Flags) = [ 1 : "[1] Initially dark" : 0 ]
+	spawnflags(Flags) = 
+	[
+		1 : "[1] Initially dark" : 0 
+	]
 ]
 
 @PointClass base(Targetname, Parentname, Angles) iconsprite("editor/light.vmt") sphere(distance) lightcone()  line(0 128 0, targetname, target) = light_dynamic : 
