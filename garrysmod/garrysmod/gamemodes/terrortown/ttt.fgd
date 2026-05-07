@@ -95,7 +95,7 @@
 [
 ]
 
-@PointClass base(Targetname, Parentname, Origin, Angles) = ttt_win :
+@PointClass base(Targetname, Parentname, Origin, Angles) iconsprite("vizzys-icons/ttt_win")  = ttt_win :
 	"Point ent allowing map to trigger a victory for traitors or innocent."
 [
 	input TraitorWin(void) : "Traitors win the round."
@@ -103,7 +103,7 @@
 
 ]
 
-@PointClass base(Targetname, Origin, Angles) = ttt_map_settings :
+@PointClass base(Targetname, Origin, Angles) iconsprite("vizzys-icons/ttt_map_settings")  = ttt_map_settings :
 	"Point ent allowing map to specify some behaviors, such as whether crowbars unlock things."
 [
 	cbar_doors(choices) : "Crowbar unlocks doors" : 1 : "Enable crowbar unlocking func_door and func_door_rotating entities that have a targetname set, using an Unlock input." =
@@ -141,7 +141,7 @@
 	output RoundEnd(integer) : "Fires when a round has ended. The type of win/loss is a parameter of the output: 2 = traitors win, 3 = innocent win, 4 = timelimit."
 ]
 
-@PointClass base(Targetname, Origin, Angles) = ttt_logic_role :
+@PointClass base(Targetname, Origin, Angles) iconsprite("vizzys-icons/ttt_logic_role") = ttt_logic_role :
 	"Point ent a bit like a combination of a filter and a logic ent. Tests if !activator is a certain role (detective/traitor/innocent/any) and fires output OnPass if true, or OnFail if not."
 [
 	Role(choices) : "Player role to test for" : 1 : "Specifies what role the !activator of TestActivator should be for this entity to fire the OnPass output." =
@@ -161,7 +161,7 @@
 ]
 
 
-@PointClass base(Targetname) iconsprite("editor/game_text.vmt") = ttt_game_text : 
+@PointClass base(Targetname) iconsprite("vizzys-icons/ttt_game_text")  = ttt_game_text : 
 	"An entity that displays a message in the top right message area."
 [
 	receive(choices) : "Players that should receive the message" : 0 : "Specifies what player or group of players should receive this message." =
@@ -181,7 +181,7 @@
 	input Display(void) : "Display the message text."
 ]
 
-@PointClass base(Targetname, Parentname, Origin) sphere(UsableRange) = ttt_traitor_button :
+@PointClass base(Targetname, Parentname, Origin) sphere(UsableRange) iconsprite("vizzys-icons/ttt_traitor_button")  = ttt_traitor_button :
 	"A button only usable by traitors, and only shown on their HUD. Can be used from any point within 1024 units of the button."
 [
 	description(string) : "Description" : "" : "Text describing the function of this button, shown on player HUD."
@@ -207,7 +207,7 @@
 	]
 ]
 
-@PointClass base(Targetname, Origin) = ttt_damageowner :
+@PointClass base(Targetname, Origin) iconsprite("vizzys-icons/ttt_damageowner")  = ttt_damageowner :
 	"Used to specify that a player is responsible for the damage dealt and kills made by a given entity, like a trigger_hurt."
 [
 	damager(string) : "Target entity" : "" : "Name of the entity for which we will specify the damage owner and round report name"
@@ -218,7 +218,7 @@
 	input ClearDamageOwner(void) : "Clears out the damage owner for the target entity."
 ]
 
-@PointClass base(Targetname, Origin) = ttt_credit_adjust :
+@PointClass base(Targetname, Origin) iconsprite("vizzys-icons/ttt_credit_adjust")  = ttt_credit_adjust :
 	"Give or take credits to the !activator."
 [
 	credits(integer) : "Credits" : 0 : "Number of credits to take. Set this to a negative number to give credits."
@@ -231,13 +231,13 @@
 	output OnFail(void) : "Fired in response to TakeCredits input if the activator player did not have sufficient credits."
 ]
 
-@PointClass base(Targetname, Parentname, Origin, Angles) = ttt_spectator_spawn :
+@PointClass base(Targetname, Parentname, Origin, Angles) iconsprite("vizzys-icons/ttt_spectator_spawn") = ttt_spectator_spawn :
 	"Spectators will be moved here as soon as they stop viewing their ragdoll. If more than one of these exists, a random one is used. The angles of this entity determine the eye angles of the player, ie. where they are facing after being moved here."
 [
 
 ]
 
-@FilterClass base(BaseFilter) = ttt_filter_role :
+@FilterClass base(BaseFilter) iconsprite("vizzys-icons/ttt_filter_role") = ttt_filter_role :
 	"A filter that filters by the role of the activator."
 [
 	Role(choices) : "Player role to filter for" : 1 : "The role to filter by. If the filter mode is Allow, only players with the given role will pass the filter. If the filter mode is Disallow, all players EXCEPT those whose role matches the given role will pass the filter." =

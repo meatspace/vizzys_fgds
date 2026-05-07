@@ -1,0 +1,7 @@
+Sprite
+{
+$spriteorientation vp_parallel
+$spriteorigin "[ 0.50 0.50 ]"
+$basetexture "vizzys-icons/ttt_filter_role"
+$no_fullbright 1
+}
