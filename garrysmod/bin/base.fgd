@@ -1427,7 +1427,7 @@
 	input SetInactive(void) : "Make the vgui screen invisible."
 ]
 
-@PointClass base(vgui_screen_base) size(-4 -4 -4, 4 4 4) = vgui_screen :
+@PointClass base(vgui_screen_base) iconsprite("vizzys-icons/vgui_screen") = vgui_screen :
 	"A VGUI screen. Useful for in-world monitors."
 [
 ]
@@ -2754,7 +2754,7 @@
 	fademaxdist(float) : "End Fade Dist" : 0 : "Maximum distance at which the overlay is visible (0 = don't fade out)."
 ]
 
-@PointClass size(-8 -8 -8, 8 8 8) sidelist(sides) sidelist(sides2) overlay_transition() iconsprite("vizzys-icons/info_overlay_transition") = info_overlay_transition : "Overlay Transition"
+@PointClass sidelist(sides) sidelist(sides2) overlay_transition() iconsprite("vizzys-icons/info_overlay_transition") = info_overlay_transition : "Overlay Transition"
 [
 	material(material) : "Material"
 	sides(sidelist) : "Brush faces"
@@ -2779,7 +2779,7 @@
 [
 ]
 
-@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = info_null :
+@PointClass base(Targetname) iconsprite("editor-ficool2/info_null") = info_null :
 	"An entity that's immediately removed on spawning. Useful as a spotlight target."
 [
 ]
@@ -2987,7 +2987,7 @@
 [
 ]
 
-@PointClass base(Targetname) color(220 180 0) size(-8 -8 -8, 8 8 8) line(255 255 255, nodeid, StartNode, nodeid, EndNode) = info_node_link :
+@PointClass base(Targetname) color(220 180 0) iconsprite("editor/info_node_link.vmt") line(255 255 255, nodeid, StartNode, nodeid, EndNode) = info_node_link :
 	"A dynamic connection between two navigation nodes. You specify the node IDs of the start and end nodes, and then you can use entity I/O " +
 	"to turn on and off the connection. This could be used to create or destroy a connection in the nodegraph because of some event in your map " +
 	"(a bridge being created/destroyed, etc)."
@@ -3033,7 +3033,7 @@
 	input TurnOff(void) : "Turn the link off."
 ]
 
-@PointClass wirebox(mins, maxs) base(Targetname) = info_node_link_controller :
+@PointClass wirebox(mins, maxs) iconsprite("teamspen210/info_node_link_controller") = info_node_link_controller :
 	"An entity that controls all connections between nodes that intersect the controller's volume. "+
 	"This allows for mass enabling/disabling of all node connections through a volume."
 [
@@ -3066,7 +3066,7 @@
 	input SetInvert(integer) : "Change the invert exclusion rule"
 ]
 
-@PointClass sphere(radius) base(Targetname, Parentname) = info_radial_link_controller :
+@PointClass sphere(radius) base(Targetname, Parentname) iconsprite("teamspen210/info_radial_link_controller") = info_radial_link_controller :
 	"This entity automatically severs node connections that pass through its radius. If it moves, it will restore those connections."
 [
 	radius(float) : "Radius (Use Helper!)" : 120
@@ -3129,7 +3129,7 @@
 	spawnflags(Flags) = [ 1 : "Initially dark" : 0 ]
 ]
 
-@PointClass base(Targetname, Parentname, Angles) iconsprite("editor/light.vmt") sphere(distance) lightcone() size(-4 -4 -4, 4 4 4) = light_dynamic :
+@PointClass base(Targetname, Parentname, Angles) iconsprite("editor/light.vmt") sphere(distance) lightcone() line(0 128 0, targetname, target) = light_dynamic :
 	"An invisible lightsource that changes in some way over time."
 [
 	target(target_destination) : "Entity to point at" : : "The name of an entity in the map that the dynamic light will point at."
@@ -5104,7 +5104,7 @@
 	input Toggle(void) : "Toggle this entity between On/Off state."
 ]
 
-@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = point_playermoveconstraint :
+@PointClass base(Targetname)  iconsprite("editor-ficool2/point_playermoveconstraint") sphere(radius) = point_playermoveconstraint :
 	"An entity that constrains players to a radius around itself, slowing them down the closer they get to the edge of the radius."
 [
 	radius(float) : "Radius" : 256 : "Radius to constrain players to."
@@ -5510,7 +5510,7 @@
 	force(float) : "Force" : "0" : "Force (will be integrated, units are force kg*in/s^2)"
 ]
 
-@PointClass halfgridsnap base(ForceController) = phys_torque :
+@PointClass halfgridsnap base(ForceController) studioprop("models/editor-ficool2/cone_helper_gray.mdl") line(255 255 255, targetname, attach1) = phys_torque :
 	"An angular thruster. Use it to apply angular force to an entity."
 [
 	// Angular acceleration (units are degress/s^2)
@@ -6293,7 +6293,7 @@
 	input TargetEntity(string) : "Start chasing the entity with this name"
 ]
 
-@PointClass base(Targetname, Parentname, Angles) cylinder(255 255 255, targetname, target, radius, targetname, targetname, radius) color(255 192 0) size(16 16 16) = path_track :
+@PointClass base(Targetname, Parentname, Angles) cylinder(255 255 255, targetname, target, radius, targetname, targetname, radius) cylinder(0 0 255, targetname, altpath, radius, targetname, targetname, radius) iconsprite("editor-ficool2/path_track") = path_track :
 	"An entity used to build paths for other entities to follow. Each path_track is a node on the path, each holding the name of the next path_track in the path."
 [
 	spawnflags(Flags) =
@@ -6730,7 +6730,7 @@
 	input EnablePlayerCollision(void) : "Enable collisions against the player."
 ]
 
-@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = env_credits :
+@PointClass base(Targetname) iconsprite("editor/env_credits.vmt") = env_credits :
 	"An entity to control the rolling credits."
 [
 	// Inputs
@@ -6770,7 +6770,7 @@
 ]
 
 
-@PointClass base(Targetname, DamageFilter) size(-8 -8 -8, 8 8 8) = logic_playerproxy :
+@PointClass base(Targetname, DamageFilter) iconsprite("editor/logic_playerproxy.vmt") = logic_playerproxy :
 	"An entity that is used to relay inputs/ouputs to the player and back to the world."
 [
 	// Outputs
@@ -6933,7 +6933,7 @@
 	input Increment(float) : "Increments named statistic counter by specified value"
 ]
 
-@PointClass base(Angles) size( -8 -8 -8, 8 8 8 ) instance() = func_instance :
+@PointClass base(Angles) iconsprite("vizzys-icons/func_instance") instance() = func_instance :
 	"An entity for placing an instance of a map file.  You may translate and rotate this entity. " +
 	"You can use the replace keys to do parameter changes on the instance contents.  In a $ at the " +
 	"beginning of a variable name.  Then just use the $variable name inside of the instance contents on any "+
@@ -7001,7 +7001,7 @@
 ]
 
 // GMOD: From CS:GO
-@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = skybox_swapper :
+@PointClass base(Targetname) iconsprite("vizzys-icons/skybox_swapper") = skybox_swapper :
 	"An entity that precaches skybox materials and swaps them on trigger."
 [
 	SkyboxName(string) : "Skybox Material Name" : "sky_dust"
@@ -7012,7 +7012,7 @@
 // Used to listen to events called from code
 //-------------------------------------------------------------------------
 // GMOD: From TF2/Portal 2
-@PointClass base(Targetname) = logic_eventlistener :
+@PointClass base(Targetname) iconsprite("vizzys-icons/logic_eventlistener") = logic_eventlistener :
 	"An entity that can listen to events fired from code and fire " +
 	"and output when it happens."
 [
@@ -7148,7 +7148,7 @@
 ]
 
 // GMOD: From CS:GO
-@PointClass base(Targetname) = point_entity_finder :
+@PointClass base(Targetname) iconsprite("teamspen210/point_entity_finder") line(0 128 0, targetname, referencename) = point_entity_finder :
 	"An entity that will find an entity and pass it along as the !caller with the OutEntity output. Requires using !caller as the parameter on the input."
 [
 	filtername(filterclass) : "Filter Name" : : "Filter to use to narrow set of findable entities. See filter_activator_name for more explanation."
@@ -7169,7 +7169,7 @@
 ]
 
 // GMOD: From Portal 2
-@PointClass base(Targetname, EnableDisable) size(-8 -8 -8, 8 8 8) = logic_register_activator :
+@PointClass base(Targetname, EnableDisable) iconsprite("vizzys-icons/logic_register_activator") = logic_register_activator :
 	"Stores an entity and sends messages with it as the activator\n" +
 	"Useful for keeping track of entities with mangled names due " +
 	"to template spawners and instances."

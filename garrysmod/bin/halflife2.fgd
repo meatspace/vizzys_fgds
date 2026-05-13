@@ -4253,7 +4253,7 @@
 [
 ]
 
-@PointClass base(Targetname, Angles) studio() = point_apc_controller : "APC Controller"
+@PointClass base(Targetname, Angles) iconsprite("vizzys-icons/point_apc_controller") line(255 255 255, targetname, targetentityname) = point_apc_controller : "APC Controller"
 [
 	spawnflags(flags) =
 	[
@@ -4267,7 +4267,7 @@
 	rotatestartsound(sound) : "Rotate Start Sound" : ""
 	rotatesound(sound) : "Rotate Loop Sound" : ""
 	rotatestopsound(sound) : "Rotate Stop Sound" : ""
-	minRange(string) : "Minmum target range" : "0"
+	minRange(string) : "Minimum target range" : "0"
 	maxRange(string) : "Maximum target range" : "0"
 	targetentityname(string) : "Name of entity I should follow/attack" : ""
 
@@ -4421,7 +4421,7 @@
 	input RemoveTau(void) : "Start removing the Tau cannon now."
 ]
 
-@PointClass base(Targetname) = script_intro : "Script: Custom entity used to handle the intro sequence."
+@PointClass base(Targetname) iconsprite("vizzys-icons/script_intro") = script_intro : "Script: Custom entity used to handle the intro sequence."
 [
 	// Inputs
 	input Activate(void) : "Take control of the player's view and start blending the two scenes."
