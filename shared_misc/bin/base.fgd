@@ -2442,7 +2442,7 @@
 		2: "[2] All Clients" : 0
 	]
 	messagesound(sound) : "Sound Effect" : "" : "When the message is shown, this sound effect will be played, originating from this entity."
-	messagevolume(string) : "Volume 0-10" : "10" : "Volume of the sound effect."
+	messagevolume(float) : "Volume 0-10" : "10" : "Volume of the sound effect."
 	messageattenuation(Choices) : "Sound Radius" : 0 =
 	[
 		0 : "Small Radius"
@@ -8904,7 +8904,7 @@
 		7: "squeak stop"
 		8: "quick stop"
 	]
-	volume(string) : "Sound Volume 0.0 - 1.0" : "0.85"
+	volume(float) : "Sound Volume 0.0 - 1.0" : "0.85"
 ]
 
 @BaseClass base(Targetname, Parentname, RenderFields, Global, PlatSounds) = Trackchange
