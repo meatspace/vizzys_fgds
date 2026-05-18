@@ -1099,7 +1099,53 @@
 @BaseClass = worldbase
 [
 	message(string) : "Map Description / Title" : : "A description/title for your map. This is not used in the code, but it's saved in the VMF and can be used for metadata purposes."
-	skyname(string) : "SkyBox Texture Name" : "sky_day01_01"
+	skyname(choices) : "Skybox Texture Name" : "sky_day01_01" : "Skybox name. Pick or enter your own .vmt name, MINUS the suffix (ft, bk, up, etc.)" =
+	[
+	"sky_day01_01" : "sky_day01_01"
+	"sky_day01_04" : "sky_day01_04"
+	"sky_day01_05" : "sky_day01_05"
+	"sky_day01_06" : "sky_day01_06"
+	"sky_day01_07" : "sky_day01_07"
+	"sky_day01_08" : "sky_day01_08"
+	"sky_day01_09" : "sky_day01_09"
+	"sky_day02_01" : "sky_day02_01"
+	"sky_day02_02" : "sky_day02_02"
+	"sky_day02_03" : "sky_day02_03"
+	"sky_day02_04" : "sky_day02_04"
+	"sky_day02_05" : "sky_day02_05"
+	"sky_day02_06" : "sky_day02_06"
+	"sky_day02_07" : "sky_day02_07"
+	"sky_day02_09" : "sky_day02_09"
+	"sky_day02_10" : "sky_day02_10"
+	"sky_day03_01" : "sky_day03_01"
+	"sky_day03_02" : "sky_day03_02"
+	"sky_day03_03" : "sky_day03_03"
+	"sky_day03_04" : "sky_day03_04"
+	"sky_day03_05" : "sky_day03_05"
+	"sky_day03_06" : "sky_day03_06"
+	"sky_day03_06b" : "sky_day03_06b"
+	"sky_borealis01" : "sky_borealis01"
+	"sky_wasteland02" : "sky_wasteland02"
+	"sky_day01_01_background" : "sky_day01_01_background"
+	"sky_day01_05_background" : "sky_day01_05_background"
+	"sky_ep01_00_hdr" : "sky_ep01_00_hdr"
+	"sky_ep01_01" : "sky_ep01_01"
+	"sky_ep01_02" : "sky_ep01_02"
+	"sky_ep01_04a" : "sky_ep01_04a"
+	"sky_ep01_04" : "sky_ep01_04"
+	"sky_ep01_citadel_int" : "sky_ep01_citadel_int"
+	"sky_fog" : "sky_fog"
+	"sky_ep02_01_hdr" : "sky_ep02_01_hdr"
+	"sky_ep02_02_hdr" : "sky_ep02_02_hdr"
+	"sky_ep02_03_hdr" : "sky_ep02_03_hdr"
+	"sky_ep02_04_hdr" : "sky_ep02_04_hdr"
+	"sky_ep02_05_hdr" : "sky_ep02_05_hdr"
+	"sky_ep02_06_hdr" : "sky_ep02_06_hdr"
+	"sky_ep02_07" : "sky_ep02_07"
+	"sky_ep02_caves_hdr" : "sky_ep02_caves_hdr"
+	"sky_lostcoast_hdr" : "sky_lostcoast_hdr"
+	]
+	
 	chaptertitle(string) : "Chapter/Savegame Title" : "" : "A ''chapter'' title that this map should identify with. Outside of Mapbase, this is used to make the chapter title appear onscreen when the level starts, but now it can change the message seen in the save/load menus, can be seen in Discord RPC, and the onscreen message behavior is now disabled by default (doesn't affect existing maps) through the ''Display Chapter Title Message'' keyvalue."
 	chaptertitlenomessage(choices) : "Display Chapter Title Message" : 1 : "Controls whether the Chapter Title Message should show up in a generated env_message when the map loads or whether it should only be used for savegame comments and RPC. This would normally be set to ''Yes'' outside of Mapbase." = 
 	[	
@@ -2396,7 +2442,7 @@
 		2: "[2] All Clients" : 0
 	]
 	messagesound(sound) : "Sound Effect" : "" : "When the message is shown, this sound effect will be played, originating from this entity."
-	messagevolume(string) : "Volume 0-10" : "10" : "Volume of the sound effect."
+	messagevolume(float) : "Volume 0-10" : "10" : "Volume of the sound effect."
 	messageattenuation(Choices) : "Sound Radius" : 0 =
 	[
 		0 : "Small Radius"
@@ -3538,10 +3584,10 @@
 	material(material) : "Material"
 	sides(sidelist) : "Brush faces"
 	RenderOrder(integer) : "Render Order" : 0 : "Higher values render after lower values. This value can be 0-3."
-	StartU(float) : "U Start" : "0.0"
-	EndU(float) : "U End" : "1.0"
-	StartV(float) : "V Start" : "0.0"
-	EndV(float) : "V End" : "1.0"
+	StartU(float) : "U Start" : "0.0" : "Start coordinates for the image X axis. Adjust to change position and scaling."
+	EndU(float) : "U End" : "1.0" : "End coordinates for the image X axis. Adjust to change position and scaling."
+	StartV(float) : "V Start" : "0.0" : "Start coordinates for the image Y axis. Adjust to change position and scaling."
+	EndV(float) : "V End" : "1.0" : "End coordinates for the image Y axis. Adjust to change position and scaling."
 	BasisOrigin(Vector) readonly : "Overlay Basis Origin(Read-Only)"
 	BasisU(Vector) readonly : "Overlay Basis U(Read-Only)"
 	BasisV(Vector) readonly : "Overlay Basis V(Read-Only)"
@@ -3592,7 +3638,7 @@
 @PointClass base(Targetname, Parentname, Angles) iconsprite("editor/info_target.vmt")  = info_target : 
 	"An entity that does nothing. Very useful as a positioning entity for other entities to refer to (i.e. the endpoint of an env_beam)"
 [
-	spawnflags( Flags ) =
+	spawnflags(Flags) =
 	[
 		1 : "[1] Transmit to client (respect PVS)" : 0
 		2 : "[2] Always transmit to client (ignore PVS)" : 0
@@ -3796,7 +3842,7 @@
 
 	target(target_destination) : "Entity to affect" : "" : "If specified, the phys_ragdollmagnet will only affect the target entity."
 
-	spawnflags( Flags ) =
+	spawnflags(Flags) =
 	[
 		2 : "[2] Bar Magnet (use axis helper)" : 0
 	]
@@ -3919,7 +3965,7 @@
 		1 : "Yes"
 	]
 
-	spawnflags( Flags ) =
+	spawnflags(Flags) =
 	[
 		1 : "[1] Force human connect" : 0
 		2 : "[2] Force small_centered connect" : 0
@@ -4028,13 +4074,13 @@
 ]
 
 @PointClass base(Targetname, Angles, HintNode) studio("models/editor/climb_node.mdl") color(153 215 103) = info_node_climb : 
-	"A climb-node for AI navigation. Only usable by NPCs that can climb. " + 
-	"In order for it to work, the following conditions need to be observed: " + 
-	"1) Place the nodes so that their centers are 8 units away from the wall surface; " + 
-	"2) Make sure their angles are facing the wall surface (similar to how cover nodes need to face their cover); " + 
-	"3) Align the bottom node on the ground plane and top node on the upper plane; " + 
-	"4) If using a ladder with a model, make it non-solid, or it'll interfere with the nodes; " + 
-	"5) Check the node connection in-game with ai_show_connect - climb nodes are connected by purple lines. " 
+	"A climb-node for AI navigation. Only usable by NPCs that can climb." + 
+	"In order for it to work, the following conditions need to be observed:" + 
+	"1. Place the nodes so that their centers are 8 units away from the wall surface" + 
+	"2. Make sure their angles are facing the wall surface (similar to how cover nodes need to face their cover)" + 
+	"3. Align the bottom node on the ground plane and top node on the upper plane" + 
+	"4. If using a ladder with a model, make it non-solid, or it'll interfere with the nodes" + 
+	"5. Check the node connection in-game with ai_show_connect - climb nodes are connected by purple lines." 
 [
 ]
 
@@ -4048,7 +4094,10 @@
 	"An invisible omnidirectional lightsource."
 [
 	target(target_destination) : "Entity To Point At" : : "The name of an entity in the map that the spotlight will point at. This will override the spotlight's angles."
-	spawnflags(Flags) = [ 1 : "[1] Initially dark" : 0 ]
+	spawnflags(Flags) =
+	[
+		1 : "[1] Initially dark" : 0 
+	]
 	_distance(integer) : "Maximum Distance" : 0 : "This is the distance that light is allowed to cast."
 ]
 
@@ -4075,7 +4124,10 @@
 	_exponent(integer) : "Focus" : 1 : "Higher focus creates a sharper light edge, and focus below 1 makes it softer."
 	_distance(integer) : "Maximum distance" : 0 : "This is the distance that light is allowed to cast."
 	pitch(angle_negative_pitch) : "Pitch" : -90
-	spawnflags(Flags) = [ 1 : "[1] Initially dark" : 0 ]
+	spawnflags(Flags) =
+	[
+		1 : "[1] Initially dark" : 0
+	]
 ]
 
 @PointClass base(Targetname, Parentname, Angles) iconsprite("editor/light.vmt") sphere(distance) lightcone()  line(0 128 0, targetname, target) = light_dynamic : 
@@ -5022,7 +5074,7 @@
 ]
 
 @SolidClass base( Targetname ) = func_smokevolume : 
-	"A brush entity that spawns smoke particles within its volume."
+	"A brush entity that spawns smoke particles within its volume. Brush must be at least 48 units tall."
 [
 	spawnflags(flags) =
 	[
@@ -5038,7 +5090,7 @@
 
 	RotationSpeed(float) : "Rotation Speed (degrees/sec)" : 10 : "The speed that the particles should rotate, in degrees per second."
 	MovementSpeed(float) : "Movement Speed (units/sec)" : 10 : "The speed that the particles should move around, in units/inches per second."
-	Density(float) : "Density [0..1]" : 1
+	Density(float) : "Density [0..1]" : 1 : "Set the particle density. It should be a range from 0 to 1."
 
 	// Inputs
 	input SetRotationSpeed(float) : "Set the particle rotation speed (in degrees per second)."
@@ -8386,7 +8438,7 @@
 	output OnOut(void) : "Fired whenever the prop completes its 'Out' animation."
 ]
 
-@BaseClass base(Targetname, Global, Angles, Studiomodel, BreakableProp, RenderFields, DXLevelChoice, Parentname, BaseFadeProp, DamageFilter) = BasePropPhysics
+@BaseClass base(Targetname, Global, Angles, Studiomodel, BreakableProp, RenderFields, DXLevelChoice, BaseFadeProp, DamageFilter) = BasePropPhysics
 [ 
 	spawnflags(flags) = 
 	[
@@ -8407,6 +8459,7 @@
 		8388608: "[8388608] Zombies can't swat" : 0
 	]
 	
+	parentname(target_destination) : "Parent" : : "The name of this entity's parent in the movement hierarchy. WARNING: May not function correctly for prop_physics & lead to console spam errors (fps loss). Use physics constraints instead."
 	minhealthdmg(integer) : "Min Damage to Hurt" : 0 : "The prop will ignore any damage events if the damage is less than this amount."
 	shadowcastdist(integer) : "Shadow Cast Distance" : 0 : "Use this to override how far this object casts shadows. 0 = default distance."
 	physdamagescale(float) : "Physics Impact Damage Scale" : "0.1" : "Scales damage energy when this object is hit by a physics object. NOTE: 0 means this feature is disabled for backwards compatibility.\nSet to 1.0 for materials as strong as flesh, smaller numbers indicate stronger materials."
@@ -8851,7 +8904,7 @@
 		7: "squeak stop"
 		8: "quick stop"
 	]
-	volume(string) : "Sound Volume 0.0 - 1.0" : "0.85"
+	volume(float) : "Sound Volume 0.0 - 1.0" : "0.85"
 ]
 
 @BaseClass base(Targetname, Parentname, RenderFields, Global, PlatSounds) = Trackchange
@@ -8877,7 +8930,7 @@
 [
 	spawnflags(flags) =
 	[
-		1 : "[1] No Pitch (X-rot, pitch never changes as it moves)" : 0
+		1 : "[1] No Pitch (X-Axis rotation, Pitch never changes as it moves)" : 0
 		2 : "[2] No User Control" : 0
 		4 : "[4] Forward Only (The controlling player may only move the entity forward, or stop it.)" : 0
 		8 : "[8] Passable" : 0
