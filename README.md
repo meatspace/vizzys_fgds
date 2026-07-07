@@ -6,17 +6,20 @@
 `steamapps\sourcemods\mapbase_shared\shared_misc`
 then add half-life2.fgd to Hammer config.
 
+
 <ins>Entropy Zero 2 install:</ins> Click code, Download .zip, extract, copy & overwrite `entropyzero2` folder at:
 `steamapps\common\EntropyZero2\entropyzero2`
 then add EntropyZero2.fgd to Hammer config.
 
+
 <ins>Map Labs install:</ins> Click code, Download .zip, extract, copy the 3 folders inside maplabs `/ bin / materials / models` directly to the map lab templates base folder.
 Overwrite if asked. You can also install to /custom folder for cleaner storage. Lastly add half-life2.fgd in /bin folder to Hammer.
+(NOTE: Map Labs FGD's have slightly different values but are otherwise 99% equal to Mapbase FGD's.)
 
-<ins>Garrysmod install:</ins> Click code, Download .zip, extract, copy & overwrite `garrysmod` folder at:
+
+<ins>Garrysmod (x64) install:</ins> Click code, Download .zip, extract, copy & overwrite `garrysmod` folder at:
 `steamapps\common\garrysmod`
-
-NOTE: Map Labs FGD's have slightly different values but are otherwise 99% equal to Mapbase FGD's. Gmod fgds are from x64 branch.
+(NOTE: gmod .fgd's tend to be overwritten with every update.)
 
 .psd files are for Adobe Photoshop
 ----
