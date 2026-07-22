@@ -2452,6 +2452,16 @@
 		"999999" : "Unlimited"
 	]
 
+GrenadeType(choices) : "Grenade Type" : "" =
+    [
+        "weapon_crowbar" : "Crowbar"
+        "weapon_stunstick" : "Stunstick"
+        "npc_grenade_frag" : "Grenade"
+        "npc_grenade_hopwire" : "Xen Grenade"
+        "npc_manhack" : "Manhack"
+        "" : "Random" //not tested but probably works
+    ]
+
 	// Inputs
 	input StartSprint(void) : "Forces the zombine to sprint."
 	input PullGrenade(void) : "Forces the zombine to pull a grenade."

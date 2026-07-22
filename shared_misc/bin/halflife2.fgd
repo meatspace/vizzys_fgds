@@ -5384,6 +5384,25 @@
 		1 : "Yes"
 	]	
 
+	spawnflags(flags) = 
+	[
+		1 : "[1] Start Asleep" : 0
+		2 : "[2] Don't take physics damage" : 0
+		4 : "[4] Debris (Don't collide with the player or other debris)" : 0
+		8 : "[8] Motion Disabled" : 0
+		64 : "[64] Enable motion on Gravity Gun grab" : 0
+		128 : "[128] Not affected by rotor wash" : 0
+		256 : "[256] Generate output on +USE " : 1
+		512 : "[512] Prevent pickup" : 0
+		1024: "[1024] Prevent motion enable on player bump" : 0
+		4096: "[4096] Debris with trigger interaction" : 0
+		8192: "[8192] Force server-side (Multiplayer only)" : 0
+		16384: "[16384] Radius pickup (Easier to pickup)" : 0
+		1048576: "[1048576] Gravity Gun can ALWAYS pick up. No matter what." : 0
+		2097152: "[2097152] No collisions" : 0
+		8388608: "[8388608] Zombies can't swat" : 0
+	]
+
 	// Outputs
 	output PlayerOn(void) : "Player entered the vehicle"
 	output PlayerOff(void) : "Player exited the vehicle"

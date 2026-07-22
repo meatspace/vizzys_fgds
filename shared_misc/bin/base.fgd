@@ -922,11 +922,11 @@
 	]
 	pattern(string) : "Custom Appearance" : "" : "Set a custom pattern of light brightness for this light. Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
 	_constant_attn(string)	: "Constant" : "0" :  "Constant/Linear/Quadratic define a ratio which determines the falloff behavior. " +
-		"The constant term causes the light to remain at a constant brightness."
+		"The constant term causes the light to remain at a constant brightness. Max value of 10,000."
 	_linear_attn(string)	: "Linear" : "0" :  "Constant/Linear/Quadratic define a ratio which determines the falloff behavior. " +
-		"The linear term falls off at a constant rate depending on the distance travelled."
-	_quadratic_attn(string)	: "Quadratic" : "1" : "Constant/Linear/Quadratic define a ratio which determines the falloff behaviour. " +
-		"The quadratic term falls off by the square of the distance. This is how light works in reality."
+		"The linear term falls off at a constant rate depending on the distance travelled. Max value of 10,000."
+	_quadratic_attn(string)	: "Quadratic" : "1" : "Constant/Linear/Quadratic define a ratio which determines the falloff behavior. " +
+		"The quadratic term falls off by the square of the distance. This is how light works in reality. Max value of 10,000."
 	_fifty_percent_distance(string) : "50 percent falloff distance" : "0" : "Distance at which brightness should fall off to 50%. If set, overrides linear constant and quadratic parameters."
 	_zero_percent_distance(string) : "0 percent falloff distance" : "0" : "Distance at which brightness should fall off to negligible (1/256)%. Must set _fifty_percent_distance to use."
 	_hardfalloff(integer) : "Hard falloff" : 0 : "If set, causes lights to fall to exactly zero beyond the zero percent distance. May cause unrealistic lighting if not used carefully."
@@ -1099,7 +1099,7 @@
 @BaseClass = worldbase
 [
 	message(string) : "Map Description / Title" : : "A description/title for your map. This is not used in the code, but it's saved in the VMF and can be used for metadata purposes."
-	skyname(choices) : "Skybox Texture Name" : "sky_day01_01" : "Skybox name. Pick or enter your own .vmt name, MINUS the suffix (ft, bk, up, etc.)" =
+	skyname(choices) : "Skybox Texture Name" : "sky_day01_01" : "Skybox name. Pick or enter your own, MINUS the suffix (ft, bk, up, etc.)" =
 	[
 	"sky_day01_01" : "sky_day01_01"
 	"sky_day01_04" : "sky_day01_04"
@@ -2079,7 +2079,7 @@
 	iMagnitude(Integer) : "Magnitude" : 100 : "The amount of damage done by the explosion."
 	// If no radius override, magnitude will determine radius.
 	iRadiusOverride(Integer) : "Radius Override" : 0 : "If specified, the radius in which the explosion damages entities. If unspecified, the radius will be based on the magnitude."
-	DamageForce(float) : "Damage Force" : 0 : "Overrides push force. If unspecified, the explosion won't push. BUG: disparity between force applied to players and force applied to physics objs." //added by vizzys
+	DamageForce(float) : "Damage Force" : 0 : "Overrides push force. If unspecified, the explosion won't push. BUG: disparity between force applied to players and force applied to physics objects." //added by vizzys
 	fireballsprite(sprite) : "Fireball Sprite" : "sprites/zerogxplode.vmt"
 	rendermode(choices) : "Render Mode" : 5 =
 	[
@@ -2858,7 +2858,7 @@
 
 	gustduration(integer) : "Gust Duration" : 5 : "How long will the wind gust for."
 
-	gustdirchange(integer) : "Max gust dir change (degrees)" : 20 : "Maximum amount that the wind's direction changes due to a gust."
+	gustdirchange(integer) : "Max gust direction change (degrees)" : 20 : "Maximum amount that the wind's direction changes due to a gust."
 	
 	treeswayscale(float) : "Tree sway scale" : "1.0" : "The scale at which this env_wind affects $treeSway. Set to 0 to not affect $treeSway. (Only one env_wind should affect $treeSway)"
 	
@@ -4110,7 +4110,7 @@
 	_lightHDR(color255) : "BrightnessHDR" : "-1 -1 -1 1" : "Color and brightness of this light when compiling in HDR mode. '-1 -1 -1 1' copies values from Brightness."
 	_lightscaleHDR(float) : "BrightnessScaleHDR" : "1" : "Amount to scale the light by when compiling for HDR."
 	_ambientHDR(color255) : "AmbientHDR" : "-1 -1 -1 1"
-	_AmbientScaleHDR(float) : "AmbientScaleHDR" : "1" : "Amount to scale the ambient light by when compiling for hdr."
+	_AmbientScaleHDR(float) : "AmbientScaleHDR" : "1" : "Amount to scale the ambient light by when compiling for HDR."
 	pitch(integer) : "Pitch" : 0 : "The downward pitch of the light from the sun. 0 is horizontal, -90 is straight down."
 	SunSpreadAngle(float) : "SunSpreadAngle" : 0 : "The angular extent of the sun for casting soft shadows. Higher numbers are more diffuse. 0.5 is a good starting value. 3 for cloudy skies."
 ]
@@ -4917,7 +4917,7 @@
 	]
 	
 	axis(axis) : "Hinge Axis"
-	distance(float) : "Rotation Distance (deg)" : 90 : "The amount, in degrees, that the door should rotate when opened."
+	distance(float) : "Rotation Distance (degrees)" : 90 : "The amount, in degrees, that the door should rotate when opened."
 	speed(integer) : "Speed" : 100 : "The speed at which the door moves."
 	soundopenoverride(sound) : "Fully Open Sound" : : "Sound played when the door has finished opening."
 	soundcloseoverride(sound) : "Fully Closed Sound" : : "Sound played when the door has finished closing."
@@ -5226,7 +5226,11 @@
 
 	// Inputs
 	input Enable(void) : "Enable the point_viewcontrol, and start controlling the player's view."
-	input Disable(void) : "Disable the point_viewcontrol, and stop controlling the player's view."
+	input Disable(void) : "Disable the point_viewcontrol, and stop controlling the player's view."	
+	input SetFOV(float) : "Set the player's FOV when using the camera."	
+	input SetFOVRate(float) : "Set how quickly the FOV should be set."
+	input SetTrackSpeed(float) : "Set the cameras track speed. TODO check: Might be hardcoded at 40 making this input useless?"	
+	input SetTargetAttachment(float) : "Set the camera to focus on the specified attachment."
 
 	// Outputs
 	output OnEndFollow(void) : "Fired when the point_viewcontrol deactivates, due to the Disable input being received, the Entity to Look At being destroyed, or the Hold Time expiring."
@@ -5304,7 +5308,7 @@
 	"Use this entity to branch between two potential sets of events."
 [
 	// Keys
-	initialvalue(choices) : "Initial value" : 0 : "Initial value for the boolean value (0 or 1)." = 
+	initialvalue(choices) : "Initial value" : 0 : "Initial value for the Boolean value (0 or 1)." = 
 	[
 		0 : "0 (False)"
 		1 : "1 (True)"
@@ -8260,8 +8264,8 @@
 		0 : "No"
 		1 : "Yes"
 	]
-	fademindist(float) : "Start Fade Dist/Pixels" : -1 : "Distance at which the prop starts to fade (<0 = use fademaxdist). If 'Screen Space Fade' is selected, this represents the number of pixels wide covered by the prop when it starts to fade."
-	fademaxdist(float) : "End Fade Dist/Pixels" : 0 : "Maximum distance at which the prop is visible (0 = don't fade out). If 'Screen Space Fade' is selected, this represents the *minimum* number of pixels wide covered by the prop when it fades."
+	fademindist(float) : "Start Fade Distance/Pixels" : -1 : "Distance at which the prop starts to fade (<0 = use fademaxdist). If 'Screen Space Fade' is selected, this represents the number of pixels wide covered by the prop when it starts to fade."
+	fademaxdist(float) : "End Fade Distance/Pixels" : 0 : "Maximum distance at which the prop is visible (0 = don't fade out). If 'Screen Space Fade' is selected, this represents the *minimum* number of pixels wide covered by the prop when it fades."
 	fadescale(float) : "Fade Scale" : 1 : "If you specify a fade in the worldspawn, or if the engine is running under dx7 [hl2/ep1/portal] or dx8 [ep2/tf], then the engine will forcibly fade out props even if fademindist/fademaxdist isn't specified." +
 												 " This scale factor gives you some control over the fade. Using 0 here turns off the forcible fades." +
 												 " Numbers smaller than 1 cause the prop to fade out at further distances, and greater than 1 cause it to fade out at closer distances."
@@ -8555,7 +8559,7 @@
 	// Inputs
 	input Ignite(void) : "Ignite, burst into flames."
 	input IgniteLifetime(float) : "Ignite, with a parameter lifetime."
-	input IgniteNumHitboxFires(integer) : "Ignite, with a parameternumber of hitbox fires."
+	input IgniteNumHitboxFires(integer) : "Ignite, with a parameter number of hitbox fires."
 	input IgniteHitboxFireScale(float) : "Ignite, with a parameter hitbox fire scale."
 ]
 
@@ -8674,7 +8678,7 @@
 @SolidClass base(func_areaportal) color(0 255 255) = func_areaportal_oneway :	"An areaportal that is only open when viewed from one direction."
 [
 	origin_(origin) readonly : "Origin" : : "Point from which the areaportal's location is determined (they are a special case and cannot use the normal value). Read-only."
-	group(string) : "One-way group" : : "Optimization: oneway portals in the same group share a single closed/open state. Use this, for example, on walls full of one-way windows."
+	group(string) : "One-way group" : : "Optimization: one-way portals in the same group share a single closed/open state. Use this, for example, on walls full of one-way windows."
 	onewayfacing(angle) : "Open direction" : "0 0 0" : "The portal will be open when the player is within 90 degrees of this direction."
 	avoidpop(choices) : "Avoid latency pop" : 0 : "Enable this if it becomes noticeable that the portal stays closed momentarily after the player walks past it. The portal will open 80 units in advance." =
 	[
@@ -9162,7 +9166,7 @@
 	"A trigger volume that autosaves when the player touches it."
 [
 	master(target_destination) : "Master" : : "Legacy support: The name of a master entity. If the master hasn't been activated, this entity will not activate."
-	NewLevelUnit(choices) : "Force New Level Unit" : 0 : "If set, the save will discard any savedata from previous levels, for the purpose of keeping savegame filesizes down. Can only be safely used if there is no way for the player to return to previous levels." =
+	NewLevelUnit(choices) : "Force New Level Unit" : 0 : "If set, the save will discard any savedata from previous levels, for the purpose of keeping savegame file sizes down. Can only be safely used if there is no way for the player to return to previous levels." =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -10194,16 +10198,16 @@
 	"Place one copy of this entity inside of an instance.  Whenever you add a $parameter for the instance, get the properties " +
 	"of this entity.  It will auto-populate it with the variables and allow you to indicate the variable type."
 [
-	parm1(instance_parm) : "Parm" : : "This is a parameter.  It goes in the form of $variable type."
-	parm2(instance_parm) : "Parm" : : "This is a parameter.  It goes in the form of $variable type."
-	parm3(instance_parm) : "Parm" : : "This is a parameter.  It goes in the form of $variable type."
-	parm4(instance_parm) : "Parm" : : "This is a parameter.  It goes in the form of $variable type."
-	parm5(instance_parm) : "Parm" : : "This is a parameter.  It goes in the form of $variable type."
-	parm6(instance_parm) : "Parm" : : "This is a parameter.  It goes in the form of $variable type."
-	parm7(instance_parm) : "Parm" : : "This is a parameter.  It goes in the form of $variable type."
-	parm8(instance_parm) : "Parm" : : "This is a parameter.  It goes in the form of $variable type."
-	parm9(instance_parm) : "Parm" : : "This is a parameter.  It goes in the form of $variable type."
-	parm10(instance_parm) : "Parm" : : "This is a parameter.  It goes in the form of $variable type."
+	parm1(instance_parm) : "Parameter" : : "This is a parameter.  It goes in the form of $variable type."
+	parm2(instance_parm) : "Parameter" : : "This is a parameter.  It goes in the form of $variable type."
+	parm3(instance_parm) : "Parameter" : : "This is a parameter.  It goes in the form of $variable type."
+	parm4(instance_parm) : "Parameter" : : "This is a parameter.  It goes in the form of $variable type."
+	parm5(instance_parm) : "Parameter" : : "This is a parameter.  It goes in the form of $variable type."
+	parm6(instance_parm) : "Parameter" : : "This is a parameter.  It goes in the form of $variable type."
+	parm7(instance_parm) : "Parameter" : : "This is a parameter.  It goes in the form of $variable type."
+	parm8(instance_parm) : "Parameter" : : "This is a parameter.  It goes in the form of $variable type."
+	parm9(instance_parm) : "Parameter" : : "This is a parameter.  It goes in the form of $variable type."
+	parm10(instance_parm) : "Parameter" : : "This is a parameter.  It goes in the form of $variable type."
 ]
 
 @SolidClass base(Trigger) = trigger_apply_impulse : 
@@ -10219,7 +10223,7 @@
 [
 	hint_replace_key(string) : "Replace Key" : : "Hints with the same Replace Key will replace each other when displayed at the same time. Use different values for each hint if you would like to have multiple hints displaying at once."
 	hint_target(target_destination) : "Target Entity" : : "The entity to show this hint on top of. The entity used must exist on the client, info_target_instructor_hint can be parented to server only entities for this purpose."
-	hint_static(Choices) : "Positioning" : 0 : "Either show at the position of the Target Entity. Or show the hint directly on the hud at a fixed position." =
+	hint_static(Choices) : "Positioning" : 0 : "Either show at the position of the Target Entity. Or show the hint directly on the HUD at a fixed position." =
 	[
 		0 : "Follow the Target Entity"
 		1 : "Show on the HUD"
