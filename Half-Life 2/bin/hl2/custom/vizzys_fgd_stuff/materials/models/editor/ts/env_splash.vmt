@@ -1,0 +1,7 @@
+UnlitGeneric
+{
+	// Texture by Ficool2
+	$baseTexture "models/editor/ts/env_splash"
+	$translucent 1
+	$model 1
+}
