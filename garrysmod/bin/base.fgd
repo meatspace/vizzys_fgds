@@ -5181,6 +5181,13 @@
 	output OnPlayerUse(void) : "Fired when the player tries to +USE the physbox. This output will fire only if the Generate output on +USE spawnflag is set."
 ]
 
+ @SolidClass base(func_physbox) = func_physbox_multiplayer: "This entity is identical to func_physbox, " +
+     "except the runtime collisions use a more bouncy method that avoids " +
+     "the prediction errors normal physics objects get. Not solid to players."
+ [
+ //inherits from func_physbox 
+ ]
+
 @BaseClass base(Targetname) = TwoObjectPhysics
 [
 	spawnflags(flags) =
