@@ -3098,7 +3098,7 @@
 		"matches the given target, then tell the NPC to stop this schedule if it is running."
 ]
 
-@PointClass base(Targetname iconsprite("editor-ficool2/ai_citizen_response_system") = ai_citizen_response_system :
+@PointClass base(Targetname) iconsprite("editor-ficool2/ai_citizen_response_system") = ai_citizen_response_system :
 	"If placed in the level, will manage citizens responses to player's actions."
 [
 	// Inputs

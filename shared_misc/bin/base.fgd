@@ -1063,7 +1063,6 @@
 		2: "[2] NPCs" : 0
 		4: "[4] Pushables (Deprecated)": 0
 		8: "[8] VPhysics Objects" : 0
-		8192: "[8192] Items (weapons, items, projectiles)" : 0
 		16: "[16] Only player ally NPCs" : 0
 		32: "[32] Only clients in vehicles" : 0
 		64: "[64] Everything (not including physics debris)" : 0
@@ -1071,6 +1070,7 @@
 		1024: "[1024] Physics debris" : 0
 		2048: "[2048] Only NPCs in vehicles (respects player ally flag)" : 0
 		4096: "[4096] Disallow Bots" : 0
+		8192: "[8192] Items (weapons, items, projectiles)" : 0
 	]
 
 	filtername(filterclass) : "Filter Name" : : "Filter to use to see if activator triggers me. See filter_activator_name for more explanation."
@@ -1307,7 +1307,7 @@
 		0: "Solid"
 		1: "Nonsolid"
 	]
-	vrad_brush_cast_shadows(choices) : "Shadows" : 0 : "Set this if this brush casts lightmap shadows." =
+	vrad_brush_cast_shadows(choices) : "Shadows" : 0 : "Set if this brush casts lightmap shadows." =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -1749,7 +1749,7 @@
 		0 : "No"
 		1 : "Yes"
 	]	
-	vrad_brush_cast_shadows(choices) : "Shadows" : 0 : "Set this if this brush casts lightmap shadows." =
+	vrad_brush_cast_shadows(choices) : "Shadows" : 0 : "Set if this brush casts lightmap shadows." =
 	[
 		0 : "No static shadow"
 		1 : "Yes, Cast static shadow"
@@ -2025,6 +2025,7 @@
 
 	// Inputs
 	input Activate(void) : "Activates the effect."
+	input Use(void) : "Activates the effect."
 ]
 
 @PointClass base(Targetname, Parentname) iconsprite("editor-ficool2/env_blood") color(255 0 0) = env_blood : 
@@ -4091,14 +4092,14 @@
 //
 //-------------------------------------------------------------------------
 @PointClass light() iconsprite("editor/light.vmt") base(Targetname, Light) sphere(_fifty_percent_distance) sphere(_zero_percent_distance) sphere(_hardfalloff) sphere(_distance) = light :
-	"An invisible omnidirectional lightsource."
+	"An invisible omnidirectional light source."
 [
 	target(target_destination) : "Entity To Point At" : : "The name of an entity in the map that the spotlight will point at. This will override the spotlight's angles."
 	spawnflags(Flags) =
 	[
 		1 : "[1] Initially dark" : 0 
 	]
-	_distance(integer) : "Maximum Distance" : 0 : "This is the distance that light is allowed to cast."
+	_distance(integer) : "Maximum Distance" : 0 : "This is the distance that light is allowed to cast, in units."
 ]
 
 @PointClass base(Angles) iconsprite("editor/light_env.vmt") = light_environment : 
@@ -4122,7 +4123,7 @@
 	_inner_cone(integer) : "Inner (bright) angle" : 30
 	_cone(integer) : "Outer (fading) angle" : 45
 	_exponent(integer) : "Focus" : 1 : "Higher focus creates a sharper light edge, and focus below 1 makes it softer."
-	_distance(integer) : "Maximum distance" : 0 : "This is the distance that light is allowed to cast."
+	_distance(integer) : "Maximum distance" : 0 : "This is the distance that light is allowed to cast, in units."
 	pitch(angle_negative_pitch) : "Pitch" : -90
 	spawnflags(Flags) =
 	[
@@ -4412,9 +4413,9 @@
 ]
 
 // disabled this because it literally does not exist -vizzys
-//@MoveClass base(Targetname, Parentname, Mover, KeyFrame)  iconsprite("vizzys-icons/move_track") animator() = move_track : 
+// @MoveClass base(Targetname, Parentname, Mover, KeyFrame)  iconsprite("vizzys-icons/move_track") animator() = move_track : 
 //	"Track Move Behavior"
-//[
+// [
 //	WheelBaseLength(integer) : "Distance between the wheels" : 50
 //	Damage(integer) : "Damage done to blocking entities" : 0
 //	NoRotate(choices) : "Turn to face down path" : 0 =
@@ -4422,7 +4423,7 @@
 //		0 : "Yes"
 //		1 : "No"
 //	]
-//]
+// ]
 
 //-------------------------------------------------------------------------
 //
@@ -5094,7 +5095,7 @@
 
 	// Inputs
 	input SetRotationSpeed(float) : "Set the particle rotation speed (in degrees per second)."
-	input SetMovementSpeed(float) : "Set the particle movement speed (in units/inches per second)."
+	input SetMovementSpeed(float) : "Set the particle movement speed (in units per second)."
 	input SetDensity(float) : "Set the particle density. It should be a range from 0 to 1."
 ]
 
@@ -5770,8 +5771,8 @@
 		128 : "[128] Hears sentences (Combine dialogue, etc.)" : 1
 	]
 
-	Sensitivity(float) : "Sensitivity (0 - 10)" : 1 : "Microphone sensitivity, 0=deaf, 1=default, 10=extremely sensitive). Only applicable in Measuring mode."
-	SmoothFactor(float) : "Smoothing (0 - 1)" : 0 : "Smoothing factor, 0=no smoothing, 1=maximum smoothing). Only applicable in Measuring mode."
+	Sensitivity(float) : "Sensitivity (0 - 10)" : 1 : "Microphone sensitivity, 0=deaf, 1=default, 10=extremely sensitive. Only applicable in Measuring mode."
+	SmoothFactor(float) : "Smoothing (0 - 1)" : 0 : "Smoothing factor, 0=no smoothing, 1=maximum smoothing. Only applicable in Measuring mode."
 	MaxRange(float) : "Maximum hearing range (0=infinite)" : 240 : "Sounds beyond this range won't be heard, irrelevant of attenuation. "+
 		"WARNING: setting this to zero (or a value > 1024) when the microphone is in Speaker mode can be very bad for performance!!"
 		
@@ -9301,7 +9302,7 @@
 	
 	target(target_destination) : "Look Target" : : "The name of the entity to be looked at."
 	LookTime(string) : "LookTime" : "0.5" : "The time, in seconds, that the player must look at the target before firing the output. Resets if player leaves trigger, or looks outside the Field of View threshold."
-	FieldOfView(string) : "FieldOfView" : "0.9" : "How close the player has to be looking at the target. 1.0 = perfectly straight ahead\n 0.0 = +/- 90 degrees\n -1.0 = all directions) This is actually cos(angle)."
+	FieldOfView(string) : "FieldOfView" : "0.9" : "How close the player has to be looking at the target. 1.0 = perfectly straight ahead\n 0.0 = +/- 90 degrees\n -1.0 = all directions. This is actually cos(angle)."
 	Timeout(float) : "Timeout" : "0" : "The time, in seconds, to wait after player enters the trigger before firing the OnTimeout output, 0 = never."
 	
 	UseLOS(choices) : "Require LOS" : 0 : "If enabled, the player must have full LOS to the target entity in order to count as ''looking''." =
