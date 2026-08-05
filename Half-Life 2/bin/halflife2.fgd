@@ -3182,7 +3182,7 @@
 //
 //-------------------------------------------------------------------------
 
-@PointClass base(EnvGlobal) size(-8 -8 -8, 8 8 8) = env_global : 
+@PointClass base(EnvGlobal) iconsprite("editor/env_global.vmt") = env_global : 
 	"An entity to control a game-specific global states."
 [
 	globalstate(choices) : "Global State to Set" =
