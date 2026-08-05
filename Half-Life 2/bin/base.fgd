@@ -4872,7 +4872,7 @@
 		"all entities EXCEPT those whose mass is greater than the given float will pass the filter."
 ]
 
-@FilterClass base(BaseFilter, DamageTypes) iconsprite("vizzys-icons/filter_damage_type") = filter_damage_type :
+@FilterClass base(BaseFilter) iconsprite("vizzys-icons/filter_damage_type") = filter_damage_type :
 	"A damage filter that filters by the type of damage inflicted. This can only be used as a damage filter, not as an activator filter."
 [
 	damagetype(choices) : "Damage Type" : 0 : "The type(s) of damage associated with this entity." =
@@ -5053,7 +5053,7 @@
 	input Teleport(void) : "Teleport the target entity."
 ]
 
-@PointClass base(Targetname, Parentname, DamageTypes) iconsprite("editor-ficool2/point_hurt") sphere(DamageRadius) line(255 0 0, targetname, damagetarget) = point_hurt :
+@PointClass base(Targetname, Parentname) iconsprite("editor-ficool2/point_hurt") sphere(DamageRadius) line(255 0 0, targetname, damagetarget) = point_hurt :
 	"An entity that does damage to all entities in a radius around itself, with a specified delay." +
 	"If 'Target Entity' is specified, the damage is only done to that entity."
 [
@@ -6708,7 +6708,7 @@
 ]
 
 
-@PointClass base(Targetname, DamageFilter, PlayerProxyPlayer) iconsprite("editor/logic_playerproxy.vmt") = logic_playerproxy :
+@PointClass base(Targetname, DamageFilter) iconsprite("editor/logic_playerproxy.vmt") = logic_playerproxy :
 	"An entity that is used to relay inputs/outputs to the player and back to the world."
 [
 	// Outputs

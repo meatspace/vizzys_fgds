@@ -1519,7 +1519,7 @@
 		2097152 : "[2097152] Cast long shadow (2048 units)" : 0
 	]
 
-	InitialSpeed(string) : "Initial Speed" : "0"
+
 	GracePeriod(float) : "Grace Period" : "2.0" : "Time in seconds the helicopter has to see the player before he starts shooting"
 	PatrolSpeed(float) : "Patrol Speed" : "0" : "Speed at which the helicopter moves if he has no enemy."
 
@@ -4038,7 +4038,7 @@
 	input SetDensity(float) : "Set the density of the starfield. It's a multiplier, so 1 is the default."
 ]
 
-@PointClass size( -4 -4 -4, 4 4 4 ) base(Targetname, Parentname, Angle, RenderFields) = env_flare : "Flare"
+@PointClass size( -4 -4 -4, 4 4 4 ) base(Targetname, Parentname, Angles, RenderFields) = env_flare : "Flare"
 [
 	scale(float) : "Scale" : 1
 	duration(float) : "Duration" : 30
