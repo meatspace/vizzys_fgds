@@ -4031,7 +4031,7 @@
 	material(material) : "Particle Material" : "particle/particle_noisesphere" : "The material to use for each particle in the explosion."
 ]
 
-@PointClass size( -4 -4 -4, 4 4 4 ) base(Targetname) = env_starfield : "Starfield effect" 
+@PointClass base(Targetname) iconsprite("vizzys-icons/env_starfield") = env_starfield : "Starfield effect" 
 [
 	input TurnOn(void) : "Turn on"
 	input TurnOff(void) : "Turn off"

@@ -1,4 +1,4 @@
 VertexLitGeneric
 {
-	"$baseTexture" "Models\Editor/cone_projected_helper"
+	"$baseTexture" "models/editor/cone_projected_helper"
 }
