@@ -129,7 +129,7 @@
 	output OnFirstBallReinserted(void) : "Fired when the first combine ball is reinserted into the field (only gets triggered when Combine Power supply is checked)"
 ]
 
-@PointClass base(BasePropPhysics) studioprop() = prop_combine_ball :
+@PointClass base(BasePropPhysics) studioprop("models/effects/combineball.mdl") = prop_combine_ball :
 	"A prop that physically simulates as a single rigid body. It can be constrained to other physics objects using hinges "+
 	"or other constraints. It can also be configured to break when it takes enough damage."
 [
