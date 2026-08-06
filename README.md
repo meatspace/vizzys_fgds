@@ -2,12 +2,12 @@
 
 .FGD's For Mapbase, Entropy Zero 2, Map labs (wip), & Garrysmod/TTT (wip)
 
-<ins>Mapbase install:</ins> Click code, Download .zip, extract, copy & overwrite `shared_misc` folder at:
+<ins>Mapbase install:</ins> Click code, Download .zip, extract, copy & overwrite the `shared_misc` folder at:
 `steamapps\sourcemods\mapbase_shared\shared_misc`
 then add half-life2.fgd to Hammer config.
 
 
-<ins>Entropy Zero 2 install:</ins> Click code, Download .zip, extract, copy & overwrite `entropyzero2` folder at:
+<ins>Entropy Zero 2 install:</ins> Click code, Download .zip, extract, copy & overwrite the `entropyzero2` folder at:
 `steamapps\common\EntropyZero2\entropyzero2`
 then add EntropyZero2.fgd to Hammer config.
 
@@ -17,11 +17,17 @@ Overwrite if asked. You can also install to /custom folder for cleaner storage. 
 (NOTE: Map Labs FGD's have slightly different values but are otherwise 99% equal to Mapbase FGD's.)
 
 
-<ins>Garrysmod (x64) install:</ins> Click code, Download .zip, extract, copy & overwrite `garrysmod` folder at:
+<ins>Garrysmod (x64) install:</ins> Click code, Download .zip, extract, copy & overwrite the `garrysmod` folder at:
 `steamapps\common\garrysmod`
-(NOTE: gmod .fgd's tend to be overwritten with every update.)
+(NOTE: gmod .fgd's tend to be overwritten with every single game update.)
+
+<ins>Half-Life 2 install:</ins> Click code, Download .zip, extract, copy & overwrite the `Half-Life 2` folder at:
+`steamapps\common\Half-Life 2`
+then add half-life2.fgd to Hammer config.
+
 
 .psd files are for Adobe Photoshop
+
 ----
 
 | --CREDITS-- |  | Website |
