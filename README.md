@@ -1,6 +1,6 @@
 # Vizzy's enhanced .fgd's! ![alt text](https://cdn.discordapp.com/emojis/860206945943158844.gif?size=32&quality=lossless) 
 
-.FGD's For Mapbase, Entropy Zero 2, Map labs (wip), & Garrysmod/TTT (wip)
+.FGD's For Mapbase, Entropy Zero 2, Map Labs, Garrysmod/TTT, Half-life 2
 
 <ins>Mapbase install:</ins> Click code, Download .zip, extract, copy & overwrite the `shared_misc` folder at:
 `steamapps\sourcemods\mapbase_shared\shared_misc`
