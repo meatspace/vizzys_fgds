@@ -282,11 +282,11 @@
 [
 	spawnflags(Flags) =
 	[
-		32 : "Autostart" : 0
-		64 : "Start Inactive" : 0
-		128 : "Fast Retire" : 0
-		256 : "Out of Ammo" : 0
-		512 : "Citizen modified (Friendly)" : 0
+		32 : "[32] Autostart" : 1
+		64 : "[64] Start Inactive" : 0
+		128 : "[128] Fast Retire (gives up search faster)" : 0
+		256 : "[256] Out of Ammo" : 0
+		512 : "[512] Citizen modified (Friendly)" : 0
 	]
 
 	SkinNumber(integer) : "Skin Number" : 0 : "Which skin to use for this turret. Set to 0 to select randomly."
@@ -318,7 +318,7 @@
 
 	input StartFiring(void) : "Tell the driver to attack nearby enemies with the vehicle's weaponry (if any)"
 	input StopFiring(void) : "Tell the driver to stop attacking nearby enemies with the vehicle's weaponry."
-	input GotoPathCorner(string) : "Tell the driver to go to a specific path corner and continue from there."
+	input GotoPathCorner(target_destination) : "Tell the driver to go to a specific path corner and continue from there."
 ]
 
 @NPCClass base(VehicleDriverNPC) studio("models/roller.mdl") = npc_vehicledriver :
@@ -353,8 +353,8 @@
 [
 	spawnflags(Flags) =
 	[
-		65536 : "No Rocket Attacks" : 0
-		131072 : "No Gun Attacks" : 0
+		65536 :  "[65536] No Rocket Attacks" : 0
+		131072 : "[131072] No Gun Attacks" : 0
 	]
 
 	drivermaxspeed(float) : "Maxspeed (percentage of vehicle's maxspeed)." : 1
@@ -374,8 +374,8 @@
 [
 	spawnflags(Flags) =
 	[
-		65536 : "Friendly" : 0
-		131072 : "Use prop_physics collision rules"	: 0
+		65536 :  "[65536] Friendly" : 0
+		131072 : "[131072] Use prop_physics collision rules (Let rollermine go through clip and NPC clip brushes)"	: 0
 		262144 : "Spawn as Alyx-hacked" : 0 // GMOD
 	]
 
@@ -387,16 +387,16 @@
 
 	uniformsightdist(choices) : "Sight Distance" : 0 =
 	[
-		0 : "Ignore distant targets not in a vehicle (default)."
-		1 : "Equal visibility for all targets."
+		0 : "Default: Ignore distant targets not in a vehicle (300 idle, 800 in combat)."
+		1 : "Equal visibility for all targets. (on foot targets 2048 units away)"
 	]
 
 	input TurnOn(void) : "Restore this rollermine to normal functionality."
 	input TurnOff(void) : "Make this rollermine completely inert. Does not run AI and NPCs will ignore it."
 	//input PowerDown(void) : "Shuts down this rollermine." // Duplicate of InteractivePowerDown
 	input JoltVehicle(void) : "Jolt the vehicle this rollermine is attached to, if attached to one."
-	input RespondToChirp(void) : "Plays a 'respont to chirp' sound."
-	input RespondToExplodeChirp(void) : "Plays a 'respont to explode chirp' sound and explodes."
+	input RespondToChirp(void) : "Plays a 'respond to chirp' sound."
+	input RespondToExplodeChirp(void) : "Plays a 'respond to explode chirp' sound and explodes."
 	input ConstraintBroken(void) : "Make the rollermine fall off of a vehicle." //added by vizzys
 	input PowerDown(void) : "Episodic Only. Shut down a hacked rollermine, then explode it after 4 seconds." //added by vizzys
 	output OnPhysGunPickup(void) : "Picked up with Gravity Gun"
@@ -441,12 +441,12 @@
 
 	spawnflags(Flags) =
 	[
-		65536 : "Hidden" : 0
-		131072 : "Laser Viewcone" : 0
-		262144 : "No Corpse" : 0
-		524288 : "Start Disabled" : 0
-		1048576 : "Faster shooting (Episodic)" : 0
-		2097152 : "No sweep away from target (Episodic)" : 0
+		65536 :  "[65536] Hidden (Model is hidden while alive)" : 1
+		131072 : "[131072] Laser Viewcone (Only find player within 35 units of beam. Once seen uses full range of sight to track player)" : 0
+		262144 : "[262144] No Corpse" : 0
+		524288 : "[524288] Start Disabled (The sniper won't shoot anything and can't be killed until sent EnableSniper)" : 0
+		1048576 : "[1048576] Faster shooting (Episodic)" : 0
+		2097152 : "[2097152] No sweep away from target (Episodic)" : 0
 	]
 ]
 
@@ -457,10 +457,10 @@
 
 	type(choices) : "Type of target" : 0 =
 	[
-		0 : "Generic Citizen Beacon"
-		1 : "Magnussen RDU Beacon"
+		0 : "Generic Citizen Beacon (Lambda)"
+		1 : "Magnusson RDU Beacon (Magnusson Device)"
 		2 : "Dog"
-		3 : "Ally Installation"
+		3 : "Ally Installation (Blue triangle with a dot)"
 		4 : "Enemy (Red dot)"
 		5 : "Large Enemy (Striders, big Red dot)"
 	]
@@ -468,7 +468,7 @@
 	mode(choices) : "Mode" : 0 =
 	[
 		0 : "Default"
-		1 : "Sticky - once detected, ignore effective radius."
+		1 : "Sticky (once detected, ignore effective radius)"
 	]
 ]
 
@@ -483,11 +483,11 @@
 	groupname(string) : "Group Name"
 	spawnflags(Flags) =
 	[
-		1 : "Shoot Me" : 0
-		2 : "No Interruptions" : 0
-		// 4 : "Snap Shot" : 0 OBSOLETE NOW but don't overwrite, in case some levels need legacy support.
-		8 : "Resume if Interrupted" : 0
-		16: "Snap to me" : 0
+		1 : "[1] Shoot Me" : 0
+		2 : "[2] No Interruptions" : 0
+		// 4 : "[4] Snap Shot" : 0 OBSOLETE NOW but don't overwrite, in case some levels need legacy support.
+		8 : "[8] Resume if Interrupted" : 0
+		16 : "[16] Snap to me" : 0
 	]
 ]
 
@@ -520,9 +520,9 @@
 
 	spawnflags(Flags) =
 	[
-		65536 : "Burrow away when eluded" : 0
-		131072 : "Use Ground Checks" : 0
-		262144 : "Worker Type (Make into acid antlion)" : 0
+		65536 : "[65536] Burrow away when eluded (When enemies are too far away or unreachable)" : 0
+		131072 : "[131072] Use Ground Checks" : 0
+		262144 : "[262144] Worker Type (Make into acid antlion)" : 0
 	]
 
 	radius(integer) : "Alert Radius" : 256
@@ -550,7 +550,7 @@
 	input IgnoreBugbait(void) : "Ignore bugbait"
 	input HearBugbait(void) : "Hear bugbait"
 	input JumpAtTarget(target_destination) : "The antlion will attempt to jump through or at the target." //added by vizzys
-	output	OnReachedFightGoal(void) : "Fires when the antlion reaches his specified fight-to location"
+	output	OnReachedFightGoal(void) : "Fires when the antlion reaches it's specified fight-to location"
 	output	OnUnBurrowed(void) : "Fires when the antlion unburrows"
 
 ]
@@ -559,8 +559,8 @@
 [
 	spawnflags(Flags) =
 	[
-		65536 : "Create server-side ragdoll on death" : 0
-		131072 : "Use inside footsteps" : 0
+		65536 : "[65536] Create server-side ragdoll on death" : 0
+		131072 : "[131072] Use inside footsteps" : 0
 	]
 
 	startburrowed(choices) : "Start Burrowed" : "No" =
@@ -569,7 +569,7 @@
 		1 : "Yes"
 	]
 
-	allowbark(choices) : "Allow Bark" : "No" =
+	allowbark(choices) : "Allow Bark (Antlion Summon)" : "No" =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -587,7 +587,7 @@
 		1 : "Yes"
 	]
 
-	shovetargets(target_destination) : "Shove Targets" : ""
+	shovetargets(target_destination) : "Shove Targets" : "" : "All entities of this name will be considered shove targets."
 
 	// Inputs
 	input Unburrow(void) : "Unburrow from the ground"
@@ -600,7 +600,7 @@
 	input DisableBark(void) : "Stop the antlion guard from trying to summon antlions"
 	input InvestigateHint(target_destination) : "Sniff around at a hint group until told otherwise"
 	input StopInvestigating(void) : "Stop trying to sniff out the player"
-
+	input SummonedAntlionDied(void) : "Informs the guard that a summoned antlion has died. Automatically sent by summoned antlions when they die. Sending this manually will cause the guard to summon an extra antlion for each time its sent." //added by vizzys
 	input EnablePreferPhysicsAttack(void) : "Prefer to use physics attacks if at all possible, even when inside a cavern."
 	input DisablePreferPhysicsAttack(void) : "Do not prefer to use physics attacks if at all possible, even when inside a cavern."
 
@@ -659,8 +659,8 @@
 
 	spawnflags(flags) =
 	[
-		65536 : "Start hidden" : 0
-		131072 : "Start hanging from ceiling" : 0
+		65536  :  "[65536] Start hidden" : 0
+		131072 :  "[131072] Start hanging from ceiling" : 0
 	]
 
 
@@ -699,18 +699,18 @@
 	health(Integer) : "Health" : 35
 
 	minangle(string) : "Minimum Angle" : "360" : "Angle from the bullseye required for bullseye to be a valid enemy"
-	mindist(string) : "Minimum Distance" : "0" : "Distance from the bullseye required for bullseye to be a valid enemy"
+	mindist(float) : "Minimum Distance" : "0" : "Distance from the bullseye required for bullseye to be a valid enemy"
 
 	autoaimradius(float) : "Autoaim Radius" : "0" : "Radius of autoaim influence. Use ent_autoaim <picker> to visualize."
 
 	spawnflags(Flags) =
 	[
-		65536 : "Not Solid" : 0
-		131072 : "Take No Damage" : 0
-		262144 : "Enemy Damage Only" : 0
-		524288 : "Bleed" : 0
-		1048576 : "Perfect Accuracy" : 0
-		2097152 : "Collide against physics objects (Creates VPhysics Shadow)" : 0
+		65536   : "[65536] Not Solid" : 0
+		131072  : "[131072] Take No Damage" : 0
+		262144  : "[262144] Enemy Damage Only (Can only take damage from enemies)" : 0
+		524288  : "[524288] Bleed when damaged" : 0
+		1048576 : "[1048576] Perfect Accuracy (NPCs have perfect accuracy when shooting this target)" : 0
+		2097152 : "[2097152] Collide against physics objects (Creates VPhysics Shadow)" : 0
 	]
 	output OnTargeted(void) : "Fires when targeted"
 	output OnReleased(void) : "Fires when no longer targeted"
@@ -721,18 +721,18 @@
 [
 	spawnflags(flags) =
 	[
-		65536 : "Check Visibility" : 1
-		131072 : "APC Visibility checks" : 0
-		262144 : "Short memory" : 0
-		524288 : "Can be an enemy" : 0
+		65536 : "[65536] Check Visibility (If not checked, the enemy finder sees though walls)" : 1
+		131072 : "[131072] APC Visibility checks" : 0
+		262144 : "[262144] Short memory" : 0
+		524288  : "[524288] Can be an enemy (Allows this entity to be considered an enemy by other combat characters)" : 0
 	]
-	FieldOfView(string) : "FieldOfView" : "0.2" : "How far to look (1.0 = straight ahead, 0.0 = +/- 90 degrees, -1.0 = all directions)"
-	MinSearchDist(integer) : "Min Search Dist" : 0
-	MaxSearchDist(integer) : "Max Search Dist" : 2048
+	FieldOfView(float) : "FieldOfView" : "0.2" : "The enemy finder's viewcone. (1.0 = straight ahead, 0.0 = +/- 90 degrees, -1.0 = all directions)"
+	MinSearchDist(integer) : "Min Search Distance" : 0 : "Sets the minimum search distance." 
+	MaxSearchDist(integer) : "Max Search Distance" : 2048 : "Sets the maximum search distance." 
 
-	freepass_timetotrigger(float) : "Player pass issue time" : 0 : "Amount of time an enemy is hidden after which a 'free pass' on reaquire is granted"
-	freepass_duration(float) : "Player pass duration" : 0 : "After granted 'free pass', the amount of time a target is allowed before reaquire"
-	freepass_movetolerance(float) : "Player pass move tolerance" : 120 : "After granted 'free pass', the distance the target is allowed to move before reaquire"
+	freepass_timetotrigger(float) : "Player pass issue time" : 0 : "Amount of time an enemy is hidden after which a 'free pass' on reacquire is granted"
+	freepass_duration(float) : "Player pass duration" : 0 : "After granted 'free pass', the amount of time a target is allowed before reacquire"
+	freepass_movetolerance(float) : "Player pass move tolerance" : 120 : "After granted 'free pass', the distance the target is allowed to move before reacquire"
 	freepass_refillrate(float) : "Player pass refill rate" : "0.5" : "After free pass begins expiring, how much the time the target gets back for every second they hide again"
 	freepass_peektime(float) : "Player pass peek time" : 0 : "How long targets in cover are allowed to peek without penalty"
 
@@ -757,20 +757,20 @@
 [
 	spawnflags(flags) =
 	[
-		65536 : "Check Visibility" : 1
-		131072 : "APC Visibility checks" : 0
-		262144 : "Short memory" : 0
-		524288 : "Can be an enemy" : 0
+		65536 : "[65536] Check Visibility" : 1
+		131072 : "[131072] APC Visibility checks" : 0
+		262144 : "[262144] Short memory" : 0
+		524288  : "[524288] Can be an enemy" : 0
 	]
-	FieldOfView(string) : "FieldOfView" : "0.2" : "How far to look (1.0 = straight ahead, 0.0 = +/- 90 degrees, -1.0 = all directions)"
-	MinSearchDist(integer) : "Min Search Dist" : 0
-	MaxSearchDist(integer) : "Max Search Dist" : 2048
+	FieldOfView(float) : "FieldOfView" : "0.2" : "How far to look (1.0 = straight ahead, 0.0 = +/- 90 degrees, -1.0 = all directions)"
+	MinSearchDist(integer) : "Min Search Distance" : 0 : "Sets the minimum search distance." 
+	MaxSearchDist(integer) : "Max Search Distance" : 2048 : "Sets the maximum search distance." 
 
 	SnapToEnt(target_destination) : "Name of entity to snap to" : "" : "Since it can be hard to position these entities with respect to the func_tank brushwork, you can specify an entity name here and this enemyfinder will position itself at the center of that entity."
 
-	freepass_timetotrigger(float) : "Player pass issue time" : 0 : "Amount of time an enemy is hidden after which a 'free pass' on reaquire is granted"
-	freepass_duration(float) : "Player pass duration" : 0 : "After granted 'free pass', the amount of time a target is allowed before reaquire"
-	freepass_movetolerance(float) : "Player pass move tolerance" : 120 : "After granted 'free pass', the distance the target is allowed to move before reaquire"
+	freepass_timetotrigger(float) : "Player pass issue time" : 0 : "Amount of time an enemy is hidden after which a 'free pass' on reacquire is granted"
+	freepass_duration(float) : "Player pass duration" : 0 : "After granted 'free pass', the amount of time a target is allowed before reacquire"
+	freepass_movetolerance(float) : "Player pass move tolerance" : 120 : "After granted 'free pass', the distance the target is allowed to move before reacquire"
 	freepass_refillrate(float) : "Player pass refill rate" : "0.5" : "After free pass begins expiring, how much the time the target gets back for every second they hide again"
 	freepass_peektime(float) : "Player pass peek time" : 0 : "How long targets in cover are allowed to peek without penalty"
 
@@ -796,15 +796,15 @@
 
 	spawnflags(Flags) =
 	[
-		65536 : "Follow player on spawn" : 0
-		131072 : "Medic" : 0
-		262144 : "Random Head" : 1
-		524288 : "Ammo Resupplier" : 0
-		1048576 : "Not Commandable" : 0
-		2097152 : "Don't use Speech Semaphore - OBSOLETE" : 0
-		4194304 : "Random male head" : 0
-		8388608 : "Random female head" : 0
-		16777216 : "Use RenderBox in ActBusies" : 0
+		65536 : "[65536] Follow player on spawn" : 0
+		131072 : "[131072] Medic" : 0
+		262144 : "[262144] Random Head (Will crash game if using Unique model)" : 1
+		524288 : "[524288] Ammo Resupplier" : 0
+		1048576 : "[1048576] Not Commandable" : 0
+		2097152 : "[2097152] Don't use Speech Semaphore - OBSOLETE" : 0
+		4194304 : "[4194304] Random male head" : 0
+		8388608 : "[8388608] Random female head" : 0
+		16777216 : "[16777216] Use RenderBox in ActBusies (Makes collision box as big as the rendering box when in actbusies)" : 0
 	]
 
 	additionalequipment(choices) : "Weapons" : "0" =
@@ -823,7 +823,7 @@
 		"Pistol" : "Pistol"
 		"SMG1" : "SMG1"
 		"SMG1_Grenade" : "SMG1 Grenade"
-		"AR2" : "AR2"
+		"AR2" : "AR2 (Pulse Rifle)"
 		"Buckshot" : "Shotgun"
 		"RPG_Round" : "RPG"
 		"Grenade" : "Grenade"
@@ -871,7 +871,7 @@
 		"models/odessa.mdl" : "Odessa Cubbage"
 	]
 
-	ExpressionOverride(string) : "Facial expression override"
+	ExpressionOverride(string) : "Expression Override" : : "Enter a VCD file to override facial expressions on this NPC."
 
 	notifynavfailblocked(choices) : "Fire output when Nav is blocked?" : 0 =
 	[
@@ -879,9 +879,9 @@
 		1 : "Yes"
 	]
 
-	neverleaveplayersquad(choices) : "Permanent squad member?" : 0 : "A permanent squad member cannot leave the player's squad unless killed or explicity removed by entity I/O. Only use this if you're sure you want to override the default AI." =
+	neverleaveplayersquad(choices) : "Permanent squad member?" : 0 : "A permanent squad member cannot leave the player's squad unless killed or explicitly removed by entity I/O. Only use this if you're sure you want to override the default AI." =
 	[
-		0 : "No. This is default behavior."
+		0 : "No. Default behavior. (Give up if cant get within 600 units of player & LOS after 20 seconds of trying)"
 		1 : "Yes, stay in squad until death."
 	]
 
@@ -899,7 +899,7 @@
 
 	input StartPatrolling(void) : "Patrol whenever I'm idle or alert."
 	input StopPatrolling(void) : "Stop patrolling when I'm idle or alert."
-	input SetCommandable(void) : "Make a previously uncommandable citizen commandable"
+	input SetCommandable(void) : "Makes a previously uncommandable citizen commandable"
 	input SetMedicOn(void) : "Set the medic flag on. Will not change the model or skin of the citizen."
 	input SetMedicOff(void) : "Set the medic flag off. Will not change the model or skin of the citizen."
 	input SetAmmoResupplierOn(void) : "Set the ammo-resupplier flag on. Will not change the model or skin of the citizen."
@@ -911,7 +911,7 @@
 	output OnFollowOrder(void) : "Fires when ordered to follow player"
 	output OnStationOrder(void) : "Fires when ordered to a location by player"
 	output OnPlayerUse(void) : "Fires when a player +USEs the citizen"
-	output OnNavFailBlocked(void) : "Fires when this Citizen's movement fails because he/she is blocked."
+	output OnNavFailBlocked(void) : "Fires when this Citizen's movement fails because they are blocked."
 ]
 
 @NPCClass base(BaseNPC, PlayerAlly) studio("models/Barney.mdl") = npc_fisherman : "Fisherman"
@@ -928,11 +928,11 @@
 		"weapon_smg1" : "SMG1"
 		"weapon_stunstick" : "Stun Stick"
 		"weapon_shotgun" : "Shotgun"
-		"weapon_ar2" : "AR2"
+		"weapon_ar2" : "AR2 (Pulse Rifle)"
 		"0" : "Nothing"
 	]
 
-	ExpressionOverride(string) : "Facial expression override"
+	ExpressionOverride(string) : "Expression Override" : : "Enter a VCD file to override facial expressions on this NPC."	
 	input SetExpressionOverride(string) : "Set facial expression override"
 
 	// Outputs
@@ -943,7 +943,7 @@
 [
 	additionalequipment(choices) : "Weapons" : "weapon_smg1" =
 	[
-		"weapon_ar2" : "AR2"
+		"weapon_ar2" : "AR2 (Pulse Rifle)"
 		"weapon_shotgun" : "Shotgun"
 		"weapon_smg1" : "SMG1"
 		"weapon_stunstick" : "Stun Stick"
@@ -952,9 +952,9 @@
 
 	spawnflags(Flags) =
 	[
-		65536 : "Start LookOff" : 0
-		131072	: "Don't drop grenades" : 0
-		262144 : "Don't drop ar2 alt fire (elite only) " : 0
+		65536 :  "[65536] Start LookOff" : 0
+		131072	: "[131072] Don't drop grenades" : 0
+		262144  : "[262144] Don't drop AR2 alt fire (elite only) " : 0
 	]
 
 	NumGrenades(choices) : "Number of Grenades" : "5" =
@@ -1007,7 +1007,7 @@
 [
 	spawnflags(Flags) =
 	[
-		65536 : "Check LOS" : 1
+		65536  :  "[65536] Check LOS (Don't shoot once enemy takes cover, unless using SetEnemyEntity)" : 1
 	]
 
 	StartOn(choices) : "Start On" : 0 =
@@ -1024,7 +1024,7 @@
 	[
 		0: "Off"
 		1: "On"
-		2: "On Homing"
+		2: "On Homing (Only a small trail)"
 	]
 	LaunchSmoke(choices) : "Launch Smoke" : 1 =
 	[
@@ -1139,7 +1139,7 @@
 
 @PointClass base(Targetname, Parentname, EnableDisable) iconsprite("editor-ficool2/env_sporeexplosion")  = env_sporeexplosion : "Bugbait Spore Effect"
 [
-	spawnrate(float) : "Spawn Rate (as percentage)" : "25" : "How dense the spore effect is"
+	spawnrate(float) : "Spawn Rate (as percentage)" : "25" : "How dense the spore effect is. This percentage is not bound to 100, even values in the thousands are acceptable."
 ]
 
 @PointClass base(Targetname, Parentname, Targetname, EnableDisable) line(255 255 255, targetname, target) iconsprite("editor-ficool2/env_gunfire") = env_gunfire : "Gunfire Effect"
@@ -1191,16 +1191,16 @@
 [
 	spawnflags(Flags) =
 	[
-		1 : "No Impact Sound" : 0
-		2 : "No Launch Sound" : 0
-		4096 : "Start Impacted" : 0
-		8192 : "Land at initial position" : 0
-		16384 : "Wait for input to open" : 0
-		32768 : "Wait for input to spawn headcrabs" : 0
-		65536 : "No smoke" : 0
-		131072 : "No shake" : 0
-		262144 : "Remove on impact" : 0
-		524288 : "No impact effects" : 0
+		1 :  "[1] No Impact Sound" : 0
+		2 :  "[2] No Launch Sound" : 0
+		4096 : "[4096] Start Impacted" : 0
+		8192 : "[8192] Land at initial position (Land precisely where it is in Hammer)" : 0
+		16384 : "[16384] Wait for input to open" : 0
+		32768 : "[32768] Wait for input to spawn headcrabs" : 0
+		65536 : "[65536] No smoke" : 0
+		131072 : "[131072] No shake" : 0
+		262144 : "[262144] Remove on impact (Prevents damage, headcrabs, and most visual and sound effects)" : 0
+		524288 : "[524288] No impact effects (No Dust explosion)" : 0
 	]
 	HeadcrabType(choices) : "Which headcrab to spawn?" : 0 =
 	[
@@ -1503,7 +1503,6 @@
 		2097152 : "Cast long shadow" : 0
 	]
 
-	InitialSpeed(string) : "Initial Speed" : "0"
 	GracePeriod(float) : "Grace Period" : "2.0" : "Time in seconds the helicopter has to see the player before he starts shooting"
 	PatrolSpeed(float) : "Patrol Speed" : "0" : "Speed at which the helicopter moves if he has no enemy."
 
