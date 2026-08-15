@@ -28,8 +28,8 @@
 
 @PointClass base(Targetname) iconsprite("editor/env_skypaint.vmt") = env_skypaint : "Control the sky colours. Requires the skybox material be set to 'painted' in Map => Map Properties."
 [
-	topcolor(color1)		: "Sky Top Color" : "0.2 0.5 1.0" : "The colour of the top of the sky."
-	bottomcolor(color1)		: "Sky Bottom Color" : "0.8 1.0 1.0" : "The colour of the bottom of the sky."
+	topcolor(color1)		: "Sky Top Color" : "0.2 0.5 1.0" : "The color of the top of the sky."
+	bottomcolor(color1)		: "Sky Bottom Color" : "0.8 1.0 1.0" : "The color of the bottom of the sky."
 	fadebias(float)			: "Sky Fade Bias" : "1.0" : "Controls the bias of the fade between top/bottom. (1.0 is even)"
 
 	sunsize(float)			: "Sun Size" : "2.0" : "Controls the size of the sun glow."
@@ -41,7 +41,7 @@
 	]
 	suncolor(color1)		: "Sun Color" : "0.2 0.1 0.0" : "The color of the sun glow. (this is additive)"
 
-	duskscale(float)		: "Dusk Scale" : "1.0" : "The size of the dusk effect. (colouring of the horizon)"
+	duskscale(float)		: "Dusk Scale" : "1.0" : "The size of the dusk effect. (coloring of the horizon)"
 	duskintensity(float)	: "Dusk Intensity" : "1.0" : "How intense the dusk effect is."
 	duskcolor(color1)		: "Dusk Color" : "1.0 0.2 0.0" : "The color of the dusk effect."
 
@@ -60,13 +60,13 @@
 	hdrscale(float)			: "HDR Scale" : "0.66" : "When rendering your skybox in HDR mode, output will be scaled by this amount."
 
 	// Inputs
-	input SetTopColor(color255) : "Sets the colour of the top of the sky."
-	input SetBottomColor(color255) : "Sets the colour of the bottom of the sky."
+	input SetTopColor(color255) : "Sets the color of the top of the sky."
+	input SetBottomColor(color255) : "Sets the color of the bottom of the sky."
 	input SetFadeBias(float) : "Sets the bias of the fade between top/bottom. (1.0 is even)"
 	input SetSunSize(float) : "Sets the size of the sun glow."
 	input SetSunNormal(vector) : "Sets the position of the sun, expressed as a normal from the center of the world."
 	input SetSunColor(color255) : "Sets the color of the sun glow. (this is additive)"
-	input SetDuskScale(float) : "Sets the size of the dusk effect. (colouring of the horizon)"
+	input SetDuskScale(float) : "Sets the size of the dusk effect. (coloring of the horizon)"
 	input SetDuskIntensity(float) : "Sets how intense the dusk effect is."
 	input SetDuskColor(color255) : "Sets the color of the dusk effect."
 	input StarTexture(string) : "Sets the star texture."

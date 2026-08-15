@@ -4550,6 +4550,7 @@
 @PointClass base(Weapon) studioprop("models/weapons/W_Alyx_Gun.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_alyxgun: "Alyx Vance's pistol." []
 @PointClass base(Weapon) studioprop("models/weapons/W_annabelle.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_annabelle: "Annabelle (Grigori's Shotgun)" []
 @PointClass base(Weapon) studioprop("models/weapons/w_slam.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_slam: "SLAM tripmine from HL2:MP.\n\nCome on and slam, and welcome to the jam!\nCome on and slam, if you wanna jam!" []
+@PointClass base(Weapon,Targetname, Parentname) studioprop("models/shadertest/envballs.mdl") = weapon_cubemap : "Cubemap preview spheres"[] // why not
 
 // TODO: Move to its own FGD? Needs to access Weapon base class somehow
 @BaseClass color(0 0 220) base(Weapon, Studiomodel) sphere(fademindist) sphere(fademaxdist) = CustomScriptedWeapon
