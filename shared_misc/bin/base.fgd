@@ -35,6 +35,12 @@
 //
 //-------------------------------------------------------------------------
 
+@BaseClass = ColorCoding
+[ 
+	rendercolor(color255) : "Sprite Icon Color (Hammer++ Only)" : "255 255 255" : "Helper that lets you visually color code your entity icons. Ex: All soundscapes of the same sound could be blue, high res cubemaps could be tinted green, etc."
+]
+
+
 @BaseClass = Angles
 [ 
 	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "0 0 0" : "This entity's orientation in the world. Pitch is rotation around the Y axis, " +
@@ -506,7 +512,7 @@
 	[
 		0: "Random"
 		1: "Relative to Attack"
-		2: "Use Precise Gib Dir"
+		2: "Use Precise Gib Direction"
 	]
 
 	gibdir(angle) : "Precise Gib Direction" : "0 0 0" : "Specifies the direction to throw gibs when this breakable breaks. Be sure to select Use Precise Gib Dir in the Gibs Direction field!"
@@ -924,13 +930,17 @@
 	pattern(string) : "Custom Appearance" : "" : "Set a custom pattern of light brightness for this light. Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
 	_constant_attn(float)	: "Constant" : "0" :  "Constant/Linear/Quadratic define a ratio which determines the falloff behavior. " +
 		"The constant term causes the light to remain at a constant brightness. Max value of 10,000."
-	_linear_attn(float)	: "Linear" : "0" :  "Constant/Linear/Quadratic define a ratio which determines the falloff behavior. " +
+	_linear_attn(float) : "Linear" : "0" :  "Constant/Linear/Quadratic define a ratio which determines the falloff behavior. " +
 		"The linear term falls off at a constant rate depending on the distance travelled. Max value of 10,000."
-	_quadratic_attn(float)	: "Quadratic" : "1" : "Constant/Linear/Quadratic define a ratio which determines the falloff behavior. " +
+	_quadratic_attn(float) : "Quadratic" : "1" : "Constant/Linear/Quadratic define a ratio which determines the falloff behavior. " +
 		"The quadratic term falls off by the square of the distance. This is how light works in reality. Max value of 10,000."
 	_fifty_percent_distance(float) : "50 percent falloff distance" : "0" : "Distance at which brightness should fall off to 50%. If set, overrides linear constant and quadratic parameters."
 	_zero_percent_distance(float) : "0 percent falloff distance" : "0" : "Distance at which brightness should fall off to negligible (1/256)%. Must set _fifty_percent_distance to use."
-	_hardfalloff(integer) : "Hard falloff" : 0 : "If set, causes lights to fall to exactly zero beyond the zero percent distance. May cause unrealistic lighting if not used carefully."
+	_hardfalloff(choices) : "Hard falloff after 0%" : 0 : "If set, causes light to immediately fade out the exact lightmap-grid square after '0% falloff distance' value. May cause weird lighting or glitches." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
 	// Inputs
 	input TurnOn(void) : "Turn the light on."
 	input TurnOff(void) : "The the light off."
@@ -956,10 +966,10 @@
 		  0 : "None"
 
 		  2: "World: Window (Point of interest for scanners)"
-		 12: "World: Act Busy Hint"
-		 13: "World: Visually Interesting"
-		 14: "World: Visually Interesting (Don't aim at)"
-		 15: "World: Inhibit Combine Mines within 15 feet"
+		 12: "World: Act Busy Hint (Used by actbusies)"
+		 13: "World: Visually Interesting (Player companions will passively look at this node,while aiming their weapon)"
+		 14: "World: Visually Interesting. Don't aim at. (Player companions will passively look at this node when not aiming their weapon)"
+		 15: "World: Inhibit Combine Mines within 15 feet (Mines don't clamp near this)"
 		 16: "World: Visually Interesting (Stealth mode)"
 
 		100: "Crouch Cover Medium"
@@ -970,26 +980,26 @@
 		105: "Enemy Disadvantage Point"
 		//106: "Health Kit"
 
-		400: "Antlion: Burrow Point"
-		401: "Antlion: Thumper Flee Point"
+		400: "Antlion: Burrow Point (Antlions burrow in and out of this point)"
+		401: "Antlion: Thumper Flee Point (Antlions will go here when agitated by a thumper)"
 
-		450: "Headcrab: Burrow Point"
-		451: "Headcrab: Exit Pod Point"
+		450: "Headcrab: Burrow Point (Headcrabs burrow in and out of this point)"
+		451: "Headcrab: Exit Pod Point (Headcrabs will jump here when exiting env_headcrabcanister)"
 
 		//500: "Roller: Patrol Point"
 		//501: "Roller: Cleanup Spot"
 
-		700: "Crow: Fly to point"
+		700: "Crow: Fly to point (Birds may fly to this spot if provoked)"
 		701: "Crow: Perch point"
 
-		900: "Follower: Wait point"
-		901: "Override jump permission"
-		902: "Player squad transition point"
-		903: "NPC exit point"
-		904: "Strider node"
+		900: "Follower: Wait point (NPCs in ai_goal_follow will try to move here while they follow)"
+		901: "Override jump permission (NPCs will jump from this node to another of the same type if the jump is within their capabilities)"
+		902: "Player squad transition point (Companion NPCs are teleported here if not near player during level change)"
+		903: "NPC exit point (Used by actbusies. NPCs will exit the routine by going here)"
+		904: "Strider node (Used by striders for navigation)"
 
-		950: "Player Ally: Push away destination"
-		951: "Player Ally: Fear withdrawal destination"
+		950: "Player Ally: Push away destination (Ally NPCs go here to get out of the player's way)"
+		951: "Player Ally: Fear withdrawal destination (If NPC finds thing to fear, it will hide at this spot)"
 
 		1000: "HL1 World: Machinery"
 		1001: "HL1 World: Blinking Light"
@@ -1216,7 +1226,7 @@
 [
 ]
 
-@PointClass base(Targetname, Parentname) iconsprite("editor/ambient_generic.vmt") sphere(radius) line(0 128 0, targetname, SourceEntityName) = ambient_generic : "Universal ambient sound. Use it to play and control a single sound."
+@PointClass base(Targetname, Parentname, ColorCoding) iconsprite("editor/ambient_generic.vmt") sphere(radius) line(0 128 0, targetname, SourceEntityName) = ambient_generic : "Universal ambient sound. Use it to play and control a single sound."
 [
 	message(sound) : "Sound Name" : "" : "Name of the GameSound entry for the sound to play. Also supports direct .wav filenames."
 	health(integer) : "Volume" : 10 : "Sound volume, expressed as a range from 0 to 10, where 10 is the loudest."
@@ -1429,13 +1439,13 @@
 	
 	use_angles(choices) : "UseAngles" : 0 : "The old way to orient env_sun is to point it at a target. The new way is to specify the angles. If you use the new way, set this property to YES." = 
 	[
-		0 : "No"
-		1 : "Yes"
+		0 : "No (Target/Viewer Entity)"
+		1 : "Yes (Pitch Yaw Roll, May crash apparently?)"
 	]
 
 	pitch(integer) : "Pitch" : 0  : "The downward pitch of the light from the sun. 0 is horizontal, -90 is straight down. Overrides the Pitch in Pitch Yaw Roll, even if left at 0."
 
-	rendercolor(color255) : "Sun Color (R G B)" : "100 80 80"
+	rendercolor(color255) : "Sun Color (R G B)" : "100 80 80" : "Color of the sun. The effect is additive with the sky: a pure yellow sun with a bright blue sky will appear white in-game; change the color to account for this."
 	overlaycolor(color255) : "Overlay Color (R G B)" : "0 0 0" : "A value of 0 0 0 will act the old way."
 	
 	size(integer) : "Size" : 16
@@ -1747,8 +1757,8 @@
 
 	solidbsp(choices) : "Solid BSP" : 0 : "Set this if this brush is in hierarchy with a moving object of some kind, and the player can stand on this brush." =
 	[
-		0 : "No"
-		1 : "Yes"
+		0 : "No (VPhysics)"
+		1 : "Yes, BSP (QPhysics)"
 	]	
 	vrad_brush_cast_shadows(choices) : "Shadows" : 0 : "Set if this brush casts lightmap shadows." =
 	[
@@ -1911,8 +1921,8 @@
 	renderamt(integer) : "Brightness (1 - 255)" : 100 : "Opacity (Alpha) of the beam."
 	rendercolor(color255) : "Beam Color (R G B)" : "255 255 255" : "RGB color value used for this beam."
 	Radius(integer) : "Radius" : 256 : "If the 'Random Strike' spawnflag is set, this radius determines the area within which the endpoints will randomly strike."
-	life(float) : "Life (seconds 0 = infinite)" : "1" : "Amount of time before the beam dies. Setting to zero will make the beam stay forever."
-	BoltWidth(float) : "Width of beam" : 2 : "Pixel width of the beam."
+	life(float) : "Life (in seconds, 0 = infinite)" : "1" : "Amount of time before the beam dies. Setting to zero will make the beam stay forever."
+	BoltWidth(float) : "Width of beam" : 2 : "Pixel width of the beam in units."
 	NoiseAmplitude(float) : "Amount of noise (0-255)" : 0 : "The amount of noise in the beam. 0 is a perfectly straight beam."
 	texture(sprite) : "Sprite Name" : "sprites/laserbeam.vmt" : "The material used to draw the beam."
 	TextureScroll(integer) : "Texture Scroll Rate (0-100)" : 35 : "Rate at which the beam texture should scroll along the beam."
@@ -1920,9 +1930,9 @@
 	framestart(integer) : "Starting Frame" : 0 : "The frame to start the beam texture on."
 	StrikeTime(float) : "Strike again time (secs)" : "1" : "Refire time between random strikes of the beam. Only used if the 'Random Strike' spawnflag is set."
 	damage(float) : "Damage / second" : "0" : "How much damage this beam does per second to things it hits when it is continually on, or instantaneously if it strikes. For continuous damage, the value should be greater than 10 or it may not work."
-	LightningStart(target_destination) : "Start Entity" : "" : "Entity that the beam starts at."
-	LightningEnd(target_destination) : "Ending Entity" : "" : "Entity that the beam ends at."
-	decalname(string) : "Decal Name" : "Bigshot" : "Decal to be applied at the end of the beam"
+	LightningStart(target_destination) : "Start Entity" : "" : "Entity that the beam starts at. If omitted the entity will instead use a random position on any surface within its Radius value. A new random position will be appointed for every strike."
+	LightningEnd(target_destination) : "Ending Entity" : "" : "Entity that the beam ends at. If omitted the entity will instead use a random position on any surface within its Radius value. A new random position will be appointed for every strike."
+	decalname(string) : "Decal Name" : "Bigshot" : "If Damage/Second is set to something, this decal will appear where the beam first touches a solid object."
 	HDRColorScale(float) : "HDR color scale." : "1.0" : "Float value to multiply sprite color by when running in HDR mode."
 
 
@@ -1942,7 +1952,7 @@
 
 	TouchType(choices) : "Touch Type (tripwire)" : 0 : "If you want the beam to fire an output when touched by entities, choose the entity type here." =
 	[	
-		0 : "Not a tripwire"
+		0 : "Not a tripwire (all entities ignored)"
 		1 : "Player Only"
 		2 : "NPC Only"
 		3 : "Player or NPC"
@@ -2289,7 +2299,7 @@
 	"An entity that catches a target entity on fire. If the entity is an animating model, it will have sprite flames attached to its skeleton. Otherwise the entity will emit particle flame puffs."
 [
 	target(target_destination) : "Entity to ignite" : : "Name of the entity to catch on fire."
-	lifetime(float) : "Lifetime in seconds" : 10 : "Duration of flames."
+	lifetime(float) : "Lifetime in seconds" : 10 : "Duration of flames lifetime."
 	
 	// Inputs
 	input Ignite(void) : "Ignite the target entity."
@@ -2400,10 +2410,10 @@
 	rendercolor(color255) : "Beam Color (R G B)" : "255 255 255" : "RGB color value used for this beam."
 	width(float) : "Width of Beam" : 2 : "The width of the laser beam, in pixels."
 	NoiseAmplitude(integer) : "Amount of noise (0-255)" : 0 : "The amount of noise in the beam. 0 is a perfectly straight beam."
-	texture(sprite) : "Sprite Name" : "sprites/laserbeam.vmt" : "The material used to draw the laser beam."
+	texture(sprite) : "Sprite Name" : "sprites/laserbeam.vmt" : "The material used to draw the laser beam. Must include file extension or game will crash."
 	EndSprite(sprite) : "End Sprite" : "" : "If specified, this sprite will be drawn at the end of the laser beam."
 	TextureScroll(integer) : "Texture Scroll Rate (0-100)" : 35 : "Rate at which the beam texture should scroll along the beam."
-	framestart(integer) : "Starting Frame" : 0 : "The frame to start the beam texture on."
+	framestart(integer) : "Starting Frame" : 0 : "The frame to start the laser beam texture on."
 	damage(float) : "Damage / second" : "100" : "How much damage this laser does. per second. to things it hits."
 	dissolvetype(choices) : "Dissolve Type" : "None" =
 	[
@@ -3009,6 +3019,8 @@
 		1: "[1] Use Only (Only activate from Use input. Otherwise players automatically get items upon spawning)" : 0
 	]
 	//master(target_destination) : "Team Master (Obsolete)" : : "Legacy support: The name of a master entity. If the master hasn't been activated, this entity will not activate."	
+	
+	input Use(void) : "Causes this entity to give the activating player weapons. BUG: Crashes the game if the !activator is null."
 ]
 
 @PointClass base(Targetname) iconsprite("editor-ficool2/game_player_team") = game_player_team : 
@@ -3348,7 +3360,7 @@
 
 	texture(sprite) : "Sprite Name" : "sprites/physbeam.vmt" : "Material to use for the tesla lightning beams."
 
-	m_Color(color255) : "Color" : "255 255 255"
+	m_Color(color255) : "Color" : "255 255 255" : "Beam color."
 	m_flRadius(integer) : "Radius" : 200 : "Radius around the origin to find a point to strike with a tesla lightning beam."
 
 	beamcount_min(integer) : "Min # of Beams" : 6 : "Minimum number of tesla lightning beams to create when creating an arc."
@@ -3637,7 +3649,7 @@
 [
 ]
 
-@PointClass base(Targetname, Parentname, Angles) iconsprite("editor/info_target.vmt")  = info_target : 
+@PointClass base(Targetname, Parentname, Angles, ColorCoding) iconsprite("editor/info_target.vmt")  = info_target : 
 	"An entity that does nothing. Very useful as a positioning entity for other entities to refer to (i.e. the endpoint of an env_beam)"
 [
 	spawnflags(Flags) =
@@ -5013,7 +5025,7 @@
 //
 //-------------------------------------------------------------------------
 
-@PointClass color(0 0 255) sidelist(sides) iconsprite("editor/env_cubemap.vmt") line(255 255 255, targetname, parallaxobb) = env_cubemap : 
+@PointClass base(ColorCoding) color(0 0 255) sidelist(sides) iconsprite("editor/env_cubemap.vmt") line(255 255 255, targetname, parallaxobb) = env_cubemap : 
 	"An entity that creates a sample point for the Cubic Environment Map."
 [
 	cubemapsize(choices) : "Cubemap Size" : 0 : "The resolution of this cubemap's texture." =
@@ -5150,7 +5162,7 @@
 //
 //-------------------------------------------------------------------------
 
-@PointClass iconsprite("editor/logic_auto.vmt") = logic_auto : 
+@PointClass base(ColorCoding) iconsprite("editor/logic_auto.vmt") = logic_auto : 
 	"Fires outputs when a map spawns. " +
 	"If 'Remove on fire' flag is set the logic_auto is deleted after firing. " +
 	"It can be set to check a global state before firing. This allows you to only fire events based on "+
@@ -5202,13 +5214,13 @@
 	
 	spawnflags(flags) =
 	[
-		1: "[1] Start At Player" : 1
+		1: "[1] Start At Player (Teleport to !activator's eyes. moves to first path at an offset if !activator is moving)" : 1
 		2: "[2] Follow Player (Look at the Player)" : 1
-		4: "[4] Freeze Player" : 0
+		4: "[4] Freeze Player (Can still be teleported)" : 0
 		8: "[8] Infinite Hold Time (Until told to shut off via Disable)" : 0
-		16:"[16] Snap to goal angles" : 0
-		32:"[32] Make Player non-solid" : 0
-		64:"[64] Interruptible by Player (Allows player to regain control by shooting, moving, etc)" : 0
+		16:"[16] Snap to goal angles (Instantly rotate to Look At target on Enable, otherwise smoothly glide to face target)" : 0
+		32:"[32] Make Player non-solid (While looking through this camera)" : 0
+		64:"[64] Interruptible by Player (Allow player to regain control by shooting, moving, etc. Freeze Player must be unchecked)" : 0
 		128:"[128] Set FOV" : 0
 		256:"[256] Allow fixed behavior (Can move without look target, removal stops softlock, etc.)" : 1
 	]
@@ -5280,7 +5292,7 @@
 	input GetFMod(void) : "Outputs the current modulation settings in console."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/logic_compare.vmt") = logic_compare :
+@PointClass base(Targetname, ColorCoding) iconsprite("editor/logic_compare.vmt") = logic_compare :
 	"Compares an input value to another value. " +
 	"If the input value is less than the compare value, the OnLessThan output is fired with the input value. " +
 	"If the input value is equal to the compare value, the OnEqualTo output is fired with the input value. " +	
@@ -5306,7 +5318,7 @@
 	output OnLessThanOrEqualTo(float) : "Fired when the input value is greater than or equal to the compare value. Sends the input value as data."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/logic_branch.vmt") = logic_branch :
+@PointClass base(Targetname, ColorCoding) iconsprite("editor/logic_branch.vmt") = logic_branch :
 	"Tests a boolean value and fires an output based on whether the value is true or false. " +
 	"Use this entity to branch between two potential sets of events."
 [
@@ -5376,7 +5388,7 @@
 ]
 
 
-@PointClass base(Targetname) iconsprite("editor/logic_case.vmt") = logic_case :
+@PointClass base(Targetname, ColorCoding) iconsprite("editor/logic_case.vmt") = logic_case :
 	"Compares an input to up to 16 preset values. If the input value is the same as " +
 	"any of the preset values, an output corresponding to that value is fired.\n\n" +
 	"For example: if Case01 is set to 2 and Case02 is set to 5, and the input value is 5, " +
@@ -5438,7 +5450,7 @@
 // 
 // Apparently, this entity's usefulness was called into question at some point by Valve programmers.
 // Either way, I've changed it a lot, so this may (or may not) be useful now.
-@PointClass base(Targetname) iconsprite("editor/logic_multicompare.vmt") = logic_multicompare :
+@PointClass base(Targetname, ColorCoding) iconsprite("editor/logic_multicompare.vmt") = logic_multicompare :
 	"Compares a set of inputs to each other. If they are all the same, fires an OnEqual output. " +
 	"If any are different, fires the OnNotEqual output." +
 	"There is currently no way to remove inputs."
@@ -5519,7 +5531,7 @@
 	output OnRegisteredActivate4(void) : "Fired to send a message using the registered as the activator."
 ]
 
-@PointClass base(Targetname, EnableDisable) iconsprite("editor/logic_relay.vmt") = logic_relay :
+@PointClass base(Targetname, EnableDisable, ColorCoding) iconsprite("editor/logic_relay.vmt") = logic_relay :
 	"A message forwarder. Fires an OnTrigger output when triggered, and " +
 	"can be disabled to prevent forwarding outputs.\n\n" +
 	"Useful as an intermediary between one entity and another for turning " +
@@ -5579,7 +5591,7 @@
 	output OnTriggerParameter(string) : "Fired when the relay is triggered with a parameter."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/logic_script.vmt")
+@PointClass base(Targetname, ColorCoding) iconsprite("editor/logic_script.vmt")
 	line(200 200 200, targetname, group00) 
 	line(200 200 200, targetname, group01) 
 	line(200 200 200, targetname, group02) 
@@ -5617,9 +5629,8 @@
 	rendercolor(color255) : "Sprite Icon Color" : "255 255 255" : "Helper color to differentiate your script icons. Only shows up in Hammer++."
 ]
 
-@PointClass base(Targetname) iconsprite("vizzys-icons/logic_script_client.vmt") = logic_script_client : "An entity capable of running client-side scripts"
+@PointClass base(Targetname, ColorCoding) iconsprite("vizzys-icons/logic_script_client.vmt") = logic_script_client : "An entity capable of running client-side scripts"
 [
-	rendercolor(color255) : "Sprite Icon Color" : "100 200 255" : "Helper color to differentiate your script icons. Only shows up in Hammer++."
 	ClientThink(choices) : "Client Think" : 0 : "Allows client-side VScript to run a think function in the form of a 'ClientThink' hook. (NOTE: The 'Script think function' keyvalue is not related to this!)" =
 	[
 		0 : "No"
@@ -5635,7 +5646,7 @@
 	input CallScriptFunctionClient(string) : "Call a named function on the entity's client-side script scope."
 ]
 
-@PointClass base(Targetname, EnableDisable) iconsprite("editor/logic_timer.vmt") = logic_timer :
+@PointClass base(Targetname, EnableDisable, ColorCoding) iconsprite("editor/logic_timer.vmt") = logic_timer :
 	"An entity that fires a timer event at regular, or random, intervals. It can also be set to oscillate between" + 
 	"a high and low end, in which case it will fire alternating high/low outputs each time it fires."
 [
@@ -5849,7 +5860,7 @@
 	output OutColor(color255) : "Fired when the InValue input is received, with the remapped RGB color as the parameter."
 ]
 
-@PointClass base(Targetname, EnableDisable) iconsprite("editor/math_counter.vmt") = math_counter :
+@PointClass base(Targetname, EnableDisable, ColorCoding) iconsprite("editor/math_counter.vmt") = math_counter :
 	"Holds a numeric value and performs arithmetic operations upon it. If either the minimum or maximum " +
 	"legal value is nonzero, OutValue will be clamped to the legal range, and the OnHitMin/OnHitMax " +
 	"outputs will be fired at the appropriate times. If both min and max are set to zero, no clamping is " +
@@ -6014,7 +6025,7 @@
 ]
 
 
-@PointClass base(Targetname) iconsprite("editor-ficool2/point_template")
+@PointClass base(Targetname, ColorCoding) iconsprite("editor-ficool2/point_template")
 	line(255 255 0, targetname, Template01)
 	line(255 255 0, targetname, Template09)
 	line(255 255 0, targetname, Template02)
@@ -6085,7 +6096,7 @@
 [
 	spawnflags(Flags) =
 	[
-		1 : "[1] Enable AutoSpawn (will spawn whenever there's room)" : 0
+		1 : "[1] Enable AutoSpawn (will spawn whenever there's room, and the player is not looking)" : 0
 		2 : "[2] AutoSpawn: Wait for entity destruction" : 0
 		4 : "[4] AutoSpawn: Even if the player is looking" : 0
 		8 : "[8] ForceSpawn (input): Spawn only if there's room" : 0
@@ -6096,8 +6107,8 @@
 
 	PostSpawnSpeed(float) : "PostSpawn Movement Speed" : "0" : "If specified, all the entities created in the template will move this fast in the specified PostSpawn Movement Direction."
 	PostSpawnDirection(angle) : "PostSpawn Movement Direction" : "0 0 0" : "If a PostSpawn Movement Speed is specified, all the entities created in the template will move in this direction."
-	PostSpawnDirectionVariance(float) : "PostSpawn Direction Variance" : "0.15" : "This variance is applied to the PostSpawn Movement Direction for each spawned entity in the template. Use it to apply some randomness to the directions."
-	PostSpawnInheritAngles(choices) : "PostSpawn Inherit Angles" : 0 : "If in hierarchy, is spawn direction in world space, or object local space of parent" =
+	PostSpawnDirectionVariance(float) : "PostSpawn Direction Variance" : "0.15" : "Variance is applied to the PostSpawn Movement Direction for each spawned entity in the template. Use to apply some randomness to the directions. This is a radius."
+	PostSpawnInheritAngles(choices) : "PostSpawn Inherit Angles" : 0 : "If Yes, spawned entities will face in the same direction as the env_entity_maker's parent. (As opposed to the direction of this env_entity_maker itself.)" =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -8572,10 +8583,10 @@
 [
 	physicsmode(choices) : "Physics Mode" : 0 =
 	[
-		0: "Auto Detect"
-		1: "Solid, Server-side"
-		2: "Non-Solid, Server-side"
-		3: "Non-Solid, Client-side"
+		0: "Auto Detect (Lets game decide based on size and mass)"
+		1: "Solid, Server-side (Solid, looks and acts normal)"
+		2: "Non-Solid, Server-side (Non-solid, but is still consistent between players)"
+		3: "Non-Solid, Client-side (Non-solid, position may desynchronize between players. Does not generate network traffic when moving)"
 	]
 ]
 
@@ -9193,8 +9204,8 @@
 	landmark(target_destination) : "Landmark Name"
 	spawnflags(flags) =
 	[
-		2: "[2] Disable Touch" : 0
-		4: "[4] To Previous Chapter (disable if map was loaded from a new game)" : 0
+		2: "[2] Disable Touch (Prevents the trigger from changing the level when touched. Use for one-way transitions)" : 0
+		4: "[4] To Previous Chapter (Disabled if map was loaded from a new game and becomes solid)" : 0
 	]
 	
 	// Inputs

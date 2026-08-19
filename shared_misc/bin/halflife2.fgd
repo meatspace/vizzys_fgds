@@ -1343,8 +1343,9 @@
 ]
 
 
-@PointClass base(npc_template_maker) iconsprite("vizzys-icons/npc_hunter_maker") = npc_hunter_maker : 
-	"An entity that creates hunters. The NPCs it creates are clones of a template NPC."
+@PointClass base(npc_template_maker) iconsprite("vizzys-icons/npc_hunter_maker") = npc_hunter_maker : "Makes a clone of a hunter that's placed inside Hammer, and copies all of its properties and outputs. When using the SpawnMultiple input, any hunters in the map without an entity to follow (like a strider) will have their name set to the name of this maker's template hunter so that when the FollowStrider input fires from map logic, they'll guard the new strider. Renamed hunters automatically move to where the npc_hunter_maker is, not the strider. \n" +
+"NOTE: Only the first 3 strider-less hunters found will have their names changed when using SpawnMultiple. You can get around this by sending the input again with the parameter 0 to rename 3 more hunters.\n" +
+"BUG: When using SpawnMultiple, only 3 new hunters can be spawned at a time."
 [
 ]
 
@@ -1357,7 +1358,7 @@
 	levitationarea(target_destination) : "Levitation Area" : "" : "Trigger volume inside which levitated objects reside"
 	
 	levitategoal_bottom(target_destination) : "Levitation Goal Bottom" : "" : "Objects will levitate at least this high"
-	levitategoal_top(target_destination)    : "Levitation Goal Top" : "" : "Objects will levitate at least this high"
+	levitategoal_top(target_destination) : "Levitation Goal Top" : "" : "Objects will levitate at least this high"
 	
 	staging_ent_names(target_destination) : "Staging Position Names"  : "" : "All entities with this name will be considered staging positions for the throw behavior."
 	priority_grab_name(target_destination) : "Priority Name For Grabbing" : "" : "If any entities named this are present, the advisor will preferentially pick them up for throwing at the player."
@@ -1365,9 +1366,9 @@
 
 
 	output OnPickingThrowable(void) : "Fires just before I pick something to hurl"
-	output OnThrowWarn(void)        : "Fires when I trigger the warning green glow before tossing"
-	output OnThrow(void)            : "Fires just after I throw something"
-	output OnHealthIsNow(integer)       : "When I am damaged, my hitpoints thereafter"
+	output OnThrowWarn(void) : "Fires when I trigger the warning green glow before tossing"
+	output OnThrow(void) : "Fires just after I throw something"
+	output OnHealthIsNow(integer) : "When I am damaged, my hitpoints thereafter"
 	
 	input SetThrowRate(float) : "Advisor will throw an object once per this many seconds (plus a little more)"
 	input WrenchImmediate(target_destination) : "Advisor will immediately start levitating all objects with this name"
@@ -2282,7 +2283,7 @@
 		1 : "Yes"	
 	]
 
-	ShouldHaveEMP(choices) : "Should Alyx have her EMP?" : "1" =
+	ShouldHaveEMP(choices) : "Should Alyx have her EMP?" : "1" : "Determines if Alyx has her EMP prop and can reprogram rollermines using it. BUG: Doesn't stop her from trying! Unless DisallowInteraction input is sent, she still sticks her arm out for no reason." =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -2468,7 +2469,7 @@
 	input Alpha(integer) : "Set Alpha Value"
 ]
 
-@PointClass base(Angles, BaseNPCMaker) iconsprite("editor/npc_maker.vmt") line(255 16 16, targetname, ignoreentity) = npc_maker : "NPC Maker"
+@PointClass base(Angles, BaseNPCMaker, ColorCoding) iconsprite("editor/npc_maker.vmt") line(255 16 16, targetname, ignoreentity) = npc_maker : "NPC Maker"
 [
 	spawnflags(Flags) = 
 	[
@@ -2744,11 +2745,11 @@
 		4 : "Neutral"
 	]
 
-	radius(float) : "Radius for subject" : 0 : "Radius in which to check for relationships"
+	radius(float) : "Radius for subject" : 0 : "Only NPCs within the radius distance of this entity will have their dispositions changed."
 
 	rank(integer) : "Disposition Priority" : 0 : "How much the Subject(s) should Like/Hate/Fear the Target(s). Higher priority = stronger feeling."
 
-	StartActive(choices) : "Start Active" : 0 : "Should this entity be active on spawn?" =
+	StartActive(choices) : "Start Active" : 0 : "Should this entity relationship be active on entity spawn?" =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -2843,7 +2844,7 @@
 		4 : "Neutral"
 	]
 
-	radius(float) : "Radius for subject" : 0
+	radius(float) : "Radius for subject" : 0 : "Only NPCs within the radius distance of this entity will have their dispositions changed."
 
 	rank(integer) : "Disposition Priority" : 0 : "How much the subject class should Like/Hate/Fear the target class. Higher priority = stronger feeling."
 
@@ -2896,9 +2897,9 @@
 @BaseClass base(Targetname, Angles) = LeadGoalBase
 [
 	actor(target_name_or_class) : "Actor(s) to affect"
-	goal(target_destination) : "Target Entity"
-	WaitPointName(target_destination) : "Point to wait at if the target's not visible"
-	WaitDistance(float) : "Wait until player gets this close"
+	goal(target_destination) : "Target Entity" :  : "The name of the entity that the NPC will lead the player to (i.e. an info_target)."
+	WaitPointName(target_destination) : "Point to wait at if the target's not visible" :  : "If the NPC loses line-of-sight to the player, it will return to this entity (i.e. an info_target)."
+	WaitDistance(float) : "Wait until player gets this close" :  : "The player must be within this distance of the NPC before the NPC initially begins leading them."
 	LeadDistance(float) : "Lead Distance" : "64" : "The player is considered to be lagging if they're beyond this distance.  The Actor will consider retrieving when the player is 4x 'Lead Distance' away."
 	RetrieveDistance(float) : "Retrieve Distance" : "96" : "The distance from the player that the NPC should return to when retrieving a lagging player. Must be between ('Lead Distance' + 24) and ('Lead Distance' * 4) to avoid the leader ping-ponging."
 	SuccessDistance(float) : "Success Distance" : "0" : "The distance from the player (to the NPC) that the player must be within for the Lead to succeed, once the NPC has reached the goal. If set to 0, it'll use the lead distance instead (for legacy support)."
@@ -2908,7 +2909,7 @@
 		"1" : "Yes"
 	]
 
-	Retrieve(choices) : "Retrieve player?" : 1 =
+	Retrieve(choices) : "Retrieve player?" : 1 : "Should NPC run/walk to retrieve player? No means they will stand and wait." =
 	[
 		0 : "No, just idle and wait"
 		1 : "Yes, move to retrieve"
@@ -3291,13 +3292,13 @@
 	AssaultCue(choices) : "Assault Cue" : 1 =
 	[
 		1 : "Entity System Input (BeginAssault)"
-		2 : "Gunfire"
+		2 : "Gunfire  (When the entity 'hears' gunfire TODO: Broken?)"
 		3 : "Don't wait for a cue. (Attack immediately after rallying finish)"
 	]
 
-	RallySelectMethod(choices) : "Rally Point Selection Method" : 0 = 
+	RallySelectMethod(choices) : "Rally Point Selection Method" : 0 : "How NPCs will decide which rallypoint to move to." =
 	[
-		0 : "Priority, Distance (default)"
+		0 : "Priority. If multiple tie for priority, then by Distance (default)"
 		1 : "Random"
 	]
 
@@ -3881,7 +3882,7 @@
 		"antlion_allied" : "Antlions are player allies" 
 //		"player_stealth" : "Player in APC is disguised as combine" 
 		"suit_no_sprint" : "Suit sprint function not yet enabled" 
-		"super_phys_gun" : "Super phys gun is enabled (Mapbase: Counter 1 prevents item dissolve)" 
+		"super_phys_gun" : "Super Gravity Gun is enabled (Mapbase: Counter 1 prevents item dissolve)" 
 		"friendly_encounter" : "Friendly encounter sequence (lower weapons, etc.)"
 //		"citizens_passive" : "Citizens are *not* player allies (cannot be commanded)"
 		"gordon_invulnerable" : "Gordon is invulnerable"
@@ -3918,9 +3919,9 @@
 [
 	spawnflags(flags) =
 	[
-		1 : "[1] Start Active" : 1
+		1 : "[1] Start Active (Sets if the tank is allowed to fire via inputs. Affects nothing else.)" : 1
 		16 : "[16] Only Direct (When firing via inputs, tank will only shoot target if visible to the tank)" : 0
-		32 : "[32] Controllable" : 1
+		32 : "[32] Controllable (Allows player control)" : 1
 		64 : "[64] Damage Kick (Allows the tank to be damaged)" : 0
 		256 : "[256] Aiming Assistance (Player Only)" : 0
 	    1024 : "[1024] NPC Controllable" : 0
@@ -4603,13 +4604,13 @@
 	]
 	filtername(filterclass) : "Filter Name" : : "Filter to use to see if activator triggers me. See filter_activator_name for more explanation."
 	
-	SetGravityScale(float) : "Scale gravity of objects in the field." : "1.0"
+	SetGravityScale(float) : "Scale gravity of objects in the field." : "1.0"  : "Multiplies the gravity experienced by objects in the field."
 	input SetGravityScale(float) : "Scale gravity of objects in the field."
 
-	SetAdditionalAirDensity(float) : "Additional air density for drag" : "0"
+	SetAdditionalAirDensity(float) : "Additional air density for drag" : "0" : "Air drag. Applies to both linear and angular velocity."
 	input SetAdditionalAirDensity(float) : "Additional air density for drag"
 
-	SetVelocityLimit(float) : "Max velocity in field (0 disables)" : "0.0"
+	SetVelocityLimit(float) : "Max velocity in field (0 disables)" : "0.0" : "Maximum velocity of objects in the field. Leave at 0 to not set a maximum."
 	input SetVelocityLimit(float) : "Max velocity in field."
 
 	SetVelocityLimitDelta(float) : "Max amount to reduce velocity per second when it exceeds the velocity limit (0 disables)" : "0.0"
@@ -4617,19 +4618,19 @@
 
 	input SetVelocityLimitTime(string) : "Accepts two arguments: the first is the new velocity limit, the second is the time it takes to ramp to that value"
 
-	SetVelocityScale(float) : "Velocity scale/drag" : "1.0"
+	SetVelocityScale(float) : "Velocity scale/drag" : "1.0" : "Multiplies the velocity of objects. Instead of using decimals, the velocity has to be scaled down with negative numbers."
 	input SetVelocityScale(float) : "Velocity scale/drag"
 
-	SetAngVelocityLimit(float) : "Max angular velocity in field (degrees/s, 0 disables)" : "0.0"
+	SetAngVelocityLimit(float) : "Max angular velocity in field (degrees/s, 0 disables)" : "0.0" : "How fast objects should be able to spin, in degrees per second. Leave at 0 to not set a maximum."
 	input SetAngVelocityLimit(float) : "Max angular velocity in field."
 
-	SetAngVelocityScale(float) : "Angular Velocity scale/drag" : "1.0"
+	SetAngVelocityScale(float) : "Angular Velocity scale/drag" : "1.0" : "Multiplies the angular velocity of objects. Instead of using decimals, the velocity has to be scaled down with negative numbers."
 	input SetAngVelocityScale(float) : "Angular Velocity scale/drag"
 
-	SetLinearForce(float) : "Linear force (0 disables)" : "0.0"
+	SetLinearForce(float) : "Linear force (0 disables)" : "0.0" : "If non-zero, objects will be pushed with this much force."
 	input SetLinearForce(float) : "Linear force (0 disables)"
 
-	SetLinearForceAngles(angle) : "Direction of linear force (Pitch Yaw Roll (Y Z X))" : "0 0 0"
+	SetLinearForceAngles(angle) : "Direction of linear force (Pitch Yaw Roll (Y Z X))" : "0 0 0" : "Which way to push things."
 
 	ParticleTrailMaterial(string) : "Particle Trail Material" : : "Name of a material to use for the particle trail, no name means no particle trail"
 	ParticleTrailLifetime(float) : "Particle Trail Lifetime" : 4 : "Lifetime of the particles to emit"
@@ -4853,7 +4854,7 @@
 	]
 ]
 
-@PointClass color(0 0 255) base(Targetname) iconsprite("editor/choreo_manager.vmt") = logic_scene_list_manager :
+@PointClass color(0 0 255) base(Targetname, ColorCoding) iconsprite("editor/choreo_manager.vmt") = logic_scene_list_manager :
 	"Manages a list of logic_choreographed_scene entities. Store choreo scenes in them in order that they will be played by other inputs. Whenever a scene plays, the manager will remove all scenes before that one in the list. The name of another logic_scene_list_manager can be entered in a slot instead of an individual scene, which will cause all scenes in that manager to be removed when a later scene in this list is played."
 [
 	scene0(target_destination) : "Scene 1" : "" : "The name of a logic_choreographed_scene, or logic_scene_list_manager."
@@ -5872,7 +5873,7 @@
 	input Dissolve(target_destination) : "Dissolve target, if no target is passed it'll use the target specified in the target field."
 	target(target_destination) : "Target to Dissolve" : "" : "Targetname of the entity you want to dissolve."
 
-	magnitude(integer) : "Magnitude" : 250 : "How strongly to push away from the center."
+	magnitude(integer) : "Magnitude" : 250 : "If Dissolve Type is Core Effect, How strongly to push away from the center."
 
 
 	dissolvetype(choices) : "Dissolve Type" : "Energy" =
@@ -5947,11 +5948,11 @@
 		1 : "[1] Do not automatically attach to surface" : 0
 	]
 
-	input Squash( void ) : "Squash the grub!"
+	input Squash(void) : "Squash the grub!"
 	input Agitate(float) : "Makes the grub be excited for the specified amount of time." //added by vizzys
-	output OnAgitated( void ) : "Fired when the grub is stepped on or damaged."
-	output OnDeath( void ) : "Fired when the grub is killed."
-	output OnDeathByPlayer( void ) : "Fired when the grub is killed (only by the player)."
+	output OnAgitated(void) : "Fired when the grub is stepped on or damaged."
+	output OnDeath(void) : "Fired when the grub is killed."
+	output OnDeathByPlayer(void) : "Fired when the grub is killed (only by the player, throwing a prop doesn't count)."
 ]
 
 @NPCClass base(Item) studio() = item_grubnugget :
