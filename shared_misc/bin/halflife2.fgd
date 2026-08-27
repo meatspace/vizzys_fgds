@@ -290,7 +290,7 @@
 		524288 : "[524288] Start Disabled" : 0
 		]
 
-	sightdist(float) : "Sight radius" : 1024 : "Radius distance at which the cannon is able to acquire enemies."
+	sightdist(float) : "Sight radius" : "1024" : "Radius distance at which the cannon is able to acquire enemies."
 	// Inputs
 	input InputEnableSniper(void) : "Enable the cannon." //added by vizzys, not sure which one works
 	input InputDisableSniper(void) : "Disable the cannon." //added by vizzys, not sure which one works
@@ -446,8 +446,8 @@
 @NPCClass base(VehicleDriverNPC) studio("models/roller.mdl") = npc_vehicledriver : 
 	"NPC used to drive a target vehicle."
 [
-	drivermaxspeed(float) : "Maxspeed (percentage of vehicle's maxspeed)." : 1
-	driverminspeed(float) : "MinSpeed (percentage of vehicle's maxspeed)." : 0
+	drivermaxspeed(float) : "Maxspeed (percentage of vehicle's maxspeed)." : "1"
+	driverminspeed(float) : "MinSpeed (percentage of vehicle's maxspeed)." : "0"
 
 	input SetDriversMaxSpeed(float) : "Set the Maxspeed (percentage of vehicle's maxspeed)."
 	input SetDriversMinSpeed(float) : "Set the Minspeed (percentage of vehicle's maxspeed)."
@@ -458,7 +458,7 @@
 @NPCClass base(VehicleDriverNPC) studio("models/roller.mdl") = npc_cranedriver : 
 	"NPC used to drive cranes."
 [
-	releasepause(float) : "Pause time before dropping a ForceDrop specified object." : 0
+	releasepause(float) : "Pause time before dropping a ForceDrop specified object." : "0"
 
 	// Inputs
 	input ForcePickup(target_destination) : "Force the driver to pickup the specified entity (by targetname)"
@@ -479,8 +479,8 @@
 		131072 : "[131072] No Gun Attacks" : 0
 	]
 
-	drivermaxspeed(float) : "Maxspeed (percentage of vehicle's maxspeed)." : 1
-	driverminspeed(float) : "MinSpeed (percentage of vehicle's maxspeed)." : 0
+	drivermaxspeed(float) : "Maxspeed (percentage of vehicle's maxspeed)." : "1"
+	driverminspeed(float) : "MinSpeed (percentage of vehicle's maxspeed)." : "0"
 
 	input SetDriversMaxSpeed(float) : "Set the Maxspeed (percentage of vehicle's maxspeed)."
 	input SetDriversMinSpeed(float) : "Set the Minspeed (percentage of vehicle's maxspeed)."
@@ -581,7 +581,7 @@
 
 @PointClass base(Targetname, Parentname, EnableDisable) iconsprite("vizzys-icons/info_radar_target") sphere(radius) = info_radar_target : "Jalopy Radar Beacon"
 [
-	radius(float) : "Effective Radius" : 6000 : "How close the Jalopy must be to detect this beacon. If this radius is -1, the range is infinite"
+	radius(float) : "Effective Radius" : "6000" : "How close the Jalopy must be to detect this beacon. If this radius is -1, the range is infinite"
 
 	type(choices) : "Type of target" : 0 = 
 	[
@@ -866,11 +866,11 @@
 	MinSearchDist(integer) : "Min Search Distance" : 0 : "Sets the minimum search distance." 
 	MaxSearchDist(integer) : "Max Search Distance" : 2048 : "Sets the maximum search distance." 
 
-	freepass_timetotrigger(float) : "Player pass issue time" : 0 : "Amount of time an enemy is hidden after which a 'free pass' on reacquire is granted"
-	freepass_duration(float) : "Player pass duration" : 0 : "After granted 'free pass', the amount of time a target is allowed before reacquire"
+	freepass_timetotrigger(float) : "Player pass issue time" : "0" : "Amount of time an enemy is hidden after which a 'free pass' on reacquire is granted"
+	freepass_duration(float) : "Player pass duration" : "0" : "After granted 'free pass', the amount of time a target is allowed before reacquire"
 	freepass_movetolerance(float) : "Player pass move tolerance" : 120 : "After granted 'free pass', the distance the target is allowed to move before reacquire"
 	freepass_refillrate(float) : "Player pass refill rate" : "0.5" : "After free pass begins expiring, how much the time the target gets back for every second they hide again"
-	freepass_peektime(float) : "Player pass peek time" : 0 : "How long targets in cover are allowed to peek without penalty"
+	freepass_peektime(float) : "Player pass peek time" : "0" : "How long targets in cover are allowed to peek without penalty"
 
 	StartOn(choices) : "Start On" : 1 =
 	[
@@ -934,11 +934,11 @@
 
 	SnapToEnt(target_destination) : "Name of entity to snap to" : "" : "Since it can be hard to position these entities with respect to the func_tank brushwork, you can specify an entity name here and this enemyfinder will position itself at the center of that entity."
 
-	freepass_timetotrigger(float) : "Player pass issue time" : 0 : "Amount of time an enemy is hidden after which a 'free pass' on reacquire is granted"
-	freepass_duration(float) : "Player pass duration" : 0 : "After granted 'free pass', the amount of time a target is allowed before reacquire"
-	freepass_movetolerance(float) : "Player pass move tolerance" : 120 : "After granted 'free pass', the distance the target is allowed to move before reacquire"
+	freepass_timetotrigger(float) : "Player pass issue time" : "0" : "Amount of time an enemy is hidden after which a 'free pass' on reacquire is granted"
+	freepass_duration(float) : "Player pass duration" : "0" : "After granted 'free pass', the amount of time a target is allowed before reacquire"
+	freepass_movetolerance(float) : "Player pass move tolerance" : "120" : "After granted 'free pass', the distance the target is allowed to move before reacquire"
 	freepass_refillrate(float) : "Player pass refill rate" : "0.5" : "After free pass begins expiring, how much the time the target gets back for every second they hide again"
-	freepass_peektime(float) : "Player pass peek time" : 0 : "How long targets in cover are allowed to peek without penalty"
+	freepass_peektime(float) : "Player pass peek time" : "0" : "How long targets in cover are allowed to peek without penalty"
 
 	StartOn(choices) : "Start On" : 1 =
 	[
@@ -1396,8 +1396,8 @@
 	minburstsize(integer) : "Min Burst Size" : 2 : "Minimum number of rounds in a burst."
 	maxburstsize(integer) : "Max Burst Size" : 7 : "Maximum number of rounds in a burst."
 
-	minburstdelay(float) : "Min Delay Between Bursts" : 2 : "Minimum delay between bursts. (seconds)"
-	maxburstdelay(float) : "Max Delay Between Bursts" : 5 : "Maximum delay between bursts. (seconds)"
+	minburstdelay(float) : "Min Delay Between Bursts" : "2" : "Minimum delay between bursts. (seconds)"
+	maxburstdelay(float) : "Max Delay Between Bursts" : "5" : "Maximum delay between bursts. (seconds)"
 
 	rateoffire(float) : "Rate of fire" : 10 : "Expressed as rounds per second"
 
@@ -1464,15 +1464,15 @@
 		-1 : "Random"
 	]
 	HeadcrabCount(integer) : "Headcrab count" : 6 : "Number of headcrabs to spawn on impact"
-	FlightSpeed(float) : "Flight Speed" : 3000  : "Speed to fly through the air"
-	FlightTime(float) : "Flight Time" : 5	    : "Time to fly through the air in seconds"
-	StartingHeight(float) : "Starting Height" : 0 : "Relative height from the landing position at which the canister should be launched. Positive values mean launch it above the impact point, negative values mean launch it below."
-	MinSkyboxRefireTime(float) : "Min Refire Time" : 0 : "Min number of seconds before the cannister is refired. This will only work for cannisters placed in the skybox."
-	MaxSkyboxRefireTime(float) : "Max Refire Time" : 0 : "Max number of seconds before the cannister is refired. This will only work for cannisters placed in the skybox."
+	FlightSpeed(float) : "Flight Speed" : "3000" : "Speed to fly through the air"
+	FlightTime(float) : "Flight Time" : "5" : "Time to fly through the air in seconds"
+	StartingHeight(float) : "Starting Height" : "0" : "Relative height from the landing position at which the canister should be launched. Positive values mean launch it above the impact point, negative values mean launch it below."
+	MinSkyboxRefireTime(float) : "Min Refire Time" : "0" : "Min number of seconds before the cannister is refired. This will only work for cannisters placed in the skybox."
+	MaxSkyboxRefireTime(float) : "Max Refire Time" : "0" : "Max number of seconds before the cannister is refired. This will only work for cannisters placed in the skybox."
 	SkyboxCannisterCount(integer) : "Cannister count" : 1 : "Number of cannisters to fire in the skybox (0 means fire continuously, forever)."
-	Damage(float) : "Impact damage" : 150 : "Max damage the canister applies on impact"
-	DamageRadius(float) : "Impact damage radius": 750 : "Max radius of the impact damage for the canister"
-	SmokeLifetime(float) : "Smoke Duration" : 30 : "Duration that the canister smokes.  -1 means always smoke."
+	Damage(float) : "Impact damage" : "150" : "Max damage the canister applies on impact"
+	DamageRadius(float) : "Impact damage radius": "750" : "Max radius of the impact damage for the canister"
+	SmokeLifetime(float) : "Smoke Duration" : "30" : "Duration that the canister smokes.  -1 means always smoke."
 	LaunchPositionName(target_destination) : "Launch Position Name" : "" : "If the canister should launch to it's origin from another point within the world, this should specify an info_target at the launch origin."
 
 	// Inputs
@@ -1624,8 +1624,8 @@
 	"A special, space-warping explosion that damages/dissolves entities in the specified radius. " +
 	"Striders use this in their warp cannons."
 [
-	damage(float) : "Damage" : 200 : "The amount of damage done by the explosion."
-	radius(float) : "Radius" : 256 : "The radius in which the explosion can damage entities."
+	damage(float) : "Damage" : "200" : "The amount of damage done by the explosion."
+	radius(float) : "Radius" : "256" : "The radius in which the explosion can damage entities."
 	magnitude(string) : "Shockwave Magnitude" : "1.0" : "Multiplier for how far the shockwave should go. Does nothing to the radius or damage. 2.5 = Strider Cannon"
 	soundname(sound) : "Sound" : "" : "Sound to make when we explode."
 	
@@ -1647,7 +1647,7 @@
 		131072 :  "[131072] Ambush Mode (Starts with tongue retracted, waiting for input to drop it)"		: 0
 	]
 
-	RestDist(float) : "Rest Distance" : 16 : "Distance above the ground that the tongue should lie when the barnacle is at rest"
+	RestDist(float) : "Rest Distance" : "16" : "Distance above the ground that the tongue should lie when the barnacle is at rest"
 
 	input DropTongue(void) : "Drop tongue"
 	input SetDropTongueSpeed(integer) : "Set Drop Tongue speed"
@@ -1739,7 +1739,7 @@
 
 	model(studio) : "Model" : "models/combine_dropship.mdl"
 	LandTarget(target_destination) : "Land target name"
-	GunRange(float) : "Crate Gun Range" : 2048 : "If the dropship's carrying a crate with a gun on it, it'll only shoot targets within this range."
+	GunRange(float) : "Crate Gun Range" : "2048" : "If the dropship's carrying a crate with a gun on it, it'll only shoot targets within this range."
 
 	RollermineTemplate(target_destination) : "Name of Rollermine Template" : "" : "If this dropship drops any rollermines due to the 'DropMines' input being fired, it will use this template for the rollermines it creates. If left blank, ordinary rollermines will be dropped."
 
@@ -1939,7 +1939,7 @@
 	[
 		65536 :  "[65536] Avoid the sphere above and below" : 0
 	]
-	radius(float) : "Radius" : 128
+	radius(float) : "Radius" : "128" : "Sphere Radius"
 	
 	AvoidFilter(filterclass) : "Avoid Filter" : : "Filter to use to see if the helicopter avoids this sphere. See filter_activator_name for more explanation."
 ]
@@ -2513,7 +2513,7 @@
 	TemplateName(target_destination) : "Name of template NPC"
 
 	spawngroup(string) : "Spawn on Hint Group" : "" : "If specified, children will spawn on a hint node from this group, nearest the target."
-	spawnradius(float) : "Spawn radius" : 512 : "Target must be within this distance of any node in the hint group specified above. If the target is outside the radius, no NPC will spawn."
+	spawnradius(float) : "Spawn radius" : "512" : "Target must be within this distance of any node in the hint group specified above. If the target is outside the radius, no NPC will spawn."
 	spawntarget(target_destination): "Spawn target" : "" : "Targetname of the entity to try and spawn near."
 	fighttarget(target_destination): "Fight target" : "" : "Targetname of an entity used as a goal for the children to fight to."
 	followtarget(target_destination): "Follow target" : "" : "Targetname of an entity used as a goal for the children to follow."
@@ -2555,7 +2555,7 @@
 
 @PointClass base(Targetname) sphere(repelradius) color(0 0 255) iconsprite("vizzys-icons/point_antlion_repellant") = point_antlion_repellant : "Antlion Repellant"
 [
-	repelradius(float): "Repel radius" : 512 : "Antlions aren't allowed to be inside this radius"
+	repelradius(float): "Repel radius" : "512" : "Antlions aren't allowed to be inside this radius"
 	input Enable(void) : "Enable"
 	input Disable(void) : "Disable"
 ]
@@ -2745,7 +2745,7 @@
 		4 : "Neutral"
 	]
 
-	radius(float) : "Radius for subject" : 0 : "Only NPCs within the radius distance of this entity will have their dispositions changed."
+	radius(float) : "Radius for subject" : "0" : "Only NPCs within the radius distance of this entity will have their dispositions changed."
 
 	rank(integer) : "Disposition Priority" : 0 : "How much the Subject(s) should Like/Hate/Fear the Target(s). Higher priority = stronger feeling."
 
@@ -2844,7 +2844,7 @@
 		4 : "Neutral"
 	]
 
-	radius(float) : "Radius for subject" : 0 : "Only NPCs within the radius distance of this entity will have their dispositions changed."
+	radius(float) : "Radius for subject" : "0" : "Only NPCs within the radius distance of this entity will have their dispositions changed."
 
 	rank(integer) : "Disposition Priority" : 0 : "How much the subject class should Like/Hate/Fear the target class. Higher priority = stronger feeling."
 
@@ -3167,7 +3167,7 @@
 		4 : "[4] Do not leave post (cop will not move to attack. Another cop might if they're free to)" : 0
 	]
 
-	policeradius(float) : "Radius" : 512 : "Radius to police"
+	policeradius(float) : "Radius" : "512" : "Radius to police"
 	policetarget(target_destination) : "Target" : "" : "Target to police"
 
 	// Inputs
@@ -3186,7 +3186,7 @@
 	"(Assault) rally point"
 [
 	assaultpoint(target_destination)  : "Assault Point" : "" : "Location to move to as assault begins"
-	assaultdelay(float) : "Assault Delay" : 0 : "How long to wait after cue is given before assault begins."
+	assaultdelay(float) : "Assault Delay" : "0" : "How long to wait after cue is given before assault begins."
 	rallysequence(string) : "Rally Sequence" : "" : "Override the NPC's wait activity by entering a sequence name."
 	priority(integer) : "Priority" : 1 : "Higher priority rally points get selected first."
 
@@ -3222,7 +3222,7 @@
 		1 : "Yes"
 	]
 
-	allowdiversionradius(float) : "Diversion Proximity" : 0 : "If Allow Diversion is set, NPC will only divert from assault to attack an enemy that is within this distance of the assault point. 0 = No limit."
+	allowdiversionradius(float) : "Diversion Proximity" : "0" : "If Allow Diversion is set, NPC will only divert from assault to attack an enemy that is within this distance of the assault point. 0 = No limit."
 
 	nevertimeout(choices) : "Never Timeout" : 0 : "If set, the assault never ends for NPCs assaulting this point. Useful for forcing NPCs back to a point." =
 	[
@@ -3325,7 +3325,7 @@
 		1 : "Classname"
 	] 
 
-	busysearchrange(float) : "Search Range for Busy Hints" : 2048 : "Range in which this NPC will search for busy hints."
+	busysearchrange(float) : "Search Range for Busy Hints" : "2048" : "Range in which this NPC will search for busy hints."
 	visibleonly(choices) : "Visible Busy Hints Only" : 0 : "Should this NPC use only visible busy hints?" =
 	[
 		0 : "No"
@@ -3530,9 +3530,9 @@
 		2 : "Don't care"
 	]
 		
-	RequiredTime(float) : "Required Time"	  : 0 : "Duration of time that all the conditions must be true"
-	MinTimeout(float) : "Minimum time out"  : 0 : "Minimum time before OnConditionsTimeout is fired. 0 = never expire."
-	MaxTimeout(float) : "Maximum time out"  : 0 : "Maximum time before OnConditionsTimeout is fired. 0 = ignore (If you don't specify a Maximum timeout, conditions will time out at exactly Minimum Time Out. If you DO specify a Maximum time out, timeout will occur randomly between Minimum and Maximum time out values.)"
+	RequiredTime(float) : "Required Time"	  : "0" : "Duration of time that all the conditions must be true"
+	MinTimeout(float) : "Minimum time out"  : "0" : "Minimum time before OnConditionsTimeout is fired. 0 = never expire."
+	MaxTimeout(float) : "Maximum time out"  : "0" : "Maximum time before OnConditionsTimeout is fired. 0 = ignore (If you don't specify a Maximum timeout, conditions will time out at exactly Minimum Time Out. If you DO specify a Maximum time out, timeout will occur randomly between Minimum and Maximum time out values.)"
 	
 	ActorSeePlayer(choices) : "Actor Sees Player" : 2 =
 	[
@@ -3541,8 +3541,8 @@
 		2 : "Don't care"
 	]
 
-	PlayerActorProximity(float) : "Player distance"  : 0 : "The distance the player must/must not be to the actor. Negative values for NOT, 0 for ignore."
-	PlayerActorFOV(float) : "Player FOV for Actor " : 360 : "Specify angle of view cone in degrees. Negative value = NOT"
+	PlayerActorProximity(float) : "Player distance"  : "0" : "The distance the player must/must not be to the actor. Negative values for NOT, 0 for ignore."
+	PlayerActorFOV(float) : "Player FOV for Actor " : "360" : "Specify angle of view cone in degrees. Negative value = NOT"
 	PlayerActorFOVTrueCone(choices ) : "Play FOV to Actor is a true view cone" : 0 : "Player's view cone is evaluated as a true cone, not pie slice " = 
 	[
 		0 : "No - Tall pie slice"
@@ -3565,9 +3565,9 @@
 		2 : "Don't care"
 	]
 
-	ActorTargetProximity(float) : "Target distance"  : 0 : "The distance the actor must/must not be to the Target. Negative values for NOT, 0 for ignore."
-	PlayerTargetProximity(float) : "Player distance from Target"  : 0 : "The distance the player must/must not be to the Target. Negative values for NOT, 0 for ignore."
-	PlayerTargetFOV(float) : "Player FOV for Target" : 360 : "Specify angle of view cone in degrees. Negative value = NOT"
+	ActorTargetProximity(float) : "Target distance"  : "0" : "The distance the actor must/must not be to the Target. Negative values for NOT, 0 for ignore."
+	PlayerTargetProximity(float) : "Player distance from Target"  : "0" : "The distance the player must/must not be to the Target. Negative values for NOT, 0 for ignore."
+	PlayerTargetFOV(float) : "Player FOV for Target" : "360" : "Specify angle of view cone in degrees. Negative value = NOT"
 	PlayerTargetFOVTrueCone(choices ) : "Play FOV to Target is a true view cone" : 0 : "Player's view cone is evaluated as a true cone, not pie slice " = 
 	[
 		0 : "No - Tall pie slice"
@@ -3785,9 +3785,9 @@
 	]
 
 	target(target_destination) : "Target" :  : "Thing that must looked at or be close to the door. !player works."  //added by vizzys
-	ProximityDistance(float) : "Proximity Distance" : 0 : "If non-zero, how close the target must be (plus Proximity Offset) for the door to move. As the target approaches the center of the door's original position (or Proximity Offset distance from it), the door will open more and more."
+	ProximityDistance(float) : "Proximity Distance" : "0" : "If non-zero, how close the target must be (plus Proximity Offset) for the door to move. As the target approaches the center of the door's original position (or Proximity Offset distance from it), the door will open more and more."
 	ProximityOffset(float) : "Proximity Offset" :  : "In this range to the door, the door will always be open. If 0, the door will only be fully open if the target is standing in the perfect spot."
-	FieldOfView(float) : "Field of View" : 0 : "A number between 0.0001 and 1 representing how closely the target is looking towards the door. Closer to 0 means less directly looking at the door, and 1 means looking inhumanly accurately at the center of the door. The target entity must be a player or NPC to use this."
+	FieldOfView(float) : "Field of View" : "0" : "A number between 0.0001 and 1 representing how closely the target is looking towards the door. Closer to 0 means less directly looking at the door, and 1 means looking inhumanly accurately at the center of the door. The target entity must be a player or NPC to use this."
 	// Input
 	input InvertOn(void) : "InvertOn - when set behavior of door is inverted."
 	input InvertOff(void) : "InvertOff - when set behavior of door is normal."
@@ -4095,7 +4095,7 @@
 	PulseSpeed(float) : "Pulse Speed" : 1000 : "How fast does pulse travel"
 	PulseColor(color255) : "Pulse Color" : "255 0 0" : "Color of the pulse"
 	PulseWidth(float) : "Pulse Width" : "20" : "Width of the pulse"
-	PulseLife(float) : "Pulse Life" : 2 : "(Seconds)  How long the pulse lasts"
+	PulseLife(float) : "Pulse Life" : "2" : "(Seconds)  How long the pulse lasts"
 	PulseLag(float) : "Pulse Lag" : "0.05" : "(Seconds)  How far behind is pulse tail"
 	PulseFireSound(sound)   : "Pulse Fire Sound" : "" : "Sound played when pulse fires"
 ]
@@ -4109,7 +4109,7 @@
 
 @SolidClass base(BaseTank) = func_tankrocket : "Brush Rocket Turret"
 [
-	rocketspeed(float) : "Projectile speed" : 800 : "Speed the rocket will travel at."
+	rocketspeed(float) : "Projectile speed" : "800" : "Speed the rocket will travel at."
 ]
 
 @SolidClass base(BaseTank, TankShootSound) = func_tankairboatgun : "Airboat Gun Turret"
@@ -4530,9 +4530,9 @@
 	output OnCacheInteraction(void) : "Fires when the player 'proves' they've found this weapon. Fires on: Player Touch, +USE pickup, Gravity Gun pickup, Gravity Gun punt."
 	output OnDropped(void) : "Fires when the weapon is dropped by a NPC or player, either through death or from picking up a different weapon."
 
-	fademindist(float) : "Start Fade Dist/Pixels" : -1 : "Distance at which the prop starts to fade (<0 = use fademaxdist). If 'Screen Space Fade' is selected, this represents the number of pixels wide covered by the prop when it starts to fade."
-	fademaxdist(float) : "End Fade Dist/Pixels" : 0 : "Maximum distance at which the prop is visible (0 = don't fade out). If 'Screen Space Fade' is selected, this represents the *minimum* number of pixels wide covered by the prop when it fades."
-	fadescale(float) : "Fade Scale" : 1 : "If you specify a fade in the worldspawn, or if the engine is running under dx7, then the engine will forcibly fade out props even if fademindist/fademaxdist isn't specified." +
+	fademindist(float) : "Start Fade Dist/Pixels" : "-1" : "Distance at which the prop starts to fade (<0 = use fademaxdist). If 'Screen Space Fade' is selected, this represents the number of pixels wide covered by the prop when it starts to fade."
+	fademaxdist(float) : "End Fade Dist/Pixels" : "0" : "Maximum distance at which the prop is visible (0 = don't fade out). If 'Screen Space Fade' is selected, this represents the *minimum* number of pixels wide covered by the prop when it fades."
+	fadescale(float) : "Fade Scale" : "1" : "If you specify a fade in the worldspawn, or if the engine is running under dx7, then the engine will forcibly fade out props even if fademindist/fademaxdist isn't specified." +
 												 " This scale factor gives you some control over the fade. Using 0 here turns off the forcible fades." +
 ]
 
@@ -5049,8 +5049,8 @@
 
 @PointClass base(Targetname, Parentname, Angles,  RenderFields) size(-4 -4 -4, 4 4 4) = env_flare : "Flare"
 [
-	scale(float) : "Scale" : 1
-	duration(float) : "Duration" : 30
+	scale(float) : "Scale" : "1"
+	duration(float) : "Duration" : "30"
 	
 	spawnflags(Flags) =
 	[
@@ -5282,7 +5282,7 @@
 		1 : "[1] Start Off" : 0
 	]
 
-	FOV(float) : "FOV" : 90 : "Field of view in degrees"
+	FOV(float) : "FOV" : "90" : "Field of view in degrees"
 //	resolution(float) : "resolution" : 256 : "width/height of the render target for the camera"
 	UseScreenAspectRatio(choices) : "Screen Aspect Ratio" : 0 =
 	[
@@ -5295,9 +5295,9 @@
 		1 : "Yes"
 	]	
 	fogColor(color255) : "Fog Color" : "0 0 0"
-	fogStart(float) : "Fog Start" : 2048 : "The near fog plane."
-	fogEnd(float) : "Fog End" : 4096 : "The far fog/clipping plane."
-	fogMaxDensity(float) : "Fog Max Density [0..1]" : 1 : "The maximum fog density. 0=no fog, 1=full fog."
+	fogStart(float) : "Fog Start" : "2048" : "The near fog plane."
+	fogEnd(float) : "Fog End" : "4096" : "The far fog/clipping plane."
+	fogMaxDensity(float) : "Fog Max Density [0..1]" : "1" : "The maximum fog density. 0=no fog, 1=full fog."
 	
 	SkyMode(choices) : "Sky Mode" : 2 : "How to draw the sky through this point_camera." =
 	[
@@ -5777,7 +5777,7 @@
 		2 : "[2] Start on" : 0
 	]
 
-	scale(float) : "Scale" : 1 : "Scale of the effect.  1 is the default size, 2 is twice that, etc."
+	scale(float) : "Scale" : "1" : "Scale of the effect.  1 is the default size, 2 is twice that, etc."
 
 	// Inputs
 	input StartCharge(float) : "Start charging the core over specified number of seconds."
@@ -5903,7 +5903,7 @@
 [
 	model(studio) : "Model" : "models/props_junk/flare.mdl" : "Any model entered here can use flares."
 	
-	FlareLifetime(float) : "Flare lifetime" : 30 : "The amount of time the flare should be ignited."
+	FlareLifetime(float) : "Flare lifetime" : "30" : "The amount of time the flare should be ignited."
 
 	input StartFlare(void) : "Ignites the flare."
 	input StopFlare(void) : "Extinguishes the flare."
@@ -5932,8 +5932,8 @@
 		1 : "Yes"
 	]
 	
-	magnitude(float) : "Magnitude" : 100 : "How strongly to push away from the center."
-	radius(float) : "Radius" : 128 : "Radius to affect items in."
+	magnitude(float) : "Magnitude" : "100" : "How strongly to push away from the center."
+	radius(float) : "Radius" : "128" : "Radius to affect items in."
 	inner_radius(float) : "Inner radius" : "0" : "If not zero, the LOS is calculated from a point intersecting this sphere."
 	
 	input Enable(void) : "Enable the push."
@@ -5989,7 +5989,7 @@
 
 @PointClass base(Targetname, Parentname) sphere(radius) iconsprite("vizzys-icons/point_flesh_effect_target") = point_flesh_effect_target : "Flesh Effect Target"
 [
-	radius(float) : "Radius" : 8 : "Radius of the effect when active"
+	radius(float) : "Radius" : "8" : "Radius of the effect when active"
 
 	input SetRadius(vector) : "Sets a new radius and time to interpolate to it(as a vector <Size> <Time in Seconds>)."
 ]
