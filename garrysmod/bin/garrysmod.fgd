@@ -13,6 +13,11 @@
 [
 ]
 
+@SolidClass base(Targetname) = func_proprrespawnzone :
+	"Zone that handles respawning and distribution of clientside physics props."
+[
+]
+
 @PointClass base(Targetname) iconsprite("editor/lua_run.vmt") = lua_run : "Runs Lua Code"
 [
 	Code(string) : "Code" : "" : "Lua code to run when triggered"

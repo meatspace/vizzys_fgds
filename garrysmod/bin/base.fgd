@@ -5944,6 +5944,11 @@
 	]
 ]
 
+@PointClass base(prop_physics) studioprop() sphere(fademindist) sphere(fademaxdist) = prop_physics_respawnable : "A model that moves around realistically. It can respawn when broken."
+[
+	RespawnTime(float) : "Respawn Time" : 60 : "How long to wait before respawning."
+]
+
 @PointClass base(BasePropPhysics, RenderFields) studioprop() sphere(radius) = prop_sphere : "A model with a spherical physics mesh."
 [
 	radius(float) : "Radius" : 12 : "How large the sphere's radius should be."
