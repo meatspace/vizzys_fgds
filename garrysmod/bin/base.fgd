@@ -40,14 +40,20 @@
 	input SetLightingOriginHack(target_destination) : "Sets the relative lighting origin entity. This will make this entity sample lighting from the given entity's position"
 ]
 
-// Also all CBaseAnimating entities
+// Also all CBaseAnimating entities, but we limit where it appears to avoid potential "it no worky" issues
 @BaseClass = GMODModelScale
 [
 	modelscale(float) : "Model Scale" : "1.0" : "Scales the model by percentage given. 1 = 100%, 0.5 = 50%, 2 = 200%, etc."
 
-	input SetModelScale(float) : "Scales the model by percentage given. 1 = 100%, 0.5 = 50%, 2 = 200%, etc."
+	input SetModelScale(string) : "Takes two values separated by a space. The first is the target model scale. (1 = 100%, 0.5 = 50%, 2 = 200%, etc.) The second value is the number of seconds the change in scale will be spread over."
 ]
 
+@BaseClass = CBaseAnimating
+[
+	input SetModel(string) : "Changes the model to the specified path.\nForm of 'models/ammo/ammo_us.mdl'.\nIMPORTANT:\nAbsolutely NO quotes!\nMake sure you use this slash '/'.\nMerasmus says to heed this advice thou shalt corrupt the VMF."
+	input SetCycle(float) : "Skip to a specific point in the current animation"
+	input SetPlaybackRate(float) : "Change the animation speed multiplier"
+]
 // GMOD Note: This fixes brush model bounds being in world space, which is useful for good parenting.
 @BaseClass = Origin
 [
@@ -82,7 +88,7 @@
 	skin(integer) : "Skin" : 0 : "Some models have multiple versions of their textures, called skins. Set this to a number other than 0 to use that skin instead of the default."
 ]
 
-@BaseClass base(GMODSandbox, ToggleDraw, Shadow, Skin) = Studiomodel
+@BaseClass base(GMODSandbox, CBaseAnimating, ToggleDraw, Shadow, Skin) = Studiomodel
 [
 	model(*studio) : "World model" : "" : "The model this entity should use."
 
@@ -160,7 +166,7 @@
 
 @BaseClass = RenderFxChoices
 [
-	renderfx(choices) :"Render FX" : 0 =
+	renderfx(choices) :"Render FX" : 0  : "Custom rendering effects." =
 	[
 		0: "Normal"
 		1: "Slow Pulse"
@@ -875,7 +881,39 @@
 @BaseClass = worldbase
 [
 	message(string) : "Map Description / Title"
-	skyname(string) : "SkyBox Texture Name" : "sky_day01_01"
+	skyname(choices) : "Skybox Texture Name" : "sky_day01_01" : "Skybox name. Pick or enter your own, MINUS the suffix (ft, bk, up, etc.)" =
+	[
+	"sky_day01_01" : "sky_day01_01"
+	"sky_day01_04" : "sky_day01_04"
+	"sky_day01_05" : "sky_day01_05"
+	"sky_day01_06" : "sky_day01_06"
+	"sky_day01_07" : "sky_day01_07"
+	"sky_day01_08" : "sky_day01_08"
+	"sky_day01_09" : "sky_day01_09"
+	"sky_day02_01" : "sky_day02_01"
+	"sky_day02_02" : "sky_day02_02"
+	"sky_day02_03" : "sky_day02_03"
+	"sky_day02_04" : "sky_day02_04"
+	"sky_day02_05" : "sky_day02_05"
+	"sky_day02_06" : "sky_day02_06"
+	"sky_day02_07" : "sky_day02_07"
+	"sky_day02_09" : "sky_day02_09"
+	"sky_day02_10" : "sky_day02_10"
+	"sky_day03_01" : "sky_day03_01"
+	"sky_day03_02" : "sky_day03_02"
+	"sky_day03_03" : "sky_day03_03"
+	"sky_day03_04" : "sky_day03_04"
+	"sky_day03_05" : "sky_day03_05"
+	"sky_day03_06" : "sky_day03_06"
+	"sky_day03_06b" : "sky_day03_06b"
+	"sky_borealis01" : "sky_borealis01"
+	"sky_wasteland02" : "sky_wasteland02"
+	"de_cobble_hdr" : "de_cobble_hdr"
+	"militia_hdr " : "militia_hdr"
+	"sky_dust " : "sky_dust"
+	"train" : "train"
+	"painted" : "painted"
+	]
 	chaptertitle(string) : "Chapter Title Message" : "" : "Chapter Title that appears onscreen when this level starts."
 	startdark(choices) : "Level Fade In" : 0 =
 	[
@@ -1302,12 +1340,14 @@
 	]
 
 	// Inputs
-	input SetTonemapScale(float) : "Set the player's tonemap scale. It should be a value between 0 and 2, where 0 is the eyes fully closed, 1 is use the unchanged autoexposure (default), and 2 is the eye fully wide open."
-	input BlendTonemapScale(string) : "Blend from the player's current tonemap scale to a new one. The parameter syntax is as follows: <target tonemap scale> <blend duration>. For example: '0.5 10' would blend from the current tonemap scale to 0.5 over a period of 10 seconds. Tonemap scale is a value between 0 and 2, where 0 is the eyes fully closed, 1 is use the unchanged autoexposure (default), and 2 is the eye fully wide open."
+	// GMOD: These 2 never worked.
+	//input SetTonemapScale(float) : "Set the player's tonemap scale. It should be a value between 0 and 2, where 0 is the eyes fully closed, 1 is use the unchanged autoexposure (default), and 2 is the eye fully wide open."
+	//input BlendTonemapScale(string) : "Blend from the player's current tonemap scale to a new one. The parameter syntax is as follows: <target tonemap scale> <blend duration>. For example: '0.5 10' would blend from the current tonemap scale to 0.5 over a period of 10 seconds. Tonemap scale is a value between 0 and 2, where 0 is the eyes fully closed, 1 is use the unchanged autoexposure (default), and 2 is the eye fully wide open."
 	input UseDefaultAutoExposure(void) : "Revert to using the default tonemap auto exposure."
 	input SetAutoExposureMin(float) : "Set a custom tonemap auto exposure minimum."
 	input SetAutoExposureMax(float) : "Set a custom tonemap auto exposure maximum."
 	input SetBloomScale(float) : "Set a custom bloom scale."
+	input UseDefaultBloomScale(void) : "Revert to using the default bloom scale."
 	input SetTonemapRate(float) : "Set the rate for autoexposure adjustment."
 ]
 
@@ -1356,7 +1396,7 @@
 @PointClass base(Parentname) size( -16 -16 0, 16 16 4 ) color(255 128 255) line(0 128 0, targetname, target) = info_ladder_dismount :
 	"An entity to handle endpoints for multiple ladders that are too close to each other."
 [
-	target(target_destination) : "LadderName" : : "If multiple ladders are near multiple endpoints, use this to stop them from interfering with each other."
+	target(target_destination) : "Ladder Name" : : "If multiple ladders are near multiple endpoints, use this to stop them from interfering with each other."
 ]
 
 @SolidClass base(Targetname) color(0 128 255) sphere(FadeStartDist) sphere(FadeDist) = func_areaportalwindow :
@@ -2687,17 +2727,18 @@
 //	input Command(string) : "Command to execute."
 //]
 
-@PointClass base(Targetname) iconsprite("editor-ficool2/point_bonusmaps_accessor") = point_bonusmaps_accessor :
-	"An entity that relays bonus maps changes."
-[
-	filename(string) : "File Name" : ""
-	mapname(string) : "Map Name" : ""
-
-	// Inputs
-	input Unlock(void) : "Unlocks the filename/map combination."
-	input Complete(void) : "Completes the filename/map combination."
-	input Save(void) : "Saves bonus map data."
-]
+// GMOD: Useless in GMod, was removed
+//@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = point_bonusmaps_accessor :
+//	"An entity that relays bonus maps changes."
+//[
+//	filename(string) : "File Name" : ""
+//	mapname(string) : "Map Name" : ""
+//
+//	// Inputs
+//	input Unlock(void) : "Unlocks the filename/map combination."
+//	input Complete(void) : "Completes the filename/map combination."
+//	input Save(void) : "Saves bonus map data."
+//]
 
 @PointClass base(Targetname) iconsprite("editor/game_ui.vmt") = game_ui :
 	"An entity used to override player input when the player is looking at it."
@@ -4010,7 +4051,7 @@
 		3 : "Ajar (use Ajar Angles)"
 	]
 
-	axis(axis) : "Hinge Axis (Non functional)" : : "This field does not function."
+	//axis(axis) : "Hinge Axis (Non functional)" : : "This field does not function."
 	distance(float) : "Rotation Distance (degrees)" : 90 : "The amount, in degrees, that the door should rotate when opened."
 	speed(integer) : "Speed" : 100 : "The speed at which the door moves."
 	soundopenoverride(sound) : "Fully Open Sound" : : "Sound played when the door has finished opening."
